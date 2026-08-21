@@ -12,13 +12,14 @@
 </head>
 <body class="min-h-screen p-6 bg-blue-50">
     
-    <!-- Tombol Kembali & Papan Skor -->
+    <!-- Top Bar: Tombol Home & Papan Skor -->
     <div class="max-w-4xl mx-auto mb-8 flex justify-between items-center">
-        <a href="mandiri-belajar-inggris/index.html" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold bg-white px-4 py-2 rounded-xl shadow-sm border border-blue-100 transition-all">
+        <!-- Perbaikan jalur Home menggunakan root "/" agar anti 404 -->
+        <a href="/" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold bg-white px-4 py-2 rounded-xl shadow-sm border border-blue-100 transition-all">
             ⬅️ Home
         </a>
         
-        <!-- Papan Skor Baru -->
+        <!-- Papan Skor -->
         <div class="bg-yellow-400 text-yellow-900 font-bold px-6 py-2 rounded-xl shadow-md border-2 border-yellow-500 flex items-center gap-2 text-lg">
             🏆 Poin: <span id="skorTotal">0</span>
         </div>
@@ -49,12 +50,8 @@
         </a>
     </div>
 
-    <!-- Otak Kecil untuk mengambil skor dari laci browser -->
     <script>
-        // Saat halaman dibuka, cari data 'poinMurid' di laci (localStorage)
         let skorTersimpan = localStorage.getItem('poinMurid');
-        
-        // Kalau sudah ada isinya, tampilkan. Kalau belum, tampilkan 0.
         if (skorTersimpan) {
             document.getElementById("skorTotal").innerHTML = skorTersimpan;
         }
