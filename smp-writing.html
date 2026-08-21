@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Writing SMP | ENG-LEARN</title>
+    <title>Writing SMP (10 Soal) | ENG-LEARN</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
@@ -12,108 +12,130 @@
 </head>
 <body class="min-h-screen p-6 bg-blue-50">
     
-    <!-- Bagian Atas: Tombol Batal & Papan Poin Sementara -->
+    <!-- Top Bar -->
     <div class="max-w-3xl mx-auto mb-6 flex justify-between items-center">
-        <!-- Tombol Kembali sekarang ada peringatannya (confirm) -->
-        <a href="smp.html" onclick="return confirm('Yakin mau kembali? Poin yang belum disimpan di sesi ini akan hangus lho!')" class="inline-flex items-center text-red-500 hover:text-red-700 font-bold bg-white px-4 py-2 rounded-xl shadow-sm border border-red-100 transition-all">
+        <a href="smp.html" onclick="return confirm('Yakin mau kembali? Poin sesi ini akan hangus lho!')" class="inline-flex items-center text-red-500 hover:text-red-700 font-bold bg-white px-4 py-2 rounded-xl shadow-sm border border-red-100 transition-all">
             ⬅️ Batal & Kembali
         </a>
-        
-        <!-- Papan Poin Sesi Ini (Biru) -->
         <div class="bg-blue-500 text-white font-bold px-6 py-2 rounded-xl shadow-md flex items-center gap-2 text-lg">
             ⭐ Poin Sesi: <span id="poinSesiTampil">0</span>
         </div>
     </div>
 
     <div class="max-w-3xl mx-auto bg-white rounded-3xl p-8 shadow-xl border-2 border-blue-50">
-        <!-- Judul Materi -->
-        <h1 class="text-3xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-4">✍️ Writing 1: To Be (is, am, are)</h1>
-        
-        <!-- Isi Materi -->
-        <div class="mb-8 text-gray-700 text-lg leading-relaxed">
-            <p class="mb-4">Dalam bahasa Inggris, kita menggunakan "To Be" untuk menghubungkan subjek dengan kata benda atau kata sifat.</p>
-            <ul class="list-disc pl-6 bg-blue-50 p-4 rounded-xl font-medium">
-                <li><span class="text-blue-600">I</span> menggunakan <span class="text-blue-600">am</span></li>
-                <li><span class="text-blue-600">He, She, It (Tunggal)</span> menggunakan <span class="text-blue-600">is</span></li>
-                <li><span class="text-blue-600">You, We, They (Jamak)</span> menggunakan <span class="text-blue-600">are</span></li>
-            </ul>
+        <!-- Induk Judul & Nomor Soal -->
+        <div class="flex justify-between items-center mb-4 border-b-2 border-blue-100 pb-4">
+            <h1 class="text-2xl font-bold text-gray-800">✍️ Writing SMP: Latihan Dasar</h1>
+            <span id="labelNomorSoal" class="bg-blue-100 text-blue-700 font-bold px-4 py-1 rounded-full text-sm">Soal 1 dari 10</span>
         </div>
-
-        <!-- Latihan Soal -->
-        <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100">
-            <h2 class="text-xl font-bold text-gray-800 mb-4">Latihan Singkat</h2>
+        
+        <!-- Area Soal Interaktif -->
+        <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100 mt-6">
+            <!-- Kalimat Pertanyaan (Dinamis lewat JS) -->
+            <div id="teksSoal" class="text-xl font-medium mb-6 leading-relaxed">
+                <!-- Soal akan dimuat di sini -->
+            </div>
             
-            <div class="flex items-center gap-3 text-xl font-medium mb-6">
-                <span>"Hello, my name</span>
-                <input type="text" id="jawabanMurid" class="border-b-4 border-blue-300 bg-transparent w-20 text-center focus:outline-none focus:border-blue-600 transition-colors" placeholder="___">
-                <span>Budi."</span>
+            <div class="flex items-center gap-3 mb-6">
+                <input type="text" id="jawabanMurid" class="border-b-4 border-blue-300 bg-white px-4 py-2 rounded-lg w-40 text-center text-xl font-bold focus:outline-none focus:border-blue-600 transition-colors shadow-inner" placeholder="Ketik...">
             </div>
 
-            <!-- Tombol Cek -->
-            <button id="tombolCek" onclick="cekJawaban()" class="bg-blue-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-600 transition-colors">
+            <!-- Tombol Cek & Lanjut -->
+            <button id="tombolCek" onclick="cekJawaban()" class="bg-blue-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-600 transition-colors shadow-md">
                 Cek Jawaban
             </button>
 
-            <!-- Tempat Hasil -->
+            <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden bg-green-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-green-600 transition-colors shadow-md">
+                ➡️ Lanjut Soal Berikutnya
+            </button>
+
+            <!-- Pesan Hasil -->
             <p id="pesanHasil" class="mt-4 text-lg font-bold hidden p-3 rounded-xl"></p>
 
-            <!-- Tombol Simpan & Selesai (Awalnya Disembunyikan) -->
-            <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-600 transition-colors shadow-lg hover:shadow-green-300">
-                🎉 Simpan Poin & Selesai!
+            <!-- Tombol Selesai Sesi (Muncul di soal terakhir) -->
+            <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700 transition-colors shadow-lg">
+                🎉 Selesai! Simpan Semua Poin
             </button>
         </div>
     </div>
 
-    <!-- Otak Kecil JavaScript Baru -->
     <script>
-        // Memori Sementara (Hilang kalau pencet Back)
+        // Bank Data 10 Soal Writing SMP
+        const daftarSoal = [
+            { kalimatDepan: "Hello, my name", kalimatBelakang: "Budi.", kunci: "is" },
+            { kalimatDepan: "They", kalimatBelakang: "students in grade 7.", kunci: "are" },
+            { kalimatDepan: "I", kalimatGenerator: true, kalimatDepan: "I", kalimatBelakang: "a student.", kunci: "am" },
+            { kalimatDepan: "She", kalimatBelakang: "my English teacher.", kunci: "is" },
+            { kalimatDepan: "We", kalimatBelakang: "happy to learn English.", kunci: "are" },
+            { kalimatDepan: "He", kalimatBelakang: "playing football now.", kunci: "is" },
+            { kalimatDepan: "Cat", kalimatBelakang: "a cute animal. (Ganti dengan 'It' atau 'This')", kunci: "is" },
+            { kalimatDepan: "You", kalimatBelakang: "smart and diligent.", kunci: "are" },
+            { kalimatDepan: "The books", kalimatBelakang: "on the table.", kunci: "are" },
+            { kalimatDepan: "My mother", kalimatBelakang: "cooking in the kitchen.", kunci: "is" }
+        ];
+
+        let indeksSoalAktif = 0;
         let poinSesi = 0;
-        let sudahBenar = false;
+        let sudahDijawab = false;
+
+        // Memuat soal ke layar
+        function muatSoal() {
+            let soal = daftarSoal[indeksSoalAktif];
+            document.getElementById("labelNomorSoal").innerHTML = `Soal ${indeksSoalAktif + 1} dari 10`;
+            document.getElementById("teksSoal").innerHTML = `"${soal.kalimatDepan} <span class='text-blue-600 font-bold underline'>[ ... ]</span> ${soal.kalimatBelakang}"`;
+            
+            document.getElementById("jawabanMurid").value = "";
+            document.getElementById("pesanHasil").classList.add("hidden");
+            document.getElementById("tombolLanjut").classList.add("hidden");
+            document.getElementById("tombolCek").classList.remove("hidden");
+            document.getElementById("tombolCek").classList.replace("bg-gray-400", "bg-blue-500");
+            sudahDijawab = false;
+        }
+
+        // Jalankan saat pertama kali dibuka
+        muatSoal();
 
         function cekJawaban() {
-            // Kalau sudah benar, tombol Cek Jawaban tidak berfungsi lagi (anti-spam poin)
-            if (sudahBenar) return; 
+            if (sudahDijawab) return;
 
             let jawaban = document.getElementById("jawabanMurid").value.toLowerCase().trim();
             let pesan = document.getElementById("pesanHasil");
-            let tombolSelesai = document.getElementById("tombolSelesai");
-            let tombolCek = document.getElementById("tombolCek");
+            let soalAktif = daftarSoal[indeksSoalAktif];
             
             pesan.classList.remove("hidden");
 
-            if (jawaban === "is") {
-                pesan.innerHTML = "✅ Benar sekali! Hebat! (+10 Poin)";
+            if (jawaban === soalAktif.kunci) {
+                pesan.innerHTML = "✅ Benar sekali! (+10 Poin)";
                 pesan.className = "mt-4 text-lg font-bold p-3 rounded-xl bg-green-100 text-green-700 border-2 border-green-200";
                 
-                // 1. Tambah Poin Sementara & Tampilkan
-                poinSesi = poinSesi + 10;
+                poinSesi += 10;
                 document.getElementById("poinSesiTampil").innerHTML = poinSesi;
+                sudahDijawab = true;
                 
-                // 2. Kunci jawaban biar nggak bisa ditipu
-                sudahBenar = true;
-                tombolCek.classList.replace("bg-blue-500", "bg-gray-400"); // Tombol Cek jadi abu-abu
-                
-                // 3. Munculkan tombol hijau "Simpan & Selesai"
-                tombolSelesai.classList.remove("hidden");
+                document.getElementById("tombolCek").classList.replace("bg-blue-500", "bg-gray-400");
+
+                // Cek apakah ini soal terakhir atau bukan
+                if (indeksSoalAktif < daftarSoal.length - 1) {
+                    document.getElementById("tombolLanjut").classList.remove("hidden");
+                } else {
+                    document.getElementById("tombolSelesai").classList.remove("hidden");
+                    document.getElementById("tombolLanjut").classList.add("hidden");
+                }
 
             } else {
-                pesan.innerHTML = "❌ Masih kurang tepat. Coba lagi!";
+                pesan.innerHTML = "❌ Kurang tepat. Coba ketik ulang!";
                 pesan.className = "mt-4 text-lg font-bold p-3 rounded-xl bg-red-100 text-red-700 border-2 border-red-200";
             }
         }
 
-        // Fungsi ini hanya jalan kalau tombol Hijau besar ditekan
+        function soalBerikutnya() {
+            indeksSoalAktif++;
+            muatSoal();
+        }
+
         function simpanPoinDanSelesai() {
-            // Ambil tabungan poin dari Laci Browser (kalau kosong, berarti 0)
             let poinTotalLama = parseInt(localStorage.getItem('poinMurid')) || 0;
-            
-            // Campur Tabungan Lama + Poin Sementara tadi
-            let poinTotalBaru = poinTotalLama + poinSesi;
-            
-            // Simpan Tabungan Baru ke Laci Browser
-            localStorage.setItem('poinMurid', poinTotalBaru);
-            
-            // Pulangkan murid ke halaman Menu SMP
+            localStorage.setItem('poinMurid', poinTotalLama + poinSesi);
             window.location.href = "smp.html";
         }
     </script>
