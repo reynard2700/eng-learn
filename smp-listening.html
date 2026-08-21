@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listening SMP | ENG-LEARN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+        body { font-family: 'Poppins', sans-serif; }
+    </style>
+</head>
+<body class="min-h-screen p-6 bg-blue-50">
+    
+    <!-- Tombol Kembali -->
+    <div class="max-w-3xl mx-auto mb-6">
+        <a href="smp.html" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold bg-white px-4 py-2 rounded-xl shadow-sm border border-blue-100 transition-all">
+            ⬅️ Kembali ke Menu SMP
+        </a>
+    </div>
+
+    <div class="max-w-3xl mx-auto bg-white rounded-3xl p-8 shadow-xl border-2 border-blue-50">
+        <!-- Judul Materi -->
+        <h1 class="text-3xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-4">🎧 Listening 1: Daily Activities</h1>
+        
+        <!-- Instruksi -->
+        <div class="mb-8 text-gray-700 text-lg leading-relaxed">
+            <p>Pastikan volume komputermu menyala. Klik tombol suara di bawah, dengarkan baik-baik, lalu ketik kata yang hilang!</p>
+        </div>
+
+        <!-- Area Latihan -->
+        <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100 text-center">
+            
+            <!-- Tombol Putar Suara -->
+            <button onclick="putarAudio()" class="bg-green-500 text-white px-8 py-4 rounded-full font-bold text-xl hover:bg-green-600 transition-colors shadow-lg hover:shadow-green-300 mb-8 flex items-center justify-center mx-auto gap-3">
+                <span class="text-3xl">🔊</span> Putar Suara
+            </button>
+            
+            <p class="text-lg mb-4 text-left font-semibold">Lengkapi kalimat yang kamu dengar:</p>
+            
+            <div class="flex items-center justify-center gap-3 text-xl font-medium mb-6 flex-wrap">
+                <span>"I usually</span>
+                <!-- Kotak input -->
+                <input type="text" id="jawabanListening" class="border-b-4 border-green-300 bg-transparent w-24 text-center focus:outline-none focus:border-green-600 transition-colors" placeholder="___">
+                <span>breakfast at 6 AM."</span>
+            </div>
+
+            <!-- Tombol Cek -->
+            <button onclick="cekJawaban()" class="bg-blue-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-600 transition-colors">
+                Cek Jawaban
+            </button>
+
+            <!-- Tempat hasil -->
+            <p id="pesanHasil" class="mt-4 text-lg font-bold hidden p-3 rounded-xl"></p>
+        </div>
+    </div>
+
+    <!-- Otak Kecil JavaScript -->
+    <script>
+        // Fitur menyuruh komputer bicara
+        function putarAudio() {
+            // Ini kalimat yang akan diucapkan komputer
+            let teks = "I usually eat breakfast at 6 AM.";
+            
+            // Memanggil robot suara bawaan browser
+            let suara = new SpeechSynthesisUtterance(teks);
+            suara.lang = "en-US"; // Menggunakan aksen bahasa Inggris Amerika
+            suara.rate = 0.8; // Kecepatan diperlambat sedikit agar jelas untuk murid
+            
+            // Perintahkan bicara!
+            window.speechSynthesis.speak(suara);
+        }
+
+        // Fitur cek jawaban (Sama seperti halaman Writing)
+        function cekJawaban() {
+            let jawaban = document.getElementById("jawabanListening").value.toLowerCase().trim();
+            let pesan = document.getElementById("pesanHasil");
+            pesan.classList.remove("hidden");
+
+            if (jawaban === "eat") {
+                pesan.innerHTML = "✅ Benar sekali! Pendengaranmu tajam!";
+                pesan.className = "mt-4 text-lg font-bold p-3 rounded-xl bg-green-100 text-green-700 border-2 border-green-200";
+            } else {
+                pesan.innerHTML = "❌ Kurang tepat. Coba dengarkan lagi! (Petunjuk: kata kerja 'makan')";
+                pesan.className = "mt-4 text-lg font-bold p-3 rounded-xl bg-red-100 text-red-700 border-2 border-red-200";
+            }
+        }
+    </script>
+</body>
+</html>

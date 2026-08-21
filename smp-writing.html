@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing SMP | ENG-LEARN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+        body { font-family: 'Poppins', sans-serif; }
+    </style>
+</head>
+<body class="min-h-screen p-6 bg-blue-50">
+    
+    <!-- Tombol Kembali -->
+    <div class="max-w-3xl mx-auto mb-6">
+        <a href="smp.html" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold bg-white px-4 py-2 rounded-xl shadow-sm border border-blue-100 transition-all">
+            ⬅️ Kembali ke Menu SMP
+        </a>
+    </div>
+
+    <div class="max-w-3xl mx-auto bg-white rounded-3xl p-8 shadow-xl border-2 border-blue-50">
+        <!-- Judul Materi -->
+        <h1 class="text-3xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-4">✍️ Writing 1: To Be (is, am, are)</h1>
+        
+        <!-- Isi Materi (Teori Singkat) -->
+        <div class="mb-8 text-gray-700 text-lg leading-relaxed">
+            <p class="mb-4">Dalam bahasa Inggris, kita menggunakan "To Be" untuk menghubungkan subjek dengan kata benda atau kata sifat.</p>
+            <ul class="list-disc pl-6 bg-blue-50 p-4 rounded-xl font-medium">
+                <li><span class="text-blue-600">I</span> menggunakan <span class="text-blue-600">am</span></li>
+                <li><span class="text-blue-600">He, She, It (Tunggal)</span> menggunakan <span class="text-blue-600">is</span></li>
+                <li><span class="text-blue-600">You, We, They (Jamak)</span> menggunakan <span class="text-blue-600">are</span></li>
+            </ul>
+        </div>
+
+        <!-- Latihan Soal Interaktif -->
+        <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">Latihan Singkat</h2>
+            <p class="text-lg mb-4">Lengkapi kalimat perkenalan diri ini:</p>
+            
+            <div class="flex items-center gap-3 text-xl font-medium mb-6">
+                <span>"Hello, my name</span>
+                <!-- Kotak input tempat murid mengetik -->
+                <input type="text" id="jawabanMurid" class="border-b-4 border-blue-300 bg-transparent w-20 text-center focus:outline-none focus:border-blue-600 transition-colors" placeholder="___">
+                <span>Budi."</span>
+            </div>
+
+            <!-- Tombol Cek -->
+            <button onclick="cekJawaban()" class="bg-blue-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-600 transition-colors">
+                Cek Jawaban
+            </button>
+
+            <!-- Tempat memunculkan hasil (Benar/Salah) -->
+            <p id="pesanHasil" class="mt-4 text-lg font-bold hidden p-3 rounded-xl"></p>
+        </div>
+    </div>
+
+    <!-- Ini adalah "Otak Kecil" (JavaScript) -->
+    <script>
+        function cekJawaban() {
+            // Mengambil apa yang diketik murid (dijadikan huruf kecil semua agar mudah dicek)
+            let jawaban = document.getElementById("jawabanMurid").value.toLowerCase().trim();
+            let pesan = document.getElementById("pesanHasil");
+            
+            // Memunculkan area pesan yang tadi disembunyikan
+            pesan.classList.remove("hidden");
+
+            // Mengecek apakah jawabannya adalah "is"
+            if (jawaban === "is") {
+                pesan.innerHTML = "✅ Benar sekali! Hebat!";
+                pesan.className = "mt-4 text-lg font-bold p-3 rounded-xl bg-green-100 text-green-700 border-2 border-green-200";
+            } else {
+                pesan.innerHTML = "❌ Masih kurang tepat. (Petunjuk: My name = Tunggal/Satu)";
+                pesan.className = "mt-4 text-lg font-bold p-3 rounded-xl bg-red-100 text-red-700 border-2 border-red-200";
+            }
+        }
+    </script>
+</body>
+</html>

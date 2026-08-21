@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speaking SMP | ENG-LEARN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+        body { font-family: 'Poppins', sans-serif; }
+    </style>
+</head>
+<body class="min-h-screen p-6 bg-blue-50">
+    
+    <!-- Tombol Kembali -->
+    <div class="max-w-3xl mx-auto mb-6">
+        <a href="smp.html" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold bg-white px-4 py-2 rounded-xl shadow-sm border border-blue-100 transition-all">
+            ⬅️ Kembali ke Menu SMP
+        </a>
+    </div>
+
+    <div class="max-w-3xl mx-auto bg-white rounded-3xl p-8 shadow-xl border-2 border-blue-50 text-center">
+        <!-- Judul Materi -->
+        <h1 class="text-3xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-4">🗣️ Speaking 1: Greetings</h1>
+        
+        <!-- Instruksi -->
+        <p class="mb-6 text-gray-700 text-lg">Tekan tombol di bawah, izinkan penggunaan <b>Microphone</b>, lalu ucapkan kalimat ini dengan lantang dan jelas:</p>
+
+        <!-- Kalimat yang harus dibaca -->
+        <div class="text-4xl font-extrabold text-blue-600 mb-8 bg-blue-50 py-6 rounded-2xl border-2 border-blue-200">
+            "Good morning"
+        </div>
+
+        <!-- Tombol Rekam Suara -->
+        <button id="tombolBicara" onclick="mulaiMendengar()" class="bg-purple-500 text-white px-8 py-4 rounded-full font-bold text-xl hover:bg-purple-600 transition-colors shadow-lg hover:shadow-purple-300 mb-6 flex items-center justify-center mx-auto gap-3">
+            <span class="text-3xl">🎤</span> Mulai Bicara
+        </button>
+
+        <!-- Teks yang ditangkap oleh komputer -->
+        <p class="text-gray-500 font-medium mb-2">Yang komputer dengar:</p>
+        <div id="teksTangkapan" class="text-xl font-mono bg-gray-100 p-4 rounded-xl min-h-[60px] flex items-center justify-center mb-6">
+            (Belum ada suara)
+        </div>
+
+        <!-- Tempat hasil Benar/Salah -->
+        <p id="pesanHasil" class="text-xl font-bold hidden p-4 rounded-xl"></p>
+    </div>
+
+    <!-- Otak Kecil JavaScript (Speech Recognition) -->
+    <script>
+        function mulaiMendengar() {
+            let tombol = document.getElementById("tombolBicara");
+            let teksTangkapan = document.getElementById("teksTangkapan");
+            let pesanHasil = document.getElementById("pesanHasil");
+
+            // Memanggil fitur "Telinga" dari Google Chrome
+            let TelingaKomputer = window.SpeechRecognition || window.webkitSpeechRecognition;
+            
+            if (!TelingaKomputer) {
+                alert("Maaf, browsermu tidak mendukung fitur ini. Gunakan Google Chrome versi terbaru.");
+                return;
+            }
+
+            let mesinPengecek = new TelingaKomputer();
+            mesinPengecek.lang = "en-US"; // Setting telinga agar fokus ke Bahasa Inggris
+
+            // Mengubah tampilan tombol saat mulai merekam
+            tombol.innerHTML = "🔴 Sedang mendengarkan...";
+            tombol.classList.replace("bg-purple-500", "bg-red-500");
+
+            // Mulai mendengarkan!
+            mesinPengecek.start();
+
+            // Saat komputer berhasil menangkap suara dan mengubahnya jadi teks
+            mesinPengecek.onresult = function(event) {
+                // Mengambil hasil teks dan mengubahnya jadi huruf kecil semua
+                let hasilSuara = event.results[0][0].transcript.toLowerCase();
+                
+                // Menampilkan teks yang ditangkap di layar
+                teksTangkapan.innerHTML = '"' + hasilSuara + '"';
+
+                pesanHasil.classList.remove("hidden");
+
+                // Mengecek apakah ada kata "good morning" di dalam suaranya
+                if (hasilSuara.includes("good morning")) {
+                    pesanHasil.innerHTML = "✅ Pengucapanmu Sempurna!";
+                    pesanHasil.className = "text-xl font-bold p-4 rounded-xl bg-green-100 text-green-700 border-2 border-green-200";
+                } else {
+                    pesanHasil.innerHTML = "❌ Masih kurang pas. Coba ucapkan lagi pelan-pelan.";
+                    pesanHasil.className = "text-xl font-bold p-4 rounded-xl bg-red-100 text-red-700 border-2 border-red-200";
+                }
+            };
+
+            // Mengembalikan tombol seperti semula setelah selesai mendengarkan
+            mesinPengecek.onspeechend = function() {
+                mesinPengecek.stop();
+                tombol.innerHTML = '<span class="text-3xl">🎤</span> Mulai Bicara';
+                tombol.classList.replace("bg-red-500", "bg-purple-500");
+            }
+        }
+    </script>
+</body>
+</html>
