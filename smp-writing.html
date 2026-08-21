@@ -40,10 +40,16 @@
                 🚀 Kirim Jawaban
             </button>
 
-            <!-- Kotak Hasil & Penjelasan Opsi -->
+            <!-- Kotak Hasil & Penjelasan -->
             <div id="pesanHasil" class="hidden mb-6 p-4 rounded-xl border-2"></div>
 
-            <!-- Tombol Lanjut (Muncul pas benar) -->
+            <!-- Kotak Penjelasan Semua Opsi (Muncul setelah dikirim) -->
+            <div id="kotakPenjelasanSemua" class="hidden mb-6 p-5 rounded-xl bg-white border-2 border-blue-200 shadow-sm">
+                <h3 class="font-bold text-blue-900 mb-3 text-base">📚 Bedah Fungsi Semua Opsi:</h3>
+                <div id="isiPenjelasanSemua" class="space-y-3 text-sm text-gray-700"></div>
+            </div>
+
+            <!-- Tombol Lanjut -->
             <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden w-full bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-600 shadow-md transition-colors">
                 ➡️ Lanjut Soal Berikutnya
             </button>
@@ -63,9 +69,9 @@
                 belakang: "Budi.",
                 kunci: "is",
                 penjelasan: {
-                    "is": "✅ Benar! Kata 'name' dihitung sebagai kata benda tunggal (setara dengan 'It'), jadi pasangannya adalah 'is'.",
-                    "am": "❌ Kurang tepat. 'Am' adalah pasangan mutlak khusus untuk subjek 'I' (Saya).",
-                    "are": "❌ Kurang tepat. 'Are' digunakan untuk subjek jamak atau 'You', sedangkan 'name' bentuknya tunggal."
+                    "is": "<b>IS:</b> Dipakai untuk subjek tunggal (He, She, It, atau nama orang tunggal seperti 'name' / Budi). Di sini benar karena 'name' itu satu.",
+                    "am": "<b>AM:</b> Pasangan mutlak yang hanya digunakan khusus untuk subjek 'I' (Saya).",
+                    "are": "<b>ARE:</b> Digunakan untuk subjek jamak (They, We, You) atau benda yang jumlahnya lebih dari satu."
                 }
             },
             {
@@ -74,9 +80,9 @@
                 belakang: "students in grade 7.",
                 kunci: "are",
                 penjelasan: {
-                    "is": "❌ Kurang tepat. 'Is' hanya dipakai untuk subjek tunggal (seperti He, She, It), sementara 'They' itu jamak.",
-                    "am": "❌ Kurang tepat. 'Am' hanya khusus untuk subjek 'I'.",
-                    "are": "✅ Benar! 'They' berarti 'mereka' (banyak/jamak), sehingga wajib menggunakan 'are'."
+                    "is": "<b>IS:</b> Hanya untuk subjek tunggal (orang ketiga satu orang), tidak bisa untuk 'They'.",
+                    "am": "<b>AM:</b> Hanya khusus dipakai oleh subjek 'I'.",
+                    "are": "<b>ARE:</b> Benar! 'They' berarti 'mereka' (banyak/jamak), sehingga wajib berpasangan dengan 'are'."
                 }
             },
             {
@@ -85,9 +91,9 @@
                 belakang: "a new student here.",
                 kunci: "am",
                 penjelasan: {
-                    "is": "❌ Salah. 'Is' dipakai untuk subjek orang ketiga tunggal, bukan untuk 'I'.",
-                    "am": "✅ Benar! Subjek 'I' (Saya) dalam bahasa Inggris memiliki pasangan mutlak yaitu 'am'.",
-                    "are": "❌ Salah. 'Are' digunakan untuk subjek jamak atau 'You'."
+                    "is": "<b>IS:</b> Salah, karena 'is' bukan pasangan untuk subjek 'I'.",
+                    "am": "<b>AM:</b> Benar! Subjek 'I' (Saya) dalam bahasa Inggris memiliki pasangan mutlak yaitu 'am'.",
+                    "are": "<b>ARE:</b> Salah, 'are' khusus untuk subjek jamak atau 'You'."
                 }
             },
             {
@@ -96,9 +102,9 @@
                 belakang: "my English teacher.",
                 kunci: "is",
                 penjelasan: {
-                    "is": "✅ Benar! 'She' (Dia perempuan) adalah subjek tunggal orang ketiga, pasangannya 'is'.",
-                    "am": "❌ Salah. 'Am' hanya untuk subjek 'I'.",
-                    "are": "❌ Salah. 'Are' untuk subjek jamak."
+                    "is": "<b>IS:</b> Benar! 'She' (Dia perempuan) adalah subjek tunggal orang ketiga, pasangannya 'is'.",
+                    "am": "<b>AM:</b> Salah, 'am' hanya untuk subjek 'I'.",
+                    "are": "<b>ARE:</b> Salah, 'are' digunakan untuk subjek jamak."
                 }
             },
             {
@@ -107,9 +113,9 @@
                 belakang: "happy to learn English.",
                 kunci: "are",
                 penjelasan: {
-                    "is": "❌ Salah. 'Is' khusus untuk subjek tunggal, sedangkan 'We' mencakup banyak orang.",
-                    "am": "❌ Salah. 'Am' hanya untuk subjek 'I'.",
-                    "are": "✅ Benar! 'We' (Kami/Kita) adalah bentuk jamak, pasangannya menggunakan 'are'."
+                    "is": "<b>IS:</b> Salah, 'is' khusus untuk subjek tunggal.",
+                    "am": "<b>AM:</b> Salah, 'am' hanya untuk subjek 'I'.",
+                    "are": "<b>ARE:</b> Benar! 'We' (Kami/Kita) adalah bentuk jamak, pasangannya menggunakan 'are'."
                 }
             },
             {
@@ -118,9 +124,9 @@
                 belakang: "playing football now.",
                 kunci: "is",
                 penjelasan: {
-                    "is": "✅ Benar! 'He' (Dia laki-laki) adalah subjek tunggal, sehingga menggunakan 'is'.",
-                    "am": "❌ Salah. 'Am' khusus untuk 'I'.",
-                    "are": "❌ Salah. 'Are' untuk subjek jamak."
+                    "is": "<b>IS:</b> Benar! 'He' (Dia laki-laki) adalah subjek tunggal, sehingga menggunakan 'is'.",
+                    "am": "<b>AM:</b> Salah, 'am' khusus untuk 'I'.",
+                    "are": "<b>ARE:</b> Salah, 'are' untuk subjek jamak."
                 }
             },
             {
@@ -129,9 +135,9 @@
                 belakang: "sleeping on the sofa.",
                 kunci: "is",
                 penjelasan: {
-                    "is": "✅ Benar! Karena kucingnya hanya satu (tunggal/setara 'It'), maka memakai 'is'.",
-                    "am": "❌ Salah. 'Am' hanya untuk 'I'.",
-                    "are": "❌ Salah. 'Are' dipakai jika kucingnya banyak (The cats)."
+                    "is": "<b>IS:</b> Benar! Karena kucingnya hanya satu (tunggal/setara 'It'), maka memakai 'is'.",
+                    "am": "<b>AM:</b> Salah, 'am' hanya untuk 'I'.",
+                    "are": "<b>ARE:</b> Salah, 'are' dipakai jika kucingnya banyak (The cats)."
                 }
             },
             {
@@ -140,9 +146,9 @@
                 belakang: "smart and diligent.",
                 kunci: "are",
                 penjelasan: {
-                    "is": "❌ Salah. Meskipun terkadang 'You' menunjuk satu orang, aturannya tetap memakai 'are'.",
-                    "am": "❌ Salah. 'Am' khusus untuk 'I'.",
-                    "are": "✅ Benar! Subjek 'You' dalam tata bahasa Inggris selalu berpasangan dengan 'are'."
+                    "is": "<b>IS:</b> Salah. Meskipun menunjuk satu orang, aturan tata bahasa mewajibkan 'You' memakai 'are'.",
+                    "am": "<b>AM:</b> Salah, 'am' khusus untuk 'I'.",
+                    "are": "<b>ARE:</b> Benar! Subjek 'You' selalu berpasangan dengan 'are'."
                 }
             },
             {
@@ -151,9 +157,9 @@
                 belakang: "on the wooden table.",
                 kunci: "are",
                 penjelasan: {
-                    "is": "❌ Salah. 'Is' untuk buku tunggal (The book).",
-                    "am": "❌ Salah. 'Am' untuk 'I'.",
-                    "are": "✅ Benar! Karena ada kata 'books' (banyak buku), maka to be yang dipakai adalah 'are'."
+                    "is": "<b>IS:</b> Salah, 'is' untuk buku tunggal (The book tanpa 's').",
+                    "am": "<b>AM:</b> Salah, 'am' untuk 'I'.",
+                    "are": "<b>ARE:</b> Benar! Karena ada kata 'books' (banyak buku), maka to be yang dipakai adalah 'are'."
                 }
             },
             {
@@ -162,9 +168,9 @@
                 belakang: "cooking in the kitchen.",
                 kunci: "is",
                 penjelasan: {
-                    "is": "✅ Benar! Sinta adalah nama satu orang (tunggal/setara 'She'), jadi pasangannya 'is'.",
-                    "am": "❌ Salah. 'Am' khusus untuk 'I'.",
-                    "are": "❌ Salah. 'Are' untuk subjek jamak."
+                    "is": "<b>IS:</b> Benar! Sinta adalah nama satu orang (tunggal/setara 'She'), jadi pasangannya 'is'.",
+                    "am": "<b>AM:</b> Salah, 'am' khusus untuk 'I'.",
+                    "are": "<b>ARE:</b> Salah, 'are' untuk subjek jamak."
                 }
             }
         ];
@@ -196,13 +202,13 @@
             });
 
             document.getElementById("pesanHasil").classList.add("hidden");
+            document.getElementById("kotakPenjelasanSemua").classList.add("hidden");
             document.getElementById("tombolLanjut").classList.add("hidden");
             document.getElementById("tombolKirim").classList.remove("hidden");
         }
 
         function pilihOpsi(opsi) {
             pilihanDipilih = opsi;
-            // Tandai tombol yang sedang diklik
             let listOpsi = ["is", "am", "are"];
             listOpsi.forEach(o => {
                 let btn = document.getElementById("opsi-" + o);
@@ -224,9 +230,21 @@
             let pesan = document.getElementById("pesanHasil");
             pesan.classList.remove("hidden");
 
+            // Tampilkan kotak penjelasan semua opsi
+            let kotakPenjelasan = document.getElementById("kotakPenjelasanSemua");
+            let isiPenjelasan = document.getElementById("isiPenjelasanSemua");
+            kotakPenjelasan.classList.remove("hidden");
+            
+            let htmlSemua = "";
+            for (let key in soalAktif.penjelasan) {
+                let statusWarna = (key === soalAktif.kunci) ? "text-green-700 font-bold bg-green-50 p-2 rounded" : "text-gray-600 bg-gray-50 p-2 rounded";
+                htmlSemua += `<div class="${statusWarna}">• ${soalAktif.penjelasan[key]}</div>`;
+            }
+            isiPenjelasan.innerHTML = htmlSemua;
+
             if (pilihanDipilih === soalAktif.kunci) {
-                pesan.innerHTML = `🎉 <b>Tepat sekali!</b><br>${soalAktif.penjelasan[pilihanDipilih]}`;
-                pesan.className = "mb-6 p-4 rounded-xl border-2 bg-green-50 text-green-800 border-green-200 text-lg";
+                pesan.innerHTML = `🎉 <b>Tepat sekali! Pilihanmu benar.</b> Lihat rincian fungsi setiap opsi di bawah ya!`;
+                pesan.className = "mb-4 p-4 rounded-xl border-2 bg-green-50 text-green-800 border-green-200 text-base";
                 
                 if (!sudahDijawabBenar) {
                     poinSesi += 10;
@@ -241,8 +259,8 @@
                     document.getElementById("tombolSelesai").classList.remove("hidden");
                 }
             } else {
-                pesan.innerHTML = `⚠️ <b>Kurang tepat.</b><br>${soalAktif.penjelasan[pilihanDipilih]}<br><span class='text-sm text-gray-500 mt-2 block'>💡 (Tips: Kamu bebas mencoba mengklik opsi lain untuk membaca penjelasannya sebelum lanjut!)</span>`;
-                pesan.className = "mb-6 p-4 rounded-xl border-2 bg-red-50 text-red-800 border-red-200 text-lg";
+                pesan.innerHTML = `⚠️ <b>Kurang tepat.</b> Opsi yang kamu pilih belum benar. Cek fungsi masing-masing opsi di bawah untuk memahaminya!`;
+                pesan.className = "mb-4 p-4 rounded-xl border-2 bg-red-50 text-red-800 border-red-200 text-base";
             }
         }
 

@@ -40,8 +40,14 @@
                 🚀 Kirim Jawaban
             </button>
 
-            <!-- Kotak Hasil & Penjelasan -->
+            <!-- Kotak Hasil -->
             <div id="pesanHasil" class="hidden mb-6 p-4 rounded-xl border-2"></div>
+
+            <!-- Kotak Penjelasan Semua Opsi -->
+            <div id="kotakPenjelasanSemua" class="hidden mb-6 p-5 rounded-xl bg-white border-2 border-orange-200 shadow-sm">
+                <h3 class="font-bold text-orange-900 mb-3 text-base">📚 Bedah Fungsi Semua Opsi:</h3>
+                <div id="isiPenjelasanSemua" class="space-y-3 text-sm text-gray-700"></div>
+            </div>
 
             <!-- Tombol Lanjut -->
             <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden w-full bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-600 shadow-md transition-colors">
@@ -64,10 +70,10 @@
                 pilihan: ["therefore", "however", "furthermore", "meanwhile"],
                 kunci: "therefore",
                 penjelasan: {
-                    "therefore": "✅ Benar! 'Therefore' digunakan untuk menarik kesimpulan logis atau menyatakan akibat langsung dari klausa sebelumnya.",
-                    "however": "❌ Kurang tepat. 'However' digunakan untuk menyatakan pertentangan/kontras, bukan sebab-akibat.",
-                    "furthermore": "❌ Kurang tepat. 'Furthermore' dipakai untuk menambah argumen pendukung, bukan kesimpulan.",
-                    "meanwhile": "❌ Kurang tepat. 'Meanwhile' menunjukkan dua kejadian yang berlangsung bersamaan."
+                    "therefore": "<b>Therefore:</b> BENAR! Digunakan untuk menarik kesimpulan logis atau menyatakan akibat langsung.",
+                    "however": "<b>However:</b> Salah. Dipakai untuk menyatakan pertentangan/kontras.",
+                    "furthermore": "<b>Furthermore:</b> Salah. Dipakai untuk menambah argumen pendukung.",
+                    "meanwhile": "<b>Meanwhile:</b> Salah. Menunjukkan dua kejadian yang berlangsung bersamaan."
                 }
             },
             {
@@ -77,10 +83,10 @@
                 pilihan: ["therefore", "however", "moreover", "instead"],
                 kunci: "however",
                 penjelasan: {
-                    "however": "✅ Benar! 'However' tepat digunakan di sini untuk menunjukkan kontras yang mengejutkan (sudah belajar giat tapi tetap gagal).",
-                    "therefore": "❌ Kurang tepat. Kalau 'therefore', mestinya dia lulus ujian karena belajar giat.",
-                    "moreover": "❌ Kurang tepat. 'Moreover' hanya untuk menambah informasi senada.",
-                    "instead": "❌ Kurang tepat. 'Instead' menunjukkan alternatif pilihan pengganti."
+                    "therefore": "<b>Therefore:</b> Salah. Kalau ini, mestinya dia lulus ujian karena belajar giat.",
+                    "however": "<b>However:</b> BENAR! Tepat untuk menunjukkan kontras yang mengejutkan (sudah belajar tapi tetap gagal).",
+                    "moreover": "<b>Moreover:</b> Salah. Hanya untuk menambah informasi senada.",
+                    "instead": "<b>Instead:</b> Salah. Menunjukkan alternatif pilihan pengganti."
                 }
             },
             {
@@ -90,23 +96,23 @@
                 pilihan: ["otherwise", "however", "furthermore", "consequently"],
                 kunci: "furthermore",
                 penjelasan: {
-                    "furthermore": "✅ Benar! 'Furthermore' dipakai untuk menambahkan kelebihan lain (selain murah, hotelnya juga bersih).",
-                    "otherwise": "❌ Kurang tepat. 'Otherwise' menyangkut peringatan kondisi sebaliknya.",
-                    "however": "❌ Kurang tepat. Ini bukan kalimat yang saling bertentangan.",
-                    "consequently": "❌ Kurang tepat. Bersih bukanlah konsekuensi logis langsung dari murah."
+                    "otherwise": "<b>Otherwise:</b> Salah. Menyangkut peringatan kondisi sebaliknya.",
+                    "however": "<b>However:</b> Salah. Ini bukan kalimat yang saling bertentangan.",
+                    "furthermore": "<b>Furthermore:</b> BENAR! Dipakai untuk menambah kelebihan lain (selain murah, hotelnya juga bersih).",
+                    "consequently": "<b>Consequently:</b> Salah. Bersih bukanlah konsekuensi langsung dari murah."
                 }
             },
             {
-                materi: "💡 Teori: Menyatakan dua aktivitas berbeda yang terjadi secara bersamaan (paralel).",
+                materi: "💡 Teori: Menyatakan dua aktivitas berbeda yang terjadi secara bersamaan.",
                 depan: "John cooked dinner;",
                 belakang: ", Mary cleaned the room.",
                 pilihan: ["meanwhile", "therefore", "instead", "nevertheless"],
                 kunci: "meanwhile",
                 penjelasan: {
-                    "meanwhile": "✅ Benar! 'Meanwhile' (sementara itu) menunjukkan dua orang melakukan hal berbeda di waktu yang sama.",
-                    "therefore": "❌ Kurang tepat. Memasak tidak disebabkan oleh membersihkan ruangan.",
-                    "instead": "❌ Kurang tepat. Mary membersihkan ruangan bukan sebagai pengganti John memasak.",
-                    "nevertheless": "❌ Kurang tepat. Ini bukan kalimat pertentangan rintangan."
+                    "meanwhile": "<b>Meanwhile:</b> BENAR! Menunjukkan dua orang melakukan hal berbeda di waktu yang sama.",
+                    "therefore": "<b>Therefore:</b> Salah. Memasak tidak disebabkan oleh membersihkan ruangan.",
+                    "instead": "<b>Instead:</b> Salah. Mary membersihkan bukan sebagai pengganti John memasak.",
+                    "nevertheless": "<b>Nevertheless:</b> Salah. Ini bukan kalimat pertentangan rintangan."
                 }
             },
             {
@@ -116,10 +122,10 @@
                 pilihan: ["however", "moreover", "otherwise", "therefore"],
                 kunci: "moreover",
                 penjelasan: {
-                    "moreover": "✅ Benar! 'Moreover' dipakai untuk menumpuk poin negatif tambahan (selain mahal, boros bensin pula).",
-                    "however": "❌ Kurang tepat. Kedua klausa ini sifatnya mendukung argumen negatif yang sama, bukan bertentangan.",
-                    "otherwise": "❌ Kurang tepat. Tidak ada unsur pengandaian di sini.",
-                    "therefore": "❌ Kurang tepat. Boros bensin bukan kesimpulan formal dari harga mobil."
+                    "however": "<b>However:</b> Salah. Kedua klausa ini sifatnya mendukung argumen negatif yang sama.",
+                    "moreover": "<b>Moreover:</b> BENAR! Dipakai untuk menumpuk poin negatif tambahan (selain mahal, boros bensin pula).",
+                    "otherwise": "<b>Otherwise:</b> Salah. Tidak ada unsur pengandaian.",
+                    "therefore": "<b>Therefore:</b> Salah. Boros bensin bukan kesimpulan formal dari harga."
                 }
             },
             {
@@ -129,10 +135,10 @@
                 pilihan: ["consequently", "meanwhile", "furthermore", "instead"],
                 kunci: "consequently",
                 penjelasan: {
-                    "consequently": "✅ Benar! 'Consequently' (akibatnya) menunjukkan konsekuensi hukum/aturan yang pasti terjadi.",
-                    "meanwhile": "❌ Kurang tepat. Dikeluarkan bukan terjadi secara bersamaan dengan melanggar aturan.",
-                    "furthermore": "❌ Kurang tepat. Ini bukan sekadar penambahan informasi biasa.",
-                    "instead": "❌ Kurang tepat. Dikeluarkan adalah hukuman, bukan opsi alternatif."
+                    "consequently": "<b>Consequently:</b> BENAR! Menunjukkan konsekuensi hukum/aturan yang pasti terjadi.",
+                    "meanwhile": "<b>Meanwhile:</b> Salah. Dikeluarkan bukan terjadi bersamaan dengan melanggar.",
+                    "furthermore": "<b>Furthermore:</b> Salah. Ini bukan sekadar penambahan informasi biasa.",
+                    "instead": "<b>Instead:</b> Salah. Dikeluarkan adalah hukuman, bukan opsi alternatif."
                 }
             },
             {
@@ -142,10 +148,10 @@
                 pilihan: ["therefore", "otherwise", "instead", "however"],
                 kunci: "instead",
                 penjelasan: {
-                    "instead": "✅ Benar! 'Instead' (sebaliknya/alih-alih) menunjukkan pilihan aksi lain yang diambil.",
-                    "therefore": "❌ Kurang tepat. Berjuang lebih keras bukanlah kesimpulan logis dari tidak menyerah.",
-                    "otherwise": "❌ Kurang tepat. Ini bukan kalimat peringatan.",
-                    "however": "❌ Kurang bisa digunakan, karena 'instead' lebih spesifik menunjukkan jalan keluar alternatif."
+                    "therefore": "<b>Therefore:</b> Salah. Berjuang bukan kesimpulan logis dari tidak menyerah.",
+                    "otherwise": "<b>Otherwise:</b> Salah. Ini bukan kalimat peringatan.",
+                    "instead": "<b>Instead:</b> BENAR! Menunjukkan pilihan aksi lain yang diambil sebagai pengganti.",
+                    "however": "<b>However:</b> Kurang tepat dibanding 'instead' yang spesifik menunjukkan alternatif."
                 }
             },
             {
@@ -155,10 +161,10 @@
                 pilihan: ["furthermore", "otherwise", "meanwhile", "consequently"],
                 kunci: "otherwise",
                 penjelasan: {
-                    "otherwise": "✅ Benar! 'Otherwise' (kalau tidak) memperingatkan konsekuensi buruk jika tidak segera bergegas.",
-                    "furthermore": "❌ Kurang tepat. Ketinggalan kereta bukanlah argumen penambah yang positif.",
-                    "meanwhile": "❌ Kurang tepat. Waktu kejadiannya tidak paralel.",
-                    "consequently": "❌ Kurang tepat. 'Otherwise' lebih natural untuk peringatan kondisi bersyarat."
+                    "furthermore": "<b>Furthermore:</b> Salah. Ketinggalan kereta bukan argumen penambah yang positif.",
+                    "otherwise": "<b>Otherwise:</b> BENAR! Memperingatkan konsekuensi buruk jika tidak segera bergegas.",
+                    "meanwhile": "<b>Meanwhile:</b> Salah. Waktu kejadiannya tidak paralel.",
+                    "consequently": "<b>Consequently:</b> Kurang natural dibanding 'otherwise' untuk peringatan bersyarat."
                 }
             },
             {
@@ -168,10 +174,10 @@
                 pilihan: ["nevertheless", "instead", "therefore", "moreover"],
                 kunci: "nevertheless",
                 penjelasan: {
-                    "nevertheless": "✅ Benar! 'Nevertheless' (meskipun demikian) sangat cocok untuk menunjukkan keberhasilan di tengah kesulitan.",
-                    "instead": "❌ Kurang tepat. Menyelesaikan tugas bukanlah opsi alternatif dari kesulitan.",
-                    "therefore": "❌ Kurang tepat. Selesai tepat waktu bukan disebabkan oleh sulitnya tugas.",
-                    "moreover": "❌ Kurang tepat. Ini adalah kalimat kontras."
+                    "nevertheless": "<b>Nevertheless:</b> BENAR! Sangat cocok untuk menunjukkan keberhasilan di tengah kesulitan.",
+                    "instead": "<b>Instead:</b> Salah. Menyelesaikan tugas bukan opsi alternatif dari kesulitan.",
+                    "therefore": "<b>Therefore:</b> Salah. Selesai tepat waktu bukan disebabkan oleh sulitnya tugas.",
+                    "moreover": "<b>Moreover:</b> Salah. Ini adalah kalimat kontras."
                 }
             },
             {
@@ -181,10 +187,10 @@
                 pilihan: ["in addition", "otherwise", "meanwhile", "however"],
                 kunci: "in addition",
                 penjelasan: {
-                    "in addition": "✅ Benar! 'In addition' (sebagai tambahan) dipakai untuk menumpuk kerugian lain dari merokok.",
-                    "otherwise": "❌ Kurang tepat. Ini bukan kalimat peringatan bersyarat.",
-                    "meanwhile": "❌ Kurang tepat. Tidak ada kaitan dengan waktu bersamaan.",
-                    "however": "❌ Kurang tepat. Boros uang dan merusak kesehatan adalah dua hal yang senada, bukan bertentangan."
+                    "in addition": "<b>In addition:</b> BENAR! Dipakai untuk menumpuk kerugian lain dari merokok.",
+                    "otherwise": "<b>Otherwise:</b> Salah. Ini bukan kalimat peringatan bersyarat.",
+                    "meanwhile": "<b>Meanwhile:</b> Salah. Tidak ada kaitan dengan waktu bersamaan.",
+                    "however": "<b>However:</b> Salah. Boros uang dan merusak kesehatan adalah hal yang senada."
                 }
             }
         ];
@@ -215,6 +221,7 @@
             });
 
             document.getElementById("pesanHasil").classList.add("hidden");
+            document.getElementById("kotakPenjelasanSemua").classList.add("hidden");
             document.getElementById("tombolLanjut").classList.add("hidden");
             document.getElementById("tombolKirim").classList.remove("hidden");
         }
@@ -242,9 +249,21 @@
             let pesan = document.getElementById("pesanHasil");
             pesan.classList.remove("hidden");
 
+            // Tampilkan kotak penjelasan semua opsi
+            let kotakPenjelasan = document.getElementById("kotakPenjelasanSemua");
+            let isiPenjelasan = document.getElementById("isiPenjelasanSemua");
+            kotakPenjelasan.classList.remove("hidden");
+
+            let htmlSemua = "";
+            for (let key in soalAktif.penjelasan) {
+                let statusWarna = (key === soalAktif.kunci) ? "text-green-700 font-bold bg-green-50 p-2 rounded" : "text-gray-600 bg-gray-50 p-2 rounded";
+                htmlSemua += `<div class="${statusWarna}">• ${soalAktif.penjelasan[key]}</div>`;
+            }
+            isiPenjelasan.innerHTML = htmlSemua;
+
             if (pilihanDipilih === soalAktif.kunci) {
-                pesan.innerHTML = `🎉 <b>Tepat sekali!</b><br>${soalAktif.penjelasan[pilihanDipilih]}`;
-                pesan.className = "mb-6 p-4 rounded-xl border-2 bg-green-50 text-green-800 border-green-200 text-lg";
+                pesan.innerHTML = `🎉 <b>Tepat sekali! Pilihanmu benar.</b> Lihat rincian fungsi setiap opsi di bawah ya!`;
+                pesan.className = "mb-4 p-4 rounded-xl border-2 bg-green-50 text-green-800 border-green-200 text-base";
                 
                 if (!sudahDijawabBenar) {
                     poinSesi += 20;
@@ -259,8 +278,8 @@
                     document.getElementById("tombolSelesai").classList.remove("hidden");
                 }
             } else {
-                pesan.innerHTML = `⚠️ <b>Kurang tepat.</b><br>${soalAktif.penjelasan[pilihanDipilih]}<br><span class='text-sm text-gray-500 mt-2 block'>💡 (Tips: Kamu bebas mengeklik opsi lain untuk melihat penjelasan fungsi kata hubung lainnya sebelum lanjut!)</span>`;
-                pesan.className = "mb-6 p-4 rounded-xl border-2 bg-red-50 text-red-800 border-red-200 text-lg";
+                pesan.innerHTML = `⚠️ <b>Kurang tepat.</b> Pilihanmu belum benar, tapi tenang! Cek fungsi semua opsi di bawah untuk memperdalam pemahamanmu.`;
+                pesan.className = "mb-4 p-4 rounded-xl border-2 bg-red-50 text-red-800 border-red-200 text-base";
             }
         }
 
