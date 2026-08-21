@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listening SMP | ENG-LEARN</title>
+    <title>Listening SMP (10 Soal) | ENG-LEARN</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
@@ -12,7 +12,6 @@
 </head>
 <body class="min-h-screen p-6 bg-blue-50">
     
-    <!-- Top Bar: Tombol Kembali & Poin Sesi -->
     <div class="max-w-3xl mx-auto mb-6 flex justify-between items-center">
         <a href="smp.html" onclick="return confirm('Yakin mau kembali? Poin sesi ini akan hangus lho!')" class="inline-flex items-center text-red-500 hover:text-red-700 font-bold bg-white px-4 py-2 rounded-xl shadow-sm border border-red-100 transition-all">
             ⬅️ Batal & Kembali
@@ -23,71 +22,97 @@
     </div>
 
     <div class="max-w-3xl mx-auto bg-white rounded-3xl p-8 shadow-xl border-2 border-blue-50">
-        <h1 class="text-3xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-4">🎧 Listening 1: Daily Activities</h1>
-        
-        <div class="mb-8 text-gray-700 text-lg leading-relaxed">
-            <p>Pastikan volume komputermu menyala. Klik tombol suara di bawah, dengarkan, lalu ketik kata yang hilang!</p>
+        <div class="flex justify-between items-center mb-4 border-b-2 border-blue-100 pb-4">
+            <h1 class="text-2xl font-bold text-gray-800">🎧 Listening SMP: Daily Life</h1>
+            <span id="labelNomorSoal" class="bg-blue-100 text-blue-700 font-bold px-4 py-1 rounded-full text-sm">Soal 1 dari 10</span>
         </div>
 
+        <div id="kotakMateri" class="mb-6 text-gray-700 text-base bg-blue-50 p-4 rounded-xl border border-blue-100 font-medium"></div>
+
         <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100 text-center">
-            <button onclick="putarAudio()" class="bg-green-500 text-white px-8 py-4 rounded-full font-bold text-xl hover:bg-green-600 transition-colors shadow-lg hover:shadow-green-300 mb-8 flex items-center justify-center mx-auto gap-3">
-                <span class="text-3xl">🔊</span> Putar Suara
+            <button onclick="putarAudio()" class="bg-green-500 text-white px-8 py-4 rounded-full font-bold text-xl hover:bg-green-600 transition-colors shadow-lg mb-6">
+                🔊 Putar Suara
             </button>
             
-            <p class="text-lg mb-4 text-left font-semibold">Lengkapi kalimat yang kamu dengar:</p>
-            <div class="flex items-center justify-center gap-3 text-xl font-medium mb-6 flex-wrap">
-                <span>"I usually</span>
-                <input type="text" id="jawabanListening" class="border-b-4 border-green-300 bg-transparent w-24 text-center focus:outline-none focus:border-green-600 transition-colors" placeholder="___">
-                <span>breakfast at 6 AM."</span>
-            </div>
+            <div id="teksSoal" class="text-xl font-medium mb-6 leading-relaxed"></div>
+            
+            <input type="text" id="jawabanListening" class="border-b-4 border-green-300 bg-white px-4 py-2 rounded-lg w-40 text-center text-xl font-bold mb-6 focus:outline-none focus:border-green-600 shadow-inner" placeholder="Ketik jawaban...">
 
-            <!-- Tombol Cek -->
-            <button id="tombolCek" onclick="cekJawaban()" class="bg-blue-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-600 transition-colors">
-                Cek Jawaban
-            </button>
+            <button id="tombolCek" onclick="cekJawaban()" class="block w-full bg-blue-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-600 mb-2">Cek Jawaban</button>
+            <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden block w-full bg-green-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-green-600">➡️ Lanjut Soal Berikutnya</button>
 
-            <!-- Pesan Hasil & Tombol Selesai -->
             <p id="pesanHasil" class="mt-4 text-lg font-bold hidden p-3 rounded-xl"></p>
-            <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-600 transition-colors shadow-lg hover:shadow-green-300">
-                🎉 Simpan Poin & Selesai!
-            </button>
+            <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700">🎉 Selesai & Simpan!</button>
         </div>
     </div>
 
-    <!-- Script JavaScript dengan Logika Gamifikasi -->
     <script>
+        const daftarSoal = [
+            { materi: "💡 Teori: 'I usually...' digunakan untuk rutinitas.", depan: "I usually", belakang: "breakfast at 6.", kunci: "eat", clue: "Petunjuk: Kegiatan makan pagi." },
+            { materi: "💡 Teori: Gunakan 'go' untuk kegiatan pergi.", depan: "I", belakang: "to school by bike.", kunci: "go", clue: "Petunjuk: Pergi ke sekolah." },
+            { materi: "💡 Teori: 'Drink' adalah kata kerja minum.", depan: "I", belakang: "milk every morning.", kunci: "drink", clue: "Petunjuk: Meminum susu." },
+            { materi: "💡 Teori: 'Read' untuk kegiatan membaca.", depan: "I like to", belakang: "books at night.", kunci: "read", clue: "Petunjuk: Membaca buku." },
+            { materi: "💡 Teori: 'Play' untuk hobi atau permainan.", depan: "I", belakang: "football in the park.", kunci: "play", clue: "Petunjuk: Bermain bola." },
+            { materi: "💡 Teori: 'Study' untuk kegiatan belajar.", depan: "We", belakang: "English together.", kunci: "study", clue: "Petunjuk: Belajar bersama." },
+            { materi: "💡 Teori: 'Wake' untuk bangun tidur.", depan: "I", belakang: "up at 5 AM.", kunci: "wake", clue: "Petunjuk: Bangun tidur." },
+            { materi: "💡 Teori: 'Sleep' untuk tidur.", depan: "I", belakang: "at 9 PM.", kunci: "sleep", clue: "Petunjuk: Tidur malam." },
+            { materi: "💡 Teori: 'Wash' untuk membersihkan.", depan: "I", belakang: "my face every morning.", kunci: "wash", clue: "Petunjuk: Mencuci wajah." },
+            { materi: "💡 Teori: 'Help' untuk menolong.", depan: "I", belakang: "my mother.", kunci: "help", clue: "Petunjuk: Membantu ibu." }
+        ];
+
+        let indeksSoalAktif = 0;
         let poinSesi = 0;
-        let sudahBenar = false;
+        let sudahDijawab = false;
+
+        function muatSoal() {
+            let soal = daftarSoal[indeksSoalAktif];
+            document.getElementById("labelNomorSoal").innerHTML = `Soal ${indeksSoalAktif + 1} dari 10`;
+            document.getElementById("kotakMateri").innerHTML = soal.materi;
+            document.getElementById("teksSoal").innerHTML = `"${soal.depan} <span class='text-green-600 font-bold underline'>[ ... ]</span> ${soal.belakang}"`;
+            document.getElementById("jawabanListening").value = "";
+            document.getElementById("pesanHasil").classList.add("hidden");
+            document.getElementById("tombolLanjut").classList.add("hidden");
+            document.getElementById("tombolCek").classList.remove("hidden");
+            sudahDijawab = false;
+        }
 
         function putarAudio() {
-            let suara = new SpeechSynthesisUtterance("I usually eat breakfast at 6 AM.");
+            let soal = daftarSoal[indeksSoalAktif];
+            let teks = `${soal.depan} ${soal.kunci} ${soal.belakang}`;
+            let suara = new SpeechSynthesisUtterance(teks);
             suara.lang = "en-US";
             suara.rate = 0.8;
             window.speechSynthesis.speak(suara);
         }
 
         function cekJawaban() {
-            if (sudahBenar) return; 
-
+            if (sudahDijawab) return;
             let jawaban = document.getElementById("jawabanListening").value.toLowerCase().trim();
             let pesan = document.getElementById("pesanHasil");
-            let tombolSelesai = document.getElementById("tombolSelesai");
-            let tombolCek = document.getElementById("tombolCek");
+            let soalAktif = daftarSoal[indeksSoalAktif];
             pesan.classList.remove("hidden");
 
-            if (jawaban === "eat") {
-                pesan.innerHTML = "✅ Benar sekali! (+10 Poin)";
+            if (jawaban === soalAktif.kunci) {
+                pesan.innerHTML = "✅ Benar! (+10 Poin)";
                 pesan.className = "mt-4 text-lg font-bold p-3 rounded-xl bg-green-100 text-green-700 border-2 border-green-200";
-                
-                poinSesi = 10;
+                poinSesi += 10;
                 document.getElementById("poinSesiTampil").innerHTML = poinSesi;
-                sudahBenar = true;
-                tombolCek.classList.replace("bg-blue-500", "bg-gray-400");
-                tombolSelesai.classList.remove("hidden");
+                sudahDijawab = true;
+                document.getElementById("tombolCek").classList.add("hidden");
+                if (indeksSoalAktif < daftarSoal.length - 1) {
+                    document.getElementById("tombolLanjut").classList.remove("hidden");
+                } else {
+                    document.getElementById("tombolSelesai").classList.remove("hidden");
+                }
             } else {
-                pesan.innerHTML = "❌ Kurang tepat. Coba dengarkan lagi!";
+                pesan.innerHTML = `❌ Salah. <br><span class="text-sm font-normal">${soalAktif.clue}</span>`;
                 pesan.className = "mt-4 text-lg font-bold p-3 rounded-xl bg-red-100 text-red-700 border-2 border-red-200";
             }
+        }
+
+        function soalBerikutnya() {
+            indeksSoalAktif++;
+            muatSoal();
         }
 
         function simpanPoinDanSelesai() {
@@ -95,6 +120,7 @@
             localStorage.setItem('poinMurid', poinTotalLama + poinSesi);
             window.location.href = "smp.html";
         }
+        muatSoal();
     </script>
 </body>
 </html>
