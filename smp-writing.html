@@ -32,29 +32,23 @@
         <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100">
             <div id="teksSoal" class="text-xl font-medium mb-6 leading-relaxed text-center"></div>
             
-            <!-- Area Opsi Pilihan Ganda -->
             <div id="areaPilihan" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6"></div>
 
-            <!-- Tombol Kirim Jawaban -->
             <button id="tombolKirim" onclick="kirimJawaban()" class="w-full bg-blue-500 text-white px-6 py-3 rounded-xl font-bold text-lg hover:bg-blue-600 shadow-md transition-colors mb-4">
                 🚀 Kirim Jawaban
             </button>
 
-            <!-- Kotak Hasil & Penjelasan -->
             <div id="pesanHasil" class="hidden mb-6 p-4 rounded-xl border-2"></div>
 
-            <!-- Kotak Penjelasan Semua Opsi (Muncul setelah dikirim) -->
             <div id="kotakPenjelasanSemua" class="hidden mb-6 p-5 rounded-xl bg-white border-2 border-blue-200 shadow-sm">
                 <h3 class="font-bold text-blue-900 mb-3 text-base">📚 Bedah Fungsi Semua Opsi:</h3>
                 <div id="isiPenjelasanSemua" class="space-y-3 text-sm text-gray-700"></div>
             </div>
 
-            <!-- Tombol Lanjut -->
             <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden w-full bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-600 shadow-md transition-colors">
                 ➡️ Lanjut Soal Berikutnya
             </button>
 
-            <!-- Tombol Selesai Sesi -->
             <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700 shadow-lg">
                 🎉 Selesai! Simpan Semua Poin
             </button>
@@ -230,20 +224,25 @@
             let pesan = document.getElementById("pesanHasil");
             pesan.classList.remove("hidden");
 
-            // Tampilkan kotak penjelasan semua opsi
             let kotakPenjelasan = document.getElementById("kotakPenjelasanSemua");
             let isiPenjelasan = document.getElementById("isiPenjelasanSemua");
             kotakPenjelasan.classList.remove("hidden");
-            
+
             let htmlSemua = "";
+            let isBenar = (pilihanDipilih === soalAktif.kunci);
+
             for (let key in soalAktif.penjelasan) {
-                let statusWarna = (key === soalAktif.kunci) ? "text-green-700 font-bold bg-green-50 p-2 rounded" : "text-gray-600 bg-gray-50 p-2 rounded";
+                let statusWarna = "text-gray-600 bg-gray-50 p-2 rounded";
+                // Warna hijau HANYA muncul jika jawaban murid benar DAN key-nya adalah kunci jawaban
+                if (isBenar && key === soalAktif.kunci) {
+                    statusWarna = "text-green-700 font-bold bg-green-50 p-2 rounded border border-green-200";
+                }
                 htmlSemua += `<div class="${statusWarna}">• ${soalAktif.penjelasan[key]}</div>`;
             }
             isiPenjelasan.innerHTML = htmlSemua;
 
-            if (pilihanDipilih === soalAktif.kunci) {
-                pesan.innerHTML = `🎉 <b>Tepat sekali! Pilihanmu benar.</b> Lihat rincian fungsi setiap opsi di bawah ya!`;
+            if (isBenar) {
+                pesan.innerHTML = `🎉 <b>Tepat sekali! Pilihanmu benar.</b>`;
                 pesan.className = "mb-4 p-4 rounded-xl border-2 bg-green-50 text-green-800 border-green-200 text-base";
                 
                 if (!sudahDijawabBenar) {
@@ -259,7 +258,7 @@
                     document.getElementById("tombolSelesai").classList.remove("hidden");
                 }
             } else {
-                pesan.innerHTML = `⚠️ <b>Kurang tepat.</b> Opsi yang kamu pilih belum benar. Cek fungsi masing-masing opsi di bawah untuk memahaminya!`;
+                pesan.innerHTML = `⚠️ <b>Kurang tepat.</b> Jawabannya belum benar, yuk coba pikirkan lagi atau pilih opsi lain!`;
                 pesan.className = "mb-4 p-4 rounded-xl border-2 bg-red-50 text-red-800 border-red-200 text-base";
             }
         }
