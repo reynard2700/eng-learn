@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Writing SMP (Mode Belajar Interaktif) | ENG-LEARN</title>
+    <title>Writing SMP (Mode Review Interaktif) | ENG-LEARN</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
@@ -45,12 +45,18 @@
                 <div id="isiPenjelasanSemua" class="space-y-3 text-sm text-gray-700"></div>
             </div>
 
-            <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden w-full bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-600 shadow-md transition-colors">
-                ➡️ Lanjut Soal Berikutnya
-            </button>
+            <!-- Navigasi Bawah (Sebelumnya & Lanjut) -->
+            <div class="flex gap-3">
+                <button id="tombolSebelumnya" onclick="soalSebelumnya()" class="hidden flex-1 bg-gray-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-gray-600 shadow-md transition-colors">
+                    ⬅️ Sebelumnya
+                </button>
+                <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden flex-1 bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-green-600 shadow-md transition-colors">
+                    ➡️ Lanjut 
+                </button>
+            </div>
 
             <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700 shadow-lg">
-                🎉 Selesai! Simpan Semua Poin
+                🎉 Selesai & Simpan Poin!
             </button>
         </div>
     </div>
@@ -172,7 +178,8 @@
         let indeksSoalAktif = 0;
         let poinSesi = 0;
         let pilihanDipilih = null;
-        let sudahDijawabBenar = false;
+        // Memori status tiap soal: [sudahSelesaiBenar, pilihanUser]
+        let statusRiwayat = {};
 
         function muatSoal() {
             let soal = daftarSoal[indeksSoalAktif];
@@ -183,7 +190,6 @@
             let areaPilihan = document.getElementById("areaPilihan");
             areaPilihan.innerHTML = "";
             pilihanDipilih = null;
-            sudahDijawabBenar = false;
 
             let listOpsi = ["is", "am", "are"];
             listOpsi.forEach(opsi => {
@@ -195,21 +201,48 @@
                 areaPilihan.appendChild(tombol);
             });
 
-            document.getElementById("pesanHasil").classList.add("hidden");
-            document.getElementById("kotakPenjelasanSemua").classList.add("hidden");
-            document.getElementById("tombolLanjut").classList.add("hidden");
-            document.getElementById("tombolKirim").classList.remove("hidden");
+            // Tombol Sebelumnya aktif jika bukan di soal pertama
+            if (indeksSoalAktif > 0) {
+                document.getElementById("tombolSebelumnya").classList.remove("hidden");
+            } else {
+                document.getElementById("tombolSebelumnya").classList.add("hidden");
+            }
+
+            // Cek apakah soal ini sudah pernah dijawab benar sebelumnya
+            let riwayat = statusRiwayat[indeksSoalAktif];
+            if (riwayat && riwayat.sudahBenar) {
+                // Pulihkan tampilan jika sudah pernah dijawab benar
+                pilihanDipilih = riwayat.pilihan;
+                tandaiTombolTerpilih(pilihanDipilih);
+                tampilkanHasilDanBedah(true, true);
+            } else {
+                document.getElementById("pesanHasil").classList.add("hidden");
+                document.getElementById("kotakPenjelasanSemua").classList.add("hidden");
+                document.getElementById("tombolLanjut").classList.add("hidden");
+                document.getElementById("tombolKirim").classList.remove("hidden");
+                document.getElementById("tombolSelesai").classList.add("hidden");
+            }
         }
 
         function pilihOpsi(opsi) {
+            // Jika soal ini sudah pernah diselesaikan benar, jangan biarkan ubah jawaban seenaknya (opsional, biar rapi)
+            let riwayat = statusRiwayat[indeksSoalAktif];
+            if (riwayat && riwayat.sudahBenar) return; 
+
             pilihanDipilih = opsi;
+            tandaiTombolTerpilih(opsi);
+        }
+
+        function tandaiTombolTerpilih(opsiTerpilih) {
             let listOpsi = ["is", "am", "are"];
             listOpsi.forEach(o => {
                 let btn = document.getElementById("opsi-" + o);
-                if (o === opsi) {
-                    btn.className = "bg-blue-500 border-2 border-blue-600 text-white font-bold py-4 rounded-xl shadow-md transition-all text-xl";
-                } else {
-                    btn.className = "bg-white border-2 border-blue-200 text-blue-700 font-bold py-4 rounded-xl shadow-sm hover:bg-blue-50 transition-all text-xl";
+                if (btn) {
+                    if (o === opsiTerpilih) {
+                        btn.className = "bg-blue-500 border-2 border-blue-600 text-white font-bold py-4 rounded-xl shadow-md transition-all text-xl";
+                    } else {
+                        btn.className = "bg-white border-2 border-blue-200 text-blue-700 font-bold py-4 rounded-xl shadow-sm hover:bg-blue-50 transition-all text-xl";
+                    }
                 }
             });
         }
@@ -221,6 +254,24 @@
             }
 
             let soalAktif = daftarSoal[indeksSoalAktif];
+            let isBenar = (pilihanDipilih === soalAktif.kunci);
+
+            if (isBenar) {
+                // Catat ke memori riwayat bahwa soal ini sudah dijawab benar
+                if (!statusRiwayat[indeksSoalAktif] || !statusRiwayat[indeksSoalAktif].sudahBenar) {
+                    poinSesi += 10;
+                    document.getElementById("poinSesiTampil").innerHTML = poinSesi;
+                }
+                statusRiwayat[indeksSoalAktif] = { sudahBenar: true, pilihan: pilihanDipilih };
+                tampilkanHasilDanBedah(true, false);
+            } else {
+                statusRiwayat[indeksSoalAktif] = { sudahBenar: false, pilihan: pilihanDipilih };
+                tampilkanHasilDanBedah(false, false);
+            }
+        }
+
+        function tampilkanHasilDanBedah(isBenar, dariReview) {
+            let soalAktif = daftarSoal[indeksSoalAktif];
             let pesan = document.getElementById("pesanHasil");
             pesan.classList.remove("hidden");
 
@@ -229,11 +280,8 @@
             kotakPenjelasan.classList.remove("hidden");
 
             let htmlSemua = "";
-            let isBenar = (pilihanDipilih === soalAktif.kunci);
-
             for (let key in soalAktif.penjelasan) {
                 let statusWarna = "text-gray-600 bg-gray-50 p-2 rounded";
-                // Warna hijau HANYA muncul jika jawaban murid benar DAN key-nya adalah kunci jawaban
                 if (isBenar && key === soalAktif.kunci) {
                     statusWarna = "text-green-700 font-bold bg-green-50 p-2 rounded border border-green-200";
                 }
@@ -242,15 +290,11 @@
             isiPenjelasan.innerHTML = htmlSemua;
 
             if (isBenar) {
-                pesan.innerHTML = `🎉 <b>Tepat sekali! Pilihanmu benar.</b>`;
+                pesan.innerHTML = dariReview ? 
+                    `📚 <b>Mode Review:</b> Soal ini sudah kamu jawab dengan benar sebelumnya.` : 
+                    `🎉 <b>Tepat sekali! Pilihanmu benar.</b>`;
                 pesan.className = "mb-4 p-4 rounded-xl border-2 bg-green-50 text-green-800 border-green-200 text-base";
                 
-                if (!sudahDijawabBenar) {
-                    poinSesi += 10;
-                    document.getElementById("poinSesiTampil").innerHTML = poinSesi;
-                    sudahDijawabBenar = true;
-                }
-
                 document.getElementById("tombolKirim").classList.add("hidden");
                 if (indeksSoalAktif < daftarSoal.length - 1) {
                     document.getElementById("tombolLanjut").classList.remove("hidden");
@@ -258,14 +302,23 @@
                     document.getElementById("tombolSelesai").classList.remove("hidden");
                 }
             } else {
-                pesan.innerHTML = `⚠️ <b>Kurang tepat.</b> Jawabannya belum benar, yuk coba pikirkan lagi atau pilih opsi lain!`;
+                pesan.innerHTML = `⚠️ <b>Kurang tepat.</b> Jawabannya belum benar, yuk cek fungsi masing-masing opsi di bawah!`;
                 pesan.className = "mb-4 p-4 rounded-xl border-2 bg-red-50 text-red-800 border-red-200 text-base";
+                document.getElementById("tombolLanjut").classList.add("hidden");
+                document.getElementById("tombolSelesai").classList.add("hidden");
             }
         }
 
         function soalBerikutnya() {
             indeksSoalAktif++;
             muatSoal();
+        }
+
+        function soalSebelumnya() {
+            if (indeksSoalAktif > 0) {
+                indeksSoalAktif--;
+                muatSoal();
+            }
         }
 
         function simpanPoinDanSelesai() {
