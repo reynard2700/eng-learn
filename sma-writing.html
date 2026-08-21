@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Writing SMA (10 Soal) | ENG-LEARN</title>
+    <title>Writing SMA (Pilihan Ganda) | ENG-LEARN</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
@@ -23,39 +23,114 @@
 
     <div class="max-w-3xl mx-auto bg-white rounded-3xl p-8 shadow-xl border-2 border-orange-50">
         <div class="flex justify-between items-center mb-4 border-b-2 border-orange-100 pb-4">
-            <h1 class="text-2xl font-bold text-gray-800">📝 Writing SMA: Connectors</h1>
+            <h1 class="text-2xl font-bold text-gray-800">📝 Writing SMA: Connectors (Pilihan Ganda)</h1>
             <span id="labelNomorSoal" class="bg-orange-100 text-orange-700 font-bold px-4 py-1 rounded-full text-sm">Soal 1 dari 10</span>
         </div>
         
         <div id="kotakMateri" class="mb-6 text-gray-700 text-base bg-orange-50 p-4 rounded-xl border border-orange-100 font-medium"></div>
 
         <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100">
-            <div id="teksSoal" class="text-xl font-medium mb-6 leading-relaxed"></div>
+            <div id="teksSoal" class="text-xl font-medium mb-6 leading-relaxed text-center"></div>
             
-            <div class="flex items-center gap-3 mb-6">
-                <input type="text" id="jawabanMurid" class="border-b-4 border-orange-300 bg-white px-4 py-2 rounded-lg w-44 text-center text-xl font-bold focus:outline-none focus:border-orange-600 transition-colors shadow-inner" placeholder="Ketik...">
+            <!-- Tempat Tombol Pilihan Ganda SMA -->
+            <div id="areaPilihan" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <!-- Tombol opsi dimuat lewat JS -->
             </div>
 
-            <button id="tombolCek" onclick="cekJawaban()" class="block w-full bg-orange-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-orange-600 mb-2">Cek Jawaban</button>
-            <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden block w-full bg-green-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-green-600">➡️ Lanjut Soal Berikutnya</button>
+            <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden w-full bg-green-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-green-600 shadow-md">
+                ➡️ Lanjut Soal Berikutnya
+            </button>
 
-            <p id="pesanHasil" class="mt-4 text-lg font-bold hidden p-3 rounded-xl"></p>
-            <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700">🎉 Selesai & Simpan Poin!</button>
+            <p id="pesanHasil" class="mt-4 text-lg font-bold hidden p-3 rounded-xl text-center"></p>
+
+            <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700 shadow-lg">
+                🎉 Selesai & Simpan Poin!
+            </button>
         </div>
     </div>
 
     <script>
         const daftarSoal = [
-            { materi: "💡 Teori: 'Therefore' menunjukkan hubungan sebab-akibat formal.", depan: "It was raining heavily,", belakang: "we canceled the match.", kunci: "therefore", clue: "Petunjuk: Penghubung untuk menarik kesimpulan logis." },
-            { materi: "💡 Teori: 'However' menyatakan kontras.", depan: "She studied hard;", belakang: "she failed the exam.", kunci: "however", clue: "Petunjuk: Hasil yang tidak terduga." },
-            { materi: "💡 Teori: 'Furthermore' menambahkan argumen pendukung.", depan: "The hotel is cheap;", belakang: ", it is very clean.", kunci: "furthermore", clue: "Petunjuk: Tambahkan poin positif." },
-            { materi: "💡 Teori: 'Meanwhile' untuk dua kejadian bersamaan.", depan: "John cooked dinner;", belakang: ", Mary cleaned the room.", kunci: "meanwhile", clue: "Petunjuk: Dua aktivitas paralel." },
-            { materi: "💡 Teori: 'Moreover' untuk penguatan argumen.", depan: "The car is expensive;", belakang: ", it consumes too much fuel.", kunci: "moreover", clue: "Petunjuk: Poin tambahan yang senada." },
-            { materi: "💡 Teori: 'Consequently' untuk konsekuensi logis.", depan: "He broke the rules;", belakang: ", he was expelled.", kunci: "consequently", clue: "Petunjuk: Konsekuensi dari tindakan." },
-            { materi: "💡 Teori: 'Instead' menunjukkan pilihan pengganti.", depan: "He didn't quit;", belakang: ", he fought harder.", kunci: "instead", clue: "Petunjuk: Tindakan alternatif." },
-            { materi: "💡 Teori: 'Otherwise' untuk peringatan.", depan: "Hurry up;", belakang: ", we will miss the train.", kunci: "otherwise", clue: "Petunjuk: Apa yang terjadi jika tidak dilakukan?" },
-            { materi: "💡 Teori: 'Nevertheless' meski ada rintangan.", depan: "The task was difficult;", belakang: ", they finished it on time.", kunci: "nevertheless", clue: "Petunjuk: Meskipun ada rintangan." },
-            { materi: "💡 Teori: 'In addition' untuk menambah informasi.", depan: "Smoking is bad for health;", belakang: ", it wastes money.", kunci: "in addition", clue: "Petunjuk: Penambahan informasi negatif." }
+            {
+                materi: "💡 Teori: 'Therefore' menunjukkan hubungan sebab-akibat formal.",
+                depan: "It was raining heavily,",
+                belakang: "we canceled the match.",
+                pilihan: ["therefore", "however", "furthermore", "meanwhile"],
+                kunci: "therefore",
+                clue: "Petunjuk: Penghubung untuk menarik kesimpulan logis dari klausa sebelumnya."
+            },
+            {
+                materi: "💡 Teori: 'However' menyatakan kontras atau pertentangan.",
+                depan: "She studied hard;",
+                belakang: "she failed the exam.",
+                pilihan: ["therefore", "however", "moreover", "instead"],
+                kunci: "however",
+                clue: "Petunjuk: Hasil yang tidak terduga dari usaha yang dilakukan."
+            },
+            {
+                materi: "💡 Teori: 'Furthermore' menambahkan argumen pendukung.",
+                depan: "The hotel is cheap;",
+                belakang: ", it is very clean.",
+                pilihan: ["otherwise", "however", "furthermore", "consequently"],
+                kunci: "furthermore",
+                clue: "Petunjuk: Berfungsi memberikan poin tambahan yang memperkuat argumen."
+            },
+            {
+                materi: "💡 Teori: 'Meanwhile' untuk dua kejadian bersamaan.",
+                depan: "John cooked dinner;",
+                belakang: ", Mary cleaned the room.",
+                pilihan: ["meanwhile", "therefore", "instead", "nevertheless"],
+                kunci: "meanwhile",
+                clue: "Petunjuk: Menunjukkan aktivitas paralel yang terjadi dalam waktu yang sama."
+            },
+            {
+                materi: "💡 Teori: 'Moreover' untuk penguatan argumen.",
+                depan: "The car is expensive;",
+                belakang: ", it consumes too much fuel.",
+                pilihan: ["however", "moreover", "otherwise", "therefore"],
+                kunci: "moreover",
+                clue: "Petunjuk: Menambahkan alasan senada yang memperkuat opini negatif pertama."
+            },
+            {
+                materi: "💡 Teori: 'Consequently' untuk konsekuensi logis.",
+                depan: "He broke the rules;",
+                belakang: ", he was expelled.",
+                pilihan: ["consequently", "meanwhile", "furthermore", "instead"],
+                kunci: "consequently",
+                clue: "Petunjuk: Konsekuensi langsung atau hukuman dari aksi sebelumnya."
+            },
+            {
+                materi: "💡 Teori: 'Instead' menunjukkan pilihan pengganti.",
+                depan: "He didn't quit;",
+                belakang: ", he fought harder.",
+                pilihan: ["therefore", "otherwise", "instead", "however"],
+                kunci: "instead",
+                clue: "Petunjuk: Menunjukkan tindakan alternatif yang dipilih sebagai pengganti."
+            },
+            {
+                materi: "💡 Teori: 'Otherwise' untuk kondisi pengandaian/peringatan.",
+                depan: "Hurry up;",
+                belakang: ", we will miss the train.",
+                pilihan: ["furthermore", "otherwise", "meanwhile", "consequently"],
+                kunci: "otherwise",
+                clue: "Petunjuk: Menyatakan apa yang terjadi jika klausa pertama diabaikan."
+            },
+            {
+                materi: "💡 Teori: 'Nevertheless' meski ada rintangan.",
+                depan: "The task was difficult;",
+                belakang: ", they finished it on time.",
+                pilihan: ["nevertheless", "instead", "therefore", "moreover"],
+                kunci: "nevertheless",
+                clue: "Petunjuk: Kata hubung formal yang berarti 'meskipun ada rintangan tersebut'."
+            },
+            {
+                materi: "💡 Teori: 'In addition' untuk menambah informasi.",
+                depan: "Smoking is bad for health;",
+                belakang: ", it wastes money.",
+                pilihan: ["in addition", "otherwise", "meanwhile", "however"],
+                kunci: "in addition",
+                clue: "Petunjuk: Frasa transisi untuk menambahkan informasi baru yang sejalan."
+            }
         ];
 
         let indeksSoalAktif = 0;
@@ -66,37 +141,46 @@
             let soal = daftarSoal[indeksSoalAktif];
             document.getElementById("labelNomorSoal").innerHTML = `Soal ${indeksSoalAktif + 1} dari 10`;
             document.getElementById("kotakMateri").innerHTML = soal.materi;
-            document.getElementById("teksSoal").innerHTML = `"${soal.depan} <span class='text-orange-600 font-bold underline'>[ ... ]</span> ${soal.belakang}"`;
-            document.getElementById("jawabanMurid").value = "";
+            document.getElementById("teksSoal").innerHTML = `"${soal.depan} <span class='text-orange-600 font-bold underline bg-orange-100 px-2 py-1 rounded'>[ ... ]</span> ${soal.belakang}"`;
+            
+            let areaPilihan = document.getElementById("areaPilihan");
+            areaPilihan.innerHTML = "";
+            
+            soal.pilihan.forEach(pilihan => {
+                let tombol = document.createElement("button");
+                tombol.innerHTML = pilihan;
+                tombol.className = "bg-white border-2 border-orange-200 text-orange-700 font-bold py-4 rounded-xl shadow-sm hover:bg-orange-500 hover:text-white hover:border-orange-500 transition-all text-xl capitalize";
+                tombol.onclick = function() { pilihJawaban(pilihan, soal.kunci, soal.clue); };
+                areaPilihan.appendChild(tombol);
+            });
+
             document.getElementById("pesanHasil").classList.add("hidden");
             document.getElementById("tombolLanjut").classList.add("hidden");
-            document.getElementById("tombolCek").classList.remove("hidden");
             sudahDijawab = false;
         }
 
-        function cekJawaban() {
+        function pilihJawaban(jawabanPilihan, kunciBenar, clueSoal) {
             if (sudahDijawab) return;
-            let jawaban = document.getElementById("jawabanMurid").value.toLowerCase().trim();
+
             let pesan = document.getElementById("pesanHasil");
-            let soalAktif = daftarSoal[indeksSoalAktif];
             pesan.classList.remove("hidden");
 
-            if (jawaban === soalAktif.kunci) {
-                pesan.innerHTML = "✅ Benar! (+20 Poin SMA)";
-                pesan.className = "mt-4 text-lg font-bold p-3 rounded-xl bg-green-100 text-green-700 border-2 border-green-200";
+            if (jawabanPilihan === kunciBenar) {
+                pesan.innerHTML = "✅ Benar sekali! (+20 Poin SMA)";
+                pesan.className = "mt-4 text-lg font-bold p-3 rounded-xl bg-green-100 text-green-700 border-2 border-green-200 text-center";
+                
                 poinSesi += 20;
                 document.getElementById("poinSesiTampil").innerHTML = poinSesi;
                 sudahDijawab = true;
-                document.getElementById("tombolCek").classList.add("hidden");
-                
+
                 if (indeksSoalAktif < daftarSoal.length - 1) {
                     document.getElementById("tombolLanjut").classList.remove("hidden");
                 } else {
                     document.getElementById("tombolSelesai").classList.remove("hidden");
                 }
             } else {
-                pesan.innerHTML = `❌ Kurang tepat. <br><span class="text-sm font-normal">${soalAktif.clue}</span>`;
-                pesan.className = "mt-4 text-lg font-bold p-3 rounded-xl bg-red-100 text-red-700 border-2 border-red-200";
+                pesan.innerHTML = `❌ Kurang tepat. <br><span class="text-sm font-normal">${clueSoal}</span>`;
+                pesan.className = "mt-4 text-lg font-bold p-3 rounded-xl bg-red-100 text-red-700 border-2 border-red-200 text-center";
             }
         }
 
