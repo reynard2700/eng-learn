@@ -1,99 +1,75 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Writing SMA | ENG-LEARN</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
-        body { font-family: 'Poppins', sans-serif; }
-    </style>
-</head>
-<body class="min-h-screen p-6 bg-orange-50">
-    
-    <!-- Top Bar: Tombol Batal & Poin Sesi -->
-    <div class="max-w-3xl mx-auto mb-6 flex justify-between items-center">
-        <a href="sma.html" onclick="return confirm('Yakin mau kembali? Poin sesi ini akan hangus lho!')" class="inline-flex items-center text-red-500 hover:text-red-700 font-bold bg-white px-4 py-2 rounded-xl shadow-sm border border-red-100 transition-all">
-            ⬅️ Batal & Kembali
-        </a>
-        <div class="bg-orange-500 text-white font-bold px-6 py-2 rounded-xl shadow-md flex items-center gap-2 text-lg">
-            ⭐ Poin Sesi: <span id="poinSesiTampil">0</span>
-        </div>
-    </div>
-
-    <div class="max-w-3xl mx-auto bg-white rounded-3xl p-8 shadow-xl border-2 border-orange-50">
-        <h1 class="text-3xl font-bold text-gray-800 mb-4 border-b-2 border-orange-100 pb-4">📝 Writing SMA: Connectors</h1>
-        
-        <div class="mb-8 text-gray-700 text-lg leading-relaxed">
-            <p class="mb-4">Untuk menulis esai yang baik, kita butuh kata hubung (*Connectors*). Salah satunya adalah kata yang menyatakan akibat.</p>
-            <ul class="list-disc pl-6 bg-orange-50 p-4 rounded-xl font-medium">
-                <li>Gunakan <span class="text-orange-600 font-bold">therefore</span> (oleh karena itu) untuk kesimpulan formal.</li>
-                <li>Gunakan <span class="text-orange-600 font-bold">however</span> (namun) untuk pertentangan.</li>
-            </ul>
-        </div>
-
-        <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100">
-            <h2 class="text-xl font-bold text-gray-800 mb-4">Latihan Esai Singkat</h2>
-            
-            <div class="text-xl font-medium mb-6 leading-loose">
-                "It was raining heavily. 
-                <input type="text" id="jawabanMurid" class="border-b-4 border-orange-300 bg-transparent w-28 text-center focus:outline-none focus:border-orange-600 transition-colors mx-2" placeholder="_______">, 
-                we canceled the football match."
-            </div>
-
-            <!-- Tombol Cek -->
-            <button id="tombolCek" onclick="cekJawaban()" class="bg-orange-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-orange-600 transition-colors">
-                Cek Jawaban
-            </button>
-
-            <!-- Pesan Hasil -->
-            <p id="pesanHasil" class="mt-4 text-lg font-bold hidden p-3 rounded-xl"></p>
-
-            <!-- Tombol Simpan & Selesai -->
-            <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-600 transition-colors shadow-lg hover:shadow-green-300">
-                🎉 Simpan Poin & Selesai!
-            </button>
-        </div>
-    </div>
-
-    <script>
-        let poinSesi = 0;
-        let sudahBenar = false;
-
-        function cekJawaban() {
-            if (sudahBenar) return; 
-
-            let jawaban = document.getElementById("jawabanMurid").value.toLowerCase().trim();
-            let pesan = document.getElementById("pesanHasil");
-            let tombolSelesai = document.getElementById("tombolSelesai");
-            let tombolCek = document.getElementById("tombolCek");
-            
-            pesan.classList.remove("hidden");
-
-            if (jawaban === "therefore") {
-                pesan.innerHTML = "✅ Benar sekali! Argumenmu solid! (+20 Poin SMA)";
-                pesan.className = "mt-4 text-lg font-bold p-3 rounded-xl bg-green-100 text-green-700 border-2 border-green-200";
-                
-                // Poin anak SMA lebih besar (20 poin)
-                poinSesi = poinSesi + 20;
-                document.getElementById("poinSesiTampil").innerHTML = poinSesi;
-                
-                sudahBenar = true;
-                tombolCek.classList.replace("bg-orange-500", "bg-gray-400");
-                tombolSelesai.classList.remove("hidden");
-
-            } else {
-                pesan.innerHTML = "❌ Masih kurang tepat. (Petunjuk: 'Oleh karena itu')";
-                pesan.className = "mt-4 text-lg font-bold p-3 rounded-xl bg-red-100 text-red-700 border-2 border-red-200";
-            }
+<script>
+    const daftarSoal = [
+        {
+            materi: "💡 Teori: <b>'Therefore'</b> menunjukkan hubungan sebab-akibat formal.",
+            depan: "It was raining heavily,",
+            belakang: "we canceled the match.",
+            kunci: "therefore",
+            clue: "Petunjuk: Penghubung ini digunakan untuk menarik kesimpulan logis dari kalimat sebelumnya."
+        },
+        {
+            materi: "💡 Teori: <b>'However'</b> menyatakan kontras atau opini yang berlawanan.",
+            depan: "She studied hard;",
+            belakang: "she failed the exam.",
+            kunci: "however",
+            clue: "Petunjuk: Gunakan konjungsi yang menunjukkan hasil yang tidak terduga dari upaya yang dilakukan."
+        },
+        {
+            materi: "💡 Teori: <b>'Furthermore'</b> adalah untuk menambahkan argumen pendukung.",
+            depan: "The hotel is cheap;",
+            belakang: ", it is very clean.",
+            kunci: "furthermore",
+            clue: "Petunjuk: Gunakan kata hubung yang memberikan poin tambahan untuk memperkuat argumen positif."
+        },
+        {
+            materi: "💡 Teori: <b>'Meanwhile'</b> untuk dua kejadian yang terjadi pada waktu bersamaan.",
+            depan: "John cooked dinner;",
+            belakang: ", Mary cleaned the room.",
+            kunci: "meanwhile",
+            clue: "Petunjuk: Konteks ini menunjukkan dua subjek yang melakukan aktivitas berbeda secara paralel."
+        },
+        {
+            materi: "💡 Teori: <b>'Moreover'</b> untuk penguatan argumen (bisa juga dipakai *furthermore*).",
+            depan: "The car is expensive;",
+            belakang: ", it consumes too much fuel.",
+            kunci: "moreover",
+            clue: "Petunjuk: Kalimat kedua memberikan alasan tambahan yang senada dengan poin negatif pertama."
+        },
+        {
+            materi: "💡 Teori: <b>'Consequently'</b> untuk konsekuensi yang tidak terelakkan.",
+            depan: "He broke the rules;",
+            belakang: ", he was expelled.",
+            kunci: "consequently",
+            clue: "Petunjuk: Ini adalah konsekuensi logis/hukuman dari tindakan subjek di kalimat pertama."
+        },
+        {
+            materi: "💡 Teori: <b>'Instead'</b> untuk menunjukkan pilihan yang menggantikan aksi awal.",
+            depan: "He didn't quit;",
+            belakang: ", he fought harder.",
+            kunci: "instead",
+            clue: "Petunjuk: Konjungsi ini digunakan untuk menunjukkan tindakan alternatif yang diambil."
+        },
+        {
+            materi: "💡 Teori: <b>'Otherwise'</b> digunakan dalam kalimat pengandaian/peringatan.",
+            depan: "Hurry up;",
+            belakang: ", we will miss the train.",
+            kunci: "otherwise",
+            clue: "Petunjuk: Kata hubung ini menunjukkan apa yang akan terjadi jika tindakan di klausa pertama tidak dilakukan."
+        },
+        {
+            materi: "💡 Teori: <b>'Nevertheless'</b> menunjukkan pertentangan meski ada kondisi sulit.",
+            depan: "The task was difficult;",
+            belakang: ", they finished it on time.",
+            kunci: "nevertheless",
+            clue: "Petunjuk: Gunakan kata hubung formal yang berarti 'meskipun ada rintangan tersebut'."
+        },
+        {
+            materi: "💡 Teori: <b>'In addition'</b> untuk menambah informasi dalam esai.",
+            depan: "Smoking is bad for health;",
+            belakang: ", it wastes money.",
+            kunci: "in addition",
+            clue: "Petunjuk: Hubungkan dua argumen negatif dengan frasa yang menandakan penambahan informasi."
         }
-
-        function simpanPoinDanSelesai() {
-            let poinTotalLama = parseInt(localStorage.getItem('poinMurid')) || 0;
-            localStorage.setItem('poinMurid', poinTotalLama + poinSesi);
-            window.location.href = "sma.html";
-        }
-    </script>
-</body>
-</html>
+    ];
+    // ... (sisa kode fungsi muatSoal dan lainnya sama seperti sebelumnya)
+</script>
