@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Writing SMP (10 Soal) | ENG-LEARN</title>
+    <title>Writing SMP (10 Soal Lengkap) | ENG-LEARN</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
@@ -23,24 +23,28 @@
     </div>
 
     <div class="max-w-3xl mx-auto bg-white rounded-3xl p-8 shadow-xl border-2 border-blue-50">
-        <!-- Induk Judul & Nomor Soal -->
+        <!-- Header & Nomor Soal -->
         <div class="flex justify-between items-center mb-4 border-b-2 border-blue-100 pb-4">
-            <h1 class="text-2xl font-bold text-gray-800">✍️ Writing SMP: Latihan Dasar</h1>
+            <h1 class="text-2xl font-bold text-gray-800">✍️ Writing SMP: To Be (is, am, are)</h1>
             <span id="labelNomorSoal" class="bg-blue-100 text-blue-700 font-bold px-4 py-1 rounded-full text-sm">Soal 1 dari 10</span>
         </div>
         
+        <!-- Kotak Materi Teori Kecil di Setiap Soal -->
+        <div id="kotakMateri" class="mb-6 text-gray-700 text-base leading-relaxed bg-blue-50 p-4 rounded-xl border border-blue-100 font-medium">
+            <!-- Materi dinamis dimuat lewat JS -->
+        </div>
+
         <!-- Area Soal Interaktif -->
-        <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100 mt-6">
-            <!-- Kalimat Pertanyaan (Dinamis lewat JS) -->
+        <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100">
             <div id="teksSoal" class="text-xl font-medium mb-6 leading-relaxed">
-                <!-- Soal akan dimuat di sini -->
+                <!-- Pertanyaan dinamis -->
             </div>
             
             <div class="flex items-center gap-3 mb-6">
                 <input type="text" id="jawabanMurid" class="border-b-4 border-blue-300 bg-white px-4 py-2 rounded-lg w-40 text-center text-xl font-bold focus:outline-none focus:border-blue-600 transition-colors shadow-inner" placeholder="Ketik...">
             </div>
 
-            <!-- Tombol Cek & Lanjut -->
+            <!-- Tombol Aksi -->
             <button id="tombolCek" onclick="cekJawaban()" class="bg-blue-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-600 transition-colors shadow-md">
                 Cek Jawaban
             </button>
@@ -49,10 +53,10 @@
                 ➡️ Lanjut Soal Berikutnya
             </button>
 
-            <!-- Pesan Hasil -->
+            <!-- Pesan Hasil & Clue -->
             <p id="pesanHasil" class="mt-4 text-lg font-bold hidden p-3 rounded-xl"></p>
 
-            <!-- Tombol Selesai Sesi (Muncul di soal terakhir) -->
+            <!-- Tombol Selesai Sesi -->
             <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700 transition-colors shadow-lg">
                 🎉 Selesai! Simpan Semua Poin
             </button>
@@ -60,29 +64,89 @@
     </div>
 
     <script>
-        // Bank Data 10 Soal Writing SMP
+        // Bank Data 10 Soal lengkap dengan Teori & Clue spesifik
         const daftarSoal = [
-            { kalimatDepan: "Hello, my name", kalimatBelakang: "Budi.", kunci: "is" },
-            { kalimatDepan: "They", kalimatBelakang: "students in grade 7.", kunci: "are" },
-            { kalimatDepan: "I", kalimatGenerator: true, kalimatDepan: "I", kalimatBelakang: "a student.", kunci: "am" },
-            { kalimatDepan: "She", kalimatBelakang: "my English teacher.", kunci: "is" },
-            { kalimatDepan: "We", kalimatBelakang: "happy to learn English.", kunci: "are" },
-            { kalimatDepan: "He", kalimatBelakang: "playing football now.", kunci: "is" },
-            { kalimatDepan: "Cat", kalimatBelakang: "a cute animal. (Ganti dengan 'It' atau 'This')", kunci: "is" },
-            { kalimatDepan: "You", kalimatBelakang: "smart and diligent.", kunci: "are" },
-            { kalimatDepan: "The books", kalimatBelakang: "on the table.", kunci: "are" },
-            { kalimatDepan: "My mother", kalimatBelakang: "cooking in the kitchen.", kunci: "is" }
+            {
+                materi: "💡 Teori: Subjek <b>'I'</b> (Saya) selalu menggunakan <b>'am'</b>.",
+                depan: "Hello, my name",
+                belakang: "Budi.",
+                kunci: "is",
+                clue: "Petunjuk: Kata 'name' merujuk pada benda tunggal (He/She/It), gunakan 'is'."
+            },
+            {
+                materi: "💡 Teori: Subjek jamak seperti <b>'They'</b> (Mereka) menggunakan <b>'are'</b>.",
+                depan: "They",
+                belakang: "students in grade 7.",
+                kunci: "are",
+                clue: "Petunjuk: 'They' adalah kata ganti orang banyak (jamak)."
+            },
+            {
+                materi: "💡 Teori: Subjek <b>'I'</b> (Saya) selalu memakai to be <b>'am'</b>.",
+                depan: "I",
+                belakang: "a new student here.",
+                kunci: "am",
+                clue: "Petunjuk: Pasangan mutlak untuk subjek 'I' adalah..."
+            },
+            {
+                materi: "💡 Teori: Subjek tunggal orang ketiga seperti <b>'She'</b> (Dia perempuan) menggunakan <b>'is'</b>.",
+                depan: "She",
+                belakang: "my English teacher.",
+                kunci: "is",
+                clue: "Petunjuk: 'She' dihitung satu orang (tunggal)."
+            },
+            {
+                materi: "💡 Teori: Subjek jamak <b>'We'</b> (Kami/Kita) menggunakan <b>'are'</b>.",
+                depan: "We",
+                belakang: "happy to learn English.",
+                kunci: "are",
+                clue: "Petunjuk: 'We' berarti lebih dari satu orang."
+            },
+            {
+                materi: "💡 Teori: Subjek tunggal <b>'He'</b> (Dia laki-laki) menggunakan <b>'is'</b>.",
+                depan: "He",
+                belakang: "playing football now.",
+                kunci: "is",
+                clue: "Petunjuk: 'He' adalah subjek tunggal."
+            },
+            {
+                materi: "💡 Teori: Nama benda tunggal atau hewan (contoh: 'Cat') posisinya sama dengan <b>'It'</b>, menggunakan <b>'is'</b>.",
+                depan: "The cat",
+                belakang: "sleeping on the sofa.",
+                kunci: "is",
+                clue: "Petunjuk: Hitung berapa banyak kucingnya (hanya satu)."
+            },
+            {
+                materi: "💡 Teori: Subjek <b>'You'</b> (Kamu/Kalian) selalu menggunakan <b>'are'</b>.",
+                depan: "You",
+                belakang: "smart and diligent.",
+                kunci: "are",
+                clue: "Petunjuk: Pasangan untuk subjek 'You' adalah..."
+            },
+            {
+                materi: "💡 Teori: Jika bendanya banyak (ditandai huruf 's' di akhir kata seperti <b>'books'</b>), gunakan <b>'are'</b>.",
+                depan: "The books",
+                belakang: "on the wooden table.",
+                kunci: "are",
+                clue: "Petunjuk: Perhatikan kata 'books' (ada huruf s di belakang = lebih dari satu)."
+            },
+            {
+                materi: "💡 Teori: Nama orang satu orang (contoh: 'Sinta') menggunakan <b>'is'</b>.",
+                depan: "Sinta",
+                belakang: "cooking in the kitchen.",
+                kunci: "is",
+                clue: "Petunjuk: Sinta adalah orang tunggal (setara dengan 'She')."
+            }
         ];
 
         let indeksSoalAktif = 0;
         let poinSesi = 0;
         let sudahDijawab = false;
 
-        // Memuat soal ke layar
         function muatSoal() {
             let soal = daftarSoal[indeksSoalAktif];
             document.getElementById("labelNomorSoal").innerHTML = `Soal ${indeksSoalAktif + 1} dari 10`;
-            document.getElementById("teksSoal").innerHTML = `"${soal.kalimatDepan} <span class='text-blue-600 font-bold underline'>[ ... ]</span> ${soal.kalimatBelakang}"`;
+            document.getElementById("kotakMateri").innerHTML = soal.materi;
+            document.getElementById("teksSoal").innerHTML = `"${soal.depan} <span class='text-blue-600 font-bold underline'>[ ... ]</span> ${soal.belakang}"`;
             
             document.getElementById("jawabanMurid").value = "";
             document.getElementById("pesanHasil").classList.add("hidden");
@@ -92,7 +156,6 @@
             sudahDijawab = false;
         }
 
-        // Jalankan saat pertama kali dibuka
         muatSoal();
 
         function cekJawaban() {
@@ -105,7 +168,7 @@
             pesan.classList.remove("hidden");
 
             if (jawaban === soalAktif.kunci) {
-                pesan.innerHTML = "✅ Benar sekali! (+10 Poin)";
+                pesan.innerHTML = "✅ Benar sekali! Hebat! (+10 Poin)";
                 pesan.className = "mt-4 text-lg font-bold p-3 rounded-xl bg-green-100 text-green-700 border-2 border-green-200";
                 
                 poinSesi += 10;
@@ -114,7 +177,6 @@
                 
                 document.getElementById("tombolCek").classList.replace("bg-blue-500", "bg-gray-400");
 
-                // Cek apakah ini soal terakhir atau bukan
                 if (indeksSoalAktif < daftarSoal.length - 1) {
                     document.getElementById("tombolLanjut").classList.remove("hidden");
                 } else {
@@ -123,7 +185,8 @@
                 }
 
             } else {
-                pesan.innerHTML = "❌ Kurang tepat. Coba ketik ulang!";
+                // Menampilkan clue spesifik milik soal tersebut jika salah
+                pesan.innerHTML = `❌ Masih kurang tepat. <br><span class="text-sm font-normal">${soalAktif.clue}</span>`;
                 pesan.className = "mt-4 text-lg font-bold p-3 rounded-xl bg-red-100 text-red-700 border-2 border-red-200";
             }
         }
