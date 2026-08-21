@@ -12,11 +12,16 @@
 </head>
 <body class="min-h-screen p-6 bg-blue-50">
     
-    <!-- Tombol Kembali ke Ruang Tamu -->
-    <div class="max-w-4xl mx-auto mb-8">
-        <a href="index.html" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold bg-white px-4 py-2 rounded-xl shadow-sm border border-blue-100 transition-all hover:shadow-md">
-            ⬅️ Kembali ke Home
+    <!-- Tombol Kembali & Papan Skor -->
+    <div class="max-w-4xl mx-auto mb-8 flex justify-between items-center">
+        <a href="index.html" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold bg-white px-4 py-2 rounded-xl shadow-sm border border-blue-100 transition-all">
+            ⬅️ Home
         </a>
+        
+        <!-- Papan Skor Baru -->
+        <div class="bg-yellow-400 text-yellow-900 font-bold px-6 py-2 rounded-xl shadow-md border-2 border-yellow-500 flex items-center gap-2 text-lg">
+            🏆 Poin: <span id="skorTotal">0</span>
+        </div>
     </div>
 
     <!-- Judul Kamar -->
@@ -27,32 +32,32 @@
 
     <!-- Pilihan Materi Pelajaran -->
     <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-        
-        <!-- Materi Writing -->
-        <!-- Materi Writing (Sudah dipasang pintu ke smp-writing.html) -->
-        <a href="smp-writing.html" class="block bg-white rounded-3xl p-6 text-center shadow-lg border-2 border-transparent hover:border-blue-400 hover:-translate-y-1 transition-all cursor-pointer">
+        <a href="smp-writing.html" class="block bg-white rounded-3xl p-6 text-center shadow-lg border-2 border-transparent hover:border-blue-400 hover:-translate-y-1 transition-all">
             <div class="text-5xl mb-4">✍️</div>
             <h3 class="text-2xl font-bold text-gray-800 mb-2">Writing</h3>
             <p class="text-gray-600 text-sm">Belajar menyusun kalimat dan paragraf sederhana.</p>
         </a>
-
-        <!-- Materi Listening -->
-       <!-- Materi Listening -->
-        <a href="smp-listening.html" class="block bg-white rounded-3xl p-6 text-center shadow-lg border-2 border-transparent hover:border-green-400 hover:-translate-y-1 transition-all cursor-pointer">
+        <a href="smp-listening.html" class="block bg-white rounded-3xl p-6 text-center shadow-lg border-2 border-transparent hover:border-green-400 hover:-translate-y-1 transition-all">
             <div class="text-5xl mb-4">🎧</div>
             <h3 class="text-2xl font-bold text-gray-800 mb-2">Listening</h3>
             <p class="text-gray-600 text-sm">Latih pendengaranmu dengan audio percakapan.</p>
         </a>
-
-        <!-- Materi Speaking -->
-        <!-- Materi Speaking -->
-        <a href="smp-speaking.html" class="block bg-white rounded-3xl p-6 text-center shadow-lg border-2 border-transparent hover:border-purple-400 hover:-translate-y-1 transition-all cursor-pointer">
+        <a href="smp-speaking.html" class="block bg-white rounded-3xl p-6 text-center shadow-lg border-2 border-transparent hover:border-purple-400 hover:-translate-y-1 transition-all">
             <div class="text-5xl mb-4">🗣️</div>
             <h3 class="text-2xl font-bold text-gray-800 mb-2">Speaking</h3>
             <p class="text-gray-600 text-sm">Latihan pengucapan (non-percakapan) dengan benar.</p>
         </a>
-
     </div>
 
+    <!-- Otak Kecil untuk mengambil skor dari laci browser -->
+    <script>
+        // Saat halaman dibuka, cari data 'poinMurid' di laci (localStorage)
+        let skorTersimpan = localStorage.getItem('poinMurid');
+        
+        // Kalau sudah ada isinya, tampilkan. Kalau belum, tampilkan 0.
+        if (skorTersimpan) {
+            document.getElementById("skorTotal").innerHTML = skorTersimpan;
+        }
+    </script>
 </body>
 </html>
