@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listening SMA | ENG-LEARN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+        body { font-family: 'Poppins', sans-serif; }
+    </style>
+</head>
+<body class="min-h-screen p-6 bg-orange-50">
+    
+    <!-- Top Bar -->
+    <div class="max-w-3xl mx-auto mb-6 flex justify-between items-center">
+        <a href="sma.html" onclick="return confirm('Yakin mau kembali? Poin sesi ini akan hangus lho!')" class="inline-flex items-center text-red-500 hover:text-red-700 font-bold bg-white px-4 py-2 rounded-xl shadow-sm border border-red-100 transition-all">
+            ⬅️ Batal & Kembali
+        </a>
+        <div class="bg-orange-500 text-white font-bold px-6 py-2 rounded-xl shadow-md flex items-center gap-2 text-lg">
+            ⭐ Poin Sesi: <span id="poinSesiTampil">0</span>
+        </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto bg-white rounded-3xl p-8 shadow-xl border-2 border-orange-50">
+        <h1 class="text-3xl font-bold text-gray-800 mb-4 border-b-2 border-orange-100 pb-4">🎙️ Listening SMA: News Report</h1>
+        
+        <div class="mb-8 text-gray-700 text-lg leading-relaxed">
+            <p>Dengarkan potongan berita ini baik-baik. (Tips: Kecepatan suara normal, perhatikan kata terakhirnya!).</p>
+        </div>
+
+        <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100 text-center">
+            <button onclick="putarAudio()" class="bg-green-500 text-white px-8 py-4 rounded-full font-bold text-xl hover:bg-green-600 transition-colors shadow-lg hover:shadow-green-300 mb-8 flex items-center justify-center mx-auto gap-3">
+                <span class="text-3xl">🔊</span> Putar Berita
+            </button>
+            
+            <p class="text-lg mb-4 text-left font-semibold">Lengkapi berita ini:</p>
+            <div class="flex items-center justify-center gap-3 text-xl font-medium mb-6 flex-wrap">
+                <span>"The government announced a new economic</span>
+                <input type="text" id="jawabanListening" class="border-b-4 border-green-300 bg-transparent w-28 text-center focus:outline-none focus:border-green-600 transition-colors mx-2" placeholder="_______">
+                <span>today."</span>
+            </div>
+
+            <!-- Tombol Cek -->
+            <button id="tombolCek" onclick="cekJawaban()" class="bg-orange-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-orange-600 transition-colors">
+                Cek Jawaban
+            </button>
+
+            <!-- Pesan & Tombol Selesai -->
+            <p id="pesanHasil" class="mt-4 text-lg font-bold hidden p-3 rounded-xl"></p>
+            <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-600 transition-colors shadow-lg hover:shadow-green-300">
+                🎉 Simpan Poin & Selesai!
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let poinSesi = 0;
+        let sudahBenar = false;
+
+        function putarAudio() {
+            // Kalimat berita (kecepatan normal = 1)
+            let suara = new SpeechSynthesisUtterance("The government announced a new economic policy today.");
+            suara.lang = "en-US";
+            suara.rate = 1.0; 
+            window.speechSynthesis.speak(suara);
+        }
+
+        function cekJawaban() {
+            if (sudahBenar) return; 
+
+            let jawaban = document.getElementById("jawabanListening").value.toLowerCase().trim();
+            let pesan = document.getElementById("pesanHasil");
+            let tombolSelesai = document.getElementById("tombolSelesai");
+            let tombolCek = document.getElementById("tombolCek");
+            pesan.classList.remove("hidden");
+
+            // Kunci Jawaban: policy
+            if (jawaban === "policy") {
+                pesan.innerHTML = "✅ Tepat sekali! Kosakatamu bagus! (+20 Poin SMA)";
+                pesan.className = "mt-4 text-lg font-bold p-3 rounded-xl bg-green-100 text-green-700 border-2 border-green-200";
+                
+                poinSesi = 20;
+                document.getElementById("poinSesiTampil").innerHTML = poinSesi;
+                sudahBenar = true;
+                tombolCek.classList.replace("bg-orange-500", "bg-gray-400");
+                tombolSelesai.classList.remove("hidden");
+            } else {
+                pesan.innerHTML = "❌ Kurang tepat. Dengarkan lagi! (Petunjuk: Kebijakan)";
+                pesan.className = "mt-4 text-lg font-bold p-3 rounded-xl bg-red-100 text-red-700 border-2 border-red-200";
+            }
+        }
+
+        function simpanPoinDanSelesai() {
+            let poinTotalLama = parseInt(localStorage.getItem('poinMurid')) || 0;
+            localStorage.setItem('poinMurid', poinTotalLama + poinSesi);
+            window.location.href = "sma.html";
+        }
+    </script>
+</body>
+</html>

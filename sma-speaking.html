@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speaking SMA | ENG-LEARN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+        body { font-family: 'Poppins', sans-serif; }
+    </style>
+</head>
+<body class="min-h-screen p-6 bg-orange-50">
+    
+    <!-- Top Bar -->
+    <div class="max-w-3xl mx-auto mb-6 flex justify-between items-center">
+        <a href="sma.html" onclick="return confirm('Yakin mau kembali? Poin sesi ini akan hangus lho!')" class="inline-flex items-center text-red-500 hover:text-red-700 font-bold bg-white px-4 py-2 rounded-xl shadow-sm border border-red-100 transition-all">
+            ⬅️ Batal & Kembali
+        </a>
+        <div class="bg-orange-500 text-white font-bold px-6 py-2 rounded-xl shadow-md flex items-center gap-2 text-lg">
+            ⭐ Poin Sesi: <span id="poinSesiTampil">0</span>
+        </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto bg-white rounded-3xl p-8 shadow-xl border-2 border-orange-50 text-center">
+        <h1 class="text-3xl font-bold text-gray-800 mb-4 border-b-2 border-orange-100 pb-4">📢 Speaking SMA: Expressing Opinion</h1>
+        <p class="mb-6 text-gray-700 text-lg">Ucapkan kalimat opini di bawah ini dengan jelas dan artikulasi yang baik:</p>
+
+        <!-- Kalimat yang lebih panjang -->
+        <div class="text-3xl font-extrabold text-orange-600 mb-8 bg-orange-50 py-6 px-4 rounded-2xl border-2 border-orange-200 leading-normal">
+            "In my opinion, education is the key to success."
+        </div>
+
+        <button id="tombolBicara" onclick="mulaiMendengar()" class="bg-purple-500 text-white px-8 py-4 rounded-full font-bold text-xl hover:bg-purple-600 transition-colors shadow-lg hover:shadow-purple-300 mb-6 flex items-center justify-center mx-auto gap-3">
+            <span class="text-3xl">🎤</span> Mulai Pidato
+        </button>
+
+        <p class="text-gray-500 font-medium mb-2">Yang komputer dengar:</p>
+        <div id="teksTangkapan" class="text-xl font-mono bg-gray-100 p-4 rounded-xl min-h-[60px] flex items-center justify-center mb-6">
+            (Belum ada suara)
+        </div>
+
+        <!-- Pesan & Tombol Selesai -->
+        <p id="pesanHasil" class="text-xl font-bold hidden p-4 rounded-xl"></p>
+        <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-600 transition-colors shadow-lg hover:shadow-green-300">
+            🎉 Simpan Poin & Selesai!
+        </button>
+    </div>
+
+    <script>
+        let poinSesi = 0;
+        let sudahBenar = false;
+
+        function mulaiMendengar() {
+            if (sudahBenar) return;
+
+            let tombol = document.getElementById("tombolBicara");
+            let teksTangkapan = document.getElementById("teksTangkapan");
+            let pesanHasil = document.getElementById("pesanHasil");
+            let tombolSelesai = document.getElementById("tombolSelesai");
+
+            let TelingaKomputer = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!TelingaKomputer) {
+                alert("Gunakan Google Chrome terbaru untuk fitur ini.");
+                return;
+            }
+
+            let mesinPengecek = new TelingaKomputer();
+            mesinPengecek.lang = "en-US";
+
+            tombol.innerHTML = "🔴 Sedang mendengarkan...";
+            tombol.classList.replace("bg-purple-500", "bg-red-500");
+            mesinPengecek.start();
+
+            mesinPengecek.onresult = function(event) {
+                let hasilSuara = event.results[0][0].transcript.toLowerCase();
+                teksTangkapan.innerHTML = '"' + hasilSuara + '"';
+                pesanHasil.classList.remove("hidden");
+
+                // Cek apakah ada kata kunci penting dari kalimat tersebut
+                if (hasilSuara.includes("education is the key")) {
+                    pesanHasil.innerHTML = "✅ Luar Biasa! Pengucapanmu sangat *native*! (+20 Poin SMA)";
+                    pesanHasil.className = "mt-4 text-xl font-bold p-4 rounded-xl bg-green-100 text-green-700 border-2 border-green-200";
+                    
+                    poinSesi = 20;
+                    document.getElementById("poinSesiTampil").innerHTML = poinSesi;
+                    sudahBenar = true;
+                    tombol.classList.replace("bg-red-500", "bg-gray-400");
+                    tombol.innerHTML = "Selesai";
+                    tombolSelesai.classList.remove("hidden");
+                } else {
+                    pesanHasil.innerHTML = "❌ Masih kurang pas. Coba atur nafas dan ucapkan lagi!";
+                    pesanHasil.className = "mt-4 text-xl font-bold p-4 rounded-xl bg-red-100 text-red-700 border-2 border-red-200";
+                }
+            };
+
+            mesinPengecek.onspeechend = function() {
+                mesinPengecek.stop();
+                if (!sudahBenar) {
+                    tombol.innerHTML = '<span class="text-3xl">🎤</span> Mulai Pidato';
+                    tombol.classList.replace("bg-red-500", "bg-purple-500");
+                }
+            }
+        }
+
+        function simpanPoinDanSelesai() {
+            let poinTotalLama = parseInt(localStorage.getItem('poinMurid')) || 0;
+            localStorage.setItem('poinMurid', poinTotalLama + poinSesi);
+            window.location.href = "sma.html";
+        }
+    </script>
+</body>
+</html>
