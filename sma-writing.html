@@ -1,75 +1,117 @@
-<script>
-    const daftarSoal = [
-        {
-            materi: "💡 Teori: <b>'Therefore'</b> menunjukkan hubungan sebab-akibat formal.",
-            depan: "It was raining heavily,",
-            belakang: "we canceled the match.",
-            kunci: "therefore",
-            clue: "Petunjuk: Penghubung ini digunakan untuk menarik kesimpulan logis dari kalimat sebelumnya."
-        },
-        {
-            materi: "💡 Teori: <b>'However'</b> menyatakan kontras atau opini yang berlawanan.",
-            depan: "She studied hard;",
-            belakang: "she failed the exam.",
-            kunci: "however",
-            clue: "Petunjuk: Gunakan konjungsi yang menunjukkan hasil yang tidak terduga dari upaya yang dilakukan."
-        },
-        {
-            materi: "💡 Teori: <b>'Furthermore'</b> adalah untuk menambahkan argumen pendukung.",
-            depan: "The hotel is cheap;",
-            belakang: ", it is very clean.",
-            kunci: "furthermore",
-            clue: "Petunjuk: Gunakan kata hubung yang memberikan poin tambahan untuk memperkuat argumen positif."
-        },
-        {
-            materi: "💡 Teori: <b>'Meanwhile'</b> untuk dua kejadian yang terjadi pada waktu bersamaan.",
-            depan: "John cooked dinner;",
-            belakang: ", Mary cleaned the room.",
-            kunci: "meanwhile",
-            clue: "Petunjuk: Konteks ini menunjukkan dua subjek yang melakukan aktivitas berbeda secara paralel."
-        },
-        {
-            materi: "💡 Teori: <b>'Moreover'</b> untuk penguatan argumen (bisa juga dipakai *furthermore*).",
-            depan: "The car is expensive;",
-            belakang: ", it consumes too much fuel.",
-            kunci: "moreover",
-            clue: "Petunjuk: Kalimat kedua memberikan alasan tambahan yang senada dengan poin negatif pertama."
-        },
-        {
-            materi: "💡 Teori: <b>'Consequently'</b> untuk konsekuensi yang tidak terelakkan.",
-            depan: "He broke the rules;",
-            belakang: ", he was expelled.",
-            kunci: "consequently",
-            clue: "Petunjuk: Ini adalah konsekuensi logis/hukuman dari tindakan subjek di kalimat pertama."
-        },
-        {
-            materi: "💡 Teori: <b>'Instead'</b> untuk menunjukkan pilihan yang menggantikan aksi awal.",
-            depan: "He didn't quit;",
-            belakang: ", he fought harder.",
-            kunci: "instead",
-            clue: "Petunjuk: Konjungsi ini digunakan untuk menunjukkan tindakan alternatif yang diambil."
-        },
-        {
-            materi: "💡 Teori: <b>'Otherwise'</b> digunakan dalam kalimat pengandaian/peringatan.",
-            depan: "Hurry up;",
-            belakang: ", we will miss the train.",
-            kunci: "otherwise",
-            clue: "Petunjuk: Kata hubung ini menunjukkan apa yang akan terjadi jika tindakan di klausa pertama tidak dilakukan."
-        },
-        {
-            materi: "💡 Teori: <b>'Nevertheless'</b> menunjukkan pertentangan meski ada kondisi sulit.",
-            depan: "The task was difficult;",
-            belakang: ", they finished it on time.",
-            kunci: "nevertheless",
-            clue: "Petunjuk: Gunakan kata hubung formal yang berarti 'meskipun ada rintangan tersebut'."
-        },
-        {
-            materi: "💡 Teori: <b>'In addition'</b> untuk menambah informasi dalam esai.",
-            depan: "Smoking is bad for health;",
-            belakang: ", it wastes money.",
-            kunci: "in addition",
-            clue: "Petunjuk: Hubungkan dua argumen negatif dengan frasa yang menandakan penambahan informasi."
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing SMA (10 Soal) | ENG-LEARN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+        body { font-family: 'Poppins', sans-serif; }
+    </style>
+</head>
+<body class="min-h-screen p-6 bg-orange-50">
+    
+    <div class="max-w-3xl mx-auto mb-6 flex justify-between items-center">
+        <a href="sma.html" onclick="return confirm('Yakin mau kembali? Poin sesi ini akan hangus lho!')" class="inline-flex items-center text-red-500 hover:text-red-700 font-bold bg-white px-4 py-2 rounded-xl shadow-sm border border-orange-100 transition-all">
+            ⬅️ Batal & Kembali
+        </a>
+        <div class="bg-orange-500 text-white font-bold px-6 py-2 rounded-xl shadow-md flex items-center gap-2 text-lg">
+            ⭐ Poin Sesi: <span id="poinSesiTampil">0</span>
+        </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto bg-white rounded-3xl p-8 shadow-xl border-2 border-orange-50">
+        <div class="flex justify-between items-center mb-4 border-b-2 border-orange-100 pb-4">
+            <h1 class="text-2xl font-bold text-gray-800">📝 Writing SMA: Connectors</h1>
+            <span id="labelNomorSoal" class="bg-orange-100 text-orange-700 font-bold px-4 py-1 rounded-full text-sm">Soal 1 dari 10</span>
+        </div>
+        
+        <div id="kotakMateri" class="mb-6 text-gray-700 text-base bg-orange-50 p-4 rounded-xl border border-orange-100 font-medium"></div>
+
+        <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100">
+            <div id="teksSoal" class="text-xl font-medium mb-6 leading-relaxed"></div>
+            
+            <div class="flex items-center gap-3 mb-6">
+                <input type="text" id="jawabanMurid" class="border-b-4 border-orange-300 bg-white px-4 py-2 rounded-lg w-44 text-center text-xl font-bold focus:outline-none focus:border-orange-600 transition-colors shadow-inner" placeholder="Ketik...">
+            </div>
+
+            <button id="tombolCek" onclick="cekJawaban()" class="block w-full bg-orange-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-orange-600 mb-2">Cek Jawaban</button>
+            <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden block w-full bg-green-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-green-600">➡️ Lanjut Soal Berikutnya</button>
+
+            <p id="pesanHasil" class="mt-4 text-lg font-bold hidden p-3 rounded-xl"></p>
+            <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700">🎉 Selesai & Simpan Poin!</button>
+        </div>
+    </div>
+
+    <script>
+        const daftarSoal = [
+            { materi: "💡 Teori: 'Therefore' menunjukkan hubungan sebab-akibat formal.", depan: "It was raining heavily,", belakang: "we canceled the match.", kunci: "therefore", clue: "Petunjuk: Penghubung untuk menarik kesimpulan logis." },
+            { materi: "💡 Teori: 'However' menyatakan kontras.", depan: "She studied hard;", belakang: "she failed the exam.", kunci: "however", clue: "Petunjuk: Hasil yang tidak terduga." },
+            { materi: "💡 Teori: 'Furthermore' menambahkan argumen pendukung.", depan: "The hotel is cheap;", belakang: ", it is very clean.", kunci: "furthermore", clue: "Petunjuk: Tambahkan poin positif." },
+            { materi: "💡 Teori: 'Meanwhile' untuk dua kejadian bersamaan.", depan: "John cooked dinner;", belakang: ", Mary cleaned the room.", kunci: "meanwhile", clue: "Petunjuk: Dua aktivitas paralel." },
+            { materi: "💡 Teori: 'Moreover' untuk penguatan argumen.", depan: "The car is expensive;", belakang: ", it consumes too much fuel.", kunci: "moreover", clue: "Petunjuk: Poin tambahan yang senada." },
+            { materi: "💡 Teori: 'Consequently' untuk konsekuensi logis.", depan: "He broke the rules;", belakang: ", he was expelled.", kunci: "consequently", clue: "Petunjuk: Konsekuensi dari tindakan." },
+            { materi: "💡 Teori: 'Instead' menunjukkan pilihan pengganti.", depan: "He didn't quit;", belakang: ", he fought harder.", kunci: "instead", clue: "Petunjuk: Tindakan alternatif." },
+            { materi: "💡 Teori: 'Otherwise' untuk peringatan.", depan: "Hurry up;", belakang: ", we will miss the train.", kunci: "otherwise", clue: "Petunjuk: Apa yang terjadi jika tidak dilakukan?" },
+            { materi: "💡 Teori: 'Nevertheless' meski ada rintangan.", depan: "The task was difficult;", belakang: ", they finished it on time.", kunci: "nevertheless", clue: "Petunjuk: Meskipun ada rintangan." },
+            { materi: "💡 Teori: 'In addition' untuk menambah informasi.", depan: "Smoking is bad for health;", belakang: ", it wastes money.", kunci: "in addition", clue: "Petunjuk: Penambahan informasi negatif." }
+        ];
+
+        let indeksSoalAktif = 0;
+        let poinSesi = 0;
+        let sudahDijawab = false;
+
+        function muatSoal() {
+            let soal = daftarSoal[indeksSoalAktif];
+            document.getElementById("labelNomorSoal").innerHTML = `Soal ${indeksSoalAktif + 1} dari 10`;
+            document.getElementById("kotakMateri").innerHTML = soal.materi;
+            document.getElementById("teksSoal").innerHTML = `"${soal.depan} <span class='text-orange-600 font-bold underline'>[ ... ]</span> ${soal.belakang}"`;
+            document.getElementById("jawabanMurid").value = "";
+            document.getElementById("pesanHasil").classList.add("hidden");
+            document.getElementById("tombolLanjut").classList.add("hidden");
+            document.getElementById("tombolCek").classList.remove("hidden");
+            sudahDijawab = false;
         }
-    ];
-    // ... (sisa kode fungsi muatSoal dan lainnya sama seperti sebelumnya)
-</script>
+
+        function cekJawaban() {
+            if (sudahDijawab) return;
+            let jawaban = document.getElementById("jawabanMurid").value.toLowerCase().trim();
+            let pesan = document.getElementById("pesanHasil");
+            let soalAktif = daftarSoal[indeksSoalAktif];
+            pesan.classList.remove("hidden");
+
+            if (jawaban === soalAktif.kunci) {
+                pesan.innerHTML = "✅ Benar! (+20 Poin SMA)";
+                pesan.className = "mt-4 text-lg font-bold p-3 rounded-xl bg-green-100 text-green-700 border-2 border-green-200";
+                poinSesi += 20;
+                document.getElementById("poinSesiTampil").innerHTML = poinSesi;
+                sudahDijawab = true;
+                document.getElementById("tombolCek").classList.add("hidden");
+                
+                if (indeksSoalAktif < daftarSoal.length - 1) {
+                    document.getElementById("tombolLanjut").classList.remove("hidden");
+                } else {
+                    document.getElementById("tombolSelesai").classList.remove("hidden");
+                }
+            } else {
+                pesan.innerHTML = `❌ Kurang tepat. <br><span class="text-sm font-normal">${soalAktif.clue}</span>`;
+                pesan.className = "mt-4 text-lg font-bold p-3 rounded-xl bg-red-100 text-red-700 border-2 border-red-200";
+            }
+        }
+
+        function soalBerikutnya() {
+            indeksSoalAktif++;
+            muatSoal();
+        }
+
+        function simpanPoinDanSelesai() {
+            let poinTotalLama = parseInt(localStorage.getItem('poinMurid')) || 0;
+            localStorage.setItem('poinMurid', poinTotalLama + poinSesi);
+            window.location.href = "sma.html";
+        }
+
+        muatSoal();
+    </script>
+</body>
+</html>
