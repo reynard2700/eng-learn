@@ -12,11 +12,16 @@
 </head>
 <body class="min-h-screen p-6 bg-orange-50">
     
-    <!-- Tombol Kembali -->
-    <div class="max-w-4xl mx-auto mb-8">
-        <a href="mandiri-belajar-inggris/index.html" class="inline-flex items-center text-orange-600 hover:text-orange-800 font-semibold bg-white px-4 py-2 rounded-xl shadow-sm border border-orange-100 transition-all hover:shadow-md">
-            ⬅️ Kembali ke Home
+    <!-- Top Bar: Tombol Kembali & Papan Skor -->
+    <div class="max-w-4xl mx-auto mb-8 flex justify-between items-center">
+        <a href="index.html" class="inline-flex items-center text-orange-600 hover:text-orange-800 font-semibold bg-white px-4 py-2 rounded-xl shadow-sm border border-orange-100 transition-all hover:shadow-md">
+            ⬅️ Home
         </a>
+        
+        <!-- Papan Skor -->
+        <div class="bg-yellow-400 text-yellow-900 font-bold px-6 py-2 rounded-xl shadow-md border-2 border-yellow-500 flex items-center gap-2 text-lg">
+            🏆 Poin Total: <span id="skorTotal">0</span>
+        </div>
     </div>
 
     <!-- Judul Kamar -->
@@ -28,28 +33,32 @@
     <!-- Pilihan Materi Pelajaran -->
     <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
         
-        <!-- Materi Writing SMA -->
-        <a href="#" class="block bg-white rounded-3xl p-6 text-center shadow-lg border-2 border-transparent hover:border-orange-400 hover:-translate-y-1 transition-all cursor-pointer">
+        <a href="sma-writing.html" class="block bg-white rounded-3xl p-6 text-center shadow-lg border-2 border-transparent hover:border-orange-400 hover:-translate-y-1 transition-all">
             <div class="text-5xl mb-4">📝</div>
             <h3 class="text-2xl font-bold text-gray-800 mb-2">Essay Writing</h3>
-            <p class="text-gray-600 text-sm">Belajar menyusun esai dan opini terstruktur.</p>
+            <p class="text-gray-600 text-sm">Belajar kata hubung (connectors) untuk menyusun esai.</p>
         </a>
 
-        <!-- Materi Listening SMA -->
-        <a href="#" class="block bg-white rounded-3xl p-6 text-center shadow-lg border-2 border-transparent hover:border-orange-400 hover:-translate-y-1 transition-all cursor-pointer">
+        <a href="sma-listening.html" class="block bg-white rounded-3xl p-6 text-center shadow-lg border-2 border-transparent hover:border-orange-400 hover:-translate-y-1 transition-all">
             <div class="text-5xl mb-4">🎙️</div>
             <h3 class="text-2xl font-bold text-gray-800 mb-2">News Listening</h3>
-            <p class="text-gray-600 text-sm">Pahami dialog cepat dan berita berbahasa Inggris.</p>
+            <p class="text-gray-600 text-sm">Pahami dialog cepat dan kosakata tingkat lanjut.</p>
         </a>
 
-        <!-- Materi Speaking SMA -->
-        <a href="#" class="block bg-white rounded-3xl p-6 text-center shadow-lg border-2 border-transparent hover:border-orange-400 hover:-translate-y-1 transition-all cursor-pointer">
+        <a href="sma-speaking.html" class="block bg-white rounded-3xl p-6 text-center shadow-lg border-2 border-transparent hover:border-orange-400 hover:-translate-y-1 transition-all">
             <div class="text-5xl mb-4">📢</div>
             <h3 class="text-2xl font-bold text-gray-800 mb-2">Speech & Debate</h3>
-            <p class="text-gray-600 text-sm">Latih pengucapan untuk presentasi dan pidato.</p>
+            <p class="text-gray-600 text-sm">Latih pengucapan kalimat opini panjang secara lantang.</p>
         </a>
 
     </div>
 
+    <script>
+        // Mengambil skor total dari laci browser
+        let skorTersimpan = localStorage.getItem('poinMurid');
+        if (skorTersimpan) {
+            document.getElementById("skorTotal").innerHTML = skorTersimpan;
+        }
+    </script>
 </body>
 </html>
