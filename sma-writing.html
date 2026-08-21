@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Writing SMA (Pilihan Ganda) | ENG-LEARN</title>
+    <title>Writing SMA (Mode Belajar Interaktif) | ENG-LEARN</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
@@ -23,7 +23,7 @@
 
     <div class="max-w-3xl mx-auto bg-white rounded-3xl p-8 shadow-xl border-2 border-orange-50">
         <div class="flex justify-between items-center mb-4 border-b-2 border-orange-100 pb-4">
-            <h1 class="text-2xl font-bold text-gray-800">📝 Writing SMA: Connectors (Pilihan Ganda)</h1>
+            <h1 class="text-2xl font-bold text-gray-800">📝 Writing SMA: Connectors</h1>
             <span id="labelNomorSoal" class="bg-orange-100 text-orange-700 font-bold px-4 py-1 rounded-full text-sm">Soal 1 dari 10</span>
         </div>
         
@@ -32,17 +32,23 @@
         <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100">
             <div id="teksSoal" class="text-xl font-medium mb-6 leading-relaxed text-center"></div>
             
-            <!-- Tempat Tombol Pilihan Ganda SMA -->
-            <div id="areaPilihan" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                <!-- Tombol opsi dimuat lewat JS -->
-            </div>
+            <!-- Area Opsi Pilihan Ganda SMA -->
+            <div id="areaPilihan" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6"></div>
 
-            <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden w-full bg-green-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-green-600 shadow-md">
+            <!-- Tombol Kirim Jawaban -->
+            <button id="tombolKirim" onclick="kirimJawaban()" class="w-full bg-orange-500 text-white px-6 py-3 rounded-xl font-bold text-lg hover:bg-orange-600 shadow-md transition-colors mb-4">
+                🚀 Kirim Jawaban
+            </button>
+
+            <!-- Kotak Hasil & Penjelasan -->
+            <div id="pesanHasil" class="hidden mb-6 p-4 rounded-xl border-2"></div>
+
+            <!-- Tombol Lanjut -->
+            <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden w-full bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-600 shadow-md transition-colors">
                 ➡️ Lanjut Soal Berikutnya
             </button>
 
-            <p id="pesanHasil" class="mt-4 text-lg font-bold hidden p-3 rounded-xl text-center"></p>
-
+            <!-- Tombol Selesai Sesi -->
             <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700 shadow-lg">
                 🎉 Selesai & Simpan Poin!
             </button>
@@ -52,90 +58,141 @@
     <script>
         const daftarSoal = [
             {
-                materi: "💡 Teori: 'Therefore' menunjukkan hubungan sebab-akibat formal.",
+                materi: "💡 Teori: Mempelajari kata hubung penanda hubungan sebab-akibat formal dalam esai.",
                 depan: "It was raining heavily,",
                 belakang: "we canceled the match.",
                 pilihan: ["therefore", "however", "furthermore", "meanwhile"],
                 kunci: "therefore",
-                clue: "Petunjuk: Penghubung untuk menarik kesimpulan logis dari klausa sebelumnya."
+                penjelasan: {
+                    "therefore": "✅ Benar! 'Therefore' digunakan untuk menarik kesimpulan logis atau menyatakan akibat langsung dari klausa sebelumnya.",
+                    "however": "❌ Kurang tepat. 'However' digunakan untuk menyatakan pertentangan/kontras, bukan sebab-akibat.",
+                    "furthermore": "❌ Kurang tepat. 'Furthermore' dipakai untuk menambah argumen pendukung, bukan kesimpulan.",
+                    "meanwhile": "❌ Kurang tepat. 'Meanwhile' menunjukkan dua kejadian yang berlangsung bersamaan."
+                }
             },
             {
-                materi: "💡 Teori: 'However' menyatakan kontras atau pertentangan.",
+                materi: "💡 Teori: Mempelajari kata hubung penanda kontras atau hasil yang tidak terduga.",
                 depan: "She studied hard;",
                 belakang: "she failed the exam.",
                 pilihan: ["therefore", "however", "moreover", "instead"],
                 kunci: "however",
-                clue: "Petunjuk: Hasil yang tidak terduga dari usaha yang dilakukan."
+                penjelasan: {
+                    "however": "✅ Benar! 'However' tepat digunakan di sini untuk menunjukkan kontras yang mengejutkan (sudah belajar giat tapi tetap gagal).",
+                    "therefore": "❌ Kurang tepat. Kalau 'therefore', mestinya dia lulus ujian karena belajar giat.",
+                    "moreover": "❌ Kurang tepat. 'Moreover' hanya untuk menambah informasi senada.",
+                    "instead": "❌ Kurang tepat. 'Instead' menunjukkan alternatif pilihan pengganti."
+                }
             },
             {
-                materi: "💡 Teori: 'Furthermore' menambahkan argumen pendukung.",
+                materi: "💡 Teori: Penambahan informasi atau argumen pendukung yang memperkuat poin.",
                 depan: "The hotel is cheap;",
                 belakang: ", it is very clean.",
                 pilihan: ["otherwise", "however", "furthermore", "consequently"],
                 kunci: "furthermore",
-                clue: "Petunjuk: Berfungsi memberikan poin tambahan yang memperkuat argumen."
+                penjelasan: {
+                    "furthermore": "✅ Benar! 'Furthermore' dipakai untuk menambahkan kelebihan lain (selain murah, hotelnya juga bersih).",
+                    "otherwise": "❌ Kurang tepat. 'Otherwise' menyangkut peringatan kondisi sebaliknya.",
+                    "however": "❌ Kurang tepat. Ini bukan kalimat yang saling bertentangan.",
+                    "consequently": "❌ Kurang tepat. Bersih bukanlah konsekuensi logis langsung dari murah."
+                }
             },
             {
-                materi: "💡 Teori: 'Meanwhile' untuk dua kejadian bersamaan.",
+                materi: "💡 Teori: Menyatakan dua aktivitas berbeda yang terjadi secara bersamaan (paralel).",
                 depan: "John cooked dinner;",
                 belakang: ", Mary cleaned the room.",
                 pilihan: ["meanwhile", "therefore", "instead", "nevertheless"],
                 kunci: "meanwhile",
-                clue: "Petunjuk: Menunjukkan aktivitas paralel yang terjadi dalam waktu yang sama."
+                penjelasan: {
+                    "meanwhile": "✅ Benar! 'Meanwhile' (sementara itu) menunjukkan dua orang melakukan hal berbeda di waktu yang sama.",
+                    "therefore": "❌ Kurang tepat. Memasak tidak disebabkan oleh membersihkan ruangan.",
+                    "instead": "❌ Kurang tepat. Mary membersihkan ruangan bukan sebagai pengganti John memasak.",
+                    "nevertheless": "❌ Kurang tepat. Ini bukan kalimat pertentangan rintangan."
+                }
             },
             {
-                materi: "💡 Teori: 'Moreover' untuk penguatan argumen.",
+                materi: "💡 Teori: Penguatan argumen atau penambahan alasan negatif yang senada.",
                 depan: "The car is expensive;",
                 belakang: ", it consumes too much fuel.",
                 pilihan: ["however", "moreover", "otherwise", "therefore"],
                 kunci: "moreover",
-                clue: "Petunjuk: Menambahkan alasan senada yang memperkuat opini negatif pertama."
+                penjelasan: {
+                    "moreover": "✅ Benar! 'Moreover' dipakai untuk menumpuk poin negatif tambahan (selain mahal, boros bensin pula).",
+                    "however": "❌ Kurang tepat. Kedua klausa ini sifatnya mendukung argumen negatif yang sama, bukan bertentangan.",
+                    "otherwise": "❌ Kurang tepat. Tidak ada unsur pengandaian di sini.",
+                    "therefore": "❌ Kurang tepat. Boros bensin bukan kesimpulan formal dari harga mobil."
+                }
             },
             {
-                materi: "💡 Teori: 'Consequently' untuk konsekuensi logis.",
+                materi: "💡 Teori: Konsekuensi mutlak atau hukuman dari tindakan di klausa pertama.",
                 depan: "He broke the rules;",
                 belakang: ", he was expelled.",
                 pilihan: ["consequently", "meanwhile", "furthermore", "instead"],
                 kunci: "consequently",
-                clue: "Petunjuk: Konsekuensi langsung atau hukuman dari aksi sebelumnya."
+                penjelasan: {
+                    "consequently": "✅ Benar! 'Consequently' (akibatnya) menunjukkan konsekuensi hukum/aturan yang pasti terjadi.",
+                    "meanwhile": "❌ Kurang tepat. Dikeluarkan bukan terjadi secara bersamaan dengan melanggar aturan.",
+                    "furthermore": "❌ Kurang tepat. Ini bukan sekadar penambahan informasi biasa.",
+                    "instead": "❌ Kurang tepat. Dikeluarkan adalah hukuman, bukan opsi alternatif."
+                }
             },
             {
-                materi: "💡 Teori: 'Instead' menunjukkan pilihan pengganti.",
+                materi: "💡 Teori: Menunjukkan tindakan alternatif sebagai pilihan pengganti.",
                 depan: "He didn't quit;",
                 belakang: ", he fought harder.",
                 pilihan: ["therefore", "otherwise", "instead", "however"],
                 kunci: "instead",
-                clue: "Petunjuk: Menunjukkan tindakan alternatif yang dipilih sebagai pengganti."
+                penjelasan: {
+                    "instead": "✅ Benar! 'Instead' (sebaliknya/alih-alih) menunjukkan pilihan aksi lain yang diambil.",
+                    "therefore": "❌ Kurang tepat. Berjuang lebih keras bukanlah kesimpulan logis dari tidak menyerah.",
+                    "otherwise": "❌ Kurang tepat. Ini bukan kalimat peringatan.",
+                    "however": "❌ Kurang bisa digunakan, karena 'instead' lebih spesifik menunjukkan jalan keluar alternatif."
+                }
             },
             {
-                materi: "💡 Teori: 'Otherwise' untuk kondisi pengandaian/peringatan.",
+                materi: "💡 Teori: Kalimat pengandaian yang menyatakan ancaman atau hal buruk jika diabaikan.",
                 depan: "Hurry up;",
                 belakang: ", we will miss the train.",
                 pilihan: ["furthermore", "otherwise", "meanwhile", "consequently"],
                 kunci: "otherwise",
-                clue: "Petunjuk: Menyatakan apa yang terjadi jika klausa pertama diabaikan."
+                penjelasan: {
+                    "otherwise": "✅ Benar! 'Otherwise' (kalau tidak) memperingatkan konsekuensi buruk jika tidak segera bergegas.",
+                    "furthermore": "❌ Kurang tepat. Ketinggalan kereta bukanlah argumen penambah yang positif.",
+                    "meanwhile": "❌ Kurang tepat. Waktu kejadiannya tidak paralel.",
+                    "consequently": "❌ Kurang tepat. 'Otherwise' lebih natural untuk peringatan kondisi bersyarat."
+                }
             },
             {
-                materi: "💡 Teori: 'Nevertheless' meski ada rintangan.",
+                materi: "💡 Teori: Pertentangan kuat yang menyatakan 'meskipun ada rintangan tersebut'.",
                 depan: "The task was difficult;",
                 belakang: ", they finished it on time.",
                 pilihan: ["nevertheless", "instead", "therefore", "moreover"],
                 kunci: "nevertheless",
-                clue: "Petunjuk: Kata hubung formal yang berarti 'meskipun ada rintangan tersebut'."
+                penjelasan: {
+                    "nevertheless": "✅ Benar! 'Nevertheless' (meskipun demikian) sangat cocok untuk menunjukkan keberhasilan di tengah kesulitan.",
+                    "instead": "❌ Kurang tepat. Menyelesaikan tugas bukanlah opsi alternatif dari kesulitan.",
+                    "therefore": "❌ Kurang tepat. Selesai tepat waktu bukan disebabkan oleh sulitnya tugas.",
+                    "moreover": "❌ Kurang tepat. Ini adalah kalimat kontras."
+                }
             },
             {
-                materi: "💡 Teori: 'In addition' untuk menambah informasi.",
+                materi: "💡 Teori: Penambahan informasi atau poin argumen baru dalam esai.",
                 depan: "Smoking is bad for health;",
                 belakang: ", it wastes money.",
                 pilihan: ["in addition", "otherwise", "meanwhile", "however"],
                 kunci: "in addition",
-                clue: "Petunjuk: Frasa transisi untuk menambahkan informasi baru yang sejalan."
+                penjelasan: {
+                    "in addition": "✅ Benar! 'In addition' (sebagai tambahan) dipakai untuk menumpuk kerugian lain dari merokok.",
+                    "otherwise": "❌ Kurang tepat. Ini bukan kalimat peringatan bersyarat.",
+                    "meanwhile": "❌ Kurang tepat. Tidak ada kaitan dengan waktu bersamaan.",
+                    "however": "❌ Kurang tepat. Boros uang dan merusak kesehatan adalah dua hal yang senada, bukan bertentangan."
+                }
             }
         ];
 
         let indeksSoalAktif = 0;
         let poinSesi = 0;
-        let sudahDijawab = false;
+        let pilihanDipilih = null;
+        let sudahDijawabBenar = false;
 
         function muatSoal() {
             let soal = daftarSoal[indeksSoalAktif];
@@ -145,42 +202,65 @@
             
             let areaPilihan = document.getElementById("areaPilihan");
             areaPilihan.innerHTML = "";
-            
-            soal.pilihan.forEach(pilihan => {
+            pilihanDipilih = null;
+            sudahDijawabBenar = false;
+
+            soal.pilihan.forEach(opsi => {
                 let tombol = document.createElement("button");
-                tombol.innerHTML = pilihan;
-                tombol.className = "bg-white border-2 border-orange-200 text-orange-700 font-bold py-4 rounded-xl shadow-sm hover:bg-orange-500 hover:text-white hover:border-orange-500 transition-all text-xl capitalize";
-                tombol.onclick = function() { pilihJawaban(pilihan, soal.kunci, soal.clue); };
+                tombol.innerHTML = opsi;
+                tombol.id = "opsi-" + opsi;
+                tombol.className = "bg-white border-2 border-orange-200 text-orange-700 font-bold py-4 rounded-xl shadow-sm hover:bg-orange-50 hover:border-orange-400 transition-all text-xl capitalize";
+                tombol.onclick = function() { pilihOpsi(opsi); };
                 areaPilihan.appendChild(tombol);
             });
 
             document.getElementById("pesanHasil").classList.add("hidden");
             document.getElementById("tombolLanjut").classList.add("hidden");
-            sudahDijawab = false;
+            document.getElementById("tombolKirim").classList.remove("hidden");
         }
 
-        function pilihJawaban(jawabanPilihan, kunciBenar, clueSoal) {
-            if (sudahDijawab) return;
+        function pilihOpsi(opsi) {
+            pilihanDipilih = opsi;
+            let soal = daftarSoal[indeksSoalAktif];
+            soal.pilihan.forEach(o => {
+                let btn = document.getElementById("opsi-" + o);
+                if (o === opsi) {
+                    btn.className = "bg-orange-500 border-2 border-orange-600 text-white font-bold py-4 rounded-xl shadow-md transition-all text-xl capitalize";
+                } else {
+                    btn.className = "bg-white border-2 border-orange-200 text-orange-700 font-bold py-4 rounded-xl shadow-sm hover:bg-orange-50 transition-all text-xl capitalize";
+                }
+            });
+        }
 
+        function kirimJawaban() {
+            if (!pilihanDipilih) {
+                alert("Pilih salah satu opsi jawaban terlebih dahulu ya mase!");
+                return;
+            }
+
+            let soalAktif = daftarSoal[indeksSoalAktif];
             let pesan = document.getElementById("pesanHasil");
             pesan.classList.remove("hidden");
 
-            if (jawabanPilihan === kunciBenar) {
-                pesan.innerHTML = "✅ Benar sekali! (+20 Poin SMA)";
-                pesan.className = "mt-4 text-lg font-bold p-3 rounded-xl bg-green-100 text-green-700 border-2 border-green-200 text-center";
+            if (pilihanDipilih === soalAktif.kunci) {
+                pesan.innerHTML = `🎉 <b>Tepat sekali!</b><br>${soalAktif.penjelasan[pilihanDipilih]}`;
+                pesan.className = "mb-6 p-4 rounded-xl border-2 bg-green-50 text-green-800 border-green-200 text-lg";
                 
-                poinSesi += 20;
-                document.getElementById("poinSesiTampil").innerHTML = poinSesi;
-                sudahDijawab = true;
+                if (!sudahDijawabBenar) {
+                    poinSesi += 20;
+                    document.getElementById("poinSesiTampil").innerHTML = poinSesi;
+                    sudahDijawabBenar = true;
+                }
 
+                document.getElementById("tombolKirim").classList.add("hidden");
                 if (indeksSoalAktif < daftarSoal.length - 1) {
                     document.getElementById("tombolLanjut").classList.remove("hidden");
                 } else {
                     document.getElementById("tombolSelesai").classList.remove("hidden");
                 }
             } else {
-                pesan.innerHTML = `❌ Kurang tepat. <br><span class="text-sm font-normal">${clueSoal}</span>`;
-                pesan.className = "mt-4 text-lg font-bold p-3 rounded-xl bg-red-100 text-red-700 border-2 border-red-200 text-center";
+                pesan.innerHTML = `⚠️ <b>Kurang tepat.</b><br>${soalAktif.penjelasan[pilihanDipilih]}<br><span class='text-sm text-gray-500 mt-2 block'>💡 (Tips: Kamu bebas mengeklik opsi lain untuk melihat penjelasan fungsi kata hubung lainnya sebelum lanjut!)</span>`;
+                pesan.className = "mb-6 p-4 rounded-xl border-2 bg-red-50 text-red-800 border-red-200 text-lg";
             }
         }
 
