@@ -12,18 +12,24 @@
 </head>
 <body class="min-h-screen p-6 bg-blue-50">
     
-    <!-- Tombol Kembali -->
-    <div class="max-w-3xl mx-auto mb-6">
-        <a href="smp.html" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold bg-white px-4 py-2 rounded-xl shadow-sm border border-blue-100 transition-all">
-            ⬅️ Kembali ke Menu SMP
+    <!-- Bagian Atas: Tombol Batal & Papan Poin Sementara -->
+    <div class="max-w-3xl mx-auto mb-6 flex justify-between items-center">
+        <!-- Tombol Kembali sekarang ada peringatannya (confirm) -->
+        <a href="smp.html" onclick="return confirm('Yakin mau kembali? Poin yang belum disimpan di sesi ini akan hangus lho!')" class="inline-flex items-center text-red-500 hover:text-red-700 font-bold bg-white px-4 py-2 rounded-xl shadow-sm border border-red-100 transition-all">
+            ⬅️ Batal & Kembali
         </a>
+        
+        <!-- Papan Poin Sesi Ini (Biru) -->
+        <div class="bg-blue-500 text-white font-bold px-6 py-2 rounded-xl shadow-md flex items-center gap-2 text-lg">
+            ⭐ Poin Sesi: <span id="poinSesiTampil">0</span>
+        </div>
     </div>
 
     <div class="max-w-3xl mx-auto bg-white rounded-3xl p-8 shadow-xl border-2 border-blue-50">
         <!-- Judul Materi -->
         <h1 class="text-3xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-4">✍️ Writing 1: To Be (is, am, are)</h1>
         
-        <!-- Isi Materi (Teori Singkat) -->
+        <!-- Isi Materi -->
         <div class="mb-8 text-gray-700 text-lg leading-relaxed">
             <p class="mb-4">Dalam bahasa Inggris, kita menggunakan "To Be" untuk menghubungkan subjek dengan kata benda atau kata sifat.</p>
             <ul class="list-disc pl-6 bg-blue-50 p-4 rounded-xl font-medium">
@@ -33,57 +39,82 @@
             </ul>
         </div>
 
-        <!-- Latihan Soal Interaktif -->
+        <!-- Latihan Soal -->
         <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100">
             <h2 class="text-xl font-bold text-gray-800 mb-4">Latihan Singkat</h2>
-            <p class="text-lg mb-4">Lengkapi kalimat perkenalan diri ini:</p>
             
             <div class="flex items-center gap-3 text-xl font-medium mb-6">
                 <span>"Hello, my name</span>
-                <!-- Kotak input tempat murid mengetik -->
                 <input type="text" id="jawabanMurid" class="border-b-4 border-blue-300 bg-transparent w-20 text-center focus:outline-none focus:border-blue-600 transition-colors" placeholder="___">
                 <span>Budi."</span>
             </div>
 
             <!-- Tombol Cek -->
-            <button onclick="cekJawaban()" class="bg-blue-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-600 transition-colors">
+            <button id="tombolCek" onclick="cekJawaban()" class="bg-blue-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-600 transition-colors">
                 Cek Jawaban
             </button>
 
-            <!-- Tempat memunculkan hasil (Benar/Salah) -->
+            <!-- Tempat Hasil -->
             <p id="pesanHasil" class="mt-4 text-lg font-bold hidden p-3 rounded-xl"></p>
+
+            <!-- Tombol Simpan & Selesai (Awalnya Disembunyikan) -->
+            <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-600 transition-colors shadow-lg hover:shadow-green-300">
+                🎉 Simpan Poin & Selesai!
+            </button>
         </div>
     </div>
 
-    <!-- Ini adalah "Otak Kecil" (JavaScript) -->
+    <!-- Otak Kecil JavaScript Baru -->
     <script>
+        // Memori Sementara (Hilang kalau pencet Back)
+        let poinSesi = 0;
+        let sudahBenar = false;
+
         function cekJawaban() {
-            // Mengambil apa yang diketik murid (dijadikan huruf kecil semua agar mudah dicek)
+            // Kalau sudah benar, tombol Cek Jawaban tidak berfungsi lagi (anti-spam poin)
+            if (sudahBenar) return; 
+
             let jawaban = document.getElementById("jawabanMurid").value.toLowerCase().trim();
             let pesan = document.getElementById("pesanHasil");
+            let tombolSelesai = document.getElementById("tombolSelesai");
+            let tombolCek = document.getElementById("tombolCek");
             
-            // Memunculkan area pesan yang tadi disembunyikan
             pesan.classList.remove("hidden");
 
-            // Mengecek apakah jawabannya adalah "is"
-            // Mengecek apakah jawabannya adalah "is"
             if (jawaban === "is") {
                 pesan.innerHTML = "✅ Benar sekali! Hebat! (+10 Poin)";
                 pesan.className = "mt-4 text-lg font-bold p-3 rounded-xl bg-green-100 text-green-700 border-2 border-green-200";
                 
-                // --- KODE BARU: Menyimpan Poin ---
-                // Ambil skor lama dari laci, ubah jadi angka. Kalau kosong, anggap 0.
-                let skorLama = parseInt(localStorage.getItem('poinMurid')) || 0;
-                let skorBaru = skorLama + 10;
+                // 1. Tambah Poin Sementara & Tampilkan
+                poinSesi = poinSesi + 10;
+                document.getElementById("poinSesiTampil").innerHTML = poinSesi;
                 
-                // Simpan skor baru ke laci
-                localStorage.setItem('poinMurid', skorBaru);
-                // ---------------------------------
+                // 2. Kunci jawaban biar nggak bisa ditipu
+                sudahBenar = true;
+                tombolCek.classList.replace("bg-blue-500", "bg-gray-400"); // Tombol Cek jadi abu-abu
                 
+                // 3. Munculkan tombol hijau "Simpan & Selesai"
+                tombolSelesai.classList.remove("hidden");
+
             } else {
-                pesan.innerHTML = "❌ Masih kurang tepat. (Petunjuk: My name = Tunggal/Satu)";
+                pesan.innerHTML = "❌ Masih kurang tepat. Coba lagi!";
                 pesan.className = "mt-4 text-lg font-bold p-3 rounded-xl bg-red-100 text-red-700 border-2 border-red-200";
             }
+        }
+
+        // Fungsi ini hanya jalan kalau tombol Hijau besar ditekan
+        function simpanPoinDanSelesai() {
+            // Ambil tabungan poin dari Laci Browser (kalau kosong, berarti 0)
+            let poinTotalLama = parseInt(localStorage.getItem('poinMurid')) || 0;
+            
+            // Campur Tabungan Lama + Poin Sementara tadi
+            let poinTotalBaru = poinTotalLama + poinSesi;
+            
+            // Simpan Tabungan Baru ke Laci Browser
+            localStorage.setItem('poinMurid', poinTotalBaru);
+            
+            // Pulangkan murid ke halaman Menu SMP
+            window.location.href = "smp.html";
         }
     </script>
 </body>
