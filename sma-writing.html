@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Writing SMA (Mode Review Interaktif) | ENG-LEARN</title>
+    <title>Writing SMA (20 Soal Grammar Mix) | ENG-LEARN</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
@@ -23,8 +23,8 @@
 
     <div class="max-w-3xl mx-auto bg-white rounded-3xl p-8 shadow-xl border-2 border-orange-50">
         <div class="flex justify-between items-center mb-4 border-b-2 border-orange-100 pb-4">
-            <h1 class="text-2xl font-bold text-gray-800">📝 Writing SMA: Connectors</h1>
-            <span id="labelNomorSoal" class="bg-orange-100 text-orange-700 font-bold px-4 py-1 rounded-full text-sm">Soal 1 dari 10</span>
+            <h1 class="text-2xl font-bold text-gray-800">📝 Writing SMA: Grammar & Connectors</h1>
+            <span id="labelNomorSoal" class="bg-orange-100 text-orange-700 font-bold px-4 py-1 rounded-full text-sm">Soal 1 dari 20</span>
         </div>
         
         <div id="kotakMateri" class="mb-6 text-gray-700 text-base bg-orange-50 p-4 rounded-xl border border-orange-100 font-medium"></div>
@@ -45,7 +45,6 @@
                 <div id="isiPenjelasanSemua" class="space-y-3 text-sm text-gray-700"></div>
             </div>
 
-            <!-- Navigasi Bawah -->
             <div class="flex gap-3">
                 <button id="tombolSebelumnya" onclick="soalSebelumnya()" class="hidden flex-1 bg-gray-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-gray-600 shadow-md transition-colors">
                     ⬅️ Sebelumnya
@@ -62,135 +61,270 @@
     </div>
 
     <script>
+        // ============ 20 SOAL GRAMMAR BERAGAM UNTUK SMA ============
         const daftarSoal = [
+            // 1-5: CONNECTORS
             {
-                materi: "💡 Teori: Mempelajari kata hubung penanda hubungan sebab-akibat formal dalam esai.",
+                materi: "💡 Teori: Connector untuk hubungan sebab-akibat formal.",
                 depan: "It was raining heavily,",
                 belakang: "we canceled the match.",
                 pilihan: ["therefore", "however", "furthermore", "meanwhile"],
                 kunci: "therefore",
                 penjelasan: {
-                    "therefore": "<b>Therefore:</b> Dipakai untuk menarik kesimpulan logis atau menyatakan akibat langsung.",
-                    "however": "<b>However:</b> Dipakai untuk menyatakan pertentangan/kontras.",
-                    "furthermore": "<b>Furthermore:</b> Dipakai untuk menambah argumen pendukung.",
-                    "meanwhile": "<b>Meanwhile:</b> Menunjukkan dua kejadian yang berlangsung bersamaan."
+                    "therefore": "<b>Therefore:</b> BENAR! Dipakai untuk menarik kesimpulan logis atau akibat langsung.",
+                    "however": "<b>However:</b> Salah. Dipakai untuk menyatakan pertentangan/kontras.",
+                    "furthermore": "<b>Furthermore:</b> Salah. Dipakai untuk menambah argumen pendukung.",
+                    "meanwhile": "<b>Meanwhile:</b> Salah. Menunjukkan dua kejadian yang berlangsung bersamaan."
                 }
             },
             {
-                materi: "💡 Teori: Mempelajari kata hubung penanda kontras atau hasil yang tidak terduga.",
+                materi: "💡 Teori: Connector untuk pertentangan atau hasil tidak terduga.",
                 depan: "She studied hard;",
                 belakang: "she failed the exam.",
                 pilihan: ["therefore", "however", "moreover", "instead"],
                 kunci: "however",
                 penjelasan: {
-                    "therefore": "<b>Therefore:</b> Kalau ini, mestinya dia lulus ujian karena belajar giat.",
-                    "however": "<b>However:</b> Tepat untuk menunjukkan kontras yang mengejutkan (sudah belajar tapi tetap gagal).",
-                    "moreover": "<b>Moreover:</b> Hanya untuk menambah informasi senada.",
-                    "instead": "<b>Instead:</b> Menunjukkan alternatif pilihan pengganti."
+                    "therefore": "<b>Therefore:</b> Salah. Kalau ini, mestinya dia lulus ujian.",
+                    "however": "<b>However:</b> BENAR! Tepat untuk menunjukkan kontras yang mengejutkan.",
+                    "moreover": "<b>Moreover:</b> Salah. Hanya untuk menambah informasi senada.",
+                    "instead": "<b>Instead:</b> Salah. Menunjukkan alternatif pilihan pengganti."
                 }
             },
             {
-                materi: "💡 Teori: Penambahan informasi atau argumen pendukung yang memperkuat poin.",
+                materi: "💡 Teori: Connector untuk penambahan argumen pendukung.",
                 depan: "The hotel is cheap;",
                 belakang: ", it is very clean.",
                 pilihan: ["otherwise", "however", "furthermore", "consequently"],
                 kunci: "furthermore",
                 penjelasan: {
-                    "otherwise": "<b>Otherwise:</b> Menyangkut peringatan kondisi sebaliknya.",
-                    "however": "<b>However:</b> Ini bukan kalimat yang saling bertentangan.",
-                    "furthermore": "<b>Furthermore:</b> Dipakai untuk menambah kelebihan lain (selain murah, hotelnya juga bersih).",
-                    "consequently": "<b>Consequently:</b> Bersih bukanlah konsekuensi langsung dari murah."
+                    "otherwise": "<b>Otherwise:</b> Salah. Menyangkut peringatan kondisi sebaliknya.",
+                    "however": "<b>However:</b> Salah. Ini bukan kalimat bertentangan.",
+                    "furthermore": "<b>Furthermore:</b> BENAR! Menambah kelebihan lain (murah dan bersih).",
+                    "consequently": "<b>Consequently:</b> Salah. Bersih bukan konsekuensi dari murah."
                 }
             },
             {
-                materi: "💡 Teori: Menyatakan dua aktivitas berbeda yang terjadi secara bersamaan.",
+                materi: "💡 Teori: Connector untuk aktivitas yang terjadi secara bersamaan.",
                 depan: "John cooked dinner;",
                 belakang: ", Mary cleaned the room.",
                 pilihan: ["meanwhile", "therefore", "instead", "nevertheless"],
                 kunci: "meanwhile",
                 penjelasan: {
-                    "meanwhile": "<b>Meanwhile:</b> Menunjukkan dua orang melakukan hal berbeda di waktu yang sama.",
-                    "therefore": "<b>Therefore:</b> Memasak tidak disebabkan oleh membersihkan ruangan.",
-                    "instead": "<b>Instead:</b> Mary membersihkan bukan sebagai pengganti John memasak.",
-                    "nevertheless": "<b>Nevertheless:</b> Ini bukan kalimat pertentangan rintangan."
+                    "meanwhile": "<b>Meanwhile:</b> BENAR! Menunjukkan dua aktivitas paralel di waktu yang sama.",
+                    "therefore": "<b>Therefore:</b> Salah. Memasak bukan disebabkan oleh membersihkan ruangan.",
+                    "instead": "<b>Instead:</b> Salah. Bukan sebagai pengganti.",
+                    "nevertheless": "<b>Nevertheless:</b> Salah. Ini bukan kalimat pertentangan."
                 }
             },
             {
-                materi: "💡 Teori: Penguatan argumen atau penambahan alasan negatif yang senada.",
-                depan: "The car is expensive;",
-                belakang: ", it consumes too much fuel.",
-                pilihan: ["however", "moreover", "otherwise", "therefore"],
-                kunci: "moreover",
-                penjelasan: {
-                    "however": "<b>However:</b> Kedua klausa ini sifatnya mendukung argumen negatif yang sama.",
-                    "moreover": "<b>Moreover:</b> Dipakai untuk menumpuk poin negatif tambahan (selain mahal, boros bensin pula).",
-                    "otherwise": "<b>Otherwise:</b> Tidak ada unsur pengandaian.",
-                    "therefore": "<b>Therefore:</b> Boros bensin bukan kesimpulan formal dari harga."
-                }
-            },
-            {
-                materi: "💡 Teori: Konsekuensi mutlak atau hukuman dari tindakan di klausa pertama.",
-                depan: "He broke the rules;",
-                belakang: ", he was expelled.",
-                pilihan: ["consequently", "meanwhile", "furthermore", "instead"],
-                kunci: "consequently",
-                penjelasan: {
-                    "consequently": "<b>Consequently:</b> Menunjukkan konsekuensi hukum/aturan yang pasti terjadi.",
-                    "meanwhile": "<b>Meanwhile:</b> Dikeluarkan bukan terjadi bersamaan dengan melanggar.",
-                    "furthermore": "<b>Furthermore:</b> Ini bukan sekadar penambahan informasi biasa.",
-                    "instead": "<b>Instead:</b> Dikeluarkan adalah hukuman, bukan opsi alternatif."
-                }
-            },
-            {
-                materi: "💡 Teori: Menunjukkan tindakan alternatif sebagai pilihan pengganti.",
-                depan: "He didn't quit;",
-                belakang: ", he fought harder.",
-                pilihan: ["therefore", "otherwise", "instead", "however"],
-                kunci: "instead",
-                penjelasan: {
-                    "therefore": "<b>Therefore:</b> Berjuang bukan kesimpulan logis dari tidak menyerah.",
-                    "otherwise": "<b>Otherwise:</b> Ini bukan kalimat peringatan.",
-                    "instead": "<b>Instead:</b> Menunjukkan pilihan aksi lain yang diambil sebagai pengganti.",
-                    "however": "<b>However:</b> Kurang tepat dibanding 'instead' yang spesifik menunjukkan alternatif."
-                }
-            },
-            {
-                materi: "💡 Teori: Kalimat pengandaian yang menyatakan ancaman atau hal buruk jika diabaikan.",
+                materi: "💡 Teori: Connector untuk peringatan kondisi sebaliknya.",
                 depan: "Hurry up;",
                 belakang: ", we will miss the train.",
                 pilihan: ["furthermore", "otherwise", "meanwhile", "consequently"],
                 kunci: "otherwise",
                 penjelasan: {
-                    "furthermore": "<b>Furthermore:</b> Ketinggalan kereta bukan argumen penambah yang positif.",
-                    "otherwise": "<b>Otherwise:</b> Memperingatkan konsekuensi buruk jika tidak segera bergegas.",
-                    "meanwhile": "<b>Meanwhile:</b> Waktu kejadiannya tidak paralel.",
-                    "consequently": "<b>Consequently:</b> Kurang natural dibanding 'otherwise' untuk peringatan bersyarat."
+                    "furthermore": "<b>Furthermore:</b> Salah. Ketinggalan kereta bukan argumen penambah.",
+                    "otherwise": "<b>Otherwise:</b> BENAR! Memperingatkan konsekuensi buruk jika tidak bergegas.",
+                    "meanwhile": "<b>Meanwhile:</b> Salah. Waktu kejadiannya tidak paralel.",
+                    "consequently": "<b>Consequently:</b> Kurang natural untuk peringatan bersyarat."
+                }
+            },
+            // 6-10: CONDITIONAL, RELATIVE CLAUSE, PASSIVE, REPORTED SPEECH
+            {
+                materi: "💡 Teori: Conditional Type 2 (khayalan) menggunakan 'were' untuk semua subjek.",
+                depan: "If I",
+                belakang: "you, I would accept the offer.",
+                pilihan: ["am", "was", "were", "have been"],
+                kunci: "were",
+                penjelasan: {
+                    "am": "<b>Am:</b> Salah. Ini Present, tidak cocok untuk pengandaian.",
+                    "was": "<b>Was:</b> Salah. Dalam Conditional Type 2, 'were' lebih formal/umum.",
+                    "were": "<b>Were:</b> BENAR! Type 2 selalu pakai 'were' untuk semua subjek.",
+                    "have been": "<b>Have been:</b> Salah. Ini Present Perfect, bukan pengandaian."
                 }
             },
             {
-                materi: "💡 Teori: Pertentangan kuat yang menyatakan 'meskipun ada rintangan tersebut'.",
-                depan: "The task was difficult;",
-                belakang: ", they finished it on time.",
-                pilihan: ["nevertheless", "instead", "therefore", "moreover"],
-                kunci: "nevertheless",
+                materi: "💡 Teori: Conditional Type 1 (realistis) pola: If + Present, will + V1.",
+                depan: "If she studies hard,",
+                belakang: "the exam.",
+                pilihan: ["passes", "will pass", "would pass", "passed"],
+                kunci: "will pass",
                 penjelasan: {
-                    "nevertheless": "<b>Nevertheless:</b> Sangat cocok untuk menunjukkan keberhasilan di tengah kesulitan.",
-                    "instead": "<b>Instead:</b> Menyelesaikan tugas bukan opsi alternatif dari kesulitan.",
-                    "therefore": "<b>Therefore:</b> Selesai tepat waktu bukan disebabkan oleh sulitnya tugas.",
-                    "moreover": "<b>Moreover:</b> Ini adalah kalimat kontras."
+                    "passes": "<b>Passes:</b> Salah. Butuh 'will' di klausa utama.",
+                    "will pass": "<b>Will pass:</b> BENAR! Pola Type 1: if + present, will + inf.",
+                    "would pass": "<b>Would pass:</b> Salah. Ini pola Type 2.",
+                    "passed": "<b>Passed:</b> Salah. Ini past tense, tidak cocok."
                 }
             },
             {
-                materi: "💡 Teori: Penambahan informasi atau poin argumen baru dalam esai.",
-                depan: "Smoking is bad for health;",
-                belakang: ", it wastes money.",
-                pilihan: ["in addition", "otherwise", "meanwhile", "however"],
-                kunci: "in addition",
+                materi: "💡 Teori: Relative Clause untuk orang sebagai subjek menggunakan 'who'.",
+                depan: "The teacher",
+                belakang: "teaches math is very kind.",
+                pilihan: ["who", "whom", "which", "whose"],
+                kunci: "who",
                 penjelasan: {
-                    "in addition": "<b>In addition:</b> Dipakai untuk menumpuk kerugian lain dari merokok.",
-                    "otherwise": "<b>Otherwise:</b> Ini bukan kalimat peringatan bersyarat.",
-                    "meanwhile": "<b>Meanwhile:</b> Tidak ada kaitan dengan waktu bersamaan.",
-                    "however": "<b>However:</b> Boros uang dan merusak kesehatan adalah hal yang senada."
+                    "who": "<b>Who:</b> BENAR! 'Who' untuk orang sebagai subjek (yang mengajar).",
+                    "whom": "<b>Whom:</b> Salah. 'Whom' untuk orang sebagai objek.",
+                    "which": "<b>Which:</b> Salah. 'Which' untuk benda atau hewan.",
+                    "whose": "<b>Whose:</b> Salah. 'Whose' untuk kepemilikan."
+                }
+            },
+            {
+                materi: "💡 Teori: Passive Voice (Simple Past) pola: was/were + V3.",
+                depan: "The letter",
+                belakang: "by the secretary yesterday.",
+                pilihan: ["sent", "is sent", "was sent", "has sent"],
+                kunci: "was sent",
+                penjelasan: {
+                    "sent": "<b>Sent:</b> Salah. Ini aktif tanpa to be.",
+                    "is sent": "<b>Is sent:</b> Salah. Ini Present Passive, tidak cocok dengan 'yesterday'.",
+                    "was sent": "<b>Was sent:</b> BENAR! Subjek tunggal + waktu lampau + V3.",
+                    "has sent": "<b>Has sent:</b> Salah. Ini Active Perfect, bukan passive."
+                }
+            },
+            {
+                materi: "💡 Teori: Reported Speech mengubah Present menjadi Past.",
+                depan: "He said he",
+                belakang: "the document already.",
+                pilihan: ["has", "have", "had", "will have"],
+                kunci: "had",
+                penjelasan: {
+                    "has": "<b>Has:</b> Salah. Kalimat langsungnya 'I have', berubah jadi 'had'.",
+                    "have": "<b>Have:</b> Salah. Ini untuk subjek I/You/They, tidak cocok.",
+                    "had": "<b>Had:</b> BENAR! Present Perfect (has) berubah menjadi Past Perfect (had).",
+                    "will have": "<b>Will have:</b> Salah. Ini future perfect, bukan reported speech."
+                }
+            },
+            // 11-15: FUTURE PERFECT, GERUND, QUANTIFIER, SVA, PREPOSITION
+            {
+                materi: "💡 Teori: Future Perfect untuk aksi yang sudah selesai di waktu tertentu di masa depan.",
+                depan: "By next month, I",
+                belakang: "this project.",
+                pilihan: ["finish", "finished", "will finish", "will have finished"],
+                kunci: "will have finished",
+                penjelasan: {
+                    "finish": "<b>Finish:</b> Salah. Ini Present, tidak cocok dengan 'By next month'.",
+                    "finished": "<b>Finished:</b> Salah. Ini Past Tense.",
+                    "will finish": "<b>Will finish:</b> Kurang tepat. 'Will have finished' lebih tepat untuk batas waktu.",
+                    "will have finished": "<b>Will have finished:</b> BENAR! Pola Future Perfect: will have + V3."
+                }
+            },
+            {
+                materi: "💡 Teori: Setelah kata kerja 'mind', gunakan Gerund (V-ing).",
+                depan: "I don't mind",
+                belakang: "late today.",
+                pilihan: ["stay", "to stay", "staying", "stayed"],
+                kunci: "staying",
+                penjelasan: {
+                    "stay": "<b>Stay:</b> Salah. 'Mind' tidak diikuti bare infinitive.",
+                    "to stay": "<b>To stay:</b> Salah. 'Mind' tidak diikuti to infinitive.",
+                    "staying": "<b>Staying:</b> BENAR! 'Mind' + V-ing (Gerund).",
+                    "stayed": "<b>Stayed:</b> Salah. Ini Past Tense."
+                }
+            },
+            {
+                materi: "💡 Teori: Quantifier 'Most of' digunakan untuk menyatakan sebagian besar dari kelompok tertentu.",
+                depan: "",
+                belakang: "of the students passed the test.",
+                pilihan: ["Many", "Much", "Most", "Every"],
+                kunci: "Most",
+                penjelasan: {
+                    "Many": "<b>Many:</b> Salah. 'Many of' bisa dipakai, tapi butuh 'the' (Many of the...), kurang tepat di sini.",
+                    "Much": "<b>Much:</b> Salah. 'Much' untuk uncountable (much water).",
+                    "Most": "<b>Most:</b> BENAR! 'Most of the students' adalah frasa yang umum dan tepat.",
+                    "Every": "<b>Every:</b> Salah. 'Every' diikuti singular (every student)."
+                }
+            },
+            {
+                materi: "💡 Teori: 'News' adalah kata benda uncountable yang selalu dianggap tunggal.",
+                depan: "The news",
+                belakang: "very shocking.",
+                pilihan: ["are", "is", "were", "have been"],
+                kunci: "is",
+                penjelasan: {
+                    "are": "<b>Are:</b> Salah. 'News' adalah singular (tunggal).",
+                    "is": "<b>Is:</b> BENAR! 'News' selalu tunggal, pakai 'is'.",
+                    "were": "<b>Were:</b> Salah. Ini plural atau past tense.",
+                    "have been": "<b>Have been:</b> Salah. Ini plural."
+                }
+            },
+            {
+                materi: "💡 Teori: Kata sifat 'interested' selalu diikuti preposisi 'in'.",
+                depan: "He is interested",
+                belakang: "learning English.",
+                pilihan: ["to", "at", "in", "for"],
+                kunci: "in",
+                penjelasan: {
+                    "to": "<b>To:</b> Salah. 'Interested to' jarang dan tidak baku.",
+                    "at": "<b>At:</b> Salah. 'Interested at' tidak tepat.",
+                    "in": "<b>In:</b> BENAR! 'Interested in' adalah kolokasi yang benar.",
+                    "for": "<b>For:</b> Salah. 'Interested for' tidak tepat."
+                }
+            },
+            // 16-20: CONNECTOR (DESPITE), PHRASAL VERB, INVERSION, CAUSATIVE, WISH
+            {
+                materi: "💡 Teori: 'Despite' diikuti oleh kata benda (noun phrase) untuk menunjukkan konsesi.",
+                depan: "",
+                belakang: "the rain, we went out.",
+                pilihan: ["Although", "Despite", "Because", "Unless"],
+                kunci: "Despite",
+                penjelasan: {
+                    "Although": "<b>Although:</b> Salah. 'Although' diikuti klausa (S + V).",
+                    "Despite": "<b>Despite:</b> BENAR! 'Despite' diikuti kata benda 'the rain'.",
+                    "Because": "<b>Because:</b> Salah. Ini menunjukkan sebab, bukan konsesi.",
+                    "Unless": "<b>Unless:</b> Salah. Ini menunjukkan kondisi, bukan konsesi."
+                }
+            },
+            {
+                materi: "💡 Teori: Phrasal verb 'turn off' berarti mematikan (lampu, TV).",
+                depan: "Please",
+                belakang: "the lights before leaving.",
+                pilihan: ["turn on", "turn off", "turn down", "turn up"],
+                kunci: "turn off",
+                penjelasan: {
+                    "turn on": "<b>Turn on:</b> Salah. Ini berarti menyalakan, kebalikan dari yang diinginkan.",
+                    "turn off": "<b>Turn off:</b> BENAR! 'Turn off the lights' artinya mematikan lampu.",
+                    "turn down": "<b>Turn down:</b> Salah. Ini berarti menolak atau mengecilkan volume.",
+                    "turn up": "<b>Turn up:</b> Salah. Ini berarti membesarkan volume atau muncul."
+                }
+            },
+            {
+                materi: "💡 Teori: Inversi untuk 'Never' di awal kalimat: Never + to be/aux + S + V3.",
+                depan: "Never",
+                belakang: "I seen such a beautiful view.",
+                pilihan: ["have", "had", "did", "was"],
+                kunci: "have",
+                penjelasan: {
+                    "have": "<b>Have:</b> BENAR! Inversi: Never + have + I + seen.",
+                    "had": "<b>Had:</b> Kurang tepat. 'Had' untuk Past Perfect, tapi konteksnya Present Perfect.",
+                    "did": "<b>Did:</b> Salah. 'Did' diikuti V1, sedangkan di sini ada 'seen' (V3).",
+                    "was": "<b>Was:</b> Salah. Ini untuk passive atau to be."
+                }
+            },
+            {
+                materi: "💡 Teori: Causative 'have something done' (menyuruh sesuatu dikerjakan orang lain).",
+                depan: "She",
+                belakang: "her hair cut yesterday.",
+                pilihan: ["had", "has", "have", "was"],
+                kunci: "had",
+                penjelasan: {
+                    "had": "<b>Had:</b> BENAR! 'Had her hair cut' = menyuruh potong rambut (masa lalu).",
+                    "has": "<b>Has:</b> Salah. Butuh past tense karena 'yesterday'.",
+                    "have": "<b>Have:</b> Salah. Subjek 'She' pakai 'has/had', bukan 'have'.",
+                    "was": "<b>Was:</b> Salah. 'Was' untuk passive, sedangkan ini causative."
+                }
+            },
+            {
+                materi: "💡 Teori: Setelah 'wish', gunakan past modal (can → could) untuk keinginan di masa kini.",
+                depan: "I wish I",
+                belakang: "swim.",
+                pilihan: ["can", "could", "will", "would"],
+                kunci: "could",
+                penjelasan: {
+                    "can": "<b>Can:</b> Salah. 'Wish' membutuhkan bentuk lampau (could).",
+                    "could": "<b>Could:</b> BENAR! 'Wish + could' untuk keinginan kemampuan di masa kini.",
+                    "will": "<b>Will:</b> Salah. 'Will' untuk masa depan, tidak cocok untuk wish.",
+                    "would": "<b>Would:</b> Kurang tepat. 'Would' lebih untuk preferensi, bukan kemampuan."
                 }
             }
         ];
@@ -202,9 +336,10 @@
 
         function muatSoal() {
             let soal = daftarSoal[indeksSoalAktif];
-            document.getElementById("labelNomorSoal").innerHTML = `Soal ${indeksSoalAktif + 1} dari 10`;
+            document.getElementById("labelNomorSoal").innerHTML = `Soal ${indeksSoalAktif + 1} dari 20`;
             document.getElementById("kotakMateri").innerHTML = soal.materi;
-            document.getElementById("teksSoal").innerHTML = `"${soal.depan} <span class='text-orange-600 font-bold underline bg-orange-100 px-2 py-1 rounded'>[ ... ]</span> ${soal.belakang}"`;
+            let depan = soal.depan ? `${soal.depan} ` : "";
+            document.getElementById("teksSoal").innerHTML = `"${depan}<span class='text-orange-600 font-bold underline bg-orange-100 px-2 py-1 rounded'>[ ... ]</span> ${soal.belakang}"`;
             
             let areaPilihan = document.getElementById("areaPilihan");
             areaPilihan.innerHTML = "";
@@ -242,7 +377,6 @@
         function pilihOpsi(opsi) {
             let riwayat = statusRiwayat[indeksSoalAktif];
             if (riwayat && riwayat.sudahBenar) return;
-
             pilihanDipilih = opsi;
             tandaiTombolTerpilih(opsi);
         }
@@ -266,10 +400,8 @@
                 alert("Pilih salah satu opsi jawaban terlebih dahulu ya mase!");
                 return;
             }
-
             let soalAktif = daftarSoal[indeksSoalAktif];
             let isBenar = (pilihanDipilih === soalAktif.kunci);
-
             if (isBenar) {
                 if (!statusRiwayat[indeksSoalAktif] || !statusRiwayat[indeksSoalAktif].sudahBenar) {
                     poinSesi += 20;
@@ -287,11 +419,9 @@
             let soalAktif = daftarSoal[indeksSoalAktif];
             let pesan = document.getElementById("pesanHasil");
             pesan.classList.remove("hidden");
-
             let kotakPenjelasan = document.getElementById("kotakPenjelasanSemua");
             let isiPenjelasan = document.getElementById("isiPenjelasanSemua");
             kotakPenjelasan.classList.remove("hidden");
-
             let htmlSemua = "";
             for (let key in soalAktif.penjelasan) {
                 let statusWarna = "text-gray-600 bg-gray-50 p-2 rounded";
@@ -301,13 +431,11 @@
                 htmlSemua += `<div class="${statusWarna}">• ${soalAktif.penjelasan[key]}</div>`;
             }
             isiPenjelasan.innerHTML = htmlSemua;
-
             if (isBenar) {
                 pesan.innerHTML = dariReview ? 
-                    `📚 <b>Mode Review:</b> Soal ini sudah kamu jawab benar sebelumnya.` : 
+                    `📚 <b>Mode Review:</b> Soal ini sudah kamu jawab dengan benar sebelumnya.` : 
                     `🎉 <b>Tepat sekali! Pilihanmu benar.</b>`;
                 pesan.className = "mb-4 p-4 rounded-xl border-2 bg-green-50 text-green-800 border-green-200 text-base";
-                
                 document.getElementById("tombolKirim").classList.add("hidden");
                 if (indeksSoalAktif < daftarSoal.length - 1) {
                     document.getElementById("tombolLanjut").classList.remove("hidden");
