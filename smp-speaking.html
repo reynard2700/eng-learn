@@ -65,7 +65,10 @@
             { materi: "💡 Teori: Ucapan salam ketika bertemu di pagi hari.", kunci: "good morning", teks: "Good morning", clue: "Petunjuk: Kata sapaan pagi (2 kata)." },
             { materi: "💡 Teori: Ucapan salam ketika bertemu di siang hari.", kunci: "good afternoon", teks: "Good afternoon", clue: "Petunjuk: Kata sapaan siang (2 kata)." },
             { materi: "💡 Teori: Ungkapan sopan untuk menyampaikan terima kasih.", kunci: "thank you", teks: "Thank you", clue: "Petunjuk: Dua kata untuk berterima kasih." },
-            { materi: "💡 Teori: Respon ramah saat seseorang berterima kasih.", kunci: "you are welcome", teks: "You're welcome", clue: "Petunjuk: Tiga kata untuk membalas 'thank you'." },
+            // 🛠️ PERBAIKAN UTAMA DI SINI:
+            // Google Speech selalu mendeteksi "You're welcome" menjadi "you are welcome"
+            // Jadi kunci kita pakai "you are welcome", dan juga backup untuk "you're welcome" biar aman.
+            { materi: "💡 Teori: Respon ramah saat seseorang berterima kasih.", kunci: "you are welcome", teks: "You're welcome", clue: "Petunjuk: Ucapkan 'You are welcome' (3 kata) untuk membalas 'thank you'." },
             { materi: "💡 Teori: Kalimat sederhana untuk menanyakan kabar.", kunci: "how are you", teks: "How are you?", clue: "Petunjuk: Tiga kata untuk menanyakan kabar." },
             { materi: "💡 Teori: Pernyataan perpisahan saat hendak beranjak pergi.", kunci: "goodbye", teks: "Goodbye", clue: "Petunjuk: Satu kata untuk pamit." },
             { materi: "💡 Teori: Ungkapan meminta maaf atas kesalahan kecil.", kunci: "im sorry", teks: "I'm sorry", clue: "Petunjuk: Dua kata untuk minta maaf." },
@@ -129,8 +132,22 @@
                 pesanHasil.classList.remove("hidden");
 
                 let soalAktif = daftarSoal[indeksSoalAktif];
+                let kunciUtama = soalAktif.kunci;
 
-                if (hasilSuara.includes(soalAktif.kunci)) {
+                // 🛠️ LOGIKA PERBAIKAN: Biar aman, kita cek apakah suara mengandung kunci utama
+                // ATAU untuk kasus "you're welcome", kita terima juga "you are welcome" (sudah jadi kunci utama)
+                // Tapi untuk jaga-jaga, kita cek keduanya.
+                let isMatch = hasilSuara.includes(kunciUtama);
+                
+                // Khusus untuk soal "you're welcome", tambahkan pengecekan alternatif
+                // (walaupun sebenarnya kunci utama sudah "you are welcome", ini sebagai safety net)
+                if (!isMatch && soalAktif.kunci === "you are welcome") {
+                    if (hasilSuara.includes("you're welcome") || hasilSuara.includes("you are welcome")) {
+                        isMatch = true;
+                    }
+                }
+
+                if (isMatch) {
                     pesanHasil.innerHTML = "✅ Pelafalan Sempurna! (+10 Poin)";
                     pesanHasil.className = "mt-4 text-xl font-bold p-4 rounded-xl bg-green-100 text-green-700 border-2 border-green-200";
                     
