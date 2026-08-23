@@ -62,16 +62,16 @@
 
     <script>
         const daftarSoal = [
-            { materi: "💡 Teori: Ucapan salam ketika bertemu di pagi hari.", kunci: "good morning", teks: "Good morning" },
-            { materi: "💡 Teori: Ucapan salam ketika bertemu di siang hari.", kunci: "good afternoon", teks: "Good afternoon" },
-            { materi: "💡 Teori: Ungkapan sopan untuk menyampaikan terima kasih.", kunci: "thank you", teks: "Thank you" },
-            { materi: "💡 Teori: Respon ramah saat seseorang berterima kasih.", kunci: "you are welcome", teks: "You're welcome" },
-            { materi: "💡 Teori: Kalimat sederhana untuk menanyakan kabar.", kunci: "how are you", teks: "How are you?" },
-            { materi: "💡 Teori: Pernyataan perpisahan saat hendak beranjak pergi.", kunci: "goodbye", teks: "Goodbye" },
-            { materi: "💡 Teori: Ungkapan meminta maaf atas kesalahan kecil.", kunci: "im sorry", teks: "I'm sorry" },
-            { materi: "💡 Teori: Ucapan selamat malam atau salam perpisahan malam.", kunci: "good night", teks: "Good night" },
-            { materi: "💡 Teori: Ungkapan ramah saat berkenalan pertama kali.", kunci: "nice to meet you", teks: "Nice to meet you" },
-            { materi: "💡 Teori: Pertanyaan sopan saat ingin meminta tolong.", kunci: "can you help me", teks: "Can you help me?" }
+            { materi: "💡 Teori: Ucapan salam ketika bertemu di pagi hari.", kunci: "good morning", teks: "Good morning", clue: "Petunjuk: Kata sapaan pagi (2 kata)." },
+            { materi: "💡 Teori: Ucapan salam ketika bertemu di siang hari.", kunci: "good afternoon", teks: "Good afternoon", clue: "Petunjuk: Kata sapaan siang (2 kata)." },
+            { materi: "💡 Teori: Ungkapan sopan untuk menyampaikan terima kasih.", kunci: "thank you", teks: "Thank you", clue: "Petunjuk: Dua kata untuk berterima kasih." },
+            { materi: "💡 Teori: Respon ramah saat seseorang berterima kasih.", kunci: "you are welcome", teks: "You're welcome", clue: "Petunjuk: Tiga kata untuk membalas 'thank you'." },
+            { materi: "💡 Teori: Kalimat sederhana untuk menanyakan kabar.", kunci: "how are you", teks: "How are you?", clue: "Petunjuk: Tiga kata untuk menanyakan kabar." },
+            { materi: "💡 Teori: Pernyataan perpisahan saat hendak beranjak pergi.", kunci: "goodbye", teks: "Goodbye", clue: "Petunjuk: Satu kata untuk pamit." },
+            { materi: "💡 Teori: Ungkapan meminta maaf atas kesalahan kecil.", kunci: "im sorry", teks: "I'm sorry", clue: "Petunjuk: Dua kata untuk minta maaf." },
+            { materi: "💡 Teori: Ucapan selamat malam atau salam perpisahan malam.", kunci: "good night", teks: "Good night", clue: "Petunjuk: Dua kata untuk malam." },
+            { materi: "💡 Teori: Ungkapan ramah saat berkenalan pertama kali.", kunci: "nice to meet you", teks: "Nice to meet you", clue: "Petunjuk: Empat kata saat berkenalan." },
+            { materi: "💡 Teori: Pertanyaan sopan saat ingin meminta tolong.", kunci: "can you help me", teks: "Can you help me?", clue: "Petunjuk: Empat kata untuk minta bantuan." }
         ];
 
         let indeksSoalAktif = 0;
@@ -86,8 +86,12 @@
             document.getElementById("teksTangkapan").innerHTML = "(Belum ada suara)";
             document.getElementById("pesanHasil").classList.add("hidden");
             document.getElementById("tombolLanjut").classList.add("hidden");
-            document.getElementById("tombolBicara").classList.replace("bg-gray-400", "bg-purple-500");
-            document.getElementById("tombolBicara.innerHTML").innerHTML = '<span>🎤 Mulai Bicara</span>';
+            document.getElementById("tombolSelesai").classList.add("hidden");
+            
+            let tombol = document.getElementById("tombolBicara");
+            tombol.innerHTML = '<span>🎤 Mulai Bicara</span>';
+            tombol.className = "bg-purple-500 text-white px-6 py-3 rounded-2xl font-bold text-lg hover:bg-purple-600 shadow-md inline-flex items-center gap-2";
+            
             sudahBenar = false;
         }
 
@@ -116,7 +120,7 @@
             mesinPengecek.lang = "en-US";
 
             tombol.innerHTML = "🔴 Mendengarkan...";
-            tombol.classList.replace("bg-purple-500", "bg-red-500");
+            tombol.className = "bg-red-500 text-white px-6 py-3 rounded-2xl font-bold text-lg shadow-md inline-flex items-center gap-2";
             mesinPengecek.start();
 
             mesinPengecek.onresult = function(event) {
@@ -133,8 +137,9 @@
                     poinSesi += 10;
                     document.getElementById("poinSesiTampil").innerHTML = poinSesi;
                     sudahBenar = true;
-                    tombol.classList.replace("bg-red-500", "bg-gray-400");
-                    tombol.innerHTML = "Selesai";
+                    
+                    tombol.innerHTML = "✅ Selesai";
+                    tombol.className = "bg-gray-400 text-white px-6 py-3 rounded-2xl font-bold text-lg shadow-md inline-flex items-center gap-2";
 
                     if (indeksSoalAktif < daftarSoal.length - 1) {
                         document.getElementById("tombolLanjut").classList.remove("hidden");
@@ -142,7 +147,7 @@
                         document.getElementById("tombolSelesai").classList.remove("hidden");
                     }
                 } else {
-                    pesanHasil.innerHTML = `❌ Kurang pas. Coba dengar contohnya lalu ulangi lagi!`;
+                    pesanHasil.innerHTML = `❌ Pelafalan kurang akurat.<br><span class="text-sm font-normal">${soalAktif.clue}</span>`;
                     pesanHasil.className = "mt-4 text-xl font-bold p-4 rounded-xl bg-red-100 text-red-700 border-2 border-red-200";
                 }
             };
@@ -151,9 +156,17 @@
                 mesinPengecek.stop();
                 if (!sudahBenar) {
                     tombol.innerHTML = '<span>🎤 Mulai Bicara</span>';
-                    tombol.classList.replace("bg-red-500", "bg-purple-500");
+                    tombol.className = "bg-purple-500 text-white px-6 py-3 rounded-2xl font-bold text-lg hover:bg-purple-600 shadow-md inline-flex items-center gap-2";
                 }
-            }
+            };
+
+            mesinPengecek.onerror = function(event) {
+                console.warn("Speech recognition error:", event.error);
+                if (!sudahBenar) {
+                    tombol.innerHTML = '<span>🎤 Mulai Bicara</span>';
+                    tombol.className = "bg-purple-500 text-white px-6 py-3 rounded-2xl font-bold text-lg hover:bg-purple-600 shadow-md inline-flex items-center gap-2";
+                }
+            };
         }
 
         function soalBerikutnya() {
