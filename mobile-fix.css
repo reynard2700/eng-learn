@@ -1,0 +1,272 @@
+/* ====================================================
+   MOBILE FIX - ENG-LEARN
+   Berlaku untuk semua halaman (index, smp, sma, modul)
+   ==================================================== */
+
+/* ---------- UKURAN MINIMUM TOMBOL ---------- */
+button,
+a.button-like,
+[onclick],
+a.bg-blue-500,
+a.bg-orange-500,
+.bg-green-500,
+.bg-purple-500,
+.bg-red-500 {
+    min-height: 48px !important;
+    min-width: 48px !important;
+    touch-action: manipulation;
+}
+
+/* ---------- INDEX.HTML (HALAMAN DEPAN) ---------- */
+@media (max-width: 640px) {
+    /* Layout kartu jadi vertikal */
+    .flex-col.md\:flex-row {
+        flex-direction: column !important;
+        gap: 20px !important;
+    }
+
+    /* Kartu SMP & SMA */
+    .flex-1.bg-white.rounded-3xl {
+        padding: 24px 20px !important;
+        border-radius: 24px !important;
+    }
+
+    /* Judul ENG-LEARN */
+    h1.text-5xl {
+        font-size: 2.8rem !important;
+    }
+    .text-6xl.mb-4 {
+        font-size: 3rem !important;
+    }
+    .text-lg.font-medium.bg-blue-100 {
+        font-size: 0.95rem !important;
+        padding: 10px 18px !important;
+    }
+
+    /* Tombol "Mulai Belajar" di index */
+    a.bg-blue-500,
+    a.bg-orange-500 {
+        padding: 16px !important;
+        font-size: 1.1rem !important;
+        min-height: 56px !important;
+        border-radius: 16px !important;
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+    /* Ikon di kartu */
+    .w-16.h-16 {
+        width: 56px !important;
+        height: 56px !important;
+        font-size: 2rem !important;
+    }
+    h2.text-3xl {
+        font-size: 1.6rem !important;
+    }
+    p.text-gray-600 {
+        font-size: 0.95rem !important;
+        margin-bottom: 16px !important;
+    }
+}
+
+/* ---------- DASHBOARD SMP.HTML & SMA.HTML ---------- */
+@media (max-width: 640px) {
+    /* Top bar (Home & Poin) */
+    .max-w-4xl.mx-auto.mb-8.flex.justify-between {
+        flex-wrap: wrap !important;
+        gap: 12px !important;
+        margin-bottom: 20px !important;
+    }
+    .max-w-4xl.mx-auto.mb-8.flex.justify-between > a,
+    .max-w-4xl.mx-auto.mb-8.flex.justify-between > div {
+        margin-bottom: 4px !important;
+    }
+
+    /* Grid 3 kolom jadi 1 kolom */
+    .grid.grid-cols-1.md\:grid-cols-3 {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+
+    /* Card materi di dashboard */
+    .block.bg-white.rounded-3xl {
+        padding: 20px !important;
+        border-radius: 20px !important;
+    }
+    .text-5xl.mb-4 {
+        font-size: 2.8rem !important;
+    }
+    h3.text-2xl {
+        font-size: 1.3rem !important;
+    }
+
+    /* Judul halaman */
+    h1.text-4xl {
+        font-size: 2rem !important;
+    }
+    .max-w-4xl.mx-auto.text-center.mb-10 {
+        margin-bottom: 24px !important;
+    }
+}
+
+/* ---------- MODUL WRITING, LISTENING, SPEAKING (SMP & SMA) ---------- */
+@media (max-width: 640px) {
+    /* Container utama */
+    .max-w-3xl {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+    .bg-white.rounded-3xl {
+        padding: 16px !important;
+        border-radius: 20px !important;
+    }
+
+    /* Top bar (Kembali & Poin Sesi) */
+    .max-w-3xl.mx-auto.mb-6.flex.justify-between {
+        flex-wrap: wrap !important;
+        gap: 12px !important;
+        margin-bottom: 20px !important;
+    }
+    .max-w-3xl.mx-auto.mb-6.flex.justify-between > a,
+    .max-w-3xl.mx-auto.mb-6.flex.justify-between > div {
+        margin-bottom: 4px !important;
+    }
+
+    /* Judul modul */
+    h1.text-2xl {
+        font-size: 1.25rem !important;
+    }
+    #labelNomorSoal {
+        font-size: 0.75rem !important;
+        padding: 4px 12px !important;
+    }
+
+    /* Teori & soal */
+    #kotakMateri {
+        font-size: 0.9rem !important;
+        padding: 12px !important;
+        margin-bottom: 16px !important;
+    }
+    #teksSoal {
+        font-size: 1rem !important;
+        margin-bottom: 16px !important;
+    }
+
+    /* Area pilihan ganda (Writing) */
+    #areaPilihan {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 14px !important;
+        margin-bottom: 16px !important;
+    }
+    #areaPilihan button {
+        padding: 16px 10px !important;
+        font-size: 0.95rem !important;
+        min-height: 56px !important;
+        border-radius: 16px !important;
+    }
+
+    /* Tombol Kirim, Lanjut, Selesai */
+    #tombolKirim,
+    #tombolLanjut,
+    #tombolSelesai,
+    #tombolCek {
+        padding: 16px !important;
+        font-size: 1.05rem !important;
+        min-height: 56px !important;
+        border-radius: 16px !important;
+        margin-top: 8px !important;
+        margin-bottom: 16px !important;
+    }
+
+    /* Tombol navigasi (Sebelumnya & Lanjut) di bawah */
+    .flex.gap-3 {
+        flex-direction: column !important;
+        gap: 14px !important;
+        margin-top: 12px !important;
+    }
+    #tombolSebelumnya,
+    #tombolLanjut {
+        width: 100% !important;
+        min-height: 52px !important;
+        padding: 14px !important;
+        font-size: 1rem !important;
+        flex: none !important;
+    }
+
+    /* Kotak hasil & penjelasan */
+    #pesanHasil {
+        margin-top: 16px !important;
+        margin-bottom: 16px !important;
+        padding: 12px !important;
+        font-size: 0.95rem !important;
+    }
+    #kotakPenjelasanSemua {
+        margin-top: 12px !important;
+        margin-bottom: 16px !important;
+        padding: 16px !important;
+    }
+    #isiPenjelasanSemua {
+        font-size: 0.85rem !important;
+    }
+
+    /* ===== KHUSUS LISTENING ===== */
+    .bg-gray-50.p-6 {
+        padding: 16px !important;
+    }
+    .bg-green-500.px-8.py-4 {
+        padding: 14px 20px !important;
+        font-size: 1rem !important;
+        min-height: 52px !important;
+        margin-bottom: 20px !important;
+        border-radius: 16px !important;
+    }
+    input[type="text"] {
+        font-size: 1rem !important;
+        min-height: 48px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 12px !important;
+        margin-bottom: 16px !important;
+        border-radius: 12px !important;
+    }
+
+    /* ===== KHUSUS SPEAKING ===== */
+    #teksSoal.text-3xl {
+        font-size: 1.6rem !important;
+        padding: 16px 12px !important;
+    }
+    .bg-green-500.px-6.py-3,
+    .bg-purple-500.px-6.py-3,
+    .bg-red-500.px-6.py-3 {
+        padding: 14px 18px !important;
+        font-size: 0.95rem !important;
+        min-height: 52px !important;
+        border-radius: 16px !important;
+    }
+    #teksTangkapan {
+        font-size: 1rem !important;
+        min-height: 50px !important;
+        padding: 12px !important;
+    }
+
+    /* ===== KHUSUS WRITING (Pilihan Ganda) ===== */
+    /* Efek sentuh (touch feedback) */
+    button:active,
+    [onclick]:active {
+        transform: scale(0.96);
+        transition: transform 0.1s ease;
+    }
+
+    /* Hilangkan hover di HP */
+    @media (hover: none) {
+        button:hover {
+            transform: none !important;
+        }
+        #areaPilihan button:hover {
+            background-color: white !important;
+            border-color: #blue-200 !important;
+        }
+    }
+}
