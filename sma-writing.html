@@ -1,7 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing SMA (20 Soal Grammar Mix) | ENG-LEARN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+        body { font-family: 'Poppins', sans-serif; }
+    </style>
+</head>
+<body class="min-h-screen p-6 bg-orange-50">
+    
+    <div class="max-w-3xl mx-auto mb-6 flex justify-between items-center">
+        <a href="sma.html" onclick="return confirm('Yakin mau kembali? Poin sesi ini akan hangus lho!')" class="inline-flex items-center text-red-500 hover:text-red-700 font-bold bg-white px-4 py-2 rounded-xl shadow-sm border border-orange-100 transition-all">
+            ⬅️ Batal & Kembali
+        </a>
+        <div class="bg-orange-500 text-white font-bold px-6 py-2 rounded-xl shadow-md flex items-center gap-2 text-lg">
+            ⭐ Poin Sesi: <span id="poinSesiTampil">0</span>
+        </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto bg-white rounded-3xl p-8 shadow-xl border-2 border-orange-50">
+        <div class="flex justify-between items-center mb-4 border-b-2 border-orange-100 pb-4">
+            <h1 class="text-2xl font-bold text-gray-800">📝 Writing SMA: Grammar & Connectors (20 Soal)</h1>
+            <span id="labelNomorSoal" class="bg-orange-100 text-orange-700 font-bold px-4 py-1 rounded-full text-sm">Soal 1 dari 20</span>
+        </div>
+        
+        <div id="kotakMateri" class="mb-6 text-gray-700 text-base bg-orange-50 p-4 rounded-xl border border-orange-100 font-medium"></div>
+
+        <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100">
+            <div id="teksSoal" class="text-xl font-medium mb-6 leading-relaxed text-center"></div>
+            
+            <div id="areaPilihan" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6"></div>
+
+            <button id="tombolKirim" onclick="kirimJawaban()" class="w-full bg-orange-500 text-white px-6 py-3 rounded-xl font-bold text-lg hover:bg-orange-600 shadow-md transition-colors mb-4">
+                🚀 Kirim Jawaban
+            </button>
+
+            <div id="pesanHasil" class="hidden mb-6 p-4 rounded-xl border-2"></div>
+
+            <div id="kotakPenjelasanSemua" class="hidden mb-6 p-5 rounded-xl bg-white border-2 border-orange-200 shadow-sm">
+                <h3 class="font-bold text-orange-900 mb-3 text-base">📚 Bedah Fungsi Semua Opsi:</h3>
+                <div id="isiPenjelasanSemua" class="space-y-3 text-sm text-gray-700"></div>
+            </div>
+
+            <div class="flex gap-3">
+                <button id="tombolSebelumnya" onclick="soalSebelumnya()" class="hidden flex-1 bg-gray-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-gray-600 shadow-md transition-colors">
+                    ⬅️ Sebelumnya
+                </button>
+                <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden flex-1 bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-green-600 shadow-md transition-colors">
+                    ➡️ Lanjut 
+                </button>
+            </div>
+
+            <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700 shadow-lg">
+                🎉 Selesai & Simpan Poin!
+            </button>
+        </div>
+    </div>
+
+    <script>
         const daftarSoal = [
             // 1. Connector: Therefore
             {
-                materi: "💡 Teori: 'Therefore' = kesimpulan logis / akibat.",
+                materi: "💡 Teori: 'Therefore' = kesimpulan logis / akibat langsung.",
                 depan: "It was raining heavily,",
                 belakang: "we canceled the match.",
                 pilihan: ["therefore", "however", "furthermore", "meanwhile"],
@@ -27,7 +90,7 @@
                     "instead": "<b>Instead:</b> Salah. Alternatif."
                 }
             },
-            // 3. [BARU] So...that / Such...that
+            // 3. So...that / Such...that
             {
                 materi: "💡 Teori: 'So + adjective + that' (begitu...hingga). 'Such + noun + that'.",
                 depan: "It was",
@@ -41,7 +104,7 @@
                     "very": "<b>Very:</b> Salah. Hanya penguat, tanpa 'that'."
                 }
             },
-            // 4. [BARU] Conditional Type 3 (Past Unreal)
+            // 4. Conditional Type 3 (Past Unreal)
             {
                 materi: "💡 Teori: Kondisi masa lalu yang tidak terjadi: If + had + V3, would have + V3.",
                 depan: "If she had studied,",
@@ -209,7 +272,7 @@
                     "for": "<b>For:</b> Salah."
                 }
             },
-            // 16. [BARU] Subjunctive
+            // 16. Subjunctive
             {
                 materi: "💡 Teori: Subjunctive untuk saran (suggest/recommend) pakai should + V1 atau V1 tanpa 's'.",
                 depan: "I suggest that he",
@@ -237,7 +300,7 @@
                     "turn up": "<b>Turn up:</b> Salah. Membesarkan."
                 }
             },
-            // 18. [BARU] Gerund vs Infinitive (Stop)
+            // 18. Gerund vs Infinitive (Stop)
             {
                 materi: "💡 Teori: Stop + V-ing (berhenti melakukan), Stop + to V (berhenti untuk melakukan).",
                 depan: "She stopped",
@@ -280,3 +343,147 @@
                 }
             }
         ];
+
+        let indeksSoalAktif = 0;
+        let poinSesi = 0;
+        let pilihanDipilih = null;
+        let statusRiwayat = {};
+
+        function muatSoal() {
+            let soal = daftarSoal[indeksSoalAktif];
+            document.getElementById("labelNomorSoal").innerHTML = "Soal " + (indeksSoalAktif + 1) + " dari 20";
+            document.getElementById("kotakMateri").innerHTML = soal.materi;
+            let depan = soal.depan ? soal.depan + " " : "";
+            document.getElementById("teksSoal").innerHTML = '"' + depan + '<span class="text-orange-600 font-bold underline bg-orange-100 px-2 py-1 rounded">[ ... ]</span> ' + soal.belakang + '"';
+            
+            let areaPilihan = document.getElementById("areaPilihan");
+            areaPilihan.innerHTML = "";
+            pilihanDipilih = null;
+
+            soal.pilihan.forEach(function(opsi) {
+                let tombol = document.createElement("button");
+                tombol.innerHTML = opsi;
+                tombol.id = "opsi-" + opsi;
+                tombol.className = "bg-white border-2 border-orange-200 text-orange-700 font-bold py-4 rounded-xl shadow-sm hover:bg-orange-50 hover:border-orange-400 transition-all text-xl capitalize";
+                tombol.onclick = function() { pilihOpsi(opsi); };
+                areaPilihan.appendChild(tombol);
+            });
+
+            if (indeksSoalAktif > 0) {
+                document.getElementById("tombolSebelumnya").classList.remove("hidden");
+            } else {
+                document.getElementById("tombolSebelumnya").classList.add("hidden");
+            }
+
+            let riwayat = statusRiwayat[indeksSoalAktif];
+            if (riwayat && riwayat.sudahBenar) {
+                pilihanDipilih = riwayat.pilihan;
+                tandaiTombolTerpilih(pilihanDipilih);
+                tampilkanHasilDanBedah(true, true);
+            } else {
+                document.getElementById("pesanHasil").classList.add("hidden");
+                document.getElementById("kotakPenjelasanSemua").classList.add("hidden");
+                document.getElementById("tombolLanjut").classList.add("hidden");
+                document.getElementById("tombolKirim").classList.remove("hidden");
+                document.getElementById("tombolSelesai").classList.add("hidden");
+            }
+        }
+
+        function pilihOpsi(opsi) {
+            let riwayat = statusRiwayat[indeksSoalAktif];
+            if (riwayat && riwayat.sudahBenar) return;
+            pilihanDipilih = opsi;
+            tandaiTombolTerpilih(opsi);
+        }
+
+        function tandaiTombolTerpilih(opsiTerpilih) {
+            let soal = daftarSoal[indeksSoalAktif];
+            soal.pilihan.forEach(function(o) {
+                let btn = document.getElementById("opsi-" + o);
+                if (btn) {
+                    if (o === opsiTerpilih) {
+                        btn.className = "bg-orange-500 border-2 border-orange-600 text-white font-bold py-4 rounded-xl shadow-md transition-all text-xl capitalize";
+                    } else {
+                        btn.className = "bg-white border-2 border-orange-200 text-orange-700 font-bold py-4 rounded-xl shadow-sm hover:bg-orange-50 transition-all text-xl capitalize";
+                    }
+                }
+            });
+        }
+
+        function kirimJawaban() {
+            if (!pilihanDipilih) {
+                alert("Pilih salah satu opsi jawaban terlebih dahulu ya mase!");
+                return;
+            }
+            let soalAktif = daftarSoal[indeksSoalAktif];
+            let isBenar = (pilihanDipilih === soalAktif.kunci);
+            if (isBenar) {
+                if (!statusRiwayat[indeksSoalAktif] || !statusRiwayat[indeksSoalAktif].sudahBenar) {
+                    poinSesi += 20;
+                    document.getElementById("poinSesiTampil").innerHTML = poinSesi;
+                }
+                statusRiwayat[indeksSoalAktif] = { sudahBenar: true, pilihan: pilihanDipilih };
+                tampilkanHasilDanBedah(true, false);
+            } else {
+                statusRiwayat[indeksSoalAktif] = { sudahBenar: false, pilihan: pilihanDipilih };
+                tampilkanHasilDanBedah(false, false);
+            }
+        }
+
+        function tampilkanHasilDanBedah(isBenar, dariReview) {
+            let soalAktif = daftarSoal[indeksSoalAktif];
+            let pesan = document.getElementById("pesanHasil");
+            pesan.classList.remove("hidden");
+            let kotakPenjelasan = document.getElementById("kotakPenjelasanSemua");
+            let isiPenjelasan = document.getElementById("isiPenjelasanSemua");
+            kotakPenjelasan.classList.remove("hidden");
+            let htmlSemua = "";
+            for (let key in soalAktif.penjelasan) {
+                let statusWarna = "text-gray-600 bg-gray-50 p-2 rounded";
+                if (isBenar && key === soalAktif.kunci) {
+                    statusWarna = "text-green-700 font-bold bg-green-50 p-2 rounded border border-green-200";
+                }
+                htmlSemua += '<div class="' + statusWarna + '">• ' + soalAktif.penjelasan[key] + '</div>';
+            }
+            isiPenjelasan.innerHTML = htmlSemua;
+            if (isBenar) {
+                pesan.innerHTML = dariReview ? 
+                    '📚 <b>Mode Review:</b> Soal ini sudah kamu jawab dengan benar sebelumnya.' : 
+                    '🎉 <b>Tepat sekali! Pilihanmu benar.</b>';
+                pesan.className = "mb-4 p-4 rounded-xl border-2 bg-green-50 text-green-800 border-green-200 text-base";
+                document.getElementById("tombolKirim").classList.add("hidden");
+                if (indeksSoalAktif < daftarSoal.length - 1) {
+                    document.getElementById("tombolLanjut").classList.remove("hidden");
+                } else {
+                    document.getElementById("tombolSelesai").classList.remove("hidden");
+                }
+            } else {
+                pesan.innerHTML = '⚠️ <b>Kurang tepat.</b> Jawabannya belum benar, yuk cek fungsi masing-masing opsi di bawah!';
+                pesan.className = "mb-4 p-4 rounded-xl border-2 bg-red-50 text-red-800 border-red-200 text-base";
+                document.getElementById("tombolLanjut").classList.add("hidden");
+                document.getElementById("tombolSelesai").classList.add("hidden");
+            }
+        }
+
+        function soalBerikutnya() {
+            indeksSoalAktif++;
+            muatSoal();
+        }
+
+        function soalSebelumnya() {
+            if (indeksSoalAktif > 0) {
+                indeksSoalAktif--;
+                muatSoal();
+            }
+        }
+
+        function simpanPoinDanSelesai() {
+            let poinTotalLama = parseInt(localStorage.getItem('poinMurid')) || 0;
+            localStorage.setItem('poinMurid', poinTotalLama + poinSesi);
+            window.location.href = "sma.html";
+        }
+
+        muatSoal();
+    </script>
+</body>
+</html>
