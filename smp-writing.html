@@ -1,491 +1,282 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Writing SMP (20 Soal Grammar Mix) | ENG-LEARN</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
-        body { font-family: 'Poppins', sans-serif; }
-    </style>
-</head>
-<body class="min-h-screen p-6 bg-blue-50">
-    
-    <div class="max-w-3xl mx-auto mb-6 flex justify-between items-center">
-        <a href="smp.html" onclick="return confirm('Yakin mau kembali? Poin sesi ini akan hangus lho!')" class="inline-flex items-center text-red-500 hover:text-red-700 font-bold bg-white px-4 py-2 rounded-xl shadow-sm border border-red-100 transition-all">
-            ⬅️ Batal & Kembali
-        </a>
-        <div class="bg-blue-500 text-white font-bold px-6 py-2 rounded-xl shadow-md flex items-center gap-2 text-lg">
-            ⭐ Poin Sesi: <span id="poinSesiTampil">0</span>
-        </div>
-    </div>
-
-    <div class="max-w-3xl mx-auto bg-white rounded-3xl p-8 shadow-xl border-2 border-blue-50">
-        <div class="flex justify-between items-center mb-4 border-b-2 border-blue-100 pb-4">
-            <h1 class="text-2xl font-bold text-gray-800">✍️ Writing SMP: Grammar Mix (20 Soal)</h1>
-            <span id="labelNomorSoal" class="bg-blue-100 text-blue-700 font-bold px-4 py-1 rounded-full text-sm">Soal 1 dari 20</span>
-        </div>
-        
-        <div id="kotakMateri" class="mb-6 text-gray-700 text-base bg-blue-50 p-4 rounded-xl border border-blue-100 font-medium"></div>
-
-        <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100">
-            <div id="teksSoal" class="text-xl font-medium mb-6 leading-relaxed text-center"></div>
-            
-            <div id="areaPilihan" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6"></div>
-
-            <button id="tombolKirim" onclick="kirimJawaban()" class="w-full bg-blue-500 text-white px-6 py-3 rounded-xl font-bold text-lg hover:bg-blue-600 shadow-md transition-colors mb-4">
-                🚀 Kirim Jawaban
-            </button>
-
-            <div id="pesanHasil" class="hidden mb-6 p-4 rounded-xl border-2"></div>
-
-            <div id="kotakPenjelasanSemua" class="hidden mb-6 p-5 rounded-xl bg-white border-2 border-blue-200 shadow-sm">
-                <h3 class="font-bold text-blue-900 mb-3 text-base">📚 Bedah Fungsi Semua Opsi:</h3>
-                <div id="isiPenjelasanSemua" class="space-y-3 text-sm text-gray-700"></div>
-            </div>
-
-            <div class="flex gap-3">
-                <button id="tombolSebelumnya" onclick="soalSebelumnya()" class="hidden flex-1 bg-gray-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-gray-600 shadow-md transition-colors">
-                    ⬅️ Sebelumnya
-                </button>
-                <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden flex-1 bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-green-600 shadow-md transition-colors">
-                    ➡️ Lanjut 
-                </button>
-            </div>
-
-            <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700 shadow-lg">
-                🎉 Selesai & Simpan Poin!
-            </button>
-        </div>
-    </div>
-
-    <script>
-        // ============ 20 SOAL GRAMMAR BERAGAM UNTUK SMP ============
         const daftarSoal = [
             // 1. Simple Present (tunggal)
             {
-                materi: "💡 Teori: Untuk subjek orang ketiga tunggal (He/She/It), kata kerja harus ditambah akhiran -s/-es.",
+                materi: "💡 Teori: Subjek He/She/It -> kata kerja + s/es.",
                 depan: "She",
                 belakang: "to school every day.",
                 pilihan: ["go", "goes", "going", "went"],
                 kunci: "goes",
                 penjelasan: {
-                    "go": "<b>Go:</b> Salah. Bentuk dasar ini untuk subjek I/You/They/We.",
-                    "goes": "<b>Goes:</b> BENAR! Subjek 'She' (tunggal) wajib pakai 'goes' di Simple Present.",
-                    "going": "<b>Going:</b> Salah. Butuh 'to be' (is going) untuk Present Continuous.",
-                    "went": "<b>Went:</b> Salah. Ini adalah bentuk lampau (Past Tense)."
+                    "go": "<b>Go:</b> Salah. Untuk I/You/They/We.",
+                    "goes": "<b>Goes:</b> BENAR! She (tunggal) + goes.",
+                    "going": "<b>Going:</b> Salah. Butuh to be (is going).",
+                    "went": "<b>Went:</b> Salah. Bentuk lampau."
                 }
             },
             // 2. Present Continuous
             {
-                materi: "💡 Teori: Present Continuous digunakan untuk aksi yang sedang berlangsung sekarang. Pola: to be + V-ing.",
+                materi: "💡 Teori: Sedang berlangsung sekarang: to be + V-ing.",
                 depan: "They",
                 belakang: "a movie right now.",
                 pilihan: ["watch", "watches", "watching", "are watching"],
                 kunci: "are watching",
                 penjelasan: {
-                    "watch": "<b>Watch:</b> Salah. Ini Simple Present, tidak cocok dengan 'right now'.",
-                    "watches": "<b>Watches:</b> Salah. Ini untuk subjek tunggal (He/She/It).",
-                    "watching": "<b>Watching:</b> Salah. Kurang 'to be' (are) di depannya.",
-                    "are watching": "<b>Are watching:</b> BENAR! Subjek 'They' (jamak) pakai 'are' + V-ing."
+                    "watch": "<b>Watch:</b> Salah. Simple Present.",
+                    "watches": "<b>Watches:</b> Salah. Untuk tunggal.",
+                    "watching": "<b>Watching:</b> Salah. Kurang 'are'.",
+                    "are watching": "<b>Are watching:</b> BENAR! They (jamak) + are + V-ing."
                 }
             },
             // 3. Simple Past
             {
-                materi: "💡 Teori: Simple Past Tense digunakan untuk kejadian di masa lampau yang sudah selesai.",
+                materi: "💡 Teori: Kejadian lampau selesai (Past Tense).",
                 depan: "I",
                 belakang: "to Bali last holiday.",
                 pilihan: ["go", "went", "have gone", "will go"],
                 kunci: "went",
                 penjelasan: {
-                    "go": "<b>Go:</b> Salah. Ini bentuk Present, tidak cocok dengan 'last holiday'.",
-                    "went": "<b>Went:</b> BENAR! 'Went' adalah bentuk lampau dari 'go' untuk masa lalu.",
-                    "have gone": "<b>Have gone:</b> Salah. Ini Present Perfect, biasanya tanpa keterangan waktu spesifik.",
-                    "will go": "<b>Will go:</b> Salah. Ini untuk masa depan (Future)."
+                    "go": "<b>Go:</b> Salah. Present.",
+                    "went": "<b>Went:</b> BENAR! Lampau dari 'go'.",
+                    "have gone": "<b>Have gone:</b> Salah. Present Perfect.",
+                    "will go": "<b>Will go:</b> Salah. Masa depan."
                 }
             },
             // 4. Simple Future (will)
             {
-                materi: "💡 Teori: 'Will' digunakan untuk menyatakan rencana atau prediksi di masa depan.",
+                materi: "💡 Teori: 'Will' untuk rencana/prediksi masa depan.",
                 depan: "We",
                 belakang: "a new house next year.",
                 pilihan: ["buy", "bought", "will buy", "are buying"],
                 kunci: "will buy",
                 penjelasan: {
-                    "buy": "<b>Buy:</b> Salah. Ini Present, tidak cocok dengan 'next year'.",
-                    "bought": "<b>Bought:</b> Salah. Ini Past Tense, sedangkan 'next year' adalah masa depan.",
-                    "will buy": "<b>Will buy:</b> BENAR! 'Will' + V1 untuk menyatakan rencana masa depan.",
-                    "are buying": "<b>Are buying:</b> Bisa dipakai untuk rencana dekat, tapi 'will buy' lebih tepat untuk 'next year'."
+                    "buy": "<b>Buy:</b> Salah. Present.",
+                    "bought": "<b>Bought:</b> Salah. Past.",
+                    "will buy": "<b>Will buy:</b> BENAR! Masa depan.",
+                    "are buying": "<b>Are buying:</b> Bisa, tapi 'will buy' lebih tepat untuk 'next year'."
                 }
             },
-            // 5. Preposition of Time
+            // 5. [BARU] Preposition of Place
             {
-                materi: "💡 Teori: Preposisi waktu: AT untuk jam spesifik, ON untuk hari/tanggal, IN untuk bulan/tahun.",
-                depan: "I wake up",
-                belakang: "5 o'clock every morning.",
+                materi: "💡 Teori: IN (ruang tertutup), ON (permukaan), AT (titik spesifik).",
+                depan: "The book is",
+                belakang: "the table.",
                 pilihan: ["in", "on", "at", "to"],
-                kunci: "at",
+                kunci: "on",
                 penjelasan: {
-                    "in": "<b>In:</b> Salah. 'In' dipakai untuk bulan/tahun (in May, in 2025).",
-                    "on": "<b>On:</b> Salah. 'On' dipakai untuk hari/tanggal (on Monday).",
-                    "at": "<b>At:</b> BENAR! 'At' tepat untuk menunjukkan jam spesifik (at 5 o'clock).",
-                    "to": "<b>To:</b> Salah. 'To' menunjukkan arah/tujuan."
+                    "in": "<b>In:</b> Salah. 'In' untuk ruang (in the room).",
+                    "on": "<b>On:</b> BENAR! Buku di atas permukaan meja.",
+                    "at": "<b>At:</b> Salah. 'At' untuk titik (at the bus stop).",
+                    "to": "<b>To:</b> Salah. Menunjukkan arah."
                 }
             },
             // 6. Plural Noun
             {
-                materi: "💡 Teori: Kata benda jamak (plural) biasanya ditambah akhiran -s atau -es.",
+                materi: "💡 Teori: Benda jamak (>1) tambah -s/-es.",
                 depan: "There are three",
                 belakang: "in the basket.",
                 pilihan: ["apple", "apples", "apple's", "appless"],
                 kunci: "apples",
                 penjelasan: {
-                    "apple": "<b>Apple:</b> Salah. 'Three' menunjukkan jumlah lebih dari satu, harus jamak.",
-                    "apples": "<b>Apples:</b> BENAR! Bentuk jamak dari 'apple' adalah 'apples'.",
-                    "apple's": "<b>Apple's:</b> Salah. Ini menunjukkan kepemilikan (punya apel), bukan jumlah.",
-                    "appless": "<b>Appless:</b> Salah. Ini bukan kata dalam bahasa Inggris."
+                    "apple": "<b>Apple:</b> Salah. Tunggal.",
+                    "apples": "<b>Apples:</b> BENAR! Jamak.",
+                    "apple's": "<b>Apple's:</b> Salah. Kepemilikan.",
+                    "appless": "<b>Appless:</b> Salah. Bukan kata."
                 }
             },
-            // 7. Comparative Adjective
+            // 7. [BARU] Present Perfect (pengenalan)
             {
-                materi: "💡 Teori: Kata sifat perbandingan (Comparative) digunakan untuk membandingkan dua hal.",
-                depan: "This movie is",
-                belakang: "than the old one.",
-                pilihan: ["good", "well", "better", "best"],
-                kunci: "better",
+                materi: "💡 Teori: Present Perfect (have/has + V3) untuk pengalaman masa lalu tanpa waktu spesifik.",
+                depan: "I",
+                belakang: "to that museum before.",
+                pilihan: ["go", "went", "have gone", "have been"],
+                kunci: "have been",
                 penjelasan: {
-                    "good": "<b>Good:</b> Salah. Ini bentuk positif, bukan perbandingan.",
-                    "well": "<b>Well:</b> Salah. Ini adalah kata keterangan (adverb), bukan kata sifat.",
-                    "better": "<b>Better:</b> BENAR! Comparative dari 'good' adalah 'better'.",
-                    "best": "<b>Best:</b> Salah. Ini adalah Superlative (paling), untuk membandingkan tiga hal atau lebih."
+                    "go": "<b>Go:</b> Salah. Present.",
+                    "went": "<b>Went:</b> Salah. Past, butuh waktu spesifik.",
+                    "have gone": "<b>Have gone:</b> Salah. Berarti masih di sana.",
+                    "have been": "<b>Have been:</b> BENAR! Pengalaman masa lalu."
                 }
             },
             // 8. Modal "should"
             {
-                materi: "💡 Teori: Modal 'should' digunakan untuk memberi saran atau rekomendasi.",
+                materi: "💡 Teori: 'Should' untuk memberi saran.",
                 depan: "You",
                 belakang: "bring an umbrella today.",
                 pilihan: ["must", "can", "should", "might"],
                 kunci: "should",
                 penjelasan: {
-                    "must": "<b>Must:</b> Kurang tepat. 'Must' menunjukkan keharusan absolut, bukan sekadar saran.",
-                    "can": "<b>Can:</b> Salah. 'Can' menunjukkan kemampuan, bukan saran.",
-                    "should": "<b>Should:</b> BENAR! 'Should' tepat untuk memberikan saran kepada orang lain.",
-                    "might": "<b>Might:</b> Salah. 'Might' menunjukkan kemungkinan (mungkin), bukan saran."
+                    "must": "<b>Must:</b> Kurang tepat. Keharusan absolut.",
+                    "can": "<b>Can:</b> Salah. Kemampuan.",
+                    "should": "<b>Should:</b> BENAR! Saran.",
+                    "might": "<b>Might:</b> Salah. Kemungkinan."
                 }
             },
             // 9. Article "an"
             {
-                materi: "💡 Teori: Artikel 'an' digunakan di depan kata benda yang diawali bunyi vokal (a, i, u, e, o).",
+                materi: "💡 Teori: 'an' di depan kata benda dengan bunyi vokal (a,i,u,e,o).",
                 depan: "She wants to be",
                 belakang: "engineer.",
                 pilihan: ["a", "an", "the", "none"],
                 kunci: "an",
                 penjelasan: {
-                    "a": "<b>A:</b> Salah. 'A' digunakan sebelum huruf konsonan (a book, a car).",
-                    "an": "<b>An:</b> BENAR! Kata 'engineer' diawali bunyi vokal 'e', jadi pakai 'an'.",
-                    "the": "<b>The:</b> Salah. 'The' digunakan untuk benda yang sudah spesifik/dikenal.",
-                    "none": "<b>None:</b> Salah. Kata benda tunggal yang disebut pertama kali butuh artikel."
+                    "a": "<b>A:</b> Salah. Untuk konsonan.",
+                    "an": "<b>An:</b> BENAR! 'Engineer' bunyi 'e'.",
+                    "the": "<b>The:</b> Salah. Untuk spesifik.",
+                    "none": "<b>None:</b> Salah. Butuh artikel."
                 }
             },
             // 10. Question Word (Do/Does)
             {
-                materi: "💡 Teori: Untuk membuat kalimat tanya (interrogative) dengan subjek I/You/They/We, gunakan kata tanya 'Do'.",
+                materi: "💡 Teori: 'Do' untuk I/You/They/We, 'Does' untuk He/She/It.",
                 depan: "",
                 belakang: "you like to dance?",
                 pilihan: ["Are", "Do", "Does", "Is"],
                 kunci: "Do",
                 penjelasan: {
-                    "Are": "<b>Are:</b> Salah. 'Are' dipakai untuk to be, bukan kata kerja 'like'.",
-                    "Do": "<b>Do:</b> BENAR! 'You' menggunakan kata bantu 'Do' untuk pertanyaan.",
-                    "Does": "<b>Does:</b> Salah. 'Does' untuk subjek tunggal (He/She/It).",
-                    "Is": "<b>Is:</b> Salah. 'Is' adalah to be, tidak cocok di sini."
+                    "Are": "<b>Are:</b> Salah. To be.",
+                    "Do": "<b>Do:</b> BENAR! You + Do.",
+                    "Does": "<b>Does:</b> Salah. Untuk tunggal.",
+                    "Is": "<b>Is:</b> Salah. To be."
                 }
             },
-            // ============ SOAL 11-20 (TAMBAHAN) ============
-            // 11. TO BE (am/is/are) - khusus 'am'
+            // 11. To Be (am)
             {
-                materi: "💡 Teori: 'Am' digunakan khusus untuk subjek 'I'. 'Is' untuk He/She/It. 'Are' untuk You/They/We.",
+                materi: "💡 Teori: I -> am, He/She/It -> is, You/They/We -> are.",
                 depan: "I",
                 belakang: "a dedicated student.",
                 pilihan: ["am", "is", "are", "be"],
                 kunci: "am",
                 penjelasan: {
-                    "am": "<b>Am:</b> BENAR! Subjek 'I' selalu berpasangan dengan 'am'.",
-                    "is": "<b>Is:</b> Salah. 'Is' untuk subjek He/She/It (tunggal).",
-                    "are": "<b>Are:</b> Salah. 'Are' untuk subjek jamak (You/They/We).",
-                    "be": "<b>Be:</b> Salah. 'Be' adalah bentuk dasar tanpa subjek."
+                    "am": "<b>Am:</b> BENAR! I + am.",
+                    "is": "<b>Is:</b> Salah. Untuk tunggal.",
+                    "are": "<b>Are:</b> Salah. Untuk jamak.",
+                    "be": "<b>Be:</b> Salah. Bentuk dasar."
                 }
             },
             // 12. Present Continuous Question (Is)
             {
-                materi: "💡 Teori: Kalimat tanya Present Continuous: To be + subjek + V-ing?",
+                materi: "💡 Teori: Tanya Continuous: To be + subjek + V-ing?",
                 depan: "",
                 belakang: "she reading a book now?",
                 pilihan: ["Is", "Are", "Do", "Does"],
                 kunci: "Is",
                 penjelasan: {
-                    "Is": "<b>Is:</b> BENAR! Subjek 'she' (tunggal) pakai 'Is' untuk Present Continuous.",
-                    "Are": "<b>Are:</b> Salah. 'Are' untuk subjek jamak (they/we/you).",
-                    "Do": "<b>Do:</b> Salah. 'Do' untuk pertanyaan Simple Present, bukan Continuous.",
-                    "Does": "<b>Does:</b> Salah. 'Does' juga untuk Simple Present tunggal."
+                    "Is": "<b>Is:</b> BENAR! She + Is.",
+                    "Are": "<b>Are:</b> Salah. Untuk jamak.",
+                    "Do": "<b>Do:</b> Salah. Simple Present.",
+                    "Does": "<b>Does:</b> Salah. Simple Present."
                 }
             },
             // 13. Irregular Verb (Past)
             {
-                materi: "💡 Teori: Beberapa kata kerja berubah bentuk tidak beraturan (irregular) saat menjadi Past Tense.",
+                materi: "💡 Teori: Kata kerja tidak beraturan (eat -> ate).",
                 depan: "She",
                 belakang: "an apple this morning.",
                 pilihan: ["eat", "ate", "eaten", "eats"],
                 kunci: "ate",
                 penjelasan: {
-                    "eat": "<b>Eat:</b> Salah. Ini bentuk Present, tidak cocok dengan 'this morning'.",
-                    "ate": "<b>Ate:</b> BENAR! Bentuk lampau dari 'eat' adalah 'ate'.",
-                    "eaten": "<b>Eaten:</b> Salah. Ini adalah Past Participle (V3), butuh 'has/have'.",
-                    "eats": "<b>Eats:</b> Salah. Ini Present untuk subjek tunggal, tidak cocok untuk masa lalu."
+                    "eat": "<b>Eat:</b> Salah. Present.",
+                    "ate": "<b>Ate:</b> BENAR! Lampau dari eat.",
+                    "eaten": "<b>Eaten:</b> Salah. V3 (butuh has/have).",
+                    "eats": "<b>Eats:</b> Salah. Present tunggal."
                 }
             },
             // 14. Future "going to"
             {
-                materi: "💡 Teori: 'Going to' digunakan untuk menyatakan rencana yang sudah pasti di masa depan.",
+                materi: "💡 Teori: 'Going to' untuk rencana pasti.",
                 depan: "We",
                 belakang: "visit grandma next week.",
                 pilihan: ["go", "went", "will go", "are going to"],
                 kunci: "are going to",
                 penjelasan: {
-                    "go": "<b>Go:</b> Salah. Ini Present, tidak cocok dengan 'next week'.",
-                    "went": "<b>Went:</b> Salah. Ini Past Tense.",
-                    "will go": "<b>Will go:</b> Bisa dipakai, tapi 'are going to' lebih natural untuk rencana yang sudah pasti.",
-                    "are going to": "<b>Are going to:</b> BENAR! 'We are going to' menunjukkan rencana yang sudah matang."
+                    "go": "<b>Go:</b> Salah. Present.",
+                    "went": "<b>Went:</b> Salah. Past.",
+                    "will go": "<b>Will go:</b> Bisa, tapi 'going to' lebih natural untuk rencana matang.",
+                    "are going to": "<b>Are going to:</b> BENAR!"
                 }
             },
-            // 15. QUANTIFIER (much/many) - untuk uncountable/countable
+            // 15. Quantifier (much/many)
             {
-                materi: "💡 Teori: 'Much' untuk benda tak terhitung (uncountable), 'Many' untuk benda terhitung jamak (countable plural).",
+                materi: "💡 Teori: Much (uncountable - susu, air), Many (countable plural - buku, mobil).",
                 depan: "There isn't",
                 belakang: "milk in the fridge.",
                 pilihan: ["many", "much", "few", "a lot"],
                 kunci: "much",
                 penjelasan: {
-                    "many": "<b>Many:</b> Salah. 'Many' untuk countable plural (books, cars).",
-                    "much": "<b>Much:</b> BENAR! 'Milk' adalah uncountable, jadi pakai 'much'.",
-                    "few": "<b>Few:</b> Salah. 'Few' untuk countable plural dengan arti 'sedikit'.",
-                    "a lot": "<b>A lot:</b> Kurang tepat. 'A lot' biasanya di kalimat positif, di negatif lebih natural 'much'."
+                    "many": "<b>Many:</b> Salah. Untuk countable.",
+                    "much": "<b>Much:</b> BENAR! Milk uncountable.",
+                    "few": "<b>Few:</b> Salah. Untuk countable.",
+                    "a lot": "<b>A lot:</b> Kurang tepat di negatif."
                 }
             },
-            // 16. Comparative (faster)
+            // 16. [BARU] Past Continuous
             {
-                materi: "💡 Teori: Untuk kata sifat pendek (1 suku kata), tambahkan '-er' untuk perbandingan.",
-                depan: "This car is",
-                belakang: "than that one.",
-                pilihan: ["fast", "faster", "fastest", "more fast"],
-                kunci: "faster",
+                materi: "💡 Teori: Aksi yang sedang berlangsung di masa lalu: was/were + V-ing.",
+                depan: "She",
+                belakang: "dinner when I arrived.",
+                pilihan: ["cook", "cooked", "was cooking", "has cooked"],
+                kunci: "was cooking",
                 penjelasan: {
-                    "fast": "<b>Fast:</b> Salah. Ini bentuk positif, bukan perbandingan.",
-                    "faster": "<b>Faster:</b> BENAR! 'Fast' (1 suku kata) jadi 'faster'.",
-                    "fastest": "<b>Fastest:</b> Salah. Ini Superlative (paling cepat), untuk 3+ benda.",
-                    "more fast": "<b>More fast:</b> Salah. Untuk kata pendek, pakai '-er', bukan 'more'."
+                    "cook": "<b>Cook:</b> Salah. Present.",
+                    "cooked": "<b>Cooked:</b> Salah. Simple Past.",
+                    "was cooking": "<b>Was cooking:</b> BENAR! Sedang memasak ketika saya tiba.",
+                    "has cooked": "<b>Has cooked:</b> Salah. Present Perfect."
                 }
             },
-            // 17. Modal "can" for ability
+            // 17. Modal "can"
             {
-                materi: "💡 Teori: 'Can' digunakan untuk menyatakan kemampuan (ability).",
+                materi: "💡 Teori: 'Can' untuk kemampuan (ability).",
                 depan: "I",
                 belakang: "speak three languages.",
                 pilihan: ["can", "may", "must", "should"],
                 kunci: "can",
                 penjelasan: {
-                    "can": "<b>Can:</b> BENAR! 'Can' tepat untuk menunjukkan kemampuan.",
-                    "may": "<b>May:</b> Salah. 'May' untuk izin atau kemungkinan, bukan kemampuan.",
-                    "must": "<b>Must:</b> Salah. 'Must' untuk keharusan.",
-                    "should": "<b>Should:</b> Salah. 'Should' untuk saran."
+                    "can": "<b>Can:</b> BENAR! Kemampuan.",
+                    "may": "<b>May:</b> Salah. Izin/kemungkinan.",
+                    "must": "<b>Must:</b> Salah. Keharusan.",
+                    "should": "<b>Should:</b> Salah. Saran."
                 }
             },
-            // 18. Possessive Pronoun (mine)
+            // 18. Possessive Pronoun
             {
-                materi: "💡 Teori: Possessive Pronoun (milik) tanpa kata benda: mine, yours, his, hers, ours, theirs.",
+                materi: "💡 Teori: Possessive Pronoun (mine, yours, his, hers, ours, theirs) tanpa kata benda.",
                 depan: "This bag is",
                 belakang: ", not yours.",
                 pilihan: ["my", "mine", "me", "I"],
                 kunci: "mine",
                 penjelasan: {
-                    "my": "<b>My:</b> Salah. 'My' diikuti kata benda (my bag).",
-                    "mine": "<b>Mine:</b> BENAR! 'Mine' berdiri sendiri tanpa kata benda.",
-                    "me": "<b>Me:</b> Salah. 'Me' adalah object pronoun (untuk objek).",
-                    "I": "<b>I:</b> Salah. 'I' adalah subject pronoun (subjek)."
+                    "my": "<b>My:</b> Salah. Diikuti kata benda (my bag).",
+                    "mine": "<b>Mine:</b> BENAR! Berdiri sendiri.",
+                    "me": "<b>Me:</b> Salah. Object pronoun.",
+                    "I": "<b>I:</b> Salah. Subject pronoun."
                 }
             },
-            // 19. QUANTIFIER (more/less) - perbandingan uncountable
+            // 19. [BARU] Conjunction (because/so)
             {
-                materi: "💡 Teori: 'Less' untuk uncountable (uang, waktu, air), 'Fewer' untuk countable (buku, teman).",
-                depan: "I have",
-                belakang: "money than you.",
-                pilihan: ["more", "much", "less", "few"],
-                kunci: "less",
+                materi: "💡 Teori: 'Because' (sebab), 'So' (akibat).",
+                depan: "She was happy",
+                belakang: "she got a gift.",
+                pilihan: ["because", "so", "but", "although"],
+                kunci: "because",
                 penjelasan: {
-                    "more": "<b>More:</b> Bisa dipakai, tapi 'less' lebih tepat karena menyiratkan jumlah yang lebih sedikit.",
-                    "much": "<b>Much:</b> Salah. Tidak dipakai untuk perbandingan langsung dengan 'than'.",
-                    "less": "<b>Less:</b> BENAR! 'Money' adalah uncountable, jadi pakai 'less' untuk perbandingan.",
-                    "few": "<b>Few:</b> Salah. 'Few' untuk countable plural (few books)."
+                    "because": "<b>Because:</b> BENAR! Menunjukkan alasan (sebab).",
+                    "so": "<b>So:</b> Salah. Menunjukkan akibat.",
+                    "but": "<b>But:</b> Salah. Menunjukkan pertentangan.",
+                    "although": "<b>Although:</b> Salah. Meskipun."
                 }
             },
-            // 20. QUANTIFIER (any) - untuk negatif/tanya
+            // 20. Quantifier (any)
             {
-                materi: "💡 Teori: Dalam kalimat negatif atau pertanyaan, gunakan 'any' untuk kata benda tak tentu.",
+                materi: "💡 Teori: Di negatif/tanya, pakai 'any'.",
                 depan: "There isn't",
                 belakang: "sugar in the jar.",
                 pilihan: ["some", "any", "many", "much"],
                 kunci: "any",
                 penjelasan: {
-                    "some": "<b>Some:</b> Salah. 'Some' untuk kalimat positif.",
-                    "any": "<b>Any:</b> BENAR! Kalimat negatif ('isn't') menggunakan 'any'.",
-                    "many": "<b>Many:</b> Salah. 'Many' untuk countable, dan di negatif biasanya pakai 'any'.",
-                    "much": "<b>Much:</b> Bisa dipakai, tapi 'any' lebih umum untuk negatif/pertanyaan."
+                    "some": "<b>Some:</b> Salah. Untuk positif.",
+                    "any": "<b>Any:</b> BENAR! Negatif pakai 'any'.",
+                    "many": "<b>Many:</b> Salah. Untuk countable.",
+                    "much": "<b>Much:</b> Bisa, tapi 'any' lebih umum."
                 }
             }
         ];
-
-        let indeksSoalAktif = 0;
-        let poinSesi = 0;
-        let pilihanDipilih = null;
-        let statusRiwayat = {};
-
-        function muatSoal() {
-            let soal = daftarSoal[indeksSoalAktif];
-            document.getElementById("labelNomorSoal").innerHTML = `Soal ${indeksSoalAktif + 1} dari 20`;
-            document.getElementById("kotakMateri").innerHTML = soal.materi;
-            let depan = soal.depan ? `${soal.depan} ` : "";
-            document.getElementById("teksSoal").innerHTML = `"${depan}<span class='text-blue-600 font-bold underline bg-blue-100 px-2 py-1 rounded'>[ ... ]</span> ${soal.belakang}"`;
-            
-            let areaPilihan = document.getElementById("areaPilihan");
-            areaPilihan.innerHTML = "";
-            pilihanDipilih = null;
-
-            soal.pilihan.forEach(opsi => {
-                let tombol = document.createElement("button");
-                tombol.innerHTML = opsi;
-                tombol.id = "opsi-" + opsi;
-                tombol.className = "bg-white border-2 border-blue-200 text-blue-700 font-bold py-4 rounded-xl shadow-sm hover:bg-blue-50 hover:border-blue-400 transition-all text-xl capitalize";
-                tombol.onclick = function() { pilihOpsi(opsi); };
-                areaPilihan.appendChild(tombol);
-            });
-
-            if (indeksSoalAktif > 0) {
-                document.getElementById("tombolSebelumnya").classList.remove("hidden");
-            } else {
-                document.getElementById("tombolSebelumnya").classList.add("hidden");
-            }
-
-            let riwayat = statusRiwayat[indeksSoalAktif];
-            if (riwayat && riwayat.sudahBenar) {
-                pilihanDipilih = riwayat.pilihan;
-                tandaiTombolTerpilih(pilihanDipilih);
-                tampilkanHasilDanBedah(true, true);
-            } else {
-                document.getElementById("pesanHasil").classList.add("hidden");
-                document.getElementById("kotakPenjelasanSemua").classList.add("hidden");
-                document.getElementById("tombolLanjut").classList.add("hidden");
-                document.getElementById("tombolKirim").classList.remove("hidden");
-                document.getElementById("tombolSelesai").classList.add("hidden");
-            }
-        }
-
-        function pilihOpsi(opsi) {
-            let riwayat = statusRiwayat[indeksSoalAktif];
-            if (riwayat && riwayat.sudahBenar) return;
-            pilihanDipilih = opsi;
-            tandaiTombolTerpilih(opsi);
-        }
-
-        function tandaiTombolTerpilih(opsiTerpilih) {
-            let soal = daftarSoal[indeksSoalAktif];
-            soal.pilihan.forEach(o => {
-                let btn = document.getElementById("opsi-" + o);
-                if (btn) {
-                    if (o === opsiTerpilih) {
-                        btn.className = "bg-blue-500 border-2 border-blue-600 text-white font-bold py-4 rounded-xl shadow-md transition-all text-xl capitalize";
-                    } else {
-                        btn.className = "bg-white border-2 border-blue-200 text-blue-700 font-bold py-4 rounded-xl shadow-sm hover:bg-blue-50 transition-all text-xl capitalize";
-                    }
-                }
-            });
-        }
-
-        function kirimJawaban() {
-            if (!pilihanDipilih) {
-                alert("Pilih salah satu opsi jawaban terlebih dahulu ya mase!");
-                return;
-            }
-            let soalAktif = daftarSoal[indeksSoalAktif];
-            let isBenar = (pilihanDipilih === soalAktif.kunci);
-            if (isBenar) {
-                if (!statusRiwayat[indeksSoalAktif] || !statusRiwayat[indeksSoalAktif].sudahBenar) {
-                    poinSesi += 10;
-                    document.getElementById("poinSesiTampil").innerHTML = poinSesi;
-                }
-                statusRiwayat[indeksSoalAktif] = { sudahBenar: true, pilihan: pilihanDipilih };
-                tampilkanHasilDanBedah(true, false);
-            } else {
-                statusRiwayat[indeksSoalAktif] = { sudahBenar: false, pilihan: pilihanDipilih };
-                tampilkanHasilDanBedah(false, false);
-            }
-        }
-
-        function tampilkanHasilDanBedah(isBenar, dariReview) {
-            let soalAktif = daftarSoal[indeksSoalAktif];
-            let pesan = document.getElementById("pesanHasil");
-            pesan.classList.remove("hidden");
-            let kotakPenjelasan = document.getElementById("kotakPenjelasanSemua");
-            let isiPenjelasan = document.getElementById("isiPenjelasanSemua");
-            kotakPenjelasan.classList.remove("hidden");
-            let htmlSemua = "";
-            for (let key in soalAktif.penjelasan) {
-                let statusWarna = "text-gray-600 bg-gray-50 p-2 rounded";
-                if (isBenar && key === soalAktif.kunci) {
-                    statusWarna = "text-green-700 font-bold bg-green-50 p-2 rounded border border-green-200";
-                }
-                htmlSemua += `<div class="${statusWarna}">• ${soalAktif.penjelasan[key]}</div>`;
-            }
-            isiPenjelasan.innerHTML = htmlSemua;
-            if (isBenar) {
-                pesan.innerHTML = dariReview ? 
-                    `📚 <b>Mode Review:</b> Soal ini sudah kamu jawab dengan benar sebelumnya.` : 
-                    `🎉 <b>Tepat sekali! Pilihanmu benar.</b>`;
-                pesan.className = "mb-4 p-4 rounded-xl border-2 bg-green-50 text-green-800 border-green-200 text-base";
-                document.getElementById("tombolKirim").classList.add("hidden");
-                if (indeksSoalAktif < daftarSoal.length - 1) {
-                    document.getElementById("tombolLanjut").classList.remove("hidden");
-                } else {
-                    document.getElementById("tombolSelesai").classList.remove("hidden");
-                }
-            } else {
-                pesan.innerHTML = `⚠️ <b>Kurang tepat.</b> Jawabannya belum benar, yuk cek fungsi masing-masing opsi di bawah!`;
-                pesan.className = "mb-4 p-4 rounded-xl border-2 bg-red-50 text-red-800 border-red-200 text-base";
-                document.getElementById("tombolLanjut").classList.add("hidden");
-                document.getElementById("tombolSelesai").classList.add("hidden");
-            }
-        }
-
-        function soalBerikutnya() {
-            indeksSoalAktif++;
-            muatSoal();
-        }
-
-        function soalSebelumnya() {
-            if (indeksSoalAktif > 0) {
-                indeksSoalAktif--;
-                muatSoal();
-            }
-        }
-
-        function simpanPoinDanSelesai() {
-            let poinTotalLama = parseInt(localStorage.getItem('poinMurid')) || 0;
-            localStorage.setItem('poinMurid', poinTotalLama + poinSesi);
-            window.location.href = "smp.html";
-        }
-
-        muatSoal();
-    </script>
-</body>
-</html>

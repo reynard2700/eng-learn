@@ -1,474 +1,282 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Writing SMA (20 Soal Grammar Mix) | ENG-LEARN</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
-        body { font-family: 'Poppins', sans-serif; }
-    </style>
-</head>
-<body class="min-h-screen p-6 bg-orange-50">
-    
-    <div class="max-w-3xl mx-auto mb-6 flex justify-between items-center">
-        <a href="sma.html" onclick="return confirm('Yakin mau kembali? Poin sesi ini akan hangus lho!')" class="inline-flex items-center text-red-500 hover:text-red-700 font-bold bg-white px-4 py-2 rounded-xl shadow-sm border border-orange-100 transition-all">
-            ⬅️ Batal & Kembali
-        </a>
-        <div class="bg-orange-500 text-white font-bold px-6 py-2 rounded-xl shadow-md flex items-center gap-2 text-lg">
-            ⭐ Poin Sesi: <span id="poinSesiTampil">0</span>
-        </div>
-    </div>
-
-    <div class="max-w-3xl mx-auto bg-white rounded-3xl p-8 shadow-xl border-2 border-orange-50">
-        <div class="flex justify-between items-center mb-4 border-b-2 border-orange-100 pb-4">
-            <h1 class="text-2xl font-bold text-gray-800">📝 Writing SMA: Grammar & Connectors</h1>
-            <span id="labelNomorSoal" class="bg-orange-100 text-orange-700 font-bold px-4 py-1 rounded-full text-sm">Soal 1 dari 20</span>
-        </div>
-        
-        <div id="kotakMateri" class="mb-6 text-gray-700 text-base bg-orange-50 p-4 rounded-xl border border-orange-100 font-medium"></div>
-
-        <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100">
-            <div id="teksSoal" class="text-xl font-medium mb-6 leading-relaxed text-center"></div>
-            
-            <div id="areaPilihan" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6"></div>
-
-            <button id="tombolKirim" onclick="kirimJawaban()" class="w-full bg-orange-500 text-white px-6 py-3 rounded-xl font-bold text-lg hover:bg-orange-600 shadow-md transition-colors mb-4">
-                🚀 Kirim Jawaban
-            </button>
-
-            <div id="pesanHasil" class="hidden mb-6 p-4 rounded-xl border-2"></div>
-
-            <div id="kotakPenjelasanSemua" class="hidden mb-6 p-5 rounded-xl bg-white border-2 border-orange-200 shadow-sm">
-                <h3 class="font-bold text-orange-900 mb-3 text-base">📚 Bedah Fungsi Semua Opsi:</h3>
-                <div id="isiPenjelasanSemua" class="space-y-3 text-sm text-gray-700"></div>
-            </div>
-
-            <div class="flex gap-3">
-                <button id="tombolSebelumnya" onclick="soalSebelumnya()" class="hidden flex-1 bg-gray-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-gray-600 shadow-md transition-colors">
-                    ⬅️ Sebelumnya
-                </button>
-                <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden flex-1 bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-green-600 shadow-md transition-colors">
-                    ➡️ Lanjut 
-                </button>
-            </div>
-
-            <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700 shadow-lg">
-                🎉 Selesai & Simpan Poin!
-            </button>
-        </div>
-    </div>
-
-    <script>
-        // ============ 20 SOAL GRAMMAR BERAGAM UNTUK SMA ============
         const daftarSoal = [
-            // 1-5: CONNECTORS
+            // 1. Connector: Therefore
             {
-                materi: "💡 Teori: Connector untuk hubungan sebab-akibat formal.",
+                materi: "💡 Teori: 'Therefore' = kesimpulan logis / akibat.",
                 depan: "It was raining heavily,",
                 belakang: "we canceled the match.",
                 pilihan: ["therefore", "however", "furthermore", "meanwhile"],
                 kunci: "therefore",
                 penjelasan: {
-                    "therefore": "<b>Therefore:</b> BENAR! Dipakai untuk menarik kesimpulan logis atau akibat langsung.",
-                    "however": "<b>However:</b> Salah. Dipakai untuk menyatakan pertentangan/kontras.",
-                    "furthermore": "<b>Furthermore:</b> Salah. Dipakai untuk menambah argumen pendukung.",
-                    "meanwhile": "<b>Meanwhile:</b> Salah. Menunjukkan dua kejadian yang berlangsung bersamaan."
+                    "therefore": "<b>Therefore:</b> BENAR! Akibat langsung.",
+                    "however": "<b>However:</b> Salah. Kontras.",
+                    "furthermore": "<b>Furthermore:</b> Salah. Tambahan info.",
+                    "meanwhile": "<b>Meanwhile:</b> Salah. Bersamaan."
                 }
             },
+            // 2. Connector: However
             {
-                materi: "💡 Teori: Connector untuk pertentangan atau hasil tidak terduga.",
+                materi: "💡 Teori: 'However' = kontras / hasil tak terduga.",
                 depan: "She studied hard;",
                 belakang: "she failed the exam.",
                 pilihan: ["therefore", "however", "moreover", "instead"],
                 kunci: "however",
                 penjelasan: {
-                    "therefore": "<b>Therefore:</b> Salah. Kalau ini, mestinya dia lulus ujian.",
-                    "however": "<b>However:</b> BENAR! Tepat untuk menunjukkan kontras yang mengejutkan.",
-                    "moreover": "<b>Moreover:</b> Salah. Hanya untuk menambah informasi senada.",
-                    "instead": "<b>Instead:</b> Salah. Menunjukkan alternatif pilihan pengganti."
+                    "therefore": "<b>Therefore:</b> Salah. Seharusnya lulus.",
+                    "however": "<b>However:</b> BENAR! Kontras mengejutkan.",
+                    "moreover": "<b>Moreover:</b> Salah. Tambahan senada.",
+                    "instead": "<b>Instead:</b> Salah. Alternatif."
                 }
             },
+            // 3. [BARU] So...that / Such...that
             {
-                materi: "💡 Teori: Connector untuk penambahan argumen pendukung.",
-                depan: "The hotel is cheap;",
-                belakang: ", it is very clean.",
-                pilihan: ["otherwise", "however", "furthermore", "consequently"],
-                kunci: "furthermore",
+                materi: "💡 Teori: 'So + adjective + that' (begitu...hingga). 'Such + noun + that'.",
+                depan: "It was",
+                belakang: "hot that we went swimming.",
+                pilihan: ["so", "such", "too", "very"],
+                kunci: "so",
                 penjelasan: {
-                    "otherwise": "<b>Otherwise:</b> Salah. Menyangkut peringatan kondisi sebaliknya.",
-                    "however": "<b>However:</b> Salah. Ini bukan kalimat bertentangan.",
-                    "furthermore": "<b>Furthermore:</b> BENAR! Menambah kelebihan lain (murah dan bersih).",
-                    "consequently": "<b>Consequently:</b> Salah. Bersih bukan konsekuensi dari murah."
+                    "so": "<b>So:</b> BENAR! So + adjective (hot) + that.",
+                    "such": "<b>Such:</b> Salah. Such + noun (such a hot day).",
+                    "too": "<b>Too:</b> Salah. Terlalu (tanpa 'that').",
+                    "very": "<b>Very:</b> Salah. Hanya penguat, tanpa 'that'."
                 }
             },
+            // 4. [BARU] Conditional Type 3 (Past Unreal)
             {
-                materi: "💡 Teori: Connector untuk aktivitas yang terjadi secara bersamaan.",
-                depan: "John cooked dinner;",
-                belakang: ", Mary cleaned the room.",
-                pilihan: ["meanwhile", "therefore", "instead", "nevertheless"],
-                kunci: "meanwhile",
+                materi: "💡 Teori: Kondisi masa lalu yang tidak terjadi: If + had + V3, would have + V3.",
+                depan: "If she had studied,",
+                belakang: "the exam.",
+                pilihan: ["passes", "would pass", "would have passed", "passed"],
+                kunci: "would have passed",
                 penjelasan: {
-                    "meanwhile": "<b>Meanwhile:</b> BENAR! Menunjukkan dua aktivitas paralel di waktu yang sama.",
-                    "therefore": "<b>Therefore:</b> Salah. Memasak bukan disebabkan oleh membersihkan ruangan.",
-                    "instead": "<b>Instead:</b> Salah. Bukan sebagai pengganti.",
-                    "nevertheless": "<b>Nevertheless:</b> Salah. Ini bukan kalimat pertentangan."
+                    "passes": "<b>Passes:</b> Salah. Type 1.",
+                    "would pass": "<b>Would pass:</b> Salah. Type 2.",
+                    "would have passed": "<b>Would have passed:</b> BENAR! Type 3.",
+                    "passed": "<b>Passed:</b> Salah. Simple Past."
                 }
             },
+            // 5. Connector: Otherwise
             {
-                materi: "💡 Teori: Connector untuk peringatan kondisi sebaliknya.",
+                materi: "💡 Teori: 'Otherwise' = peringatan kondisi sebaliknya.",
                 depan: "Hurry up;",
                 belakang: ", we will miss the train.",
                 pilihan: ["furthermore", "otherwise", "meanwhile", "consequently"],
                 kunci: "otherwise",
                 penjelasan: {
-                    "furthermore": "<b>Furthermore:</b> Salah. Ketinggalan kereta bukan argumen penambah.",
-                    "otherwise": "<b>Otherwise:</b> BENAR! Memperingatkan konsekuensi buruk jika tidak bergegas.",
-                    "meanwhile": "<b>Meanwhile:</b> Salah. Waktu kejadiannya tidak paralel.",
-                    "consequently": "<b>Consequently:</b> Kurang natural untuk peringatan bersyarat."
+                    "furthermore": "<b>Furthermore:</b> Salah.",
+                    "otherwise": "<b>Otherwise:</b> BENAR! Peringatan.",
+                    "meanwhile": "<b>Meanwhile:</b> Salah. Waktu paralel.",
+                    "consequently": "<b>Consequently:</b> Kurang natural."
                 }
             },
-            // 6-10: CONDITIONAL, RELATIVE CLAUSE, PASSIVE, REPORTED SPEECH
+            // 6. Conditional Type 2 (were)
             {
-                materi: "💡 Teori: Conditional Type 2 (khayalan) menggunakan 'were' untuk semua subjek.",
+                materi: "💡 Teori: Type 2 (khayalan) pakai 'were' untuk semua subjek.",
                 depan: "If I",
-                belakang: "you, I would accept the offer.",
+                belakang: "you, I would accept it.",
                 pilihan: ["am", "was", "were", "have been"],
                 kunci: "were",
                 penjelasan: {
-                    "am": "<b>Am:</b> Salah. Ini Present, tidak cocok untuk pengandaian.",
-                    "was": "<b>Was:</b> Salah. Dalam Conditional Type 2, 'were' lebih formal/umum.",
-                    "were": "<b>Were:</b> BENAR! Type 2 selalu pakai 'were' untuk semua subjek.",
-                    "have been": "<b>Have been:</b> Salah. Ini Present Perfect, bukan pengandaian."
+                    "am": "<b>Am:</b> Salah. Present.",
+                    "was": "<b>Was:</b> Kurang tepat. 'Were' lebih formal.",
+                    "were": "<b>Were:</b> BENAR! Type 2 wajib 'were'.",
+                    "have been": "<b>Have been:</b> Salah."
                 }
             },
+            // 7. Conditional Type 1
             {
-                materi: "💡 Teori: Conditional Type 1 (realistis) pola: If + Present, will + V1.",
+                materi: "💡 Teori: Type 1 (realistis): If + Present, will + V1.",
                 depan: "If she studies hard,",
                 belakang: "the exam.",
                 pilihan: ["passes", "will pass", "would pass", "passed"],
                 kunci: "will pass",
                 penjelasan: {
-                    "passes": "<b>Passes:</b> Salah. Butuh 'will' di klausa utama.",
-                    "will pass": "<b>Will pass:</b> BENAR! Pola Type 1: if + present, will + inf.",
-                    "would pass": "<b>Would pass:</b> Salah. Ini pola Type 2.",
-                    "passed": "<b>Passed:</b> Salah. Ini past tense, tidak cocok."
+                    "passes": "<b>Passes:</b> Salah. Butuh 'will'.",
+                    "will pass": "<b>Will pass:</b> BENAR! Type 1.",
+                    "would pass": "<b>Would pass:</b> Salah. Type 2.",
+                    "passed": "<b>Passed:</b> Salah."
                 }
             },
+            // 8. Relative Clause (who)
             {
-                materi: "💡 Teori: Relative Clause untuk orang sebagai subjek menggunakan 'who'.",
+                materi: "💡 Teori: 'Who' untuk orang sebagai subjek.",
                 depan: "The teacher",
-                belakang: "teaches math is very kind.",
+                belakang: "teaches math is kind.",
                 pilihan: ["who", "whom", "which", "whose"],
                 kunci: "who",
                 penjelasan: {
-                    "who": "<b>Who:</b> BENAR! 'Who' untuk orang sebagai subjek (yang mengajar).",
-                    "whom": "<b>Whom:</b> Salah. 'Whom' untuk orang sebagai objek.",
-                    "which": "<b>Which:</b> Salah. 'Which' untuk benda atau hewan.",
-                    "whose": "<b>Whose:</b> Salah. 'Whose' untuk kepemilikan."
+                    "who": "<b>Who:</b> BENAR! Subjek orang.",
+                    "whom": "<b>Whom:</b> Salah. Objek orang.",
+                    "which": "<b>Which:</b> Salah. Benda/hewan.",
+                    "whose": "<b>Whose:</b> Salah. Kepemilikan."
                 }
             },
+            // 9. Passive Voice (was sent)
             {
-                materi: "💡 Teori: Passive Voice (Simple Past) pola: was/were + V3.",
+                materi: "💡 Teori: Past Passive: was/were + V3.",
                 depan: "The letter",
                 belakang: "by the secretary yesterday.",
                 pilihan: ["sent", "is sent", "was sent", "has sent"],
                 kunci: "was sent",
                 penjelasan: {
-                    "sent": "<b>Sent:</b> Salah. Ini aktif tanpa to be.",
-                    "is sent": "<b>Is sent:</b> Salah. Ini Present Passive, tidak cocok dengan 'yesterday'.",
-                    "was sent": "<b>Was sent:</b> BENAR! Subjek tunggal + waktu lampau + V3.",
-                    "has sent": "<b>Has sent:</b> Salah. Ini Active Perfect, bukan passive."
+                    "sent": "<b>Sent:</b> Salah. Aktif.",
+                    "is sent": "<b>Is sent:</b> Salah. Present.",
+                    "was sent": "<b>Was sent:</b> BENAR! Lampau + pasif.",
+                    "has sent": "<b>Has sent:</b> Salah. Aktif Perfect."
                 }
             },
+            // 10. Reported Speech
             {
-                materi: "💡 Teori: Reported Speech mengubah Present menjadi Past.",
+                materi: "💡 Teori: Present Perfect (has) menjadi Past Perfect (had) dalam Reported Speech.",
                 depan: "He said he",
-                belakang: "the document already.",
+                belakang: "the document.",
                 pilihan: ["has", "have", "had", "will have"],
                 kunci: "had",
                 penjelasan: {
-                    "has": "<b>Has:</b> Salah. Kalimat langsungnya 'I have', berubah jadi 'had'.",
-                    "have": "<b>Have:</b> Salah. Ini untuk subjek I/You/They, tidak cocok.",
-                    "had": "<b>Had:</b> BENAR! Present Perfect (has) berubah menjadi Past Perfect (had).",
-                    "will have": "<b>Will have:</b> Salah. Ini future perfect, bukan reported speech."
+                    "has": "<b>Has:</b> Salah. Harus lampau.",
+                    "have": "<b>Have:</b> Salah.",
+                    "had": "<b>Had:</b> BENAR! Has -> had.",
+                    "will have": "<b>Will have:</b> Salah."
                 }
             },
-            // 11-15: FUTURE PERFECT, GERUND, QUANTIFIER, SVA, PREPOSITION
+            // 11. Future Perfect
             {
-                materi: "💡 Teori: Future Perfect untuk aksi yang sudah selesai di waktu tertentu di masa depan.",
+                materi: "💡 Teori: Future Perfect (will have + V3) untuk aksi selesai di waktu tertentu di masa depan.",
                 depan: "By next month, I",
                 belakang: "this project.",
                 pilihan: ["finish", "finished", "will finish", "will have finished"],
                 kunci: "will have finished",
                 penjelasan: {
-                    "finish": "<b>Finish:</b> Salah. Ini Present, tidak cocok dengan 'By next month'.",
-                    "finished": "<b>Finished:</b> Salah. Ini Past Tense.",
-                    "will finish": "<b>Will finish:</b> Kurang tepat. 'Will have finished' lebih tepat untuk batas waktu.",
-                    "will have finished": "<b>Will have finished:</b> BENAR! Pola Future Perfect: will have + V3."
+                    "finish": "<b>Finish:</b> Salah.",
+                    "finished": "<b>Finished:</b> Salah.",
+                    "will finish": "<b>Will finish:</b> Kurang tepat.",
+                    "will have finished": "<b>Will have finished:</b> BENAR!"
                 }
             },
+            // 12. Gerund (mind + Ving)
             {
-                materi: "💡 Teori: Setelah kata kerja 'mind', gunakan Gerund (V-ing).",
+                materi: "💡 Teori: Setelah 'mind' pakai Gerund (V-ing).",
                 depan: "I don't mind",
                 belakang: "late today.",
                 pilihan: ["stay", "to stay", "staying", "stayed"],
                 kunci: "staying",
                 penjelasan: {
-                    "stay": "<b>Stay:</b> Salah. 'Mind' tidak diikuti bare infinitive.",
-                    "to stay": "<b>To stay:</b> Salah. 'Mind' tidak diikuti to infinitive.",
-                    "staying": "<b>Staying:</b> BENAR! 'Mind' + V-ing (Gerund).",
-                    "stayed": "<b>Stayed:</b> Salah. Ini Past Tense."
+                    "stay": "<b>Stay:</b> Salah.",
+                    "to stay": "<b>To stay:</b> Salah.",
+                    "staying": "<b>Staying:</b> BENAR! Mind + V-ing.",
+                    "stayed": "<b>Stayed:</b> Salah."
                 }
             },
+            // 13. Quantifier (Most)
             {
-                materi: "💡 Teori: Quantifier 'Most of' digunakan untuk menyatakan sebagian besar dari kelompok tertentu.",
+                materi: "💡 Teori: 'Most of' = sebagian besar.",
                 depan: "",
-                belakang: "of the students passed the test.",
+                belakang: "of the students passed.",
                 pilihan: ["Many", "Much", "Most", "Every"],
                 kunci: "Most",
                 penjelasan: {
-                    "Many": "<b>Many:</b> Salah. 'Many of' bisa dipakai, tapi butuh 'the' (Many of the...), kurang tepat di sini.",
-                    "Much": "<b>Much:</b> Salah. 'Much' untuk uncountable (much water).",
-                    "Most": "<b>Most:</b> BENAR! 'Most of the students' adalah frasa yang umum dan tepat.",
-                    "Every": "<b>Every:</b> Salah. 'Every' diikuti singular (every student)."
+                    "Many": "<b>Many:</b> Kurang tepat (butuh 'Many of the').",
+                    "Much": "<b>Much:</b> Salah. Uncountable.",
+                    "Most": "<b>Most:</b> BENAR! Most of the...",
+                    "Every": "<b>Every:</b> Salah. Singular."
                 }
             },
+            // 14. Subject-Verb Agreement (News)
             {
-                materi: "💡 Teori: 'News' adalah kata benda uncountable yang selalu dianggap tunggal.",
+                materi: "💡 Teori: 'News' selalu tunggal (singular).",
                 depan: "The news",
                 belakang: "very shocking.",
                 pilihan: ["are", "is", "were", "have been"],
                 kunci: "is",
                 penjelasan: {
-                    "are": "<b>Are:</b> Salah. 'News' adalah singular (tunggal).",
-                    "is": "<b>Is:</b> BENAR! 'News' selalu tunggal, pakai 'is'.",
-                    "were": "<b>Were:</b> Salah. Ini plural atau past tense.",
-                    "have been": "<b>Have been:</b> Salah. Ini plural."
+                    "are": "<b>Are:</b> Salah.",
+                    "is": "<b>Is:</b> BENAR! News = tunggal.",
+                    "were": "<b>Were:</b> Salah.",
+                    "have been": "<b>Have been:</b> Salah."
                 }
             },
+            // 15. Preposition (interested in)
             {
-                materi: "💡 Teori: Kata sifat 'interested' selalu diikuti preposisi 'in'.",
+                materi: "💡 Teori: 'Interested in' + V-ing / noun.",
                 depan: "He is interested",
                 belakang: "learning English.",
                 pilihan: ["to", "at", "in", "for"],
                 kunci: "in",
                 penjelasan: {
-                    "to": "<b>To:</b> Salah. 'Interested to' jarang dan tidak baku.",
-                    "at": "<b>At:</b> Salah. 'Interested at' tidak tepat.",
-                    "in": "<b>In:</b> BENAR! 'Interested in' adalah kolokasi yang benar.",
-                    "for": "<b>For:</b> Salah. 'Interested for' tidak tepat."
+                    "to": "<b>To:</b> Salah.",
+                    "at": "<b>At:</b> Salah.",
+                    "in": "<b>In:</b> BENAR! Interested in.",
+                    "for": "<b>For:</b> Salah."
                 }
             },
-            // 16-20: CONNECTOR (DESPITE), PHRASAL VERB, INVERSION, CAUSATIVE, WISH
+            // 16. [BARU] Subjunctive
             {
-                materi: "💡 Teori: 'Despite' diikuti oleh kata benda (noun phrase) untuk menunjukkan konsesi.",
-                depan: "",
-                belakang: "the rain, we went out.",
-                pilihan: ["Although", "Despite", "Because", "Unless"],
-                kunci: "Despite",
+                materi: "💡 Teori: Subjunctive untuk saran (suggest/recommend) pakai should + V1 atau V1 tanpa 's'.",
+                depan: "I suggest that he",
+                belakang: "harder.",
+                pilihan: ["study", "studies", "studied", "will study"],
+                kunci: "study",
                 penjelasan: {
-                    "Although": "<b>Although:</b> Salah. 'Although' diikuti klausa (S + V).",
-                    "Despite": "<b>Despite:</b> BENAR! 'Despite' diikuti kata benda 'the rain'.",
-                    "Because": "<b>Because:</b> Salah. Ini menunjukkan sebab, bukan konsesi.",
-                    "Unless": "<b>Unless:</b> Salah. Ini menunjukkan kondisi, bukan konsesi."
+                    "study": "<b>Study:</b> BENAR! Subjunctive (V1).",
+                    "studies": "<b>Studies:</b> Salah. Subjunctive tidak pakai 's'.",
+                    "studied": "<b>Studied:</b> Salah. Past.",
+                    "will study": "<b>Will study:</b> Salah."
                 }
             },
+            // 17. Phrasal Verb (turn off)
             {
-                materi: "💡 Teori: Phrasal verb 'turn off' berarti mematikan (lampu, TV).",
+                materi: "💡 Teori: 'Turn off' = mematikan (lampu/TV).",
                 depan: "Please",
                 belakang: "the lights before leaving.",
                 pilihan: ["turn on", "turn off", "turn down", "turn up"],
                 kunci: "turn off",
                 penjelasan: {
-                    "turn on": "<b>Turn on:</b> Salah. Ini berarti menyalakan, kebalikan dari yang diinginkan.",
-                    "turn off": "<b>Turn off:</b> BENAR! 'Turn off the lights' artinya mematikan lampu.",
-                    "turn down": "<b>Turn down:</b> Salah. Ini berarti menolak atau mengecilkan volume.",
-                    "turn up": "<b>Turn up:</b> Salah. Ini berarti membesarkan volume atau muncul."
+                    "turn on": "<b>Turn on:</b> Salah. Menyalakan.",
+                    "turn off": "<b>Turn off:</b> BENAR! Mematikan.",
+                    "turn down": "<b>Turn down:</b> Salah. Menolak/mengecilkan.",
+                    "turn up": "<b>Turn up:</b> Salah. Membesarkan."
                 }
             },
+            // 18. [BARU] Gerund vs Infinitive (Stop)
             {
-                materi: "💡 Teori: Inversi untuk 'Never' di awal kalimat: Never + to be/aux + S + V3.",
-                depan: "Never",
-                belakang: "I seen such a beautiful view.",
-                pilihan: ["have", "had", "did", "was"],
-                kunci: "have",
+                materi: "💡 Teori: Stop + V-ing (berhenti melakukan), Stop + to V (berhenti untuk melakukan).",
+                depan: "She stopped",
+                belakang: "because she was tired.",
+                pilihan: ["smoke", "to smoke", "smoking", "smoked"],
+                kunci: "smoking",
                 penjelasan: {
-                    "have": "<b>Have:</b> BENAR! Inversi: Never + have + I + seen.",
-                    "had": "<b>Had:</b> Kurang tepat. 'Had' untuk Past Perfect, tapi konteksnya Present Perfect.",
-                    "did": "<b>Did:</b> Salah. 'Did' diikuti V1, sedangkan di sini ada 'seen' (V3).",
-                    "was": "<b>Was:</b> Salah. Ini untuk passive atau to be."
+                    "smoke": "<b>Smoke:</b> Salah.",
+                    "to smoke": "<b>To smoke:</b> Salah. Berhenti untuk merokok (tujuan).",
+                    "smoking": "<b>Smoking:</b> BENAR! Berhenti merokok (aktivitasnya).",
+                    "smoked": "<b>Smoked:</b> Salah."
                 }
             },
+            // 19. Causative (have)
             {
-                materi: "💡 Teori: Causative 'have something done' (menyuruh sesuatu dikerjakan orang lain).",
+                materi: "💡 Teori: Causative 'have something done' = menyuruh orang lain mengerjakan.",
                 depan: "She",
                 belakang: "her hair cut yesterday.",
                 pilihan: ["had", "has", "have", "was"],
                 kunci: "had",
                 penjelasan: {
-                    "had": "<b>Had:</b> BENAR! 'Had her hair cut' = menyuruh potong rambut (masa lalu).",
-                    "has": "<b>Has:</b> Salah. Butuh past tense karena 'yesterday'.",
-                    "have": "<b>Have:</b> Salah. Subjek 'She' pakai 'has/had', bukan 'have'.",
-                    "was": "<b>Was:</b> Salah. 'Was' untuk passive, sedangkan ini causative."
+                    "had": "<b>Had:</b> BENAR! Past tense.",
+                    "has": "<b>Has:</b> Salah. Butuh past (yesterday).",
+                    "have": "<b>Have:</b> Salah.",
+                    "was": "<b>Was:</b> Salah. Passive biasa."
                 }
             },
+            // 20. Wish (could)
             {
-                materi: "💡 Teori: Setelah 'wish', gunakan past modal (can → could) untuk keinginan di masa kini.",
+                materi: "💡 Teori: Wish + could (keinginan kemampuan di masa kini).",
                 depan: "I wish I",
                 belakang: "swim.",
                 pilihan: ["can", "could", "will", "would"],
                 kunci: "could",
                 penjelasan: {
-                    "can": "<b>Can:</b> Salah. 'Wish' membutuhkan bentuk lampau (could).",
-                    "could": "<b>Could:</b> BENAR! 'Wish + could' untuk keinginan kemampuan di masa kini.",
-                    "will": "<b>Will:</b> Salah. 'Will' untuk masa depan, tidak cocok untuk wish.",
-                    "would": "<b>Would:</b> Kurang tepat. 'Would' lebih untuk preferensi, bukan kemampuan."
+                    "can": "<b>Can:</b> Salah. Wish butuh lampau.",
+                    "could": "<b>Could:</b> BENAR! Wish + could.",
+                    "will": "<b>Will:</b> Salah.",
+                    "would": "<b>Would:</b> Kurang tepat (lebih untuk preferensi)."
                 }
             }
         ];
-
-        let indeksSoalAktif = 0;
-        let poinSesi = 0;
-        let pilihanDipilih = null;
-        let statusRiwayat = {};
-
-        function muatSoal() {
-            let soal = daftarSoal[indeksSoalAktif];
-            document.getElementById("labelNomorSoal").innerHTML = `Soal ${indeksSoalAktif + 1} dari 20`;
-            document.getElementById("kotakMateri").innerHTML = soal.materi;
-            let depan = soal.depan ? `${soal.depan} ` : "";
-            document.getElementById("teksSoal").innerHTML = `"${depan}<span class='text-orange-600 font-bold underline bg-orange-100 px-2 py-1 rounded'>[ ... ]</span> ${soal.belakang}"`;
-            
-            let areaPilihan = document.getElementById("areaPilihan");
-            areaPilihan.innerHTML = "";
-            pilihanDipilih = null;
-
-            soal.pilihan.forEach(opsi => {
-                let tombol = document.createElement("button");
-                tombol.innerHTML = opsi;
-                tombol.id = "opsi-" + opsi;
-                tombol.className = "bg-white border-2 border-orange-200 text-orange-700 font-bold py-4 rounded-xl shadow-sm hover:bg-orange-50 hover:border-orange-400 transition-all text-xl capitalize";
-                tombol.onclick = function() { pilihOpsi(opsi); };
-                areaPilihan.appendChild(tombol);
-            });
-
-            if (indeksSoalAktif > 0) {
-                document.getElementById("tombolSebelumnya").classList.remove("hidden");
-            } else {
-                document.getElementById("tombolSebelumnya").classList.add("hidden");
-            }
-
-            let riwayat = statusRiwayat[indeksSoalAktif];
-            if (riwayat && riwayat.sudahBenar) {
-                pilihanDipilih = riwayat.pilihan;
-                tandaiTombolTerpilih(pilihanDipilih);
-                tampilkanHasilDanBedah(true, true);
-            } else {
-                document.getElementById("pesanHasil").classList.add("hidden");
-                document.getElementById("kotakPenjelasanSemua").classList.add("hidden");
-                document.getElementById("tombolLanjut").classList.add("hidden");
-                document.getElementById("tombolKirim").classList.remove("hidden");
-                document.getElementById("tombolSelesai").classList.add("hidden");
-            }
-        }
-
-        function pilihOpsi(opsi) {
-            let riwayat = statusRiwayat[indeksSoalAktif];
-            if (riwayat && riwayat.sudahBenar) return;
-            pilihanDipilih = opsi;
-            tandaiTombolTerpilih(opsi);
-        }
-
-        function tandaiTombolTerpilih(opsiTerpilih) {
-            let soal = daftarSoal[indeksSoalAktif];
-            soal.pilihan.forEach(o => {
-                let btn = document.getElementById("opsi-" + o);
-                if (btn) {
-                    if (o === opsiTerpilih) {
-                        btn.className = "bg-orange-500 border-2 border-orange-600 text-white font-bold py-4 rounded-xl shadow-md transition-all text-xl capitalize";
-                    } else {
-                        btn.className = "bg-white border-2 border-orange-200 text-orange-700 font-bold py-4 rounded-xl shadow-sm hover:bg-orange-50 transition-all text-xl capitalize";
-                    }
-                }
-            });
-        }
-
-        function kirimJawaban() {
-            if (!pilihanDipilih) {
-                alert("Pilih salah satu opsi jawaban terlebih dahulu ya mase!");
-                return;
-            }
-            let soalAktif = daftarSoal[indeksSoalAktif];
-            let isBenar = (pilihanDipilih === soalAktif.kunci);
-            if (isBenar) {
-                if (!statusRiwayat[indeksSoalAktif] || !statusRiwayat[indeksSoalAktif].sudahBenar) {
-                    poinSesi += 20;
-                    document.getElementById("poinSesiTampil").innerHTML = poinSesi;
-                }
-                statusRiwayat[indeksSoalAktif] = { sudahBenar: true, pilihan: pilihanDipilih };
-                tampilkanHasilDanBedah(true, false);
-            } else {
-                statusRiwayat[indeksSoalAktif] = { sudahBenar: false, pilihan: pilihanDipilih };
-                tampilkanHasilDanBedah(false, false);
-            }
-        }
-
-        function tampilkanHasilDanBedah(isBenar, dariReview) {
-            let soalAktif = daftarSoal[indeksSoalAktif];
-            let pesan = document.getElementById("pesanHasil");
-            pesan.classList.remove("hidden");
-            let kotakPenjelasan = document.getElementById("kotakPenjelasanSemua");
-            let isiPenjelasan = document.getElementById("isiPenjelasanSemua");
-            kotakPenjelasan.classList.remove("hidden");
-            let htmlSemua = "";
-            for (let key in soalAktif.penjelasan) {
-                let statusWarna = "text-gray-600 bg-gray-50 p-2 rounded";
-                if (isBenar && key === soalAktif.kunci) {
-                    statusWarna = "text-green-700 font-bold bg-green-50 p-2 rounded border border-green-200";
-                }
-                htmlSemua += `<div class="${statusWarna}">• ${soalAktif.penjelasan[key]}</div>`;
-            }
-            isiPenjelasan.innerHTML = htmlSemua;
-            if (isBenar) {
-                pesan.innerHTML = dariReview ? 
-                    `📚 <b>Mode Review:</b> Soal ini sudah kamu jawab dengan benar sebelumnya.` : 
-                    `🎉 <b>Tepat sekali! Pilihanmu benar.</b>`;
-                pesan.className = "mb-4 p-4 rounded-xl border-2 bg-green-50 text-green-800 border-green-200 text-base";
-                document.getElementById("tombolKirim").classList.add("hidden");
-                if (indeksSoalAktif < daftarSoal.length - 1) {
-                    document.getElementById("tombolLanjut").classList.remove("hidden");
-                } else {
-                    document.getElementById("tombolSelesai").classList.remove("hidden");
-                }
-            } else {
-                pesan.innerHTML = `⚠️ <b>Kurang tepat.</b> Jawabannya belum benar, yuk cek fungsi masing-masing opsi di bawah!`;
-                pesan.className = "mb-4 p-4 rounded-xl border-2 bg-red-50 text-red-800 border-red-200 text-base";
-                document.getElementById("tombolLanjut").classList.add("hidden");
-                document.getElementById("tombolSelesai").classList.add("hidden");
-            }
-        }
-
-        function soalBerikutnya() {
-            indeksSoalAktif++;
-            muatSoal();
-        }
-
-        function soalSebelumnya() {
-            if (indeksSoalAktif > 0) {
-                indeksSoalAktif--;
-                muatSoal();
-            }
-        }
-
-        function simpanPoinDanSelesai() {
-            let poinTotalLama = parseInt(localStorage.getItem('poinMurid')) || 0;
-            localStorage.setItem('poinMurid', poinTotalLama + poinSesi);
-            window.location.href = "sma.html";
-        }
-
-        muatSoal();
-    </script>
-</body>
-</html>
