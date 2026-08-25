@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Writing SMA (20 Soal) | ENG-LEARN</title>
+    <title>Writing SMP (20 Soal) | ENG-LEARN</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
     <style>
@@ -13,7 +13,7 @@
         body {
             min-height: 100vh;
             padding: 1.5rem;
-            background-color: #fff7ed;
+            background-color: #eff6ff;
         }
         .max-w-3xl {
             max-width: 48rem;
@@ -65,8 +65,8 @@
             transform: scale(0.96);
             transition: transform 0.1s ease;
         }
-        #areaPilihan button.bg-orange-500,
-        #areaPilihan button.bg-orange-500:active {
+        #areaPilihan button.bg-blue-500,
+        #areaPilihan button.bg-blue-500:active {
             color: white !important;
         }
     </style>
@@ -74,36 +74,36 @@
 <body>
 
     <div class="max-w-3xl mx-auto mb-6 flex justify-between items-center">
-        <a href="sma.html" onclick="return confirm('Yakin mau kembali? Poin sesi ini akan hangus lho!')" class="inline-flex items-center text-red-500 hover:text-red-700 font-bold bg-white px-4 py-2 rounded-xl shadow-sm border border-orange-100 transition-all">
+        <a href="smp.html" onclick="return confirm('Yakin mau kembali? Poin sesi ini akan hangus lho!')" class="inline-flex items-center text-red-500 hover:text-red-700 font-bold bg-white px-4 py-2 rounded-xl shadow-sm border border-red-100 transition-all">
             ⬅️ Batal & Kembali
         </a>
-        <div class="bg-orange-500 text-white font-bold px-6 py-2 rounded-xl shadow-md flex items-center gap-2 text-lg">
+        <div class="bg-blue-500 text-white font-bold px-6 py-2 rounded-xl shadow-md flex items-center gap-2 text-lg">
             ⭐ Poin Sesi: <span id="poinSesiTampil">0</span>
         </div>
     </div>
 
-    <div class="max-w-3xl mx-auto bg-white rounded-3xl p-8 shadow-xl border-2 border-orange-50">
-        <div class="flex justify-between items-center mb-4 border-b-2 border-orange-100 pb-4">
-            <h1 class="text-2xl font-bold text-gray-800">📝 Writing SMA (20 Soal)</h1>
-            <span id="labelNomorSoal" class="bg-orange-100 text-orange-700 font-bold px-4 py-1 rounded-full text-sm">Soal 1 dari 20</span>
+    <div class="max-w-3xl mx-auto bg-white rounded-3xl p-8 shadow-xl border-2 border-blue-50">
+        <div class="flex justify-between items-center mb-4 border-b-2 border-blue-100 pb-4">
+            <h1 class="text-2xl font-bold text-gray-800">✍️ Writing SMP (20 Soal)</h1>
+            <span id="labelNomorSoal" class="bg-blue-100 text-blue-700 font-bold px-4 py-1 rounded-full text-sm">Soal 1 dari 20</span>
         </div>
 
         <!-- CLUE UMUM DI ATAS SOAL -->
-        <div id="kotakMateri" class="mb-6 text-gray-700 text-base bg-orange-50 p-4 rounded-xl border border-orange-100 font-medium"></div>
+        <div id="kotakMateri" class="mb-6 text-gray-700 text-base bg-blue-50 p-4 rounded-xl border border-blue-100 font-medium"></div>
 
         <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100">
             <div id="teksSoal" class="text-xl font-medium mb-6 leading-relaxed text-center"></div>
 
             <div id="areaPilihan" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6"></div>
 
-            <button id="tombolKirim" onclick="kirimJawaban()" class="w-full bg-orange-500 text-white px-6 py-3 rounded-xl font-bold text-lg hover:bg-orange-600 shadow-md transition-colors mb-4">
+            <button id="tombolKirim" onclick="kirimJawaban()" class="w-full bg-blue-500 text-white px-6 py-3 rounded-xl font-bold text-lg hover:bg-blue-600 shadow-md transition-colors mb-4">
                 🚀 Kirim Jawaban
             </button>
 
             <div id="pesanHasil" class="hidden mb-6 p-4 rounded-xl border-2"></div>
 
-            <div id="kotakPenjelasanSemua" class="hidden mb-6 p-5 rounded-xl bg-white border-2 border-orange-200 shadow-sm">
-                <h3 class="font-bold text-orange-900 mb-3 text-base">📚 Bedah Fungsi Semua Opsi:</h3>
+            <div id="kotakPenjelasanSemua" class="hidden mb-6 p-5 rounded-xl bg-white border-2 border-blue-200 shadow-sm">
+                <h3 class="font-bold text-blue-900 mb-3 text-base">📚 Bedah Fungsi Semua Opsi:</h3>
                 <div id="isiPenjelasanSemua" class="space-y-3 text-sm text-gray-700"></div>
             </div>
 
@@ -124,244 +124,244 @@
 
     <script>
         const daftarSoal = [{
-            clue: "💡 Petunjuk: Pilih kata hubung yang menunjukkan akibat atau kesimpulan dari pernyataan sebelumnya.",
-            depan: "It was raining heavily,",
-            belakang: "we canceled the match.",
-            pilihan: ["therefore", "however", "furthermore", "meanwhile"],
-            kunci: "therefore",
-            penjelasan: {
-                "therefore": "<b>Therefore:</b> BENAR! Akibat langsung.",
-                "however": "<b>However:</b> Salah. Kontras.",
-                "furthermore": "<b>Furthermore:</b> Salah. Tambahan info.",
-                "meanwhile": "<b>Meanwhile:</b> Salah. Bersamaan."
-            }
-        }, {
-            clue: "💡 Petunjuk: Kata hubung ini digunakan untuk menunjukkan pertentangan atau hasil yang tidak terduga.",
-            depan: "She studied hard;",
-            belakang: "she failed the exam.",
-            pilihan: ["therefore", "however", "moreover", "instead"],
-            kunci: "however",
-            penjelasan: {
-                "therefore": "<b>Therefore:</b> Salah. Seharusnya lulus.",
-                "however": "<b>However:</b> BENAR! Kontras mengejutkan.",
-                "moreover": "<b>Moreover:</b> Salah. Tambahan senada.",
-                "instead": "<b>Instead:</b> Salah. Alternatif."
-            }
-        }, {
-            clue: "💡 Petunjuk: Pola ini digunakan untuk menyatakan akibat dari suatu sifat (adjective).",
-            depan: "It was",
-            belakang: "hot that we went swimming.",
-            pilihan: ["so", "such", "too", "very"],
-            kunci: "so",
-            penjelasan: {
-                "so": "<b>So:</b> BENAR! So + adjective (hot) + that.",
-                "such": "<b>Such:</b> Salah. Such + noun (such a hot day).",
-                "too": "<b>Too:</b> Salah. Terlalu (tanpa 'that').",
-                "very": "<b>Very:</b> Salah. Hanya penguat, tanpa 'that'."
-            }
-        }, {
-            clue: "💡 Petunjuk: Ini adalah pengandaian untuk masa lalu yang tidak terjadi (Conditional Type 3).",
-            depan: "If she had studied,",
-            belakang: "the exam.",
-            pilihan: ["passes", "would pass", "would have passed", "passed"],
-            kunci: "would have passed",
-            penjelasan: {
-                "passes": "<b>Passes:</b> Salah. Type 1.",
-                "would pass": "<b>Would pass:</b> Salah. Type 2.",
-                "would have passed": "<b>Would have passed:</b> BENAR! Type 3.",
-                "passed": "<b>Passed:</b> Salah. Simple Past."
-            }
-        }, {
-            clue: "💡 Petunjuk: Kata ini digunakan untuk memberi peringatan jika tindakan tidak dilakukan.",
-            depan: "Hurry up;",
-            belakang: ", we will miss the train.",
-            pilihan: ["furthermore", "otherwise", "meanwhile", "consequently"],
-            kunci: "otherwise",
-            penjelasan: {
-                "furthermore": "<b>Furthermore:</b> Salah.",
-                "otherwise": "<b>Otherwise:</b> BENAR! Peringatan.",
-                "meanwhile": "<b>Meanwhile:</b> Salah. Waktu paralel.",
-                "consequently": "<b>Consequently:</b> Kurang natural."
-            }
-        }, {
-            clue: "💡 Petunjuk: Pengandaian untuk situasi khayalan (Conditional Type 2). Perhatikan bentuk 'to be' yang tepat.",
-            depan: "If I",
-            belakang: "you, I would accept it.",
-            pilihan: ["am", "was", "were", "have been"],
-            kunci: "were",
-            penjelasan: {
-                "am": "<b>Am:</b> Salah. Present.",
-                "was": "<b>Was:</b> Kurang tepat. 'Were' lebih formal.",
-                "were": "<b>Were:</b> BENAR! Type 2 wajib 'were'.",
-                "have been": "<b>Have been:</b> Salah."
-            }
-        }, {
-            clue: "💡 Petunjuk: Pengandaian realistis untuk masa depan (Conditional Type 1).",
-            depan: "If she studies hard,",
-            belakang: "the exam.",
-            pilihan: ["passes", "will pass", "would pass", "passed"],
-            kunci: "will pass",
-            penjelasan: {
-                "passes": "<b>Passes:</b> Salah. Butuh 'will'.",
-                "will pass": "<b>Will pass:</b> BENAR! Type 1.",
-                "would pass": "<b>Would pass:</b> Salah. Type 2.",
-                "passed": "<b>Passed:</b> Salah."
-            }
-        }, {
-            clue: "💡 Petunjuk: Kata ganti ini digunakan untuk orang sebagai subjek dalam klausa relatif.",
-            depan: "The teacher",
-            belakang: "teaches math is kind.",
-            pilihan: ["who", "whom", "which", "whose"],
-            kunci: "who",
-            penjelasan: {
-                "who": "<b>Who:</b> BENAR! Subjek orang.",
-                "whom": "<b>Whom:</b> Salah. Objek orang.",
-                "which": "<b>Which:</b> Salah. Benda/hewan.",
-                "whose": "<b>Whose:</b> Salah. Kepemilikan."
-            }
-        }, {
-            clue: "💡 Petunjuk: Kalimat pasif untuk kejadian lampau (Past Passive). Butuh to be + V3.",
-            depan: "The letter",
-            belakang: "by the secretary yesterday.",
-            pilihan: ["sent", "is sent", "was sent", "has sent"],
-            kunci: "was sent",
-            penjelasan: {
-                "sent": "<b>Sent:</b> Salah. Aktif.",
-                "is sent": "<b>Is sent:</b> Salah. Present.",
-                "was sent": "<b>Was sent:</b> BENAR! Lampau + pasif.",
-                "has sent": "<b>Has sent:</b> Salah. Aktif Perfect."
-            }
-        }, {
-            clue: "💡 Petunjuk: Mengubah kalimat langsung menjadi tidak langsung (Reported Speech) - perhatikan perubahan tenses.",
-            depan: "He said he",
-            belakang: "the document.",
-            pilihan: ["has", "have", "had", "will have"],
-            kunci: "had",
-            penjelasan: {
-                "has": "<b>Has:</b> Salah. Harus lampau.",
-                "have": "<b>Have:</b> Salah.",
-                "had": "<b>Had:</b> BENAR! Has -> had.",
-                "will have": "<b>Will have:</b> Salah."
-            }
-        }, {
-            clue: "💡 Petunjuk: Menyatakan aksi yang sudah selesai pada waktu tertentu di masa depan (Future Perfect).",
-            depan: "By next month, I",
-            belakang: "this project.",
-            pilihan: ["finish", "finished", "will finish", "will have finished"],
-            kunci: "will have finished",
-            penjelasan: {
-                "finish": "<b>Finish:</b> Salah.",
-                "finished": "<b>Finished:</b> Salah.",
-                "will finish": "<b>Will finish:</b> Kurang tepat.",
-                "will have finished": "<b>Will have finished:</b> BENAR!"
-            }
-        }, {
-            clue: "💡 Petunjuk: Setelah kata kerja tertentu, gunakan bentuk V-ing (Gerund).",
-            depan: "I don't mind",
-            belakang: "late today.",
-            pilihan: ["stay", "to stay", "staying", "stayed"],
-            kunci: "staying",
-            penjelasan: {
-                "stay": "<b>Stay:</b> Salah.",
-                "to stay": "<b>To stay:</b> Salah.",
-                "staying": "<b>Staying:</b> BENAR! Mind + V-ing.",
-                "stayed": "<b>Stayed:</b> Salah."
-            }
-        }, {
-            clue: "💡 Petunjuk: Kata ini digunakan untuk menyatakan 'sebagian besar' dari suatu kelompok.",
-            depan: "",
-            belakang: "of the students passed.",
-            pilihan: ["Many", "Much", "Most", "Every"],
-            kunci: "Most",
-            penjelasan: {
-                "Many": "<b>Many:</b> Kurang tepat (butuh 'Many of the').",
-                "Much": "<b>Much:</b> Salah. Uncountable.",
-                "Most": "<b>Most:</b> BENAR! Most of the...",
-                "Every": "<b>Every:</b> Salah. Singular."
-            }
-        }, {
-            clue: "💡 Petunjuk: Perhatikan bahwa kata 'news' selalu dianggap tunggal (singular).",
-            depan: "The news",
-            belakang: "very shocking.",
-            pilihan: ["are", "is", "were", "have been"],
-            kunci: "is",
-            penjelasan: {
-                "are": "<b>Are:</b> Salah.",
-                "is": "<b>Is:</b> BENAR! News = tunggal.",
-                "were": "<b>Were:</b> Salah.",
-                "have been": "<b>Have been:</b> Salah."
-            }
-        }, {
-            clue: "💡 Petunjuk: Kata sifat tertentu selalu diikuti preposisi yang tepat. Cari pasangan yang benar.",
-            depan: "He is interested",
-            belakang: "learning English.",
-            pilihan: ["to", "at", "in", "for"],
-            kunci: "in",
-            penjelasan: {
-                "to": "<b>To:</b> Salah.",
-                "at": "<b>At:</b> Salah.",
-                "in": "<b>In:</b> BENAR! Interested in.",
-                "for": "<b>For:</b> Salah."
-            }
-        }, {
-            clue: "💡 Petunjuk: Subjunctive digunakan setelah kata kerja seperti 'suggest' untuk menyatakan saran.",
-            depan: "I suggest that he",
-            belakang: "harder.",
-            pilihan: ["study", "studies", "studied", "will study"],
-            kunci: "study",
-            penjelasan: {
-                "study": "<b>Study:</b> BENAR! Subjunctive (V1).",
-                "studies": "<b>Studies:</b> Salah. Subjunctive tidak pakai 's'.",
-                "studied": "<b>Studied:</b> Salah. Past.",
-                "will study": "<b>Will study:</b> Salah."
-            }
-        }, {
-            clue: "💡 Petunjuk: Phrasal verb ini berarti 'mematikan' (lampu, TV, dll).",
-            depan: "Please",
-            belakang: "the lights before leaving.",
-            pilihan: ["turn on", "turn off", "turn down", "turn up"],
-            kunci: "turn off",
-            penjelasan: {
-                "turn on": "<b>Turn on:</b> Salah. Menyalakan.",
-                "turn off": "<b>Turn off:</b> BENAR! Mematikan.",
-                "turn down": "<b>Turn down:</b> Salah. Menolak/mengecilkan.",
-                "turn up": "<b>Turn up:</b> Salah. Membesarkan."
-            }
-        }, {
-            clue: "💡 Petunjuk: Perbedaan makna 'stop + V-ing' dan 'stop + to V' sangat penting.",
-            depan: "She stopped",
-            belakang: "because she was tired.",
-            pilihan: ["smoke", "to smoke", "smoking", "smoked"],
-            kunci: "smoking",
-            penjelasan: {
-                "smoke": "<b>Smoke:</b> Salah.",
-                "to smoke": "<b>To smoke:</b> Salah. Berhenti untuk merokok (tujuan).",
-                "smoking": "<b>Smoking:</b> BENAR! Berhenti merokok (aktivitasnya).",
-                "smoked": "<b>Smoked:</b> Salah."
-            }
-        }, {
-            clue: "💡 Petunjuk: Causative 'have something done' berarti menyuruh orang lain mengerjakan.",
+            clue: "💡 Petunjuk: Perhatikan subjek 'She' (tunggal). Kata kerja untuk kebiasaan sehari-hari perlu akhiran khusus.",
             depan: "She",
-            belakang: "her hair cut yesterday.",
-            pilihan: ["had", "has", "have", "was"],
-            kunci: "had",
+            belakang: "to school every day.",
+            pilihan: ["go", "goes", "going", "went"],
+            kunci: "goes",
             penjelasan: {
-                "had": "<b>Had:</b> BENAR! Past tense.",
-                "has": "<b>Has:</b> Salah. Butuh past (yesterday).",
-                "have": "<b>Have:</b> Salah.",
-                "was": "<b>Was:</b> Salah. Passive biasa."
+                "go": "<b>Go:</b> Digunakan untuk subjek I/You/They/We.",
+                "goes": "<b>Goes:</b> Bentuk yang tepat untuk subjek tunggal (She) dalam Simple Present.",
+                "going": "<b>Going:</b> Memerlukan to be (is going) untuk Present Continuous.",
+                "went": "<b>Went:</b> Ini adalah bentuk lampau (Past Tense)."
             }
         }, {
-            clue: "💡 Petunjuk: 'Wish' untuk keinginan di masa kini menggunakan bentuk lampau (past modal).",
-            depan: "I wish I",
-            belakang: "swim.",
-            pilihan: ["can", "could", "will", "would"],
-            kunci: "could",
+            clue: "💡 Petunjuk: 'Right now' menandakan kejadian yang sedang berlangsung. Butuh to be + kata kerja + ing.",
+            depan: "They",
+            belakang: "a movie right now.",
+            pilihan: ["watch", "watches", "watching", "are watching"],
+            kunci: "are watching",
             penjelasan: {
-                "can": "<b>Can:</b> Salah. Wish butuh lampau.",
-                "could": "<b>Could:</b> BENAR! Wish + could.",
-                "will": "<b>Will:</b> Salah.",
-                "would": "<b>Would:</b> Kurang tepat (lebih untuk preferensi)."
+                "watch": "<b>Watch:</b> Bentuk Simple Present.",
+                "watches": "<b>Watches:</b> Untuk subjek tunggal (He/She/It).",
+                "watching": "<b>Watching:</b> Kurang to be di depannya.",
+                "are watching": "<b>Are watching:</b> Subjek jamak (They) + are + V-ing untuk aksi sekarang."
+            }
+        }, {
+            clue: "💡 Petunjuk: 'Last holiday' menunjukkan waktu lampau. Pilih bentuk kata kerja untuk masa lalu.",
+            depan: "I",
+            belakang: "to Bali last holiday.",
+            pilihan: ["go", "went", "have gone", "will go"],
+            kunci: "went",
+            penjelasan: {
+                "go": "<b>Go:</b> Bentuk Present.",
+                "went": "<b>Went:</b> Bentuk lampau dari 'go' untuk kejadian masa lalu.",
+                "have gone": "<b>Have gone:</b> Present Perfect, biasanya tanpa keterangan waktu spesifik.",
+                "will go": "<b>Will go:</b> Untuk masa depan (Future)."
+            }
+        }, {
+            clue: "💡 Petunjuk: 'Next year' menunjukkan masa depan. Kata bantu yang tepat untuk rencana.",
+            depan: "We",
+            belakang: "a new house next year.",
+            pilihan: ["buy", "bought", "will buy", "are buying"],
+            kunci: "will buy",
+            penjelasan: {
+                "buy": "<b>Buy:</b> Bentuk Present.",
+                "bought": "<b>Bought:</b> Past Tense.",
+                "will buy": "<b>Will buy:</b> 'Will' + V1 untuk rencana masa depan.",
+                "are buying": "<b>Are buying:</b> Bisa untuk rencana dekat, tapi 'will buy' lebih tepat untuk 'next year'."
+            }
+        }, {
+            clue: "💡 Petunjuk: Cari preposisi yang tepat untuk menunjukkan posisi benda di atas permukaan.",
+            depan: "The book is",
+            belakang: "the table.",
+            pilihan: ["in", "on", "at", "to"],
+            kunci: "on",
+            penjelasan: {
+                "in": "<b>In:</b> Digunakan untuk ruang tertutup (in the room).",
+                "on": "<b>On:</b> Digunakan untuk posisi di atas permukaan.",
+                "at": "<b>At:</b> Digunakan untuk titik spesifik (at the bus stop).",
+                "to": "<b>To:</b> Menunjukkan arah tujuan."
+            }
+        }, {
+            clue: "💡 Petunjuk: Kata 'three' menunjukkan jumlah lebih dari satu. Pilih bentuk jamak (plural).",
+            depan: "There are three",
+            belakang: "in the basket.",
+            pilihan: ["apple", "apples", "apple's", "appless"],
+            kunci: "apples",
+            penjelasan: {
+                "apple": "<b>Apple:</b> Bentuk tunggal.",
+                "apples": "<b>Apples:</b> Bentuk jamak dengan akhiran -s.",
+                "apple's": "<b>Apple's:</b> Menunjukkan kepemilikan (punya apel).",
+                "appless": "<b>Appless:</b> Bukan kata dalam bahasa Inggris."
+            }
+        }, {
+            clue: "💡 Petunjuk: Kata 'before' menandakan pengalaman masa lalu tanpa waktu spesifik. Butuh have/has + V3.",
+            depan: "I",
+            belakang: "to that museum before.",
+            pilihan: ["go", "went", "have gone", "have been"],
+            kunci: "have been",
+            penjelasan: {
+                "go": "<b>Go:</b> Bentuk Present.",
+                "went": "<b>Went:</b> Simple Past, butuh keterangan waktu spesifik.",
+                "have gone": "<b>Have gone:</b> Berarti masih di sana (belum kembali).",
+                "have been": "<b>Have been:</b> Digunakan untuk pengalaman masa lalu tanpa waktu spesifik."
+            }
+        }, {
+            clue: "💡 Petunjuk: Kata ini digunakan untuk memberi saran atau rekomendasi kepada orang lain.",
+            depan: "You",
+            belakang: "bring an umbrella today.",
+            pilihan: ["must", "can", "should", "might"],
+            kunci: "should",
+            penjelasan: {
+                "must": "<b>Must:</b> Menunjukkan keharusan absolut.",
+                "can": "<b>Can:</b> Menunjukkan kemampuan.",
+                "should": "<b>Should:</b> Digunakan untuk memberikan saran.",
+                "might": "<b>Might:</b> Menunjukkan kemungkinan."
+            }
+        }, {
+            clue: "💡 Petunjuk: Kata 'engineer' diawali bunyi vokal. Artikel apa yang tepat di depannya?",
+            depan: "She wants to be",
+            belakang: "engineer.",
+            pilihan: ["a", "an", "the", "none"],
+            kunci: "an",
+            penjelasan: {
+                "a": "<b>A:</b> Digunakan sebelum huruf konsonan.",
+                "an": "<b>An:</b> Digunakan sebelum bunyi vokal (a, i, u, e, o).",
+                "the": "<b>The:</b> Digunakan untuk benda yang sudah spesifik/dikenal.",
+                "none": "<b>None:</b> Kata benda tunggal yang disebut pertama kali butuh artikel."
+            }
+        }, {
+            clue: "💡 Petunjuk: Kalimat tanya dengan subjek 'you' membutuhkan kata bantu yang tepat.",
+            depan: "",
+            belakang: "you like to dance?",
+            pilihan: ["Are", "Do", "Does", "Is"],
+            kunci: "Do",
+            penjelasan: {
+                "Are": "<b>Are:</b> Kata bantu untuk to be.",
+                "Do": "<b>Do:</b> Kata bantu untuk subjek I/You/They/We.",
+                "Does": "<b>Does:</b> Kata bantu untuk subjek tunggal (He/She/It).",
+                "Is": "<b>Is:</b> Kata bantu untuk to be."
+            }
+        }, {
+            clue: "💡 Petunjuk: Subjek 'I' selalu memiliki pasangan to be yang khusus. Pilih yang tepat.",
+            depan: "I",
+            belakang: "a dedicated student.",
+            pilihan: ["am", "is", "are", "be"],
+            kunci: "am",
+            penjelasan: {
+                "am": "<b>Am:</b> Pasangan khusus untuk subjek 'I'.",
+                "is": "<b>Is:</b> Untuk subjek He/She/It.",
+                "are": "<b>Are:</b> Untuk subjek You/They/We.",
+                "be": "<b>Be:</b> Bentuk dasar (infinitive) tanpa subjek."
+            }
+        }, {
+            clue: "💡 Petunjuk: Pertanyaan untuk aksi yang sedang berlangsung. Subjek 'she' pakai to be apa?",
+            depan: "",
+            belakang: "she reading a book now?",
+            pilihan: ["Is", "Are", "Do", "Does"],
+            kunci: "Is",
+            penjelasan: {
+                "Is": "<b>Is:</b> To be untuk subjek tunggal (she) dalam Present Continuous.",
+                "Are": "<b>Are:</b> To be untuk subjek jamak (they/we/you).",
+                "Do": "<b>Do:</b> Kata bantu untuk Simple Present.",
+                "Does": "<b>Does:</b> Kata bantu untuk Simple Present tunggal."
+            }
+        }, {
+            clue: "💡 Petunjuk: 'This morning' menunjukkan waktu lampau. Kata kerja 'eat' berubah menjadi apa?",
+            depan: "She",
+            belakang: "an apple this morning.",
+            pilihan: ["eat", "ate", "eaten", "eats"],
+            kunci: "ate",
+            penjelasan: {
+                "eat": "<b>Eat:</b> Bentuk Present.",
+                "ate": "<b>Ate:</b> Bentuk lampau (Past Tense) dari 'eat'.",
+                "eaten": "<b>Eaten:</b> Past Participle (V3), membutuhkan has/have.",
+                "eats": "<b>Eats:</b> Bentuk Present untuk subjek tunggal."
+            }
+        }, {
+            clue: "💡 Petunjuk: 'Next week' menunjukkan rencana masa depan yang sudah pasti. Frasa apa yang tepat?",
+            depan: "We",
+            belakang: "visit grandma next week.",
+            pilihan: ["go", "went", "will go", "are going to"],
+            kunci: "are going to",
+            penjelasan: {
+                "go": "<b>Go:</b> Bentuk Present.",
+                "went": "<b>Went:</b> Past Tense.",
+                "will go": "<b>Will go:</b> Bisa dipakai, tapi 'going to' lebih natural untuk rencana matang.",
+                "are going to": "<b>Are going to:</b> Digunakan untuk rencana yang sudah pasti di masa depan."
+            }
+        }, {
+            clue: "💡 Petunjuk: 'Milk' adalah benda yang tidak bisa dihitung (uncountable). Pilih kata penunjuk jumlah yang tepat.",
+            depan: "There isn't",
+            belakang: "milk in the fridge.",
+            pilihan: ["many", "much", "few", "a lot"],
+            kunci: "much",
+            penjelasan: {
+                "many": "<b>Many:</b> Untuk benda yang bisa dihitung (countable plural).",
+                "much": "<b>Much:</b> Untuk benda yang tidak bisa dihitung (uncountable).",
+                "few": "<b>Few:</b> Untuk countable plural dengan arti 'sedikit'.",
+                "a lot": "<b>A lot:</b> Biasanya dipakai di kalimat positif, di negatif lebih umum 'much'."
+            }
+        }, {
+            clue: "💡 Petunjuk: Ada dua kejadian di masa lalu. Satu sedang berlangsung, satu tiba-tiba terjadi. Pilih bentuk yang tepat.",
+            depan: "She",
+            belakang: "dinner when I arrived.",
+            pilihan: ["cook", "cooked", "was cooking", "has cooked"],
+            kunci: "was cooking",
+            penjelasan: {
+                "cook": "<b>Cook:</b> Bentuk Present.",
+                "cooked": "<b>Cooked:</b> Simple Past (aksi selesai).",
+                "was cooking": "<b>Was cooking:</b> Past Continuous untuk aksi yang sedang berlangsung.",
+                "has cooked": "<b>Has cooked:</b> Present Perfect."
+            }
+        }, {
+            clue: "💡 Petunjuk: Kata ini digunakan untuk menyatakan kemampuan (ability) melakukan sesuatu.",
+            depan: "I",
+            belakang: "speak three languages.",
+            pilihan: ["can", "may", "must", "should"],
+            kunci: "can",
+            penjelasan: {
+                "can": "<b>Can:</b> Digunakan untuk menyatakan kemampuan.",
+                "may": "<b>May:</b> Digunakan untuk izin atau kemungkinan.",
+                "must": "<b>Must:</b> Digunakan untuk keharusan.",
+                "should": "<b>Should:</b> Digunakan untuk saran."
+            }
+        }, {
+            clue: "💡 Petunjuk: Kata ganti kepemilikan yang berdiri sendiri (tanpa diikuti kata benda).",
+            depan: "This bag is",
+            belakang: ", not yours.",
+            pilihan: ["my", "mine", "me", "I"],
+            kunci: "mine",
+            penjelasan: {
+                "my": "<b>My:</b> Diikuti kata benda (my bag).",
+                "mine": "<b>Mine:</b> Berdiri sendiri tanpa kata benda.",
+                "me": "<b>Me:</b> Object pronoun (untuk objek).",
+                "I": "<b>I:</b> Subject pronoun (untuk subjek)."
+            }
+        }, {
+            clue: "💡 Petunjuk: Kata ini menunjukkan alasan (sebab) dari suatu kejadian.",
+            depan: "She was happy",
+            belakang: "she got a gift.",
+            pilihan: ["because", "so", "but", "although"],
+            kunci: "because",
+            penjelasan: {
+                "because": "<b>Because:</b> Menunjukkan alasan atau sebab.",
+                "so": "<b>So:</b> Menunjukkan akibat.",
+                "but": "<b>But:</b> Menunjukkan pertentangan.",
+                "although": "<b>Although:</b> Menunjukkan konsesi (meskipun)."
+            }
+        }, {
+            clue: "💡 Petunjuk: Dalam kalimat negatif, kata penunjuk benda tak tentu yang tepat adalah...",
+            depan: "There isn't",
+            belakang: "sugar in the jar.",
+            pilihan: ["some", "any", "many", "much"],
+            kunci: "any",
+            penjelasan: {
+                "some": "<b>Some:</b> Digunakan dalam kalimat positif.",
+                "any": "<b>Any:</b> Digunakan dalam kalimat negatif atau pertanyaan.",
+                "many": "<b>Many:</b> Untuk countable plural.",
+                "much": "<b>Much:</b> Untuk uncountable, tapi 'any' lebih umum di negatif."
             }
         }];
 
@@ -375,7 +375,7 @@
             document.getElementById("labelNomorSoal").innerHTML = "Soal " + (indeksSoalAktif + 1) + " dari 20";
             document.getElementById("kotakMateri").innerHTML = soal.clue;
             let depan = soal.depan ? soal.depan + " " : "";
-            document.getElementById("teksSoal").innerHTML = '"' + depan + '<span class="text-orange-600 font-bold underline bg-orange-100 px-2 py-1 rounded">[ ... ]</span> ' + soal.belakang + '"';
+            document.getElementById("teksSoal").innerHTML = '"' + depan + '<span class="text-blue-600 font-bold underline bg-blue-100 px-2 py-1 rounded">[ ... ]</span> ' + soal.belakang + '"';
 
             let areaPilihan = document.getElementById("areaPilihan");
             areaPilihan.innerHTML = "";
@@ -385,7 +385,7 @@
                 let tombol = document.createElement("button");
                 tombol.innerHTML = opsi;
                 tombol.id = "opsi-" + opsi;
-                tombol.className = "bg-white border-2 border-orange-200 text-orange-700 font-bold py-4 rounded-xl shadow-sm hover:bg-orange-50 hover:border-orange-400 transition-all text-xl capitalize";
+                tombol.className = "bg-white border-2 border-blue-200 text-blue-700 font-bold py-4 rounded-xl shadow-sm hover:bg-blue-50 hover:border-blue-400 transition-all text-xl capitalize";
                 tombol.onclick = function() { pilihOpsi(opsi); };
                 areaPilihan.appendChild(tombol);
             });
@@ -423,9 +423,9 @@
                 let btn = document.getElementById("opsi-" + o);
                 if (btn) {
                     if (o === opsiTerpilih) {
-                        btn.className = "bg-orange-500 border-2 border-orange-600 text-white font-bold py-4 rounded-xl shadow-md transition-all text-xl capitalize";
+                        btn.className = "bg-blue-500 border-2 border-blue-600 text-white font-bold py-4 rounded-xl shadow-md transition-all text-xl capitalize";
                     } else {
-                        btn.className = "bg-white border-2 border-orange-200 text-orange-700 font-bold py-4 rounded-xl shadow-sm hover:bg-orange-50 transition-all text-xl capitalize";
+                        btn.className = "bg-white border-2 border-blue-200 text-blue-700 font-bold py-4 rounded-xl shadow-sm hover:bg-blue-50 transition-all text-xl capitalize";
                     }
                 }
             });
@@ -440,7 +440,7 @@
             let isBenar = (pilihanDipilih === soalAktif.kunci);
             if (isBenar) {
                 if (!statusRiwayat[indeksSoalAktif] || !statusRiwayat[indeksSoalAktif].sudahBenar) {
-                    poinSesi += 20;
+                    poinSesi += 10;
                     document.getElementById("poinSesiTampil").innerHTML = poinSesi;
                 }
                 statusRiwayat[indeksSoalAktif] = { sudahBenar: true, pilihan: pilihanDipilih };
@@ -501,7 +501,7 @@
         function simpanPoinDanSelesai() {
             let poinTotalLama = parseInt(localStorage.getItem('poinMurid')) || 0;
             localStorage.setItem('poinMurid', poinTotalLama + poinSesi);
-            window.location.href = "sma.html";
+            window.location.href = "smp.html";
         }
 
         muatSoal();
