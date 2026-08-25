@@ -56,6 +56,10 @@
             #teksSoal {
                 font-size: 1rem !important;
             }
+            #kotakMateri {
+                font-size: 0.9rem !important;
+                padding: 12px !important;
+            }
         }
         button:active {
             transform: scale(0.96);
@@ -84,7 +88,8 @@
             <span id="labelNomorSoal" class="bg-orange-100 text-orange-700 font-bold px-4 py-1 rounded-full text-sm">Soal 1 dari 20</span>
         </div>
 
-        <!-- KOTAK MATERI DIHAPUS -->
+        <!-- CLUE UMUM DI ATAS SOAL -->
+        <div id="kotakMateri" class="mb-6 text-gray-700 text-base bg-orange-50 p-4 rounded-xl border border-orange-100 font-medium"></div>
 
         <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100">
             <div id="teksSoal" class="text-xl font-medium mb-6 leading-relaxed text-center"></div>
@@ -119,6 +124,7 @@
 
     <script>
         const daftarSoal = [{
+            clue: "💡 Petunjuk: Pilih kata hubung yang menunjukkan akibat atau kesimpulan dari pernyataan sebelumnya.",
             depan: "It was raining heavily,",
             belakang: "we canceled the match.",
             pilihan: ["therefore", "however", "furthermore", "meanwhile"],
@@ -130,6 +136,7 @@
                 "meanwhile": "<b>Meanwhile:</b> Salah. Bersamaan."
             }
         }, {
+            clue: "💡 Petunjuk: Kata hubung ini digunakan untuk menunjukkan pertentangan atau hasil yang tidak terduga.",
             depan: "She studied hard;",
             belakang: "she failed the exam.",
             pilihan: ["therefore", "however", "moreover", "instead"],
@@ -141,6 +148,7 @@
                 "instead": "<b>Instead:</b> Salah. Alternatif."
             }
         }, {
+            clue: "💡 Petunjuk: Pola ini digunakan untuk menyatakan akibat dari suatu sifat (adjective).",
             depan: "It was",
             belakang: "hot that we went swimming.",
             pilihan: ["so", "such", "too", "very"],
@@ -152,6 +160,7 @@
                 "very": "<b>Very:</b> Salah. Hanya penguat, tanpa 'that'."
             }
         }, {
+            clue: "💡 Petunjuk: Ini adalah pengandaian untuk masa lalu yang tidak terjadi (Conditional Type 3).",
             depan: "If she had studied,",
             belakang: "the exam.",
             pilihan: ["passes", "would pass", "would have passed", "passed"],
@@ -163,6 +172,7 @@
                 "passed": "<b>Passed:</b> Salah. Simple Past."
             }
         }, {
+            clue: "💡 Petunjuk: Kata ini digunakan untuk memberi peringatan jika tindakan tidak dilakukan.",
             depan: "Hurry up;",
             belakang: ", we will miss the train.",
             pilihan: ["furthermore", "otherwise", "meanwhile", "consequently"],
@@ -174,6 +184,7 @@
                 "consequently": "<b>Consequently:</b> Kurang natural."
             }
         }, {
+            clue: "💡 Petunjuk: Pengandaian untuk situasi khayalan (Conditional Type 2). Perhatikan bentuk 'to be' yang tepat.",
             depan: "If I",
             belakang: "you, I would accept it.",
             pilihan: ["am", "was", "were", "have been"],
@@ -185,6 +196,7 @@
                 "have been": "<b>Have been:</b> Salah."
             }
         }, {
+            clue: "💡 Petunjuk: Pengandaian realistis untuk masa depan (Conditional Type 1).",
             depan: "If she studies hard,",
             belakang: "the exam.",
             pilihan: ["passes", "will pass", "would pass", "passed"],
@@ -196,6 +208,7 @@
                 "passed": "<b>Passed:</b> Salah."
             }
         }, {
+            clue: "💡 Petunjuk: Kata ganti ini digunakan untuk orang sebagai subjek dalam klausa relatif.",
             depan: "The teacher",
             belakang: "teaches math is kind.",
             pilihan: ["who", "whom", "which", "whose"],
@@ -207,6 +220,7 @@
                 "whose": "<b>Whose:</b> Salah. Kepemilikan."
             }
         }, {
+            clue: "💡 Petunjuk: Kalimat pasif untuk kejadian lampau (Past Passive). Butuh to be + V3.",
             depan: "The letter",
             belakang: "by the secretary yesterday.",
             pilihan: ["sent", "is sent", "was sent", "has sent"],
@@ -218,6 +232,7 @@
                 "has sent": "<b>Has sent:</b> Salah. Aktif Perfect."
             }
         }, {
+            clue: "💡 Petunjuk: Mengubah kalimat langsung menjadi tidak langsung (Reported Speech) - perhatikan perubahan tenses.",
             depan: "He said he",
             belakang: "the document.",
             pilihan: ["has", "have", "had", "will have"],
@@ -229,6 +244,7 @@
                 "will have": "<b>Will have:</b> Salah."
             }
         }, {
+            clue: "💡 Petunjuk: Menyatakan aksi yang sudah selesai pada waktu tertentu di masa depan (Future Perfect).",
             depan: "By next month, I",
             belakang: "this project.",
             pilihan: ["finish", "finished", "will finish", "will have finished"],
@@ -240,6 +256,7 @@
                 "will have finished": "<b>Will have finished:</b> BENAR!"
             }
         }, {
+            clue: "💡 Petunjuk: Setelah kata kerja tertentu, gunakan bentuk V-ing (Gerund).",
             depan: "I don't mind",
             belakang: "late today.",
             pilihan: ["stay", "to stay", "staying", "stayed"],
@@ -251,6 +268,7 @@
                 "stayed": "<b>Stayed:</b> Salah."
             }
         }, {
+            clue: "💡 Petunjuk: Kata ini digunakan untuk menyatakan 'sebagian besar' dari suatu kelompok.",
             depan: "",
             belakang: "of the students passed.",
             pilihan: ["Many", "Much", "Most", "Every"],
@@ -262,6 +280,7 @@
                 "Every": "<b>Every:</b> Salah. Singular."
             }
         }, {
+            clue: "💡 Petunjuk: Perhatikan bahwa kata 'news' selalu dianggap tunggal (singular).",
             depan: "The news",
             belakang: "very shocking.",
             pilihan: ["are", "is", "were", "have been"],
@@ -273,6 +292,7 @@
                 "have been": "<b>Have been:</b> Salah."
             }
         }, {
+            clue: "💡 Petunjuk: Kata sifat tertentu selalu diikuti preposisi yang tepat. Cari pasangan yang benar.",
             depan: "He is interested",
             belakang: "learning English.",
             pilihan: ["to", "at", "in", "for"],
@@ -284,6 +304,7 @@
                 "for": "<b>For:</b> Salah."
             }
         }, {
+            clue: "💡 Petunjuk: Subjunctive digunakan setelah kata kerja seperti 'suggest' untuk menyatakan saran.",
             depan: "I suggest that he",
             belakang: "harder.",
             pilihan: ["study", "studies", "studied", "will study"],
@@ -295,6 +316,7 @@
                 "will study": "<b>Will study:</b> Salah."
             }
         }, {
+            clue: "💡 Petunjuk: Phrasal verb ini berarti 'mematikan' (lampu, TV, dll).",
             depan: "Please",
             belakang: "the lights before leaving.",
             pilihan: ["turn on", "turn off", "turn down", "turn up"],
@@ -306,6 +328,7 @@
                 "turn up": "<b>Turn up:</b> Salah. Membesarkan."
             }
         }, {
+            clue: "💡 Petunjuk: Perbedaan makna 'stop + V-ing' dan 'stop + to V' sangat penting.",
             depan: "She stopped",
             belakang: "because she was tired.",
             pilihan: ["smoke", "to smoke", "smoking", "smoked"],
@@ -317,6 +340,7 @@
                 "smoked": "<b>Smoked:</b> Salah."
             }
         }, {
+            clue: "💡 Petunjuk: Causative 'have something done' berarti menyuruh orang lain mengerjakan.",
             depan: "She",
             belakang: "her hair cut yesterday.",
             pilihan: ["had", "has", "have", "was"],
@@ -328,6 +352,7 @@
                 "was": "<b>Was:</b> Salah. Passive biasa."
             }
         }, {
+            clue: "💡 Petunjuk: 'Wish' untuk keinginan di masa kini menggunakan bentuk lampau (past modal).",
             depan: "I wish I",
             belakang: "swim.",
             pilihan: ["can", "could", "will", "would"],
@@ -348,6 +373,7 @@
         function muatSoal() {
             let soal = daftarSoal[indeksSoalAktif];
             document.getElementById("labelNomorSoal").innerHTML = "Soal " + (indeksSoalAktif + 1) + " dari 20";
+            document.getElementById("kotakMateri").innerHTML = soal.clue;
             let depan = soal.depan ? soal.depan + " " : "";
             document.getElementById("teksSoal").innerHTML = '"' + depan + '<span class="text-orange-600 font-bold underline bg-orange-100 px-2 py-1 rounded">[ ... ]</span> ' + soal.belakang + '"';
 

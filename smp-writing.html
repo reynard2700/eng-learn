@@ -20,7 +20,6 @@
             margin-left: auto;
             margin-right: auto;
         }
-        /* Mobile fix */
         @media (max-width: 640px) {
             #areaPilihan {
                 grid-template-columns: 1fr 1fr !important;
@@ -57,6 +56,10 @@
             #teksSoal {
                 font-size: 1rem !important;
             }
+            #kotakMateri {
+                font-size: 0.9rem !important;
+                padding: 12px !important;
+            }
         }
         button:active {
             transform: scale(0.96);
@@ -85,7 +88,8 @@
             <span id="labelNomorSoal" class="bg-blue-100 text-blue-700 font-bold px-4 py-1 rounded-full text-sm">Soal 1 dari 20</span>
         </div>
 
-        <!-- KOTAK MATERI DIHAPUS (tidak ditampilkan) -->
+        <!-- CLUE UMUM DI ATAS SOAL (hanya hint, tidak kasih jawaban) -->
+        <div id="kotakMateri" class="mb-6 text-gray-700 text-base bg-blue-50 p-4 rounded-xl border border-blue-100 font-medium"></div>
 
         <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100">
             <div id="teksSoal" class="text-xl font-medium mb-6 leading-relaxed text-center"></div>
@@ -120,6 +124,7 @@
 
     <script>
         const daftarSoal = [{
+            clue: "💡 Petunjuk: Perhatikan subjek 'She' (tunggal). Kata kerja untuk kebiasaan sehari-hari perlu akhiran khusus.",
             depan: "She",
             belakang: "to school every day.",
             pilihan: ["go", "goes", "going", "went"],
@@ -131,6 +136,7 @@
                 "went": "<b>Went:</b> Salah. Bentuk lampau."
             }
         }, {
+            clue: "💡 Petunjuk: 'Right now' menandakan kejadian yang sedang berlangsung. Butuh to be + kata kerja + ing.",
             depan: "They",
             belakang: "a movie right now.",
             pilihan: ["watch", "watches", "watching", "are watching"],
@@ -142,6 +148,7 @@
                 "are watching": "<b>Are watching:</b> BENAR! They (jamak) + are + V-ing."
             }
         }, {
+            clue: "💡 Petunjuk: 'Last holiday' menunjukkan waktu lampau. Pilih bentuk kata kerja untuk masa lalu.",
             depan: "I",
             belakang: "to Bali last holiday.",
             pilihan: ["go", "went", "have gone", "will go"],
@@ -153,6 +160,7 @@
                 "will go": "<b>Will go:</b> Salah. Masa depan."
             }
         }, {
+            clue: "💡 Petunjuk: 'Next year' menunjukkan masa depan. Kata bantu yang tepat untuk rencana.",
             depan: "We",
             belakang: "a new house next year.",
             pilihan: ["buy", "bought", "will buy", "are buying"],
@@ -164,6 +172,7 @@
                 "are buying": "<b>Are buying:</b> Bisa, tapi 'will buy' lebih tepat untuk 'next year'."
             }
         }, {
+            clue: "💡 Petunjuk: Cari preposisi yang tepat untuk menunjukkan posisi benda di atas permukaan.",
             depan: "The book is",
             belakang: "the table.",
             pilihan: ["in", "on", "at", "to"],
@@ -175,6 +184,7 @@
                 "to": "<b>To:</b> Salah. Menunjukkan arah."
             }
         }, {
+            clue: "💡 Petunjuk: Kata 'three' menunjukkan jumlah lebih dari satu. Pilih bentuk jamak (plural).",
             depan: "There are three",
             belakang: "in the basket.",
             pilihan: ["apple", "apples", "apple's", "appless"],
@@ -186,6 +196,7 @@
                 "appless": "<b>Appless:</b> Salah. Bukan kata."
             }
         }, {
+            clue: "💡 Petunjuk: Kata 'before' menandakan pengalaman masa lalu tanpa waktu spesifik. Butuh have/has + V3.",
             depan: "I",
             belakang: "to that museum before.",
             pilihan: ["go", "went", "have gone", "have been"],
@@ -197,6 +208,7 @@
                 "have been": "<b>Have been:</b> BENAR! Pengalaman masa lalu."
             }
         }, {
+            clue: "💡 Petunjuk: Kata ini digunakan untuk memberi saran atau rekomendasi kepada orang lain.",
             depan: "You",
             belakang: "bring an umbrella today.",
             pilihan: ["must", "can", "should", "might"],
@@ -208,6 +220,7 @@
                 "might": "<b>Might:</b> Salah. Kemungkinan."
             }
         }, {
+            clue: "💡 Petunjuk: Kata 'engineer' diawali bunyi vokal. Artikel apa yang tepat di depannya?",
             depan: "She wants to be",
             belakang: "engineer.",
             pilihan: ["a", "an", "the", "none"],
@@ -219,6 +232,7 @@
                 "none": "<b>None:</b> Salah. Butuh artikel."
             }
         }, {
+            clue: "💡 Petunjuk: Kalimat tanya dengan subjek 'you' membutuhkan kata bantu yang tepat.",
             depan: "",
             belakang: "you like to dance?",
             pilihan: ["Are", "Do", "Does", "Is"],
@@ -230,6 +244,7 @@
                 "Is": "<b>Is:</b> Salah. To be."
             }
         }, {
+            clue: "💡 Petunjuk: Subjek 'I' selalu memiliki pasangan to be yang khusus. Pilih yang tepat.",
             depan: "I",
             belakang: "a dedicated student.",
             pilihan: ["am", "is", "are", "be"],
@@ -241,6 +256,7 @@
                 "be": "<b>Be:</b> Salah. Bentuk dasar."
             }
         }, {
+            clue: "💡 Petunjuk: Pertanyaan untuk aksi yang sedang berlangsung. Subjek 'she' pakai to be apa?",
             depan: "",
             belakang: "she reading a book now?",
             pilihan: ["Is", "Are", "Do", "Does"],
@@ -252,6 +268,7 @@
                 "Does": "<b>Does:</b> Salah. Simple Present."
             }
         }, {
+            clue: "💡 Petunjuk: 'This morning' menunjukkan waktu lampau. Kata kerja 'eat' berubah menjadi apa?",
             depan: "She",
             belakang: "an apple this morning.",
             pilihan: ["eat", "ate", "eaten", "eats"],
@@ -263,6 +280,7 @@
                 "eats": "<b>Eats:</b> Salah. Present tunggal."
             }
         }, {
+            clue: "💡 Petunjuk: 'Next week' menunjukkan rencana masa depan yang sudah pasti. Frasa apa yang tepat?",
             depan: "We",
             belakang: "visit grandma next week.",
             pilihan: ["go", "went", "will go", "are going to"],
@@ -274,6 +292,7 @@
                 "are going to": "<b>Are going to:</b> BENAR!"
             }
         }, {
+            clue: "💡 Petunjuk: 'Milk' adalah benda yang tidak bisa dihitung (uncountable). Pilih kata penunjuk jumlah yang tepat.",
             depan: "There isn't",
             belakang: "milk in the fridge.",
             pilihan: ["many", "much", "few", "a lot"],
@@ -285,6 +304,7 @@
                 "a lot": "<b>A lot:</b> Kurang tepat di negatif."
             }
         }, {
+            clue: "💡 Petunjuk: Ada dua kejadian di masa lalu. Satu sedang berlangsung, satu tiba-tiba terjadi. Pilih bentuk yang tepat.",
             depan: "She",
             belakang: "dinner when I arrived.",
             pilihan: ["cook", "cooked", "was cooking", "has cooked"],
@@ -296,6 +316,7 @@
                 "has cooked": "<b>Has cooked:</b> Salah. Present Perfect."
             }
         }, {
+            clue: "💡 Petunjuk: Kata ini digunakan untuk menyatakan kemampuan (ability) melakukan sesuatu.",
             depan: "I",
             belakang: "speak three languages.",
             pilihan: ["can", "may", "must", "should"],
@@ -307,6 +328,7 @@
                 "should": "<b>Should:</b> Salah. Saran."
             }
         }, {
+            clue: "💡 Petunjuk: Kata ganti kepemilikan yang berdiri sendiri (tanpa diikuti kata benda).",
             depan: "This bag is",
             belakang: ", not yours.",
             pilihan: ["my", "mine", "me", "I"],
@@ -318,6 +340,7 @@
                 "I": "<b>I:</b> Salah. Subject pronoun."
             }
         }, {
+            clue: "💡 Petunjuk: Kata ini menunjukkan alasan (sebab) dari suatu kejadian.",
             depan: "She was happy",
             belakang: "she got a gift.",
             pilihan: ["because", "so", "but", "although"],
@@ -329,6 +352,7 @@
                 "although": "<b>Although:</b> Salah. Meskipun."
             }
         }, {
+            clue: "💡 Petunjuk: Dalam kalimat negatif, kata penunjuk benda tak tentu yang tepat adalah...",
             depan: "There isn't",
             belakang: "sugar in the jar.",
             pilihan: ["some", "any", "many", "much"],
@@ -349,6 +373,8 @@
         function muatSoal() {
             let soal = daftarSoal[indeksSoalAktif];
             document.getElementById("labelNomorSoal").innerHTML = "Soal " + (indeksSoalAktif + 1) + " dari 20";
+            // Tampilkan clue umum di atas soal
+            document.getElementById("kotakMateri").innerHTML = soal.clue;
             let depan = soal.depan ? soal.depan + " " : "";
             document.getElementById("teksSoal").innerHTML = '"' + depan + '<span class="text-blue-600 font-bold underline bg-blue-100 px-2 py-1 rounded">[ ... ]</span> ' + soal.belakang + '"';
 
