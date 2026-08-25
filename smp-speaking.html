@@ -1,18 +1,63 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Speaking SMP (10 Soal) | ENG-LEARN</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
-        body { font-family: 'Poppins', sans-serif; }
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            min-height: 100vh;
+            padding: 1.5rem;
+            background-color: #eff6ff;
+        }
+        .max-w-3xl {
+            max-width: 48rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @media (max-width: 640px) {
+            .max-w-3xl.mx-auto.mb-6.flex.justify-between {
+                flex-wrap: wrap !important;
+                gap: 12px !important;
+            }
+            .bg-white.rounded-3xl {
+                padding: 16px !important;
+            }
+            #teksSoal {
+                font-size: 1.6rem !important;
+                padding: 16px 12px !important;
+            }
+            .bg-green-500.px-6.py-3,
+            .bg-purple-500.px-6.py-3,
+            .bg-red-500.px-6.py-3 {
+                padding: 14px 18px !important;
+                font-size: 0.95rem !important;
+                min-height: 52px !important;
+            }
+            #teksTangkapan {
+                font-size: 1rem !important;
+                min-height: 50px !important;
+            }
+            #tombolLanjut,
+            #tombolSelesai {
+                padding: 16px !important;
+                font-size: 1rem !important;
+                min-height: 56px !important;
+            }
+        }
+        button:active {
+            transform: scale(0.96);
+            transition: transform 0.1s ease;
+        }
     </style>
-    <link rel="stylesheet" href="mobile-fix.css">
 </head>
-<body class="min-h-screen p-6 bg-blue-50">
-    
+<body>
+
     <div class="max-w-3xl mx-auto mb-6 flex justify-between items-center">
         <a href="smp.html" onclick="return confirm('Yakin mau kembali? Poin sesi ini akan hangus lho!')" class="inline-flex items-center text-red-500 hover:text-red-700 font-bold bg-white px-4 py-2 rounded-xl shadow-sm border border-red-100 transition-all">
             ⬅️ Batal & Kembali
@@ -24,23 +69,23 @@
 
     <div class="max-w-3xl mx-auto bg-white rounded-3xl p-8 shadow-xl border-2 border-blue-50 text-center">
         <div class="flex justify-between items-center mb-4 border-b-2 border-blue-100 pb-4 text-left">
-            <h1 class="text-2xl font-bold text-gray-800">🗣️ Speaking SMP: Daily Expressions</h1>
+            <h1 class="text-2xl font-bold text-gray-800">🗣️ Speaking SMP (10 Soal)</h1>
             <span id="labelNomorSoal" class="bg-blue-100 text-blue-700 font-bold px-4 py-1 rounded-full text-sm">Soal 1 dari 10</span>
         </div>
 
-        <div id="kotakMateri" class="mb-6 text-gray-700 text-base bg-blue-50 p-4 rounded-xl border border-blue-100 font-medium text-left"></div>
+        <!-- KOTAK MATERI DIHAPUS -->
 
         <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100">
             <p class="mb-3 text-gray-700 font-semibold">Ucapkan kalimat berikut dengan lantang:</p>
-            
+
             <div id="teksSoal" class="text-3xl font-extrabold text-blue-600 mb-6 bg-white py-6 px-4 rounded-2xl border-2 border-blue-200 shadow-sm"></div>
 
             <div class="flex justify-center gap-4 mb-6 flex-wrap">
                 <button onclick="putarContoh()" class="bg-green-500 text-white px-6 py-3 rounded-2xl font-bold text-lg hover:bg-green-600 shadow-md inline-flex items-center gap-2">
-                    <span>🔊 Dengar Contoh</span>
+                    🔊 Dengar Contoh
                 </button>
                 <button id="tombolBicara" onclick="mulaiMendengar()" class="bg-purple-500 text-white px-6 py-3 rounded-2xl font-bold text-lg hover:bg-purple-600 shadow-md inline-flex items-center gap-2">
-                    <span>🎤 Mulai Bicara</span>
+                    🎤 Mulai Bicara
                 </button>
             </div>
 
@@ -54,7 +99,7 @@
             </button>
 
             <p id="pesanHasil" class="text-lg font-bold hidden p-4 rounded-xl mt-4"></p>
-            
+
             <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700 shadow-lg">
                 🎉 Selesai! Simpan Semua Poin
             </button>
@@ -63,19 +108,16 @@
 
     <script>
         const daftarSoal = [
-            { materi: "💡 Teori: Ucapan salam ketika bertemu di pagi hari.", kunci: "good morning", teks: "Good morning", clue: "Petunjuk: Kata sapaan pagi (2 kata)." },
-            { materi: "💡 Teori: Ucapan salam ketika bertemu di siang hari.", kunci: "good afternoon", teks: "Good afternoon", clue: "Petunjuk: Kata sapaan siang (2 kata)." },
-            { materi: "💡 Teori: Ungkapan sopan untuk menyampaikan terima kasih.", kunci: "thank you", teks: "Thank you", clue: "Petunjuk: Dua kata untuk berterima kasih." },
-            // 🛠️ PERBAIKAN UTAMA DI SINI:
-            // Google Speech selalu mendeteksi "You're welcome" menjadi "you are welcome"
-            // Jadi kunci kita pakai "you are welcome", dan juga backup untuk "you're welcome" biar aman.
-            { materi: "💡 Teori: Respon ramah saat seseorang berterima kasih.", kunci: "you are welcome", teks: "You're welcome", clue: "Petunjuk: Ucapkan 'You are welcome' (3 kata) untuk membalas 'thank you'." },
-            { materi: "💡 Teori: Kalimat sederhana untuk menanyakan kabar.", kunci: "how are you", teks: "How are you?", clue: "Petunjuk: Tiga kata untuk menanyakan kabar." },
-            { materi: "💡 Teori: Pernyataan perpisahan saat hendak beranjak pergi.", kunci: "goodbye", teks: "Goodbye", clue: "Petunjuk: Satu kata untuk pamit." },
-            { materi: "💡 Teori: Ungkapan meminta maaf atas kesalahan kecil.", kunci: "im sorry", teks: "I'm sorry", clue: "Petunjuk: Dua kata untuk minta maaf." },
-            { materi: "💡 Teori: Ucapan selamat malam atau salam perpisahan malam.", kunci: "good night", teks: "Good night", clue: "Petunjuk: Dua kata untuk malam." },
-            { materi: "💡 Teori: Ungkapan ramah saat berkenalan pertama kali.", kunci: "nice to meet you", teks: "Nice to meet you", clue: "Petunjuk: Empat kata saat berkenalan." },
-            { materi: "💡 Teori: Pertanyaan sopan saat ingin meminta tolong.", kunci: "can you help me", teks: "Can you help me?", clue: "Petunjuk: Empat kata untuk minta bantuan." }
+            { kunci: "good morning", teks: "Good morning", clue: "Petunjuk: Kata sapaan pagi (2 kata)." },
+            { kunci: "good afternoon", teks: "Good afternoon", clue: "Petunjuk: Kata sapaan siang (2 kata)." },
+            { kunci: "thank you", teks: "Thank you", clue: "Petunjuk: Dua kata untuk berterima kasih." },
+            { kunci: "you are welcome", teks: "You're welcome", clue: "Petunjuk: Ucapkan 'You are welcome' (3 kata) untuk membalas 'thank you'." },
+            { kunci: "how are you", teks: "How are you?", clue: "Petunjuk: Tiga kata untuk menanyakan kabar." },
+            { kunci: "goodbye", teks: "Goodbye", clue: "Petunjuk: Satu kata untuk pamit." },
+            { kunci: "im sorry", teks: "I'm sorry", clue: "Petunjuk: Dua kata untuk minta maaf." },
+            { kunci: "good night", teks: "Good night", clue: "Petunjuk: Dua kata untuk malam." },
+            { kunci: "nice to meet you", teks: "Nice to meet you", clue: "Petunjuk: Empat kata saat berkenalan." },
+            { kunci: "can you help me", teks: "Can you help me?", clue: "Petunjuk: Empat kata untuk minta bantuan." }
         ];
 
         let indeksSoalAktif = 0;
@@ -84,18 +126,15 @@
 
         function muatSoal() {
             let soal = daftarSoal[indeksSoalAktif];
-            document.getElementById("labelNomorSoal").innerHTML = `Soal ${indeksSoalAktif + 1} dari 10`;
-            document.getElementById("kotakMateri").innerHTML = soal.materi;
-            document.getElementById("teksSoal").innerHTML = `"${soal.teks}"`;
+            document.getElementById("labelNomorSoal").innerHTML = "Soal " + (indeksSoalAktif + 1) + " dari 10";
+            document.getElementById("teksSoal").innerHTML = '"' + soal.teks + '"';
             document.getElementById("teksTangkapan").innerHTML = "(Belum ada suara)";
             document.getElementById("pesanHasil").classList.add("hidden");
             document.getElementById("tombolLanjut").classList.add("hidden");
             document.getElementById("tombolSelesai").classList.add("hidden");
-            
             let tombol = document.getElementById("tombolBicara");
-            tombol.innerHTML = '<span>🎤 Mulai Bicara</span>';
+            tombol.innerHTML = '🎤 Mulai Bicara';
             tombol.className = "bg-purple-500 text-white px-6 py-3 rounded-2xl font-bold text-lg hover:bg-purple-600 shadow-md inline-flex items-center gap-2";
-            
             sudahBenar = false;
         }
 
@@ -109,20 +148,16 @@
 
         function mulaiMendengar() {
             if (sudahBenar) return;
-
             let tombol = document.getElementById("tombolBicara");
             let teksTangkapan = document.getElementById("teksTangkapan");
             let pesanHasil = document.getElementById("pesanHasil");
-
             let TelingaKomputer = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!TelingaKomputer) {
                 alert("Gunakan Google Chrome terbaru untuk fitur suara.");
                 return;
             }
-
             let mesinPengecek = new TelingaKomputer();
             mesinPengecek.lang = "en-US";
-
             tombol.innerHTML = "🔴 Mendengarkan...";
             tombol.className = "bg-red-500 text-white px-6 py-3 rounded-2xl font-bold text-lg shadow-md inline-flex items-center gap-2";
             mesinPengecek.start();
@@ -131,41 +166,28 @@
                 let hasilSuara = event.results[0][0].transcript.toLowerCase();
                 teksTangkapan.innerHTML = '"' + hasilSuara + '"';
                 pesanHasil.classList.remove("hidden");
-
                 let soalAktif = daftarSoal[indeksSoalAktif];
-                let kunciUtama = soalAktif.kunci;
-
-                // 🛠️ LOGIKA PERBAIKAN: Biar aman, kita cek apakah suara mengandung kunci utama
-                // ATAU untuk kasus "you're welcome", kita terima juga "you are welcome" (sudah jadi kunci utama)
-                // Tapi untuk jaga-jaga, kita cek keduanya.
-                let isMatch = hasilSuara.includes(kunciUtama);
-                
-                // Khusus untuk soal "you're welcome", tambahkan pengecekan alternatif
-                // (walaupun sebenarnya kunci utama sudah "you are welcome", ini sebagai safety net)
+                let isMatch = hasilSuara.includes(soalAktif.kunci);
                 if (!isMatch && soalAktif.kunci === "you are welcome") {
                     if (hasilSuara.includes("you're welcome") || hasilSuara.includes("you are welcome")) {
                         isMatch = true;
                     }
                 }
-
                 if (isMatch) {
                     pesanHasil.innerHTML = "✅ Pelafalan Sempurna! (+10 Poin)";
                     pesanHasil.className = "mt-4 text-xl font-bold p-4 rounded-xl bg-green-100 text-green-700 border-2 border-green-200";
-                    
                     poinSesi += 10;
                     document.getElementById("poinSesiTampil").innerHTML = poinSesi;
                     sudahBenar = true;
-                    
                     tombol.innerHTML = "✅ Selesai";
                     tombol.className = "bg-gray-400 text-white px-6 py-3 rounded-2xl font-bold text-lg shadow-md inline-flex items-center gap-2";
-
                     if (indeksSoalAktif < daftarSoal.length - 1) {
                         document.getElementById("tombolLanjut").classList.remove("hidden");
                     } else {
                         document.getElementById("tombolSelesai").classList.remove("hidden");
                     }
                 } else {
-                    pesanHasil.innerHTML = `❌ Pelafalan kurang akurat.<br><span class="text-sm font-normal">${soalAktif.clue}</span>`;
+                    pesanHasil.innerHTML = "❌ Pelafalan kurang akurat.<br /><span class='text-sm font-normal'>" + soalAktif.clue + "</span>";
                     pesanHasil.className = "mt-4 text-xl font-bold p-4 rounded-xl bg-red-100 text-red-700 border-2 border-red-200";
                 }
             };
@@ -173,15 +195,14 @@
             mesinPengecek.onspeechend = function() {
                 mesinPengecek.stop();
                 if (!sudahBenar) {
-                    tombol.innerHTML = '<span>🎤 Mulai Bicara</span>';
+                    tombol.innerHTML = '🎤 Mulai Bicara';
                     tombol.className = "bg-purple-500 text-white px-6 py-3 rounded-2xl font-bold text-lg hover:bg-purple-600 shadow-md inline-flex items-center gap-2";
                 }
             };
 
-            mesinPengecek.onerror = function(event) {
-                console.warn("Speech recognition error:", event.error);
+            mesinPengecek.onerror = function() {
                 if (!sudahBenar) {
-                    tombol.innerHTML = '<span>🎤 Mulai Bicara</span>';
+                    tombol.innerHTML = '🎤 Mulai Bicara';
                     tombol.className = "bg-purple-500 text-white px-6 py-3 rounded-2xl font-bold text-lg hover:bg-purple-600 shadow-md inline-flex items-center gap-2";
                 }
             };
@@ -197,7 +218,6 @@
             localStorage.setItem('poinMurid', poinTotalLama + poinSesi);
             window.location.href = "smp.html";
         }
-
         muatSoal();
     </script>
 </body>

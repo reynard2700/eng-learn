@@ -1,18 +1,63 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Speaking SMA (10 Soal) | ENG-LEARN</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
-        body { font-family: 'Poppins', sans-serif; }
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            min-height: 100vh;
+            padding: 1.5rem;
+            background-color: #fff7ed;
+        }
+        .max-w-3xl {
+            max-width: 48rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @media (max-width: 640px) {
+            .max-w-3xl.mx-auto.mb-6.flex.justify-between {
+                flex-wrap: wrap !important;
+                gap: 12px !important;
+            }
+            .bg-white.rounded-3xl {
+                padding: 16px !important;
+            }
+            #teksSoal {
+                font-size: 1.6rem !important;
+                padding: 16px 12px !important;
+            }
+            .bg-green-500.px-6.py-3,
+            .bg-purple-500.px-6.py-3,
+            .bg-red-500.px-6.py-3 {
+                padding: 14px 18px !important;
+                font-size: 0.95rem !important;
+                min-height: 52px !important;
+            }
+            #teksTangkapan {
+                font-size: 1rem !important;
+                min-height: 50px !important;
+            }
+            #tombolLanjut,
+            #tombolSelesai {
+                padding: 16px !important;
+                font-size: 1rem !important;
+                min-height: 56px !important;
+            }
+        }
+        button:active {
+            transform: scale(0.96);
+            transition: transform 0.1s ease;
+        }
     </style>
-    <link rel="stylesheet" href="mobile-fix.css">
 </head>
-<body class="min-h-screen p-6 bg-orange-50">
-    
+<body>
+
     <div class="max-w-3xl mx-auto mb-6 flex justify-between items-center">
         <a href="sma.html" onclick="return confirm('Yakin mau kembali? Poin sesi ini akan hangus lho!')" class="inline-flex items-center text-red-500 hover:text-red-700 font-bold bg-white px-4 py-2 rounded-xl shadow-sm border border-orange-100 transition-all">
             ⬅️ Batal & Kembali
@@ -24,23 +69,23 @@
 
     <div class="max-w-3xl mx-auto bg-white rounded-3xl p-8 shadow-xl border-2 border-orange-50 text-center">
         <div class="flex justify-between items-center mb-4 border-b-2 border-orange-100 pb-4 text-left">
-            <h1 class="text-2xl font-bold text-gray-800">📢 Speaking SMA: Speech & Debate</h1>
+            <h1 class="text-2xl font-bold text-gray-800">📢 Speaking SMA (10 Soal)</h1>
             <span id="labelNomorSoal" class="bg-orange-100 text-orange-700 font-bold px-4 py-1 rounded-full text-sm">Soal 1 dari 10</span>
         </div>
 
-        <div id="kotakMateri" class="mb-6 text-gray-700 text-base bg-orange-50 p-4 rounded-xl border border-orange-100 font-medium text-left"></div>
+        <!-- KOTAK MATERI DIHAPUS -->
 
         <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100">
-            <p class="mb-3 text-gray-700 font-semibold">Simak contoh suaranya, lalu sampaikan argumen berikut dengan lantang:</p>
-            
+            <p class="mb-3 text-gray-700 font-semibold">Ucapkan argumen berikut dengan lantang:</p>
+
             <div id="teksSoal" class="text-2xl font-extrabold text-orange-600 mb-6 bg-white py-6 px-4 rounded-2xl border-2 border-orange-200 shadow-sm leading-relaxed"></div>
 
             <div class="flex justify-center gap-4 mb-6 flex-wrap">
                 <button onclick="putarContoh()" class="bg-green-500 text-white px-6 py-3 rounded-2xl font-bold text-lg hover:bg-green-600 shadow-md inline-flex items-center gap-2">
-                    <span>🔊 Dengar Contoh</span>
+                    🔊 Dengar Contoh
                 </button>
                 <button id="tombolBicara" onclick="mulaiMendengar()" class="bg-purple-500 text-white px-6 py-3 rounded-2xl font-bold text-lg hover:bg-purple-600 shadow-md inline-flex items-center gap-2">
-                    <span>🎤 Mulai Pidato</span>
+                    🎤 Mulai Pidato
                 </button>
             </div>
 
@@ -54,7 +99,7 @@
             </button>
 
             <p id="pesanHasil" class="text-lg font-bold hidden p-4 rounded-xl mt-4"></p>
-            
+
             <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700 shadow-lg">
                 🎉 Selesai! Simpan Semua Poin
             </button>
@@ -63,66 +108,16 @@
 
     <script>
         const daftarSoal = [
-            {
-                materi: "💡 Konteks Opini: Membuka argumen mengenai pentingnya sektor pendidikan.",
-                kunci: "education is the key",
-                teks: "In my opinion, education is the key to success.",
-                clue: "Petunjuk: Pastikan frasa 'education is the key' terucap dengan jelas."
-            },
-            {
-                materi: "💡 Konteks Opini: Menyatakan ketidaksepakatan secara tegas dalam debat.",
-                kunci: "i strongly disagree",
-                teks: "I strongly disagree with this statement.",
-                clue: "Petunjuk: Tekankan kata 'strongly' untuk menunjukkan ketegasan argumen."
-            },
-            {
-                materi: "💡 Konteks Opini: Membahas urgensi perlindungan lingkungan hidup.",
-                kunci: "protect the environment",
-                teks: "We must take immediate action to protect the environment.",
-                clue: "Petunjuk: Fokus pada pelafalan frasa 'protect the environment'."
-            },
-            {
-                materi: "💡 Konteks Opini: Menyoroti dampak positif teknologi modern.",
-                kunci: "technology brings positive",
-                teks: "Technology brings positive changes to our daily lives.",
-                clue: "Petunjuk: Ucapkan kata 'technology' dan 'positive' dengan intonasi naik."
-            },
-            {
-                materi: "💡 Konteks Opini: Menyampaikan sudut pandang alternatif.",
-                kunci: "on the other hand",
-                teks: "On the other hand, we should consider the economic impact.",
-                clue: "Petunjuk: Gunakan frasa transisi 'on the other hand' di awal kalimat."
-            },
-            {
-                materi: "💡 Konteks Opini: Menekankan tanggung jawab generasi muda.",
-                kunci: "young generation plays",
-                teks: "The young generation plays a vital role in shaping the future.",
-                clue: "Petunjuk: Pastikan frasa 'vital role' terdengar jelas oleh mikrofon."
-            },
-            {
-                materi: "💡 Konteks Opini: Menyimpulkan sebuah perdebatan formal.",
-                kunci: "in conclusion",
-                teks: "In conclusion, hard work always pays off in the end.",
-                clue: "Petunjuk: Awali dengan frasa konklusi formal 'in conclusion'."
-            },
-            {
-                materi: "💡 Konteks Opini: Menggarisbawahi pentingnya kesehatan mental.",
-                kunci: "mental health is just as important",
-                teks: "Mental health is just as important as physical health.",
-                clue: "Petunjuk: Ucapkan perbandingan 'just as important' dengan penekanan."
-            },
-            {
-                materi: "💡 Konteks Opini: Menyoroti peran krusial membaca buku.",
-                kunci: "reading books expands",
-                teks: "Reading books expands our imagination and knowledge.",
-                clue: "Petunjuk: Fokus pada kata kerja 'expands' dan objek 'knowledge'."
-            },
-            {
-                materi: "💡 Konteks Opini: Menutup pidato dengan seruan optimis.",
-                kunci: "together we can build",
-                teks: "Together, we can build a better world for everyone.",
-                clue: "Petunjuk: Ucapkan dengan nada optimis pada frasa 'build a better world'."
-            }
+            { kunci: "education is the key", teks: "In my opinion, education is the key to success.", clue: "Petunjuk: Pastikan frasa 'education is the key' terucap dengan jelas." },
+            { kunci: "i strongly disagree", teks: "I strongly disagree with this statement.", clue: "Petunjuk: Tekankan kata 'strongly' untuk menunjukkan ketegasan argumen." },
+            { kunci: "protect the environment", teks: "We must take immediate action to protect the environment.", clue: "Petunjuk: Fokus pada pelafalan frasa 'protect the environment'." },
+            { kunci: "technology brings positive", teks: "Technology brings positive changes to our daily lives.", clue: "Petunjuk: Ucapkan kata 'technology' dan 'positive' dengan intonasi naik." },
+            { kunci: "on the other hand", teks: "On the other hand, we should consider the economic impact.", clue: "Petunjuk: Gunakan frasa transisi 'on the other hand' di awal kalimat." },
+            { kunci: "young generation plays", teks: "The young generation plays a vital role in shaping the future.", clue: "Petunjuk: Pastikan frasa 'vital role' terdengar jelas oleh mikrofon." },
+            { kunci: "in conclusion", teks: "In conclusion, hard work always pays off in the end.", clue: "Petunjuk: Awali dengan frasa konklusi formal 'in conclusion'." },
+            { kunci: "mental health is just as important", teks: "Mental health is just as important as physical health.", clue: "Petunjuk: Ucapkan perbandingan 'just as important' dengan penekanan." },
+            { kunci: "reading books expands", teks: "Reading books expands our imagination and knowledge.", clue: "Petunjuk: Fokus pada kata kerja 'expands' dan objek 'knowledge'." },
+            { kunci: "together we can build", teks: "Together, we can build a better world for everyone.", clue: "Petunjuk: Ucapkan dengan nada optimis pada frasa 'build a better world'." }
         ];
 
         let indeksSoalAktif = 0;
@@ -131,13 +126,15 @@
 
         function muatSoal() {
             let soal = daftarSoal[indeksSoalAktif];
-            document.getElementById("labelNomorSoal").innerHTML = `Soal ${indeksSoalAktif + 1} dari 10`;
-            document.getElementById("kotakMateri").innerHTML = soal.materi;
-            document.getElementById("teksSoal").innerHTML = `"${soal.teks}"`;
+            document.getElementById("labelNomorSoal").innerHTML = "Soal " + (indeksSoalAktif + 1) + " dari 10";
+            document.getElementById("teksSoal").innerHTML = '"' + soal.teks + '"';
             document.getElementById("teksTangkapan").innerHTML = "(Belum ada suara)";
             document.getElementById("pesanHasil").classList.add("hidden");
             document.getElementById("tombolLanjut").classList.add("hidden");
-            document.getElementById("tombolBicara").classList.replace("bg-gray-400", "bg-purple-500");
+            document.getElementById("tombolSelesai").classList.add("hidden");
+            let tombol = document.getElementById("tombolBicara");
+            tombol.innerHTML = '🎤 Mulai Pidato';
+            tombol.className = "bg-purple-500 text-white px-6 py-3 rounded-2xl font-bold text-lg hover:bg-purple-600 shadow-md inline-flex items-center gap-2";
             sudahBenar = false;
         }
 
@@ -151,48 +148,40 @@
 
         function mulaiMendengar() {
             if (sudahBenar) return;
-
             let tombol = document.getElementById("tombolBicara");
             let teksTangkapan = document.getElementById("teksTangkapan");
             let pesanHasil = document.getElementById("pesanHasil");
-
             let TelingaKomputer = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!TelingaKomputer) {
                 alert("Gunakan Google Chrome terbaru untuk fitur suara.");
                 return;
             }
-
             let mesinPengecek = new TelingaKomputer();
             mesinPengecek.lang = "en-US";
-
             tombol.innerHTML = "🔴 Mendengarkan...";
-            tombol.classList.replace("bg-purple-500", "bg-red-500");
+            tombol.className = "bg-red-500 text-white px-6 py-3 rounded-2xl font-bold text-lg shadow-md inline-flex items-center gap-2";
             mesinPengecek.start();
 
             mesinPengecek.onresult = function(event) {
                 let hasilSuara = event.results[0][0].transcript.toLowerCase();
                 teksTangkapan.innerHTML = '"' + hasilSuara + '"';
                 pesanHasil.classList.remove("hidden");
-
                 let soalAktif = daftarSoal[indeksSoalAktif];
-
                 if (hasilSuara.includes(soalAktif.kunci)) {
-                    pesanHasil.innerHTML = "✅ Artikulasi Luar Biasa! (+20 Poin SMA)";
+                    pesanHasil.innerHTML = "✅ Artikulasi Luar Biasa! (+20 Poin)";
                     pesanHasil.className = "mt-4 text-xl font-bold p-4 rounded-xl bg-green-100 text-green-700 border-2 border-green-200";
-                    
                     poinSesi += 20;
                     document.getElementById("poinSesiTampil").innerHTML = poinSesi;
                     sudahBenar = true;
-                    tombol.classList.replace("bg-red-500", "bg-gray-400");
-                    tombol.innerHTML = "Selesai";
-
+                    tombol.innerHTML = "✅ Selesai";
+                    tombol.className = "bg-gray-400 text-white px-6 py-3 rounded-2xl font-bold text-lg shadow-md inline-flex items-center gap-2";
                     if (indeksSoalAktif < daftarSoal.length - 1) {
                         document.getElementById("tombolLanjut").classList.remove("hidden");
                     } else {
                         document.getElementById("tombolSelesai").classList.remove("hidden");
                     }
                 } else {
-                    pesanHasil.innerHTML = `❌ Pelafalan kurang akurat. <br><span class="text-sm font-normal">${soalAktif.clue}</span>`;
+                    pesanHasil.innerHTML = "❌ Pelafalan kurang akurat.<br /><span class='text-sm font-normal'>" + soalAktif.clue + "</span>";
                     pesanHasil.className = "mt-4 text-xl font-bold p-4 rounded-xl bg-red-100 text-red-700 border-2 border-red-200";
                 }
             };
@@ -200,10 +189,17 @@
             mesinPengecek.onspeechend = function() {
                 mesinPengecek.stop();
                 if (!sudahBenar) {
-                    tombol.innerHTML = '<span>🎤 Mulai Pidato</span>';
-                    tombol.classList.replace("bg-red-500", "bg-purple-500");
+                    tombol.innerHTML = '🎤 Mulai Pidato';
+                    tombol.className = "bg-purple-500 text-white px-6 py-3 rounded-2xl font-bold text-lg hover:bg-purple-600 shadow-md inline-flex items-center gap-2";
                 }
-            }
+            };
+
+            mesinPengecek.onerror = function() {
+                if (!sudahBenar) {
+                    tombol.innerHTML = '🎤 Mulai Pidato';
+                    tombol.className = "bg-purple-500 text-white px-6 py-3 rounded-2xl font-bold text-lg hover:bg-purple-600 shadow-md inline-flex items-center gap-2";
+                }
+            };
         }
 
         function soalBerikutnya() {
@@ -216,7 +212,6 @@
             localStorage.setItem('poinMurid', poinTotalLama + poinSesi);
             window.location.href = "sma.html";
         }
-
         muatSoal();
     </script>
 </body>

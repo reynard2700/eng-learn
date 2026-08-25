@@ -1,18 +1,64 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>News Listening SMA (10 Soal) | ENG-LEARN</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Listening SMA (10 Soal) | ENG-LEARN</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
-        body { font-family: 'Poppins', sans-serif; }
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            min-height: 100vh;
+            padding: 1.5rem;
+            background-color: #fff7ed;
+        }
+        .max-w-3xl {
+            max-width: 48rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @media (max-width: 640px) {
+            .max-w-3xl.mx-auto.mb-6.flex.justify-between {
+                flex-wrap: wrap !important;
+                gap: 12px !important;
+            }
+            .bg-white.rounded-3xl {
+                padding: 16px !important;
+            }
+            #teksSoal {
+                font-size: 1rem !important;
+            }
+            input[type="text"] {
+                font-size: 1rem !important;
+                min-height: 48px !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 12px !important;
+            }
+            .bg-green-500.px-8.py-4 {
+                padding: 14px 20px !important;
+                font-size: 1rem !important;
+                min-height: 52px !important;
+            }
+            #tombolCek,
+            #tombolLanjut,
+            #tombolSelesai {
+                padding: 16px !important;
+                font-size: 1rem !important;
+                min-height: 56px !important;
+            }
+        }
+        button:active {
+            transform: scale(0.96);
+            transition: transform 0.1s ease;
+        }
     </style>
-    <link rel="stylesheet" href="mobile-fix.css">
 </head>
-<body class="min-h-screen p-6 bg-orange-50">
-    
+<body>
+
     <div class="max-w-3xl mx-auto mb-6 flex justify-between items-center">
         <a href="sma.html" onclick="return confirm('Yakin mau kembali? Poin sesi ini akan hangus lho!')" class="inline-flex items-center text-red-500 hover:text-red-700 font-bold bg-white px-4 py-2 rounded-xl shadow-sm border border-orange-100 transition-all">
             ⬅️ Batal & Kembali
@@ -24,102 +70,81 @@
 
     <div class="max-w-3xl mx-auto bg-white rounded-3xl p-8 shadow-xl border-2 border-orange-50">
         <div class="flex justify-between items-center mb-4 border-b-2 border-orange-100 pb-4">
-            <h1 class="text-2xl font-bold text-gray-800">🎙️ News Listening SMA: Global Issues</h1>
+            <h1 class="text-2xl font-bold text-gray-800">🎙️ Listening SMA (10 Soal)</h1>
             <span id="labelNomorSoal" class="bg-orange-100 text-orange-700 font-bold px-4 py-1 rounded-full text-sm">Soal 1 dari 10</span>
         </div>
 
-        <div id="kotakMateri" class="mb-6 text-gray-700 text-base bg-orange-50 p-4 rounded-xl border border-orange-100 font-medium"></div>
+        <!-- KOTAK MATERI DIHAPUS -->
 
         <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100 text-center">
             <button onclick="putarAudio()" class="bg-green-500 text-white px-8 py-4 rounded-full font-bold text-xl hover:bg-green-600 transition-colors shadow-lg mb-6">
-                🔊 Putar Berita (Kecepatan Normal)
+                🔊 Putar Berita
             </button>
-            
+
             <div id="teksSoal" class="text-xl font-medium mb-6 leading-relaxed"></div>
-            
-            <input type="text" id="jawabanListening" class="border-b-4 border-green-300 bg-white px-4 py-2 rounded-lg w-48 text-center text-xl font-bold mb-6 focus:outline-none focus:border-green-600 shadow-inner" placeholder="Ketik kata...">
+
+            <input type="text" id="jawabanListening" class="border-b-4 border-green-300 bg-white px-4 py-2 rounded-lg w-48 text-center text-xl font-bold mb-6 focus:outline-none focus:border-green-600 shadow-inner" placeholder="Ketik jawaban..." />
 
             <button id="tombolCek" onclick="cekJawaban()" class="block w-full bg-orange-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-orange-600 mb-2">Cek Jawaban</button>
             <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden block w-full bg-green-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-green-600">➡️ Lanjut Soal Berikutnya</button>
 
             <p id="pesanHasil" class="mt-4 text-lg font-bold hidden p-3 rounded-xl"></p>
-            <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700">🎉 Selesai & Simpan Poin!</button>
+            <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700">🎉 Selesai & Simpan!</button>
         </div>
     </div>
 
     <script>
-        const daftarSoal = [
-            {
-                materi: "💡 Konteks Berita: Pengumuman resmi pemerintah terkait arah strategi negara.",
-                depan: "The government announced a new economic",
-                belakang: "today.",
-                kunci: "policy",
-                clue: "Petunjuk: Istilah formal untuk garis haluan atau aturan strategis yang ditetapkan pemerintah."
-            },
-            {
-                materi: "💡 Konteks Berita: Laporan ekonomi mengenai kenaikan harga barang secara umum.",
-                depan: "Experts warn about the rising rate of",
-                belakang: "this quarter.",
-                kunci: "inflation",
-                clue: "Petunjuk: Istilah ekonomi untuk penurunan nilai mata uang yang memicu kenaikan harga."
-            },
-            {
-                materi: "💡 Konteks Berita: Isu perubahan iklim global dan lingkungan hidup.",
-                depan: "Global warming is threatening our natural",
-                belakang: "ecosystems.",
-                kunci: "environment",
-                clue: "Petunjuk: Kosakata yang mencakup seluruh unsur alam, flora, dan fauna di bumi."
-            },
-            {
-                materi: "💡 Konteks Berita: Sektor ketenagakerjaan dan kesempatan kerja baru.",
-                depan: "The tech company plans to create thousands of new",
-                belakang: "opportunities.",
-                kunci: "employment",
-                clue: "Petunjuk: Sinonim tingkat lanjut untuk 'job' atau ketersediaan lapangan kerja."
-            },
-            {
-                materi: "💡 Konteks Berita: Isu hubungan internasional dan diplomasi antarnegara.",
-                depan: "Both countries signed a major trade",
-                belakang: "yesterday.",
-                kunci: "agreement",
-                clue: "Petunjuk: Kata benda formal untuk hasil mufakat atau kontrak kerja sama."
-            },
-            {
-                materi: "💡 Konteks Berita: Laporan inovasi teknologi modern.",
-                depan: "Artificial intelligence is transforming modern",
-                belakang: "industries.",
-                kunci: "technology",
-                clue: "Petunjuk: Bidang ilmu yang berkaitan dengan mesin, komputer, dan inovasi digital."
-            },
-            {
-                materi: "💡 Konteks Berita: Isu kesehatan masyarakat berskala luas.",
-                depan: "The health ministry launched a national vaccination",
-                belakang: "campaign.",
-                kunci: "healthcare",
-                clue: "Petunjuk: Sektor pelayanan kesehatan dan medis untuk masyarakat umum."
-            },
-            {
-                materi: "💡 Konteks Berita: Isu kriminalitas dan keamanan hukum.",
-                depan: "Police launched an investigation into the financial",
-                belakang: "scandal.",
-                kunci: "investigation",
-                clue: "Petunjuk: Proses resmi penegak hukum untuk mengumpulkan bukti kejahatan."
-            },
-            {
-                materi: "💡 Konteks Berita: Perkembangan sektor pariwisata domestik.",
-                depan: "The local region expects a massive surge in foreign",
-                belakang: "arrivals.",
-                kunci: "tourism",
-                clue: "Petunjuk: Industri yang berfokus pada perjalanan rekreasi dan pelancong asing."
-            },
-            {
-                materi: "💡 Konteks Berita: Isu ketahanan pangan nasional.",
-                depan: "Extreme weather conditions disrupted agricultural",
-                belakang: "production.",
-                kunci: "production",
-                clue: "Petunjuk: Hasil akhir dari proses pembuatan atau penanaman pangan secara massal."
-            }
-        ];
+        const daftarSoal = [{
+            depan: "The government announced a new economic",
+            belakang: "today.",
+            kunci: "policy",
+            clue: "Petunjuk: Istilah formal untuk garis haluan atau aturan strategis yang ditetapkan pemerintah."
+        }, {
+            depan: "Experts warn about the rising rate of",
+            belakang: "this quarter.",
+            kunci: "inflation",
+            clue: "Petunjuk: Istilah ekonomi untuk penurunan nilai mata uang yang memicu kenaikan harga."
+        }, {
+            depan: "Global warming is threatening our natural",
+            belakang: "ecosystems.",
+            kunci: "environment",
+            clue: "Petunjuk: Kosakata yang mencakup seluruh unsur alam, flora, dan fauna di bumi."
+        }, {
+            depan: "The tech company plans to create thousands of new",
+            belakang: "opportunities.",
+            kunci: "employment",
+            clue: "Petunjuk: Sinonim tingkat lanjut untuk 'job' atau ketersediaan lapangan kerja."
+        }, {
+            depan: "Both countries signed a major trade",
+            belakang: "yesterday.",
+            kunci: "agreement",
+            clue: "Petunjuk: Kata benda formal untuk hasil mufakat atau kontrak kerja sama."
+        }, {
+            depan: "Artificial intelligence is transforming modern",
+            belakang: "industries.",
+            kunci: "technology",
+            clue: "Petunjuk: Bidang ilmu yang berkaitan dengan mesin, komputer, dan inovasi digital."
+        }, {
+            depan: "The health ministry launched a national vaccination",
+            belakang: "campaign.",
+            kunci: "healthcare",
+            clue: "Petunjuk: Sektor pelayanan kesehatan dan medis untuk masyarakat umum."
+        }, {
+            depan: "Police launched an investigation into the financial",
+            belakang: "scandal.",
+            kunci: "investigation",
+            clue: "Petunjuk: Proses resmi penegak hukum untuk mengumpulkan bukti kejahatan."
+        }, {
+            depan: "The local region expects a massive surge in foreign",
+            belakang: "arrivals.",
+            kunci: "tourism",
+            clue: "Petunjuk: Industri yang berfokus pada perjalanan rekreasi dan pelancong asing."
+        }, {
+            depan: "Extreme weather conditions disrupted agricultural",
+            belakang: "production.",
+            kunci: "production",
+            clue: "Petunjuk: Hasil akhir dari proses pembuatan atau penanaman pangan secara massal."
+        }];
 
         let indeksSoalAktif = 0;
         let poinSesi = 0;
@@ -127,22 +152,22 @@
 
         function muatSoal() {
             let soal = daftarSoal[indeksSoalAktif];
-            document.getElementById("labelNomorSoal").innerHTML = `Soal ${indeksSoalAktif + 1} dari 10`;
-            document.getElementById("kotakMateri").innerHTML = soal.materi;
-            document.getElementById("teksSoal").innerHTML = `"${soal.depan} <span class='text-orange-600 font-bold underline'>[ ... ]</span> ${soal.belakang}"`;
+            document.getElementById("labelNomorSoal").innerHTML = "Soal " + (indeksSoalAktif + 1) + " dari 10";
+            document.getElementById("teksSoal").innerHTML = '"' + soal.depan + ' <span class="text-orange-600 font-bold underline">[ ... ]</span> ' + soal.belakang + '"';
             document.getElementById("jawabanListening").value = "";
             document.getElementById("pesanHasil").classList.add("hidden");
             document.getElementById("tombolLanjut").classList.add("hidden");
             document.getElementById("tombolCek").classList.remove("hidden");
+            document.getElementById("tombolSelesai").classList.add("hidden");
             sudahDijawab = false;
         }
 
         function putarAudio() {
             let soal = daftarSoal[indeksSoalAktif];
-            let teks = `${soal.depan} ${soal.kunci} ${soal.belakang}`;
+            let teks = soal.depan + " " + soal.kunci + " " + soal.belakang;
             let suara = new SpeechSynthesisUtterance(teks);
             suara.lang = "en-US";
-            suara.rate = 1.0; // Kecepatan normal berita
+            suara.rate = 1.0;
             window.speechSynthesis.speak(suara);
         }
 
@@ -154,20 +179,19 @@
             pesan.classList.remove("hidden");
 
             if (jawaban === soalAktif.kunci) {
-                pesan.innerHTML = "✅ Tepat sekali! (+20 Poin SMA)";
+                pesan.innerHTML = "✅ Tepat sekali! (+20 Poin)";
                 pesan.className = "mt-4 text-lg font-bold p-3 rounded-xl bg-green-100 text-green-700 border-2 border-green-200";
                 poinSesi += 20;
                 document.getElementById("poinSesiTampil").innerHTML = poinSesi;
                 sudahDijawab = true;
                 document.getElementById("tombolCek").classList.add("hidden");
-                
                 if (indeksSoalAktif < daftarSoal.length - 1) {
                     document.getElementById("tombolLanjut").classList.remove("hidden");
                 } else {
                     document.getElementById("tombolSelesai").classList.remove("hidden");
                 }
             } else {
-                pesan.innerHTML = `❌ Kurang tepat. <br><span class="text-sm font-normal">${soalAktif.clue}</span>`;
+                pesan.innerHTML = "❌ Kurang tepat. <br /><span class='text-sm font-normal'>" + soalAktif.clue + "</span>";
                 pesan.className = "mt-4 text-lg font-bold p-3 rounded-xl bg-red-100 text-red-700 border-2 border-red-200";
             }
         }
@@ -182,7 +206,6 @@
             localStorage.setItem('poinMurid', poinTotalLama + poinSesi);
             window.location.href = "sma.html";
         }
-
         muatSoal();
     </script>
 </body>
