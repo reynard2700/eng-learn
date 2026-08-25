@@ -159,6 +159,15 @@
             background: #e5e7eb;
             border-color: #6366f1;
         }
+        .btn-grammar {
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            transition: all 0.2s ease;
+        }
+        .btn-grammar:hover {
+            background: #dbeafe;
+            border-color: #6366f1;
+        }
         .saran-klik {
             color: #4f46e5;
             font-weight: 700;
@@ -176,6 +185,20 @@
             padding: 10px 14px;
             margin-top: 12px;
             font-size: 0.95rem;
+        }
+        .grammar-check-box {
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+        .grammar-check-box .good {
+            color: #16a34a;
+        }
+        .grammar-check-box .warn {
+            color: #ea580c;
+        }
+        .grammar-check-box .danger {
+            color: #dc2626;
         }
     </style>
 </head>
@@ -251,9 +274,25 @@
                         <button onclick="copyHasil()" class="text-gray-400 hover:text-indigo-600 transition text-sm font-semibold flex items-center gap-1 bg-white px-3 py-1.5 rounded-full border border-gray-200">
                             📋 Salin
                         </button>
+                        <button onclick="cekGrammar()" class="btn-grammar text-gray-600 hover:text-indigo-600 transition text-sm font-semibold flex items-center gap-1 bg-white px-3 py-1.5 rounded-full border border-gray-200">
+                            📝 Grammar
+                        </button>
                     </div>
                 </div>
                 <div id="hasilDetail" class="mt-3 text-sm text-gray-500 border-t border-gray-200 pt-3"></div>
+            </div>
+
+            <!-- Box Hasil Grammar Check -->
+            <div id="grammarBox" class="hidden mt-4 p-5 rounded-2xl border-2 border-indigo-200 bg-indigo-50 grammar-check-box fade-in">
+                <div class="flex justify-between items-start mb-3">
+                    <h4 class="font-bold text-indigo-800 flex items-center gap-2">
+                        <span>📝</span> Hasil Cek Grammar &amp; Tense
+                    </h4>
+                    <button onclick="document.getElementById('grammarBox').classList.add('hidden')" class="text-gray-400 hover:text-gray-600">
+                        ✕
+                    </button>
+                </div>
+                <div id="grammarHasil" class="space-y-2 text-sm text-gray-700"></div>
             </div>
 
             <!-- Belum ditemukan + Saran -->
@@ -276,10 +315,9 @@
 
     <script>
         // ================================================================
-        //  1.  BANK FRASA (1000+ frasa) + TAMBAHAN SEKOLAH
+        //  1.  BANK FRASA (1000+ frasa)
         // ================================================================
         const FRASA = [
-            // ----- SALAM -----
             { id: "halo", en: "hello" },
             { id: "hai", en: "hi" },
             { id: "selamat pagi", en: "good morning" },
@@ -296,8 +334,6 @@
             { id: "selamat sore semua", en: "good evening everyone" },
             { id: "selamat malam semua", en: "good night everyone" },
             { id: "salam kenal", en: "nice to meet you" },
-
-            // ----- KABAR -----
             { id: "apa kabar", en: "how are you" },
             { id: "apa kabarmu", en: "how are you" },
             { id: "bagaimana kabarmu", en: "how are you" },
@@ -311,8 +347,6 @@
             { id: "sedang baik-baik saja", en: "doing well" },
             { id: "saya baik", en: "i am fine" },
             { id: "saya sehat", en: "i am healthy" },
-
-            // ----- PERKENALAN -----
             { id: "nama saya", en: "my name is" },
             { id: "namaku", en: "my name is" },
             { id: "saya dari", en: "i am from" },
@@ -324,8 +358,6 @@
             { id: "ini teman saya", en: "this is my friend" },
             { id: "dia dari", en: "he is from" },
             { id: "dia berasal dari", en: "she comes from" },
-
-            // ----- TERIMA KASIH -----
             { id: "terima kasih", en: "thank you" },
             { id: "makasih", en: "thanks" },
             { id: "terima kasih banyak", en: "thank you very much" },
@@ -334,8 +366,6 @@
             { id: "terima kasih ya", en: "thanks a lot" },
             { id: "terima kasih atas bantuannya", en: "thank you for your help" },
             { id: "terima kasih atas perhatiannya", en: "thank you for your attention" },
-
-            // ----- MAAF -----
             { id: "maaf", en: "sorry" },
             { id: "maafkan saya", en: "i'm sorry" },
             { id: "maaf ya", en: "i'm sorry" },
@@ -344,8 +374,6 @@
             { id: "maafkan aku", en: "forgive me" },
             { id: "saya minta maaf", en: "i apologize" },
             { id: "maaf atas kesalahannya", en: "sorry for the mistake" },
-
-            // ----- PERTANYAAN UMUM -----
             { id: "apa itu", en: "what is that" },
             { id: "apa ini", en: "what is this" },
             { id: "siapa kamu", en: "who are you" },
@@ -394,8 +422,6 @@
             { id: "apakah kamu mengerti", en: "do you understand" },
             { id: "apakah kamu setuju", en: "do you agree" },
             { id: "apa pendapatmu", en: "what do you think" },
-
-            // ----- PERNYATAAN -----
             { id: "saya mau", en: "i want" },
             { id: "aku mau", en: "i want" },
             { id: "saya ingin", en: "i want" },
@@ -479,8 +505,6 @@
             { id: "saudara laki-lakiku", en: "my brother" },
             { id: "aku punya dua saudara", en: "i have two siblings" },
             { id: "saya punya dua saudara", en: "i have two siblings" },
-
-            // ----- SEKOLAH (TAMBAHAN BANYAK) -----
             { id: "pelajaran matematika", en: "mathematics" },
             { id: "pelajaran fisika", en: "physics" },
             { id: "pelajaran kimia", en: "chemistry" },
@@ -507,7 +531,6 @@
             { id: "jangka", en: "compass" },
             { id: "busur derajat", en: "protractor" },
             { id: "spidol", en: "marker" },
-            { id: "sticky notes", en: "sticky notes" },
             { id: "menyerahkan tugas", en: "submit the assignment" },
             { id: "mengumpulkan", en: "collect" },
             { id: "mengingatkan", en: "remind" },
@@ -536,8 +559,6 @@
             { id: "saya mau ke perpustakaan", en: "i want to go to the library" },
             { id: "jam berapa pelajaran dimulai?", en: "what time does the lesson start?" },
             { id: "jam berapa pulang sekolah?", en: "what time does school end?" },
-
-            // ----- KESEHATAN -----
             { id: "saya sakit", en: "i am sick" },
             { id: "saya demam", en: "i have a fever" },
             { id: "saya pusing", en: "i have a headache" },
@@ -552,8 +573,6 @@
             { id: "pandemi", en: "pandemic" },
             { id: "cuci tangan", en: "wash hands" },
             { id: "pakai masker", en: "wear a mask" },
-
-            // ----- MAKANAN -----
             { id: "nasi goreng", en: "fried rice" },
             { id: "mie ayam", en: "chicken noodles" },
             { id: "soto", en: "soto" },
@@ -572,8 +591,6 @@
             { id: "teh manis", en: "sweet tea" },
             { id: "kopi", en: "coffee" },
             { id: "jus", en: "juice" },
-
-            // ----- TEMPAT -----
             { id: "bandara", en: "airport" },
             { id: "stasiun kereta", en: "train station" },
             { id: "terminal bus", en: "bus terminal" },
@@ -589,8 +606,6 @@
             { id: "toko suvenir", en: "souvenir shop" },
             { id: "restoran", en: "restaurant" },
             { id: "kafe", en: "cafe" },
-
-            // ----- WAKTU -----
             { id: "hari ini", en: "today" },
             { id: "besok", en: "tomorrow" },
             { id: "kemarin", en: "yesterday" },
@@ -606,8 +621,6 @@
             { id: "jam berapa", en: "what time" },
             { id: "setengah", en: "half" },
             { id: "seperempat", en: "quarter" },
-
-            // ----- KATA SIFAT -----
             { id: "baik", en: "good" },
             { id: "buruk", en: "bad" },
             { id: "besar", en: "big" },
@@ -632,8 +645,6 @@
             { id: "pedas", en: "spicy" },
             { id: "pahit", en: "bitter" },
             { id: "asam", en: "sour" },
-
-            // ----- KATA HUBUNG -----
             { id: "dan", en: "and" },
             { id: "atau", en: "or" },
             { id: "tetapi", en: "but" },
@@ -653,8 +664,6 @@
             { id: "sebaliknya", en: "instead" },
             { id: "sebagai tambahan", en: "in addition" },
             { id: "walaupun", en: "although" },
-
-            // ----- PERMINTAAN TOLONG -----
             { id: "tolong bantu saya", en: "please help me" },
             { id: "tolong bantu aku", en: "please help me" },
             { id: "bisa tolong saya", en: "can you help me" },
@@ -665,8 +674,6 @@
             { id: "bisa kamu mengajar saya", en: "can you teach me" },
             { id: "tolong antarkan saya", en: "please take me" },
             { id: "tolong jemput saya", en: "please pick me up" },
-
-            // ----- EKSPRESI -----
             { id: "semoga berhasil", en: "good luck" },
             { id: "semoga sukses", en: "good luck" },
             { id: "selamat ulang tahun", en: "happy birthday" },
@@ -687,8 +694,6 @@
             { id: "saya bangga padamu", en: "i am proud of you" },
             { id: "terima kasih sudah datang", en: "thank you for coming" },
             { id: "selamat datang", en: "welcome" },
-
-            // ----- FRASA DARI SOAL -----
             { id: "the government announced a new economic policy", en: "the government announced a new economic policy" },
             { id: "experts warn about the rising rate of inflation", en: "experts warn about the rising rate of inflation" },
             { id: "global warming is threatening our natural environment", en: "global warming is threatening our natural environment" },
@@ -712,10 +717,9 @@
         ];
 
         // ================================================================
-        //  2.  BANK KATA (3000+) + TAMBAHAN SEKOLAH
+        //  2.  BANK KATA (3000+ kata)
         // ================================================================
         const KAMUS = [
-            // ----- A -----
             { en: "abandon", id: "meninggalkan" },
             { en: "ability", id: "kemampuan" },
             { en: "able", id: "mampu" },
@@ -836,8 +840,6 @@
             { en: "aware", id: "sadar" },
             { en: "awesome", id: "luar biasa" },
             { en: "awful", id: "mengerikan" },
-
-            // ----- B -----
             { en: "back", id: "kembali" },
             { en: "background", id: "latar belakang" },
             { en: "bad", id: "buruk" },
@@ -953,8 +955,6 @@
             { en: "button", id: "tombol" },
             { en: "buy", id: "membeli" },
             { en: "by", id: "oleh" },
-
-            // ----- C -----
             { en: "cabin", id: "kabin" },
             { en: "cafe", id: "kafe" },
             { en: "cage", id: "kandang" },
@@ -1193,8 +1193,6 @@
             { en: "cut", id: "memotong" },
             { en: "cute", id: "imut" },
             { en: "cycle", id: "siklus" },
-
-            // ----- D -----
             { en: "daily", id: "harian" },
             { en: "dance", id: "menari" },
             { en: "danger", id: "bahaya" },
@@ -1338,8 +1336,6 @@
             { en: "dust", id: "debu" },
             { en: "duty", id: "tugas" },
             { en: "dynamic", id: "dinamis" },
-
-            // ----- E -----
             { en: "each", id: "setiap" },
             { en: "eager", id: "bersemangat" },
             { en: "ear", id: "telinga" },
@@ -1450,8 +1446,6 @@
             { en: "extraordinary", id: "luar biasa" },
             { en: "extreme", id: "ekstrem" },
             { en: "eye", id: "mata" },
-
-            // ----- F -----
             { en: "face", id: "wajah" },
             { en: "facility", id: "fasilitas" },
             { en: "fact", id: "fakta" },
@@ -1577,8 +1571,6 @@
             { en: "funny", id: "lucu" },
             { en: "furniture", id: "perabotan" },
             { en: "future", id: "masa depan" },
-
-            // ----- G -----
             { en: "gain", id: "memperoleh" },
             { en: "game", id: "permainan" },
             { en: "gap", id: "celah" },
@@ -1647,8 +1639,6 @@
             { en: "guitar", id: "gitar" },
             { en: "gun", id: "senjata" },
             { en: "guy", id: "pria" },
-
-            // ----- H -----
             { en: "habit", id: "kebiasaan" },
             { en: "hair", id: "rambut" },
             { en: "half", id: "setengah" },
@@ -1736,8 +1726,6 @@
             { en: "husband", id: "suami" },
             { en: "hut", id: "pondok" },
             { en: "hydrogen", id: "hidrogen" },
-
-            // ----- I -----
             { en: "i", id: "saya" },
             { en: "ice", id: "es" },
             { en: "icon", id: "ikon" },
@@ -1833,8 +1821,6 @@
             { en: "item", id: "barang" },
             { en: "its", id: "miliknya" },
             { en: "itself", id: "sendiri" },
-
-            // ----- J -----
             { en: "jacket", id: "jaket" },
             { en: "jail", id: "penjara" },
             { en: "jam", id: "selai" },
@@ -1860,8 +1846,6 @@
             { en: "just", id: "hanya" },
             { en: "justice", id: "keadilan" },
             { en: "justify", id: "membenarkan" },
-
-            // ----- K -----
             { en: "keen", id: "bersemangat" },
             { en: "keep", id: "menjaga" },
             { en: "key", id: "kunci" },
@@ -1877,8 +1861,6 @@
             { en: "knock", id: "mengetuk" },
             { en: "know", id: "tahu" },
             { en: "knowledge", id: "pengetahuan" },
-
-            // ----- L -----
             { en: "label", id: "label" },
             { en: "labor", id: "tenaga kerja" },
             { en: "lack", id: "kekurangan" },
@@ -1961,8 +1943,6 @@
             { en: "lunch", id: "makan siang" },
             { en: "lung", id: "paru-paru" },
             { en: "luxury", id: "kemewahan" },
-
-            // ----- M -----
             { en: "machine", id: "mesin" },
             { en: "mad", id: "gila" },
             { en: "magazine", id: "majalah" },
@@ -2073,8 +2053,6 @@
             { en: "my", id: "milik saya" },
             { en: "myself", id: "diriku sendiri" },
             { en: "mysterious", id: "misterius" },
-
-            // ----- N -----
             { en: "nail", id: "paku" },
             { en: "name", id: "nama" },
             { en: "narrow", id: "sempit" },
@@ -2125,8 +2103,6 @@
             { en: "numerous", id: "banyak" },
             { en: "nurse", id: "perawat" },
             { en: "nut", id: "kacang" },
-
-            // ----- O -----
             { en: "object", id: "objek" },
             { en: "observe", id: "mengamati" },
             { en: "obtain", id: "memperoleh" },
@@ -2184,8 +2160,6 @@
             { en: "owe", id: "berhutang" },
             { en: "own", id: "milik sendiri" },
             { en: "owner", id: "pemilik" },
-
-            // ----- P -----
             { en: "pace", id: "kecepatan" },
             { en: "pack", id: "mengemas" },
             { en: "package", id: "paket" },
@@ -2357,8 +2331,6 @@
             { en: "push", id: "mendorong" },
             { en: "put", id: "meletakkan" },
             { en: "puzzle", id: "teka-teki" },
-
-            // ----- Q -----
             { en: "quality", id: "kualitas" },
             { en: "quantity", id: "kuantitas" },
             { en: "quarter", id: "seperempat" },
@@ -2370,8 +2342,6 @@
             { en: "quite", id: "cukup" },
             { en: "quota", id: "kuota" },
             { en: "quote", id: "kutipan" },
-
-            // ----- R -----
             { en: "race", id: "balapan" },
             { en: "radio", id: "radio" },
             { en: "rail", id: "rel" },
@@ -2502,8 +2472,6 @@
             { en: "run", id: "berlari" },
             { en: "rural", id: "pedesaan" },
             { en: "rush", id: "terburu-buru" },
-
-            // ----- S -----
             { en: "sad", id: "sedih" },
             { en: "safe", id: "aman" },
             { en: "safety", id: "keamanan" },
@@ -2779,8 +2747,6 @@
             { en: "symbol", id: "simbol" },
             { en: "sympathy", id: "simpati" },
             { en: "system", id: "sistem" },
-
-            // ----- T -----
             { en: "table", id: "meja" },
             { en: "tackle", id: "menangani" },
             { en: "take", id: "mengambil" },
@@ -2918,8 +2884,6 @@
             { en: "two", id: "dua" },
             { en: "type", id: "jenis" },
             { en: "typical", id: "khas" },
-
-            // ----- U -----
             { en: "ugly", id: "jelek" },
             { en: "ultimate", id: "terakhir" },
             { en: "uncle", id: "paman" },
@@ -2947,8 +2911,6 @@
             { en: "useful", id: "berguna" },
             { en: "usual", id: "biasa" },
             { en: "usually", id: "biasanya" },
-
-            // ----- V -----
             { en: "vacation", id: "liburan" },
             { en: "valid", id: "valid" },
             { en: "valley", id: "lembah" },
@@ -2983,8 +2945,6 @@
             { en: "volunteer", id: "relawan" },
             { en: "vote", id: "memilih" },
             { en: "voter", id: "pemilih" },
-
-            // ----- W -----
             { en: "wage", id: "upah" },
             { en: "wait", id: "menunggu" },
             { en: "wake", id: "bangun" },
@@ -3073,8 +3033,6 @@
             { en: "writer", id: "penulis" },
             { en: "writing", id: "tulisan" },
             { en: "wrong", id: "salah" },
-
-            // ----- X, Y, Z -----
             { en: "yard", id: "halaman" },
             { en: "yeah", id: "ya" },
             { en: "year", id: "tahun" },
@@ -3092,8 +3050,6 @@
             { en: "zero", id: "nol" },
             { en: "zone", id: "zona" },
             { en: "zoo", id: "kebun binatang" },
-
-            // ----- KATA DARI SOAL -----
             { en: "am", id: "adalah (saya)" },
             { en: "is", id: "adalah" },
             { en: "are", id: "adalah (jamak)" },
@@ -3237,7 +3193,189 @@
         ];
 
         // ================================================================
-        //  3.  FUNGSI UTIL: LEVENSHTEIN DISTANCE (Untuk "Maksudnya ini?")
+        //  3.  FITUR UTAMA: CEK GRAMMAR & TENSE
+        // ================================================================
+        function getEnglishText() {
+            // Ambil teks bahasa Inggris yang sedang aktif
+            if (mode === 'en-id') {
+                // Input adalah English
+                return document.getElementById('inputKata').value.trim();
+            } else {
+                // Hasil terjemahan adalah English (ID->EN)
+                const hasilEl = document.getElementById('hasilTerjemahan');
+                if (hasilEl && hasilEl.textContent) {
+                    return hasilEl.textContent.trim();
+                }
+                return '';
+            }
+        }
+
+        function cekGrammar() {
+            const grammarBox = document.getElementById('grammarBox');
+            const grammarHasil = document.getElementById('grammarHasil');
+            const text = getEnglishText();
+
+            if (!text) {
+                alert('Tidak ada kalimat Bahasa Inggris yang bisa dicek. Pastikan kamu sudah menerjemahkan atau mengetik kalimat Inggris!');
+                return;
+            }
+
+            const checks = [];
+
+            // ---- RULE 1: Subject-Verb Agreement (She/He/It + V1) ----
+            const singularSubjects = ['she', 'he', 'it', 'my mother', 'my father', 'the cat', 'the dog', 'this', 'that',
+                'my brother', 'my sister', 'the teacher', 'the student'
+            ];
+            const verbsBase = ['go', 'play', 'like', 'study', 'eat', 'drink', 'wash', 'help', 'say', 'do', 'have', 'make',
+                'take', 'write', 'read', 'speak', 'watch', 'cook', 'walk', 'run', 'swim', 'fly'
+            ];
+            let foundSVA = false;
+            for (let sub of singularSubjects) {
+                // Cari pattern: sub + verb (tanpa s/es)
+                let regex = new RegExp(`\\b${sub}\\s+(${verbsBase.join('|')})\\b`, 'i');
+                let match = text.match(regex);
+                if (match) {
+                    let verb = match[1];
+                    let thirdPerson = verb + 's';
+                    if (verb === 'have') thirdPerson = 'has';
+                    if (verb === 'do') thirdPerson = 'does';
+                    if (verb === 'go') thirdPerson = 'goes';
+                    if (verb === 'wash' || verb === 'watch' || verb === 'teach') thirdPerson = verb + 'es';
+                    if (verb === 'study') thirdPerson = 'studies';
+                    if (verb === 'fly') thirdPerson = 'flies';
+                    checks.push(
+                        `⚠️ <b>Subject-Verb Agreement:</b> Subjek "${sub}" (tunggal) membutuhkan kata kerja bentuk ketiga (<b>${thirdPerson}</b>), bukan "${verb}".`
+                        );
+                    foundSVA = true;
+                    break;
+                }
+            }
+            // Cek khusus "I + V-s" (jarang terjadi)
+            if (!foundSVA) {
+                const iRegex = /\bI\s+(\w+s)\b/i;
+                const matchI = text.match(iRegex);
+                if (matchI) {
+                    checks.push(
+                        `⚠️ <b>Subject-Verb Agreement:</b> Subjek "I" menggunakan kata kerja bentuk dasar (tanpa -s). Cek kata "${matchI[1]}".`
+                        );
+                }
+            }
+
+            // ---- RULE 2: Past Time Signal with Present Tense ----
+            const pastSignals = ['yesterday', 'last night', 'last week', 'last year', 'ago', 'this morning', 'just now',
+                'in 2020', 'last month', 'last Sunday'
+            ];
+            // Daftar verb present (bisa ditambah)
+            const presentVerbs = ['go', 'goes', 'play', 'plays', 'like', 'likes', 'study', 'studies', 'eat', 'eats',
+                'drink', 'drinks', 'wash', 'washes', 'help', 'helps', 'say', 'says', 'do', 'does', 'have', 'has',
+                'make', 'makes', 'take', 'takes', 'write', 'writes', 'read', 'reads', 'speak', 'speaks', 'watch',
+                'watches', 'cook', 'cooks', 'walk', 'walks', 'run', 'runs', 'swim', 'swims', 'fly', 'flies'
+            ];
+            for (let signal of pastSignals) {
+                let sigRegex = new RegExp(`\\b${signal}\\b`, 'i');
+                if (sigRegex.test(text)) {
+                    for (let v of presentVerbs) {
+                        let vRegex = new RegExp(`\\b${v}\\b`, 'i');
+                        if (vRegex.test(text)) {
+                            // Cek apakah ada verb past (V2) di kalimat? kita sederhanakan: flag aja
+                            checks.push(
+                                `⏳ <b>Tense Check:</b> Ada keterangan waktu "${signal}" (masa lalu). Sebaiknya gunakan <b>Past Tense (V2)</b>, misal: went / played / liked / studied / ate / drank / washed / helped / said / did / had / made / took / wrote / read / spoke / watched / cooked / walked.`
+                                );
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+
+            // ---- RULE 3: Future Signal ----
+            const futureSignals = ['tomorrow', 'next week', 'next year', 'next month', 'soon'];
+            for (let signal of futureSignals) {
+                let sigRegex = new RegExp(`\\b${signal}\\b`, 'i');
+                if (sigRegex.test(text)) {
+                    // Cek ada 'will' atau 'going to'
+                    if (!/\bwill\b|\bgoing to\b/i.test(text)) {
+                        checks.push(
+                            `⏳ <b>Tense Check:</b> Ada keterangan waktu "${signal}" (masa depan). Sebaiknya gunakan <b>"will + V1"</b> atau <b>"going to + V1"</b>.`
+                            );
+                    }
+                    break;
+                }
+            }
+
+            // ---- RULE 4: Missing "to be" (am/is/are) ----
+            if (/\bI\s+[a-zA-Z]+\b/i.test(text) && !/\bam\b|\bi'm\b/i.test(text)) {
+                if (/\s+happy\b|\s+sad\b|\s+tired\b|\s+hungry\b|\s+thirsty\b|\s+a\s|\s+an\s|\s+student\b|\s+teacher\b/i
+                    .test(text)) {
+                    checks.push(
+                        `💡 <b>Missing "to be":</b> Subjek "I" membutuhkan kata bantu "am" di depan kata sifat atau kata benda (contoh: <b>I am happy</b>).`
+                        );
+                }
+            }
+            if (/\b(she|he|it)\s+[a-zA-Z]+\b/i.test(text) && !/\bis\b|\b's\b/i.test(text)) {
+                if (/\s+happy\b|\s+sad\b|\s+tired\b|\s+hungry\b|\s+thirsty\b|\s+a\s|\s+an\s|\s+student\b|\s+teacher\b/i
+                    .test(text)) {
+                    checks.push(
+                        `💡 <b>Missing "to be":</b> Subjek "She/He/It" membutuhkan kata bantu "is" di depan kata sifat atau kata benda (contoh: <b>She is happy</b>).`
+                        );
+                }
+            }
+
+            // ---- RULE 5: Double verb (Don't + V-ing / Don't + V2) ----
+            if (/\bdon't\s+\w+ed\b|\bdoesn't\s+\w+ed\b/i.test(text)) {
+                checks.push(
+                    `⚠️ <b>Double Verb:</b> Setelah "don't/doesn't" gunakan <b>kata kerja bentuk dasar (V1)</b>, bukan V2/ V-ing. Contoh: "I don't like" (bukan "I don't liked").`
+                    );
+            }
+
+            // ---- RULE 6: "Every day" -> Present Tense ----
+            if (/\bevery day\b|\balways\b|\busually\b/i.test(text) && !/\b(went|played|ate|drank|studied|did|had|made|took|wrote|read|spoke|watched|cooked|walked|ran|swam|flew)\b/i
+                .test(text)) {
+                // This is a soft warning, but we can add a generic check.
+                if (/\b(yesterday|last|ago)\b/i.test(text)) {
+                    // Jika ada past signal, jangan flag
+                } else {
+                    // Jika tidak ada past signal, tapi ada 'every day', biasanya present.
+                    // Tapi kalimatnya pakai present, tidak perlu flag. Kita flag kalau ada verb past.
+                }
+            }
+
+            // ---- Tampilkan Hasil ----
+            if (checks.length === 0) {
+                grammarHasil.innerHTML =
+                    `
+                <div class="flex items-start gap-2 text-green-700 bg-green-50 p-3 rounded-lg border border-green-200">
+                    <span class="text-xl">✅</span>
+                    <span><b>Grammar &amp; Tense terlihat baik!</b> Kalimat ini sudah benar secara tata bahasa.</span>
+                </div>
+                `;
+            } else {
+                let html =
+                    `<div class="space-y-2">
+                    <div class="text-sm text-gray-500 mb-2">Ditemukan ${checks.length} saran perbaikan:</div>
+                `;
+                checks.forEach((msg, idx) => {
+                    let bg = 'bg-blue-50 border-blue-200';
+                    if (msg.includes('⚠️')) bg = 'bg-yellow-50 border-yellow-200';
+                    if (msg.includes('✅')) bg = 'bg-green-50 border-green-200';
+                    if (msg.includes('💡')) bg = 'bg-purple-50 border-purple-200';
+                    if (msg.includes('⏳')) bg = 'bg-orange-50 border-orange-200';
+                    html += `
+                        <div class="p-3 rounded-lg border ${bg} text-sm text-gray-800 leading-relaxed">
+                            ${msg}
+                        </div>
+                    `;
+                });
+                html += `</div>`;
+                grammarHasil.innerHTML = html;
+            }
+
+            // Tampilkan box grammar
+            grammarBox.classList.remove('hidden');
+        }
+
+        // ================================================================
+        //  4.  FUNGSI UTIL: LEVENSHTEIN DISTANCE (Untuk "Maksudnya ini?")
         // ================================================================
         function levenshteinDist(a, b) {
             const m = a.length,
@@ -3261,7 +3399,6 @@
 
         function cariSaran(kata) {
             const semuaEntri = [];
-            // Gabungkan KAMUS dan FRASA
             KAMUS.forEach(item => {
                 semuaEntri.push({ teks: item.en, id: item.id, tipe: 'kata' });
                 semuaEntri.push({ teks: item.id, id: item.en, tipe: 'kata' });
@@ -3271,7 +3408,6 @@
                 semuaEntri.push({ teks: item.id, id: item.en, tipe: 'frasa' });
             });
 
-            // Filter unik (case insensitive)
             const uniqueMap = new Map();
             semuaEntri.forEach(e => {
                 const key = e.teks.toLowerCase();
@@ -3292,11 +3428,11 @@
             }
 
             suggestions.sort((a, b) => a.distance - b.distance);
-            return suggestions.slice(0, 3); // max 3 saran
+            return suggestions.slice(0, 3);
         }
 
         // ================================================================
-        //  4.  LOGIC TRANSLATOR (dengan TTS & Saran)
+        //  5.  LOGIC TRANSLATOR (dengan TTS, Saran, & Grammar)
         // ================================================================
         let mode = 'en-id';
 
@@ -3313,6 +3449,7 @@
             document.getElementById('inputKata').value = '';
             document.getElementById('hasilBox').classList.add('hidden');
             document.getElementById('tidakDitemukan').classList.add('hidden');
+            document.getElementById('grammarBox').classList.add('hidden');
             document.getElementById('suggestions').classList.remove('active');
             document.getElementById('inputKata').focus();
         }
@@ -3375,22 +3512,12 @@
             const text = el.textContent.trim();
             if (!text) return;
 
-            // Tentukan bahasa berdasarkan mode atau deteksi
             let speechLang = 'id-ID';
-            // Jika mode EN->ID, hasilnya ID, tapi user mungkin mau dengar suara asing juga.
-            // Biarkan user mendengar teks yang ditampilkan (hasil terjemahan).
-            // Tapi kita coba deteksi otomatis: jika ada karakter non-ASCII mungkin ID.
-            // Untuk amannya, kita baca sesuai bahasa hasil.
             if (mode === 'en-id') {
-                // Hasil adalah Indonesia
                 speechLang = 'id-ID';
             } else {
-                // Hasil adalah Inggris
                 speechLang = 'en-US';
             }
-
-            // Override: jika user minta spesifik lewat parameter (belum diimplementasikan)
-            // Kita pakai speechLang yang sudah ditentukan
 
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = speechLang;
@@ -3406,12 +3533,16 @@
             const hasilDetail = document.getElementById('hasilDetail');
             const tidakDitemukan = document.getElementById('tidakDitemukan');
             const saranKata = document.getElementById('saranKata');
+            const grammarBox = document.getElementById('grammarBox');
 
             if (!kata) {
                 alert('Masukkan kata terlebih dahulu!');
                 input.focus();
                 return;
             }
+
+            // Sembunyikan grammar box lama
+            grammarBox.classList.add('hidden');
 
             let ditemukan = null;
 
@@ -3444,14 +3575,15 @@
                 hasilBox.classList.add('hidden');
                 tidakDitemukan.classList.remove('hidden');
 
-                // Cari saran (did you mean?)
                 const saran = cariSaran(kata);
                 if (saran.length > 0) {
                     saranKata.classList.remove('hidden');
-                    let html = '<div class="text-sm font-semibold text-gray-700 mb-2">🤔 Mungkin maksudnya:</div><div class="flex flex-wrap gap-2">';
+                    let html =
+                        '<div class="text-sm font-semibold text-gray-700 mb-2">🤔 Mungkin maksudnya:</div><div class="flex flex-wrap gap-2">';
                     saran.forEach(s => {
                         const displayText = s.teks;
-                        html += `<span class="saran-klik" onclick="document.getElementById('inputKata').value='${displayText}'; document.getElementById('saranKata').classList.add('hidden'); terjemahkan();">${displayText}</span>`;
+                        html +=
+                            `<span class="saran-klik" onclick="document.getElementById('inputKata').value='${displayText}'; document.getElementById('saranKata').classList.add('hidden'); terjemahkan();">${displayText}</span>`;
                     });
                     html += '</div>';
                     saranKata.innerHTML = html;
@@ -3480,7 +3612,7 @@
         }
 
         // ================================================================
-        //  5.  TAMPILAN AWAL
+        //  6.  TAMPILAN AWAL
         // ================================================================
         document.getElementById('jumlahKata').innerHTML = KAMUS.length;
         document.getElementById('jumlahFrasa').innerHTML = FRASA.length;
