@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reading SMA | ENG-LEARN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            min-height: 100vh;
+            padding: 1.5rem;
+            background-color: #fff7ed;
+        }
+        .max-w-3xl {
+            max-width: 48rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .btn-back {
+            background: white;
+            border-radius: 12px;
+            padding: 8px 16px;
+            font-weight: 600;
+            color: #ea580c;
+            border: 2px solid #fed7aa;
+            transition: all 0.2s;
+        }
+        .btn-back:hover {
+            background: #fff7ed;
+            border-color: #f97316;
+        }
+        .option-btn {
+            transition: all 0.2s ease;
+            border: 2px solid #e5e7eb;
+            background: white;
+            padding: 14px 16px;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            min-height: 52px;
+            cursor: pointer;
+            text-align: left;
+            width: 100%;
+        }
+        .option-btn:hover {
+            border-color: #f97316;
+            background: #fff7ed;
+        }
+        .option-btn.correct {
+            border-color: #22c55e;
+            background: #dcfce7;
+        }
+        .option-btn.wrong {
+            border-color: #ef4444;
+            background: #fee2e2;
+        }
+        .option-btn.disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        .option-btn.selected {
+            border-color: #f97316;
+            background: #ffedd5;
+        }
+        @media (max-width: 640px) {
+            .bg-white.rounded-3xl {
+                padding: 16px !important;
+            }
+            #teksSoal {
+                font-size: 1rem !important;
+            }
+            #bacaan {
+                font-size: 0.9rem !important;
+                padding: 12px !important;
+            }
+            .option-btn {
+                font-size: 0.85rem !important;
+                padding: 12px 14px !important;
+                min-height: 48px !important;
+            }
+        }
+        button:active {
+            transform: scale(0.96);
+        }
+        .fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        #bacaan {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 16px 20px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: #1e293b;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+        .passage-container {
+            max-height: 300px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+        }
+        .passage-container::-webkit-scrollbar {
+            width: 4px;
+        }
+        .passage-container::-webkit-scrollbar-thumb {
+            background: #f59e0b;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="max-w-3xl mx-auto">
+
+        <!-- TOP BAR -->
+        <div class="mb-6 flex flex-wrap justify-between items-center gap-3">
+            <a href="sma.html" onclick="return confirm('Yakin mau kembali? Poin sesi ini akan hangus lho!')" class="btn-back inline-flex items-center gap-1">
+                ⬅️ Batal & Kembali
+            </a>
+            <div class="bg-orange-500 text-white font-bold px-6 py-2 rounded-xl shadow-md flex items-center gap-2 text-lg">
+                ⭐ Poin Sesi: <span id="poinSesiTampil">0</span>
+            </div>
+        </div>
+
+        <!-- KARTU READING -->
+        <div class="bg-white rounded-3xl p-8 shadow-xl border-2 border-orange-100">
+
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-4 border-b-2 border-orange-100 pb-4">
+                <h1 class="text-2xl font-bold text-gray-800">📖 Reading Comprehension <span class="text-orange-500 text-sm font-normal">SMA</span></h1>
+                <span id="labelNomorSoal" class="bg-orange-100 text-orange-700 font-bold px-4 py-1 rounded-full text-sm">Soal 1 dari 10</span>
+            </div>
+
+            <!-- Area Soal -->
+            <div id="areaSoal" class="fade-in">
+                <!-- Bacaan -->
+                <div id="bacaan" class="mb-4"></div>
+
+                <!-- Pertanyaan -->
+                <div id="teksSoal" class="text-lg font-semibold text-gray-800 mb-4"></div>
+
+                <!-- Opsi -->
+                <div id="areaPilihan" class="grid grid-cols-1 gap-3 mb-6"></div>
+            </div>
+
+            <!-- Tombol Kirim / Lanjut / Selesai -->
+            <button id="tombolKirim" onclick="kirimJawaban()" class="w-full bg-orange-500 text-white px-6 py-3 rounded-xl font-bold text-lg hover:bg-orange-600 shadow-md transition-colors mb-4">
+                🚀 Kirim Jawaban
+            </button>
+
+            <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden w-full bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-green-600 shadow-md transition-colors">
+                ➡️ Lanjut Soal Berikutnya
+            </button>
+
+            <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700 shadow-lg transition-colors">
+                🎉 Selesai & Simpan Poin!
+            </button>
+
+            <!-- Feedback -->
+            <div id="pesanHasil" class="hidden mt-4 p-4 rounded-xl border-2 text-center font-bold text-lg"></div>
+
+        </div>
+    </div>
+
+    <script>
+        // ================================================================
+        //  DATA SOAL READING SMA (10 soal dengan teks pendek)
+        // ================================================================
+        const daftarSoal = [{
+            bacaan: "The Great Wall of China is one of the most famous landmarks in the world. It was built over 2,000 years ago to protect China from invaders. The wall stretches over 13,000 miles and is made of stone, brick, and earth. Today, millions of tourists visit it every year.",
+            pertanyaan: "What was the purpose of the Great Wall?",
+            pilihan: [
+                "A. To attract tourists",
+                "B. To protect China from invaders",
+                "C. To serve as a trade route",
+                "D. To be a royal palace"
+            ],
+            kunci: "B. To protect China from invaders"
+        }, {
+            bacaan: "Albert Einstein was a brilliant physicist. He developed the theory of relativity, which changed the way scientists understand time and space. He was awarded the Nobel Prize in Physics in 1921 for his work on the photoelectric effect.",
+            pertanyaan: "What did Albert Einstein develop?",
+            pilihan: [
+                "A. The theory of gravity",
+                "B. The theory of relativity",
+                "C. The atomic bomb",
+                "D. The theory of evolution"
+            ],
+            kunci: "B. The theory of relativity"
+        }, {
+            bacaan: "Global warming is the gradual increase in Earth's average temperature. It is mainly caused by human activities, such as burning fossil fuels and deforestation. The effects of global warming include rising sea levels, extreme weather, and loss of wildlife habitats.",
+            pertanyaan: "What is the main cause of global warming?",
+            pilihan: [
+                "A. Volcanic eruptions",
+                "B. Human activities like burning fossil fuels",
+                "C. Solar radiation",
+                "D. Natural climate cycles"
+            ],
+            kunci: "B. Human activities like burning fossil fuels"
+        }, {
+            bacaan: "The human brain is an incredibly complex organ. It controls everything we do, from thinking and feeling to moving and breathing. The brain is made up of billions of nerve cells called neurons. It is protected by the skull and surrounded by fluid.",
+            pertanyaan: "What protects the human brain?",
+            pilihan: [
+                "A. The spine",
+                "B. The skull",
+                "C. The muscles",
+                "D. The skin"
+            ],
+            kunci: "B. The skull"
+        }, {
+            bacaan: "Social media has become a big part of modern life. Platforms like Instagram, Facebook, and Twitter allow people to connect with friends, share photos, and express opinions. However, excessive use of social media can lead to addiction and mental health issues.",
+            pertanyaan: "What is one negative effect of social media mentioned in the text?",
+            pilihan: [
+                "A. It helps people connect",
+                "B. It improves mental health",
+                "C. It can cause addiction",
+                "D. It is free to use"
+            ],
+            kunci: "C. It can cause addiction"
+        }, {
+            bacaan: "The Amazon rainforest is the largest tropical rainforest in the world. It is home to millions of species of plants and animals. The Amazon produces about 20% of the world's oxygen and is often called the 'lungs of the Earth'.",
+            pertanyaan: "Why is the Amazon rainforest called the 'lungs of the Earth'?",
+            pilihan: [
+                "A. Because it has many trees",
+                "B. Because it produces a lot of oxygen",
+                "C. Because it is very large",
+                "D. Because it has many animals"
+            ],
+            kunci: "B. Because it produces a lot of oxygen"
+        }, {
+            bacaan: "Malaysia is a Southeast Asian country known for its diverse culture and delicious food. The capital city is Kuala Lumpur, which is famous for the Petronas Twin Towers. Malaysia has a tropical climate and is home to many beautiful beaches and islands.",
+            pertanyaan: "What is the capital city of Malaysia?",
+            pilihan: [
+                "A. Jakarta",
+                "B. Bangkok",
+                "C. Kuala Lumpur",
+                "D. Singapore"
+            ],
+            kunci: "C. Kuala Lumpur"
+        }, {
+            bacaan: "Antibiotics are medicines used to treat bacterial infections. They work by killing bacteria or stopping them from growing. However, antibiotics are not effective against viral infections like the flu or cold. Overuse of antibiotics can lead to antibiotic resistance.",
+            pertanyaan: "What do antibiotics treat?",
+            pilihan: [
+                "A. Viral infections",
+                "B. Bacterial infections",
+                "C. All kinds of diseases",
+                "D. Only the flu"
+            ],
+            kunci: "B. Bacterial infections"
+        }, {
+            bacaan: "Renewable energy comes from natural sources that are constantly replenished, such as sunlight, wind, and water. Unlike fossil fuels, renewable energy does not produce harmful greenhouse gases. Many countries are now investing in renewable energy to combat climate change.",
+            pertanyaan: "What is an example of renewable energy mentioned in the text?",
+            pilihan: [
+                "A. Coal",
+                "B. Oil",
+                "C. Sunlight",
+                "D. Natural gas"
+            ],
+            kunci: "C. Sunlight"
+        }, {
+            bacaan: "The Eiffel Tower is one of the most recognizable structures in the world. It was built in 1889 by Gustave Eiffel for the World's Fair in Paris. Originally, many people disliked it, but today it is a symbol of France and attracts millions of tourists each year.",
+            pertanyaan: "Who built the Eiffel Tower?",
+            pilihan: [
+                "A. Gustave Eiffel",
+                "B. Alexandre Eiffel",
+                "C. Napoleon Bonaparte",
+                "D. Victor Hugo"
+            ],
+            kunci: "A. Gustave Eiffel"
+        }];
+
+        // ================================================================
+        //  STATE & LOGIC
+        // ================================================================
+        let indeksSoalAktif = 0;
+        let poinSesi = 0;
+        let pilihanDipilih = null;
+        let sudahDijawab = false;
+        let statusRiwayat = {};
+
+        function muatSoal() {
+            let soal = daftarSoal[indeksSoalAktif];
+            document.getElementById("labelNomorSoal").innerHTML = `Soal ${indeksSoalAktif + 1} dari 10`;
+            document.getElementById("bacaan").innerHTML = soal.bacaan;
+            document.getElementById("teksSoal").innerHTML = soal.pertanyaan;
+
+            let areaPilihan = document.getElementById("areaPilihan");
+            areaPilihan.innerHTML = "";
+            pilihanDipilih = null;
+            sudahDijawab = false;
+
+            soal.pilihan.forEach(opsi => {
+                let tombol = document.createElement("button");
+                tombol.innerHTML = opsi;
+                tombol.className = "option-btn";
+                tombol.dataset.value = opsi;
+                tombol.onclick = function() { pilihOpsi(this, opsi); };
+                areaPilihan.appendChild(tombol);
+            });
+
+            // Reset tombol
+            document.getElementById("tombolKirim").classList.remove("hidden");
+            document.getElementById("tombolLanjut").classList.add("hidden");
+            document.getElementById("tombolSelesai").classList.add("hidden");
+            document.getElementById("pesanHasil").classList.add("hidden");
+
+            // Cek riwayat
+            let riwayat = statusRiwayat[indeksSoalAktif];
+            if (riwayat && riwayat.sudahBenar) {
+                pilihanDipilih = riwayat.pilihan;
+                tandaiTombolTerpilih(pilihanDipilih);
+                tampilkanHasil(true, true);
+            }
+        }
+
+        function pilihOpsi(btn, opsi) {
+            if (sudahDijawab) return;
+            pilihanDipilih = opsi;
+            tandaiTombolTerpilih(opsi);
+        }
+
+        function tandaiTombolTerpilih(opsiTerpilih) {
+            let semuaBtn = document.querySelectorAll(".option-btn");
+            semuaBtn.forEach(btn => {
+                btn.classList.remove("selected");
+                if (btn.dataset.value === opsiTerpilih) {
+                    btn.classList.add("selected");
+                }
+            });
+        }
+
+        function kirimJawaban() {
+            if (!pilihanDipilih) {
+                alert("Pilih salah satu opsi jawaban terlebih dahulu!");
+                return;
+            }
+            if (sudahDijawab) return;
+            sudahDijawab = true;
+
+            let soalAktif = daftarSoal[indeksSoalAktif];
+            let isBenar = (pilihanDipilih === soalAktif.kunci);
+
+            // Tandai semua opsi
+            let semuaBtn = document.querySelectorAll(".option-btn");
+            semuaBtn.forEach(btn => {
+                btn.classList.add("disabled");
+                if (btn.dataset.value === soalAktif.kunci) {
+                    btn.classList.add("correct");
+                } else if (btn.dataset.value === pilihanDipilih && !isBenar) {
+                    btn.classList.add("wrong");
+                }
+            });
+
+            if (isBenar) {
+                if (!statusRiwayat[indeksSoalAktif] || !statusRiwayat[indeksSoalAktif].sudahBenar) {
+                    poinSesi += 20;
+                    document.getElementById("poinSesiTampil").innerHTML = poinSesi;
+                }
+                statusRiwayat[indeksSoalAktif] = { sudahBenar: true, pilihan: pilihanDipilih };
+                tampilkanHasil(true, false);
+            } else {
+                statusRiwayat[indeksSoalAktif] = { sudahBenar: false, pilihan: pilihanDipilih };
+                tampilkanHasil(false, false);
+            }
+        }
+
+        function tampilkanHasil(isBenar, dariReview) {
+            let pesan = document.getElementById("pesanHasil");
+            pesan.classList.remove("hidden");
+
+            if (isBenar) {
+                pesan.innerHTML = dariReview ?
+                    "📚 <b>Mode Review:</b> Soal ini sudah kamu jawab benar sebelumnya." :
+                    "🎉 <b>Tepat sekali! Pilihanmu benar.</b> (+20 Poin)";
+                pesan.className = "mt-4 p-4 rounded-xl border-2 bg-green-50 text-green-700 border-green-200 text-center font-bold text-lg";
+                document.getElementById("tombolKirim").classList.add("hidden");
+                if (indeksSoalAktif < daftarSoal.length - 1) {
+                    document.getElementById("tombolLanjut").classList.remove("hidden");
+                } else {
+                    document.getElementById("tombolSelesai").classList.remove("hidden");
+                }
+            } else {
+                pesan.innerHTML = `⚠️ <b>Kurang tepat.</b> Jawaban yang benar adalah: <span class="font-bold text-green-600">"${daftarSoal[indeksSoalAktif].kunci}"</span>`;
+                pesan.className = "mt-4 p-4 rounded-xl border-2 bg-red-50 text-red-700 border-red-200 text-center font-bold text-lg";
+                document.getElementById("tombolKirim").classList.add("hidden");
+                if (indeksSoalAktif < daftarSoal.length - 1) {
+                    document.getElementById("tombolLanjut").classList.remove("hidden");
+                } else {
+                    document.getElementById("tombolSelesai").classList.remove("hidden");
+                }
+            }
+        }
+
+        function soalBerikutnya() {
+            indeksSoalAktif++;
+            muatSoal();
+        }
+
+        function simpanPoinDanSelesai() {
+            let poinTotalLama = parseInt(localStorage.getItem('poinMurid')) || 0;
+            localStorage.setItem('poinMurid', poinTotalLama + poinSesi);
+            window.location.href = "sma.html";
+        }
+
+        muatSoal();
+    </script>
+</body>
+</html>

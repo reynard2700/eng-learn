@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mix Quiz SMP | ENG-LEARN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Poppins', sans-serif; }
+        body { min-height: 100vh; padding: 1.5rem; background-color: #f3e8ff; }
+        .max-w-3xl { max-width: 48rem; margin-left: auto; margin-right: auto; }
+        @media (max-width: 640px) {
+            #areaPilihan { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
+            #areaPilihan button { padding: 16px 8px !important; font-size: 0.9rem !important; min-height: 52px !important; }
+            .flex.gap-3 { flex-direction: column !important; gap: 12px !important; }
+            #tombolSebelumnya, #tombolLanjut { width: 100% !important; min-height: 52px !important; }
+            #tombolKirim, #tombolLanjut, #tombolSelesai { padding: 16px !important; font-size: 1rem !important; min-height: 56px !important; }
+            .max-w-3xl.mx-auto.mb-6.flex.justify-between { flex-wrap: wrap !important; gap: 12px !important; }
+            .bg-white.rounded-3xl { padding: 16px !important; }
+            #teksSoal { font-size: 1rem !important; }
+            #kotakMateri { font-size: 0.9rem !important; padding: 12px !important; }
+        }
+        button:active { transform: scale(0.96); transition: transform 0.1s ease; }
+        #areaPilihan button.bg-purple-500, #areaPilihan button.bg-purple-500:active { color: white !important; }
+        .option-btn { transition: all 0.2s ease; border: 2px solid #e5e7eb; background: white; padding: 16px 12px; border-radius: 16px; font-weight: 600; font-size: 1rem; min-height: 56px; cursor: pointer; }
+        .option-btn:hover { border-color: #8b5cf6; background: #f3e8ff; }
+        .option-btn.correct { border-color: #22c55e; background: #dcfce7; }
+        .option-btn.wrong { border-color: #ef4444; background: #fee2e2; }
+        .option-btn.disabled { pointer-events: none; opacity: 0.7; }
+        .option-btn.selected { border-color: #8b5cf6; background: #e9d5ff; }
+        .tag-vocab { background: #dbeafe; color: #1e40af; font-size: 0.65rem; padding: 2px 10px; border-radius: 20px; font-weight: 600; display: inline-block; }
+        .tag-grammar { background: #d1fae5; color: #065f46; font-size: 0.65rem; padding: 2px 10px; border-radius: 20px; font-weight: 600; display: inline-block; }
+        .tag-reading { background: #fce7f3; color: #9d174d; font-size: 0.65rem; padding: 2px 10px; border-radius: 20px; font-weight: 600; display: inline-block; }
+    </style>
+</head>
+<body>
+
+    <div class="max-w-3xl mx-auto mb-6 flex justify-between items-center">
+        <a href="smp.html" onclick="return confirm('Yakin mau kembali? Poin sesi ini akan hangus lho!')" class="inline-flex items-center text-red-500 hover:text-red-700 font-bold bg-white px-4 py-2 rounded-xl shadow-sm border border-red-100 transition-all">
+            ⬅️ Batal & Kembali
+        </a>
+        <div class="bg-purple-500 text-white font-bold px-6 py-2 rounded-xl shadow-md flex items-center gap-2 text-lg">
+            ⭐ Poin Sesi: <span id="poinSesiTampil">0</span>
+        </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto bg-white rounded-3xl p-8 shadow-xl border-2 border-purple-50">
+        <div class="flex justify-between items-center mb-4 border-b-2 border-purple-100 pb-4">
+            <h1 class="text-2xl font-bold text-gray-800">🧩 Mix Quiz (SMP)</h1>
+            <span id="labelNomorSoal" class="bg-purple-100 text-purple-700 font-bold px-4 py-1 rounded-full text-sm">Soal 1 dari 10</span>
+        </div>
+
+        <!-- Tag tipe soal & teks bacaan (jika reading) -->
+        <div id="kotakMateri" class="mb-6 text-gray-700 text-base bg-purple-50 p-4 rounded-xl border border-purple-100 font-medium"></div>
+
+        <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100">
+            <div id="teksSoal" class="text-xl font-medium mb-6 leading-relaxed text-center"></div>
+
+            <div id="areaPilihan" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6"></div>
+
+            <button id="tombolKirim" onclick="kirimJawaban()" class="w-full bg-purple-500 text-white px-6 py-3 rounded-xl font-bold text-lg hover:bg-purple-600 shadow-md transition-colors mb-4">
+                🚀 Kirim Jawaban
+            </button>
+
+            <div id="pesanHasil" class="hidden mb-6 p-4 rounded-xl border-2"></div>
+
+            <div id="kotakPenjelasanSemua" class="hidden mb-6 p-5 rounded-xl bg-white border-2 border-purple-200 shadow-sm">
+                <h3 class="font-bold text-purple-900 mb-3 text-base">📚 Bedah Fungsi Semua Opsi:</h3>
+                <div id="isiPenjelasanSemua" class="space-y-3 text-sm text-gray-700"></div>
+            </div>
+
+            <div class="flex gap-3">
+                <button id="tombolSebelumnya" onclick="soalSebelumnya()" class="hidden flex-1 bg-gray-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-gray-600 shadow-md transition-colors">
+                    ⬅️ Sebelumnya
+                </button>
+                <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden flex-1 bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-green-600 shadow-md transition-colors">
+                    ➡️ Lanjut
+                </button>
+            </div>
+
+            <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700 shadow-lg">
+                🎉 Selesai & Simpan Poin!
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const daftarSoal = [
+            // Soal 1: Vocabulary (SMP)
+            {
+                tipe: "vocab",
+                clue: "<span class='tag-vocab'>Vocabulary</span>",
+                depan: "What is the meaning of 'happy'?",
+                pilihan: ["Sedih", "Senang", "Marah", "Lelah"],
+                kunci: "Senang",
+                penjelasan: {
+                    "Sedih": "<b>Sedih:</b> Salah. 'Happy' berarti senang, bukan sedih.",
+                    "Senang": "<b>Senang:</b> BENAR! 'Happy' artinya senang.",
+                    "Marah": "<b>Marah:</b> Salah. 'Happy' berarti senang, bukan marah.",
+                    "Lelah": "<b>Lelah:</b> Salah. 'Happy' berarti senang, bukan lelah."
+                }
+            },
+            // Soal 2: Grammar (SMP)
+            {
+                tipe: "grammar",
+                clue: "<span class='tag-grammar'>Grammar</span>",
+                depan: "She ___ to school every day.",
+                pilihan: ["go", "goes", "going", "went"],
+                kunci: "goes",
+                penjelasan: {
+                    "go": "<b>Go:</b> Salah. Subjek 'She' butuh 'goes'.",
+                    "goes": "<b>Goes:</b> BENAR! She + goes.",
+                    "going": "<b>Going:</b> Salah. Butuh to be (is going).",
+                    "went": "<b>Went:</b> Salah. Ini bentuk lampau."
+                }
+            },
+            // Soal 3: Vocabulary (SMP)
+            {
+                tipe: "vocab",
+                clue: "<span class='tag-vocab'>Vocabulary</span>",
+                depan: "What is the meaning of 'big'?",
+                pilihan: ["Kecil", "Besar", "Pendek", "Tinggi"],
+                kunci: "Besar",
+                penjelasan: {
+                    "Kecil": "<b>Kecil:</b> Salah. 'Big' berarti besar.",
+                    "Besar": "<b>Besar:</b> BENAR! 'Big' artinya besar.",
+                    "Pendek": "<b>Pendek:</b> Salah. 'Big' berarti besar.",
+                    "Tinggi": "<b>Tinggi:</b> Salah. 'Big' berarti besar."
+                }
+            },
+            // Soal 4: Grammar (SMP)
+            {
+                tipe: "grammar",
+                clue: "<span class='tag-grammar'>Grammar</span>",
+                depan: "They ___ playing football now.",
+                pilihan: ["is", "am", "are", "was"],
+                kunci: "are",
+                penjelasan: {
+                    "is": "<b>Is:</b> Salah. 'They' pakai 'are'.",
+                    "am": "<b>Am:</b> Salah. 'Am' untuk 'I'.",
+                    "are": "<b>Are:</b> BENAR! They + are + V-ing.",
+                    "was": "<b>Was:</b> Salah. Ini lampau."
+                }
+            },
+            // Soal 5: Reading (SMP) - teks pendek
+            {
+                tipe: "reading",
+                clue: "<span class='tag-reading'>Reading</span><br><br>Rina has a cat named Mochi. Mochi is orange and likes to sleep on the sofa.",
+                depan: "What is the color of Mochi?",
+                pilihan: ["Black", "White", "Orange", "Gray"],
+                kunci: "Orange",
+                penjelasan: {
+                    "Black": "<b>Black:</b> Salah. Mochi berwarna oranye.",
+                    "White": "<b>White:</b> Salah. Mochi berwarna oranye.",
+                    "Orange": "<b>Orange:</b> BENAR! Mochi adalah kucing oranye.",
+                    "Gray": "<b>Gray:</b> Salah. Mochi berwarna oranye."
+                }
+            },
+            // Soal 6: Vocabulary (SMP)
+            {
+                tipe: "vocab",
+                clue: "<span class='tag-vocab'>Vocabulary</span>",
+                depan: "What is the opposite of 'hot'?",
+                pilihan: ["Warm", "Cold", "Cool", "Dry"],
+                kunci: "Cold",
+                penjelasan: {
+                    "Warm": "<b>Warm:</b> Kurang tepat. Cold adalah lawan yang tepat.",
+                    "Cold": "<b>Cold:</b> BENAR! Lawan dari 'hot' adalah 'cold'.",
+                    "Cool": "<b>Cool:</b> Kurang tepat. Cold adalah lawan yang tepat.",
+                    "Dry": "<b>Dry:</b> Salah. Lawan dari 'wet' adalah 'dry'."
+                }
+            },
+            // Soal 7: Grammar (SMP)
+            {
+                tipe: "grammar",
+                clue: "<span class='tag-grammar'>Grammar</span>",
+                depan: "I ___ a student.",
+                pilihan: ["am", "is", "are", "be"],
+                kunci: "am",
+                penjelasan: {
+                    "am": "<b>Am:</b> BENAR! I + am.",
+                    "is": "<b>Is:</b> Salah. Untuk He/She/It.",
+                    "are": "<b>Are:</b> Salah. Untuk You/They/We.",
+                    "be": "<b>Be:</b> Salah. Bentuk dasar."
+                }
+            },
+            // Soal 8: Reading (SMP) - teks pendek
+            {
+                tipe: "reading",
+                clue: "<span class='tag-reading'>Reading</span><br><br>My school is big. It has a large library and a green field. I like to read in the library.",
+                depan: "What does the school have?",
+                pilihan: ["A big park", "A library and a field", "A swimming pool", "A computer lab"],
+                kunci: "A library and a field",
+                penjelasan: {
+                    "A big park": "<b>A big park:</b> Salah. Sekolah memiliki perpustakaan dan lapangan.",
+                    "A library and a field": "<b>A library and a field:</b> BENAR! Di teks: 'It has a large library and a green field.'",
+                    "A swimming pool": "<b>A swimming pool:</b> Salah. Tidak ada kolam renang.",
+                    "A computer lab": "<b>A computer lab:</b> Salah. Tidak disebutkan."
+                }
+            },
+            // Soal 9: Vocabulary (SMP)
+            {
+                tipe: "vocab",
+                clue: "<span class='tag-vocab'>Vocabulary</span>",
+                depan: "What is the meaning of 'beautiful'?",
+                pilihan: ["Cantik", "Jejelek", "Bagus", "Bersih"],
+                kunci: "Cantik",
+                penjelasan: {
+                    "Cantik": "<b>Cantik:</b> BENAR! 'Beautiful' artinya cantik.",
+                    "Jejelek": "<b>Jejelek:</b> Salah. Lawan dari 'beautiful'.",
+                    "Bagus": "<b>Bagus:</b> Kurang tepat. 'Beautiful' lebih ke cantik/indah.",
+                    "Bersih": "<b>Bersih:</b> Salah. Lawan dari 'clean'."
+                }
+            },
+            // Soal 10: Grammar (SMP)
+            {
+                tipe: "grammar",
+                clue: "<span class='tag-grammar'>Grammar</span>",
+                depan: "We ___ to the park yesterday.",
+                pilihan: ["go", "goes", "went", "going"],
+                kunci: "went",
+                penjelasan: {
+                    "go": "<b>Go:</b> Salah. Ini Present.",
+                    "goes": "<b>Goes:</b> Salah. Untuk tunggal.",
+                    "went": "<b>Went:</b> BENAR! Lampau dari 'go'.",
+                    "going": "<b>Going:</b> Salah. Butuh to be."
+                }
+            }
+        ];
+
+        // --- Fungsi yang sama persis seperti di reading ---
+        // (muatSoal, pilihOpsi, kirimJawaban, tampilkanHasilDanBedah, soalBerikutnya, soalSebelumnya, simpanPoinDanSelesai)
+
+        let indeksSoalAktif = 0;
+        let poinSesi = 0;
+        let pilihanDipilih = null;
+        let statusRiwayat = {};
+
+        function muatSoal() {
+            let soal = daftarSoal[indeksSoalAktif];
+            document.getElementById("labelNomorSoal").innerHTML = "Soal " + (indeksSoalAktif + 1) + " dari 10";
+            document.getElementById("kotakMateri").innerHTML = soal.clue;
+            document.getElementById("teksSoal").innerHTML = soal.depan;
+
+            let areaPilihan = document.getElementById("areaPilihan");
+            areaPilihan.innerHTML = "";
+            pilihanDipilih = null;
+
+            soal.pilihan.forEach(function(opsi) {
+                let tombol = document.createElement("button");
+                tombol.innerHTML = opsi;
+                tombol.id = "opsi-" + opsi;
+                tombol.className = "option-btn";
+                tombol.onclick = function() { pilihOpsi(opsi); };
+                areaPilihan.appendChild(tombol);
+            });
+
+            if (indeksSoalAktif > 0) {
+                document.getElementById("tombolSebelumnya").classList.remove("hidden");
+            } else {
+                document.getElementById("tombolSebelumnya").classList.add("hidden");
+            }
+
+            let riwayat = statusRiwayat[indeksSoalAktif];
+            if (riwayat && riwayat.sudahBenar) {
+                pilihanDipilih = riwayat.pilihan;
+                tandaiTombolTerpilih(pilihanDipilih);
+                tampilkanHasilDanBedah(true, true);
+            } else {
+                document.getElementById("pesanHasil").classList.add("hidden");
+                document.getElementById("kotakPenjelasanSemua").classList.add("hidden");
+                document.getElementById("tombolLanjut").classList.add("hidden");
+                document.getElementById("tombolKirim").classList.remove("hidden");
+                document.getElementById("tombolSelesai").classList.add("hidden");
+            }
+        }
+
+        function pilihOpsi(opsi) {
+            let riwayat = statusRiwayat[indeksSoalAktif];
+            if (riwayat && riwayat.sudahBenar) return;
+            pilihanDipilih = opsi;
+            tandaiTombolTerpilih(opsi);
+        }
+
+        function tandaiTombolTerpilih(opsiTerpilih) {
+            let soal = daftarSoal[indeksSoalAktif];
+            soal.pilihan.forEach(function(o) {
+                let btn = document.getElementById("opsi-" + o);
+                if (btn) {
+                    if (o === opsiTerpilih) {
+                        btn.className = "option-btn bg-purple-500 border-2 border-purple-600 text-white font-bold";
+                    } else {
+                        btn.className = "option-btn";
+                    }
+                }
+            });
+        }
+
+        function kirimJawaban() {
+            if (!pilihanDipilih) {
+                alert("Pilih salah satu opsi jawaban terlebih dahulu ya mase!");
+                return;
+            }
+            let soalAktif = daftarSoal[indeksSoalAktif];
+            let isBenar = (pilihanDipilih === soalAktif.kunci);
+            if (isBenar) {
+                if (!statusRiwayat[indeksSoalAktif] || !statusRiwayat[indeksSoalAktif].sudahBenar) {
+                    poinSesi += 10;
+                    document.getElementById("poinSesiTampil").innerHTML = poinSesi;
+                }
+                statusRiwayat[indeksSoalAktif] = { sudahBenar: true, pilihan: pilihanDipilih };
+                tampilkanHasilDanBedah(true, false);
+            } else {
+                statusRiwayat[indeksSoalAktif] = { sudahBenar: false, pilihan: pilihanDipilih };
+                tampilkanHasilDanBedah(false, false);
+            }
+        }
+
+        function tampilkanHasilDanBedah(isBenar, dariReview) {
+            let soalAktif = daftarSoal[indeksSoalAktif];
+            let pesan = document.getElementById("pesanHasil");
+            pesan.classList.remove("hidden");
+            let kotakPenjelasan = document.getElementById("kotakPenjelasanSemua");
+            let isiPenjelasan = document.getElementById("isiPenjelasanSemua");
+            kotakPenjelasan.classList.remove("hidden");
+            let htmlSemua = "";
+            for (let key in soalAktif.penjelasan) {
+                let statusWarna = "text-gray-600 bg-gray-50 p-2 rounded";
+                if (isBenar && key === soalAktif.kunci) {
+                    statusWarna = "text-green-700 font-bold bg-green-50 p-2 rounded border border-green-200";
+                }
+                htmlSemua += '<div class="' + statusWarna + '">• ' + soalAktif.penjelasan[key] + '</div>';
+            }
+            isiPenjelasan.innerHTML = htmlSemua;
+            if (isBenar) {
+                pesan.innerHTML = dariReview ?
+                    '📚 <b>Mode Review:</b> Soal ini sudah kamu jawab dengan benar sebelumnya.' :
+                    '🎉 <b>Tepat sekali! Pilihanmu benar.</b>';
+                pesan.className = "mb-4 p-4 rounded-xl border-2 bg-green-50 text-green-800 border-green-200 text-base";
+                document.getElementById("tombolKirim").classList.add("hidden");
+                if (indeksSoalAktif < daftarSoal.length - 1) {
+                    document.getElementById("tombolLanjut").classList.remove("hidden");
+                } else {
+                    document.getElementById("tombolSelesai").classList.remove("hidden");
+                }
+            } else {
+                pesan.innerHTML = '⚠️ <b>Kurang tepat.</b> Jawabannya belum benar, yuk cek fungsi masing-masing opsi di bawah!';
+                pesan.className = "mb-4 p-4 rounded-xl border-2 bg-red-50 text-red-800 border-red-200 text-base";
+                document.getElementById("tombolLanjut").classList.add("hidden");
+                document.getElementById("tombolSelesai").classList.add("hidden");
+            }
+        }
+
+        function soalBerikutnya() {
+            indeksSoalAktif++;
+            muatSoal();
+        }
+
+        function soalSebelumnya() {
+            if (indeksSoalAktif > 0) {
+                indeksSoalAktif--;
+                muatSoal();
+            }
+        }
+
+        function simpanPoinDanSelesai() {
+            let poinTotalLama = parseInt(localStorage.getItem('poinMurid')) || 0;
+            localStorage.setItem('poinMurid', poinTotalLama + poinSesi);
+            window.location.href = "smp.html";
+        }
+
+        muatSoal();
+    </script>
+</body>
+</html>
