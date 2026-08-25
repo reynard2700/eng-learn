@@ -259,6 +259,15 @@
             <button onclick="terjemahkan()" class="btn-translate w-full text-white px-6 py-4 rounded-2xl font-bold text-lg inline-flex items-center justify-center gap-2">
                 🔍 Terjemahkan
             </button>
+            <!-- Tombol Online (di bawah tombol Terjemahkan) -->
+<div class="flex flex-wrap gap-3 justify-center mt-4">
+    <button onclick="bukaGoogleTranslate()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-6 py-3 rounded-full text-sm shadow-md transition-all inline-flex items-center gap-2">
+        🌐 Terjemahkan Online (Google)
+    </button>
+    <button onclick="bukaKBBI()" class="bg-green-500 hover:bg-green-600 text-white font-bold px-6 py-3 rounded-full text-sm shadow-md transition-all inline-flex items-center gap-2">
+        📖 Cari di KBBI
+    </button>
+</div>
 
             <!-- Hasil -->
             <div id="hasilBox" class="result-box hidden mt-6 p-6 rounded-2xl border-2 border-gray-100 bg-gray-50">
@@ -3630,6 +3639,32 @@
                 document.getElementById('suggestions').classList.remove('active');
             }
         });
+        // ================================================================
+//  FUNGSI UNTUK TOMBOL ONLINE
+// ================================================================
+
+function bukaGoogleTranslate() {
+    const teks = document.getElementById('inputKata').value.trim();
+    if (!teks) {
+        alert('Masukkan kata atau kalimat terlebih dahulu!');
+        return;
+    }
+    // Deteksi arah: jika mode EN->ID, bahasa sumber en, target id, dan sebaliknya
+    const mode = document.getElementById('labelDari').textContent.includes('English') ? 'en' : 'id';
+    const target = mode === 'en' ? 'id' : 'en';
+    const url = `https://translate.google.com/?sl=${mode}&tl=${target}&text=${encodeURIComponent(teks)}`;
+    window.open(url, '_blank');
+}
+
+function bukaKBBI() {
+    const teks = document.getElementById('inputKata').value.trim();
+    if (!teks) {
+        alert('Masukkan kata terlebih dahulu!');
+        return;
+    }
+    const url = `https://kbbi.kemdikbud.go.id/entri/${encodeURIComponent(teks)}`;
+    window.open(url, '_blank');
+}
     </script>
 </body>
 </html>
