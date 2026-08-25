@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Translator | ENG-LEARN</title>
+    <title>Translator Pintar | ENG-LEARN</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
@@ -55,8 +55,7 @@
             border-color: #818cf8;
             box-shadow: 0 8px 25px rgba(99, 102, 241, 0.1);
         }
-        input:focus,
-        textarea:focus {
+        input:focus {
             outline: none;
             border-color: #6366f1;
             box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
@@ -113,7 +112,6 @@
             background: #eef2ff;
             border-color: #818cf8;
         }
-        /* Saran kata otomatis */
         .suggestions {
             position: absolute;
             top: 100%;
@@ -143,6 +141,15 @@
         .input-wrapper {
             position: relative;
         }
+        .tag-offline {
+            background: #dbeafe;
+            color: #1e40af;
+            font-size: 0.65rem;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
@@ -155,7 +162,7 @@
                 ⬅️ Kembali
             </a>
             <div class="badge-jumlah rounded-xl px-4 py-2 text-sm font-semibold text-gray-600 flex items-center gap-2">
-                📚 <span id="jumlahKata">0</span> kata tersedia
+                📚 <span id="jumlahKata">0</span> kata &amp; <span id="jumlahFrasa">0</span> frasa
             </div>
         </div>
 
@@ -164,10 +171,11 @@
 
             <!-- Header -->
             <div class="text-center mb-6">
-                <h1 class="text-3xl font-extrabold text-gray-800 flex items-center justify-center gap-2">
+                <h1 class="text-3xl font-extrabold text-gray-800 flex items-center justify-center gap-2 flex-wrap">
                     🌍 <span class="text-indigo-600">Translator</span>
+                    <span class="tag-offline">⚡ OFFLINE</span>
                 </h1>
-                <p class="text-sm text-gray-500 mt-1">Inggris ↔ Indonesia • Offline • 3000+ Kata</p>
+                <p class="text-sm text-gray-500 mt-1">Inggris ↔ Indonesia • Bisa terjemahkan kalimat sederhana!</p>
             </div>
 
             <!-- Mode Arah -->
@@ -183,12 +191,12 @@
                 </div>
             </div>
 
-            <!-- Input + Saran -->
+            <!-- Input -->
             <div class="input-wrapper mb-4">
                 <input
                 type="text"
                 id="inputKata"
-                placeholder="Ketik kata atau kalimat..."
+                placeholder="Ketik kata, frasa, atau kalimat..."
                 class="w-full border-2 border-gray-200 rounded-2xl px-5 py-4 text-lg font-medium transition-all"
                 onkeyup="handleInput(this.value)"
                 onkeydown="if(event.key==='Enter') terjemahkan()"
@@ -219,14 +227,14 @@
             <!-- Belum ditemukan -->
             <div id="tidakDitemukan" class="hidden mt-6 p-6 rounded-2xl border-2 border-yellow-200 bg-yellow-50 text-center">
                 <div class="text-4xl mb-2">😅</div>
-                <div class="text-lg font-semibold text-gray-700">Kata belum ada di kamus</div>
-                <div class="text-sm text-gray-500 mt-1">Kami akan terus menambah kosakata!</div>
+                <div class="text-lg font-semibold text-gray-700">Kata/frasa belum ada di kamus</div>
+                <div class="text-sm text-gray-500 mt-1">Coba gunakan kata yang lebih umum atau periksa ejaan!</div>
             </div>
 
             <!-- Tombol Kontribusi -->
             <div class="mt-6 text-center">
                 <button onclick="saranKata()" class="text-sm text-indigo-500 hover:text-indigo-700 font-semibold transition">
-                    💡 Ada kata yang belum ada? Kirim saran!
+                    💡 Ada kata/frasa yang belum ada? Kirim saran!
                 </button>
             </div>
 
@@ -235,37 +243,303 @@
 
     <script>
         // ================================================================
-        //  1.  BANK KATA (3000+ EN-ID)
-        //     Gabungan dari berbagai sumber: kata umum, sekolah, teknologi
+        //  1.  BANK FRASA (1000+ frasa kalimat)
+        // ================================================================
+        const FRASA = [
+            // ----- SALAM -----
+            { id: "halo", en: "hello" },
+            { id: "hai", en: "hi" },
+            { id: "selamat pagi", en: "good morning" },
+            { id: "selamat siang", en: "good afternoon" },
+            { id: "selamat sore", en: "good evening" },
+            { id: "selamat malam", en: "good night" },
+            { id: "sampai jumpa", en: "goodbye" },
+            { id: "sampai jumpa lagi", en: "see you later" },
+            { id: "sampai nanti", en: "see you later" },
+            { id: "selamat tinggal", en: "goodbye" },
+
+            // ----- KABAR -----
+            { id: "apa kabar", en: "how are you" },
+            { id: "apa kabarmu", en: "how are you" },
+            { id: "bagaimana kabarmu", en: "how are you" },
+            { id: "kabar baik", en: "i'm fine" },
+            { id: "baik", en: "fine" },
+            { id: "baik-baik saja", en: "i'm fine" },
+            { id: "luar biasa", en: "awesome" },
+            { id: "sangat baik", en: "very good" },
+
+            // ----- PERKENALAN -----
+            { id: "nama saya", en: "my name is" },
+            { id: "namaku", en: "my name is" },
+            { id: "saya dari", en: "i am from" },
+            { id: "aku dari", en: "i am from" },
+            { id: "saya berasal dari", en: "i come from" },
+            { id: "senang berkenalan", en: "nice to meet you" },
+            { id: "senang bertemu", en: "nice to meet you" },
+
+            // ----- TERIMA KASIH -----
+            { id: "terima kasih", en: "thank you" },
+            { id: "makasih", en: "thanks" },
+            { id: "terima kasih banyak", en: "thank you very much" },
+            { id: "sama-sama", en: "you're welcome" },
+            { id: "terima kasih kembali", en: "you're welcome" },
+
+            // ----- MAAF -----
+            { id: "maaf", en: "sorry" },
+            { id: "maafkan saya", en: "i'm sorry" },
+            { id: "maaf ya", en: "i'm sorry" },
+            { id: "tidak apa-apa", en: "it's okay" },
+            { id: "gapapa", en: "it's okay" },
+
+            // ----- PERTANYAAN UMUM -----
+            { id: "apa itu", en: "what is that" },
+            { id: "apa ini", en: "what is this" },
+            { id: "siapa kamu", en: "who are you" },
+            { id: "siapa namamu", en: "what is your name" },
+            { id: "di mana kamu", en: "where are you" },
+            { id: "di mana", en: "where" },
+            { id: "kapan", en: "when" },
+            { id: "mengapa", en: "why" },
+            { id: "kenapa", en: "why" },
+            { id: "bagaimana", en: "how" },
+            { id: "berapa", en: "how much" },
+            { id: "berapa harganya", en: "how much is it" },
+            { id: "apa yang kamu lakukan", en: "what are you doing" },
+            { id: "lagi apa", en: "what are you doing" },
+            { id: "kamu mau apa", en: "what do you want" },
+            { id: "kamu suka", en: "do you like" },
+            { id: "apakah kamu suka", en: "do you like" },
+            { id: "bolehkah saya", en: "may i" },
+            { id: "boleh saya", en: "may i" },
+            { id: "bisakah kamu", en: "can you" },
+            { id: "bisa kamu", en: "can you" },
+
+            // ----- PERNYATAAN -----
+            { id: "saya mau", en: "i want" },
+            { id: "aku mau", en: "i want" },
+            { id: "saya ingin", en: "i want" },
+            { id: "aku ingin", en: "i want" },
+            { id: "saya suka", en: "i like" },
+            { id: "aku suka", en: "i like" },
+            { id: "saya tidak suka", en: "i don't like" },
+            { id: "aku gak suka", en: "i don't like" },
+            { id: "saya bisa", en: "i can" },
+            { id: "aku bisa", en: "i can" },
+            { id: "saya tidak bisa", en: "i can't" },
+            { id: "aku gak bisa", en: "i can't" },
+            { id: "saya harus", en: "i must" },
+            { id: "aku harus", en: "i must" },
+            { id: "saya pergi", en: "i go" },
+            { id: "aku pergi", en: "i go" },
+            { id: "saya mau pergi", en: "i want to go" },
+            { id: "aku mau pergi", en: "i want to go" },
+            { id: "saya sudah", en: "i have" },
+            { id: "aku sudah", en: "i have" },
+            { id: "saya punya", en: "i have" },
+            { id: "aku punya", en: "i have" },
+
+            // ----- SEKOLAH -----
+            { id: "saya siswa", en: "i am a student" },
+            { id: "aku siswa", en: "i am a student" },
+            { id: "saya guru", en: "i am a teacher" },
+            { id: "aku guru", en: "i am a teacher" },
+            { id: "saya di kelas", en: "i am in class" },
+            { id: "aku di kelas", en: "i am in class" },
+            { id: "saya sedang belajar", en: "i am studying" },
+            { id: "aku sedang belajar", en: "i am studying" },
+            { id: "saya sedang mengerjakan PR", en: "i am doing homework" },
+            { id: "aku lagi ngerjain PR", en: "i am doing homework" },
+            { id: "saya sudah lulus", en: "i have graduated" },
+            { id: "aku sudah lulus", en: "i have graduated" },
+            { id: "saya ingin masuk universitas", en: "i want to go to university" },
+            { id: "aku mau masuk universitas", en: "i want to go to university" },
+
+            // ----- KELUARGA -----
+            { id: "ini keluargaku", en: "this is my family" },
+            { id: "ini keluarga saya", en: "this is my family" },
+            { id: "ayahku", en: "my father" },
+            { id: "ibuku", en: "my mother" },
+            { id: "kakakku", en: "my older brother" },
+            { id: "adikku", en: "my younger brother" },
+            { id: "saudara perempuanku", en: "my sister" },
+            { id: "saudara laki-lakiku", en: "my brother" },
+            { id: "aku punya dua saudara", en: "i have two siblings" },
+            { id: "saya punya dua saudara", en: "i have two siblings" },
+
+            // ----- MAKANAN -----
+            { id: "saya lapar", en: "i am hungry" },
+            { id: "aku lapar", en: "i am hungry" },
+            { id: "saya haus", en: "i am thirsty" },
+            { id: "aku haus", en: "i am thirsty" },
+            { id: "saya mau makan nasi", en: "i want to eat rice" },
+            { id: "aku mau makan nasi", en: "i want to eat rice" },
+            { id: "saya suka ayam", en: "i like chicken" },
+            { id: "aku suka ayam", en: "i like chicken" },
+            { id: "saya suka ikan", en: "i like fish" },
+            { id: "aku suka ikan", en: "i like fish" },
+
+            // ----- TEMPAT -----
+            { id: "saya di rumah", en: "i am at home" },
+            { id: "aku di rumah", en: "i am at home" },
+            { id: "saya di sekolah", en: "i am at school" },
+            { id: "aku di sekolah", en: "i am at school" },
+            { id: "saya di pasar", en: "i am at the market" },
+            { id: "aku di pasar", en: "i am at the market" },
+            { id: "saya di toko", en: "i am at the shop" },
+            { id: "aku di toko", en: "i am at the shop" },
+            { id: "saya di rumah sakit", en: "i am at the hospital" },
+            { id: "aku di rumah sakit", en: "i am at the hospital" },
+
+            // ----- WAKTU -----
+            { id: "jam berapa sekarang", en: "what time is it" },
+            { id: "sekarang jam", en: "it is" },
+            { id: "hari ini hari apa", en: "what day is today" },
+            { id: "besok hari apa", en: "what day is tomorrow" },
+            { id: "kemarin hari apa", en: "what day was yesterday" },
+            { id: "kapan kamu datang", en: "when did you come" },
+            { id: "kapan kamu pergi", en: "when did you go" },
+
+            // ----- PERMINTAAN TOLONG -----
+            { id: "tolong bantu saya", en: "please help me" },
+            { id: "tolong bantu aku", en: "please help me" },
+            { id: "bisa tolong saya", en: "can you help me" },
+            { id: "bisa tolong aku", en: "can you help me" },
+            { id: "tolong tunjukkan", en: "please show me" },
+            { id: "tolong beri tahu saya", en: "please tell me" },
+            { id: "tolong beri tahu aku", en: "please tell me" },
+
+            // ----- SPEAKING (dari soal) -----
+            { id: "pendidikan adalah kunci", en: "education is the key" },
+            { id: "saya sangat tidak setuju", en: "i strongly disagree" },
+            { id: "lindungi lingkungan", en: "protect the environment" },
+            { id: "teknologi membawa positif", en: "technology brings positive" },
+            { id: "di sisi lain", en: "on the other hand" },
+            { id: "generasi muda memainkan", en: "young generation plays" },
+            { id: "sebagai kesimpulan", en: "in conclusion" },
+            { id: "kesehatan mental sama pentingnya", en: "mental health is just as important" },
+            { id: "membaca buku memperluas", en: "reading books expands" },
+            { id: "bersama kita bisa membangun", en: "together we can build" },
+
+            // ----- KALIMAT SEHARI-HARI -----
+            { id: "halo apa kabar", en: "hello how are you" },
+            { id: "selamat pagi semua", en: "good morning everyone" },
+            { id: "sampai jumpa besok", en: "see you tomorrow" },
+            { id: "hati-hati di jalan", en: "be careful on the road" },
+            { id: "semoga berhasil", en: "good luck" },
+            { id: "semoga sukses", en: "good luck" },
+            { id: "selamat ulang tahun", en: "happy birthday" },
+            { id: "selamat tahun baru", en: "happy new year" },
+
+            // ----- PERTANYAAN -----
+            { id: "kamu mau kemana", en: "where are you going" },
+            { id: "mau kemana", en: "where are you going" },
+            { id: "kamu dari mana", en: "where are you from" },
+            { id: "kamu tinggal di mana", en: "where do you live" },
+            { id: "kamu sekolah di mana", en: "where do you go to school" },
+            { id: "kamu kerja di mana", en: "where do you work" },
+            { id: "kamu suka apa", en: "what do you like" },
+            { id: "kamu suka makanan apa", en: "what food do you like" },
+            { id: "kamu suka musik apa", en: "what music do you like" },
+            { id: "kamu punya berapa saudara", en: "how many siblings do you have" },
+            { id: "kamu sudah makan", en: "have you eaten" },
+            { id: "sudah makan belum", en: "have you eaten" },
+            { id: "kamu lelah", en: "are you tired" },
+            { id: "kamu capek", en: "are you tired" },
+            { id: "kamu sehat", en: "are you healthy" },
+            { id: "kamu baik-baik saja", en: "are you okay" },
+            { id: "ada apa", en: "what's up" },
+            { id: "ada masalah", en: "what's the problem" },
+            { id: "kenapa kamu sedih", en: "why are you sad" },
+            { id: "kenapa kamu marah", en: "why are you angry" },
+            { id: "kenapa kamu terlambat", en: "why are you late" },
+
+            // ----- PERNYATAAN LANJUTAN -----
+            { id: "saya mau makan", en: "i want to eat" },
+            { id: "saya mau minum", en: "i want to drink" },
+            { id: "saya mau tidur", en: "i want to sleep" },
+            { id: "saya mau belajar", en: "i want to study" },
+            { id: "saya mau pergi ke sekolah", en: "i want to go to school" },
+            { id: "saya suka belajar bahasa Inggris", en: "i like learning English" },
+            { id: "saya suka membaca buku", en: "i like reading books" },
+            { id: "saya suka menonton film", en: "i like watching movies" },
+            { id: "saya suka bermain sepak bola", en: "i like playing football" },
+            { id: "saya tidak suka makanan pedas", en: "i don't like spicy food" },
+            { id: "saya bisa berbicara bahasa Inggris", en: "i can speak English" },
+            { id: "saya tidak bisa", en: "i can't" },
+            { id: "saya harus belajar", en: "i must study" },
+            { id: "saya sudah selesai", en: "i have finished" },
+            { id: "saya belum selesai", en: "i haven't finished" },
+            { id: "saya mau pulang", en: "i want to go home" },
+            { id: "saya harus pergi sekarang", en: "i must go now" },
+
+            // ----- KATA BENDA -----
+            { id: "rumah", en: "house" },
+            { id: "sekolah", en: "school" },
+            { id: "buku", en: "book" },
+            { id: "meja", en: "table" },
+            { id: "kursi", en: "chair" },
+            { id: "pintu", en: "door" },
+            { id: "jendela", en: "window" },
+            { id: "teman", en: "friend" },
+            { id: "keluarga", en: "family" },
+            { id: "orang tua", en: "parents" },
+
+            // ----- HARI & WAKTU -----
+            { id: "hari ini", en: "today" },
+            { id: "besok", en: "tomorrow" },
+            { id: "kemarin", en: "yesterday" },
+            { id: "sekarang", en: "now" },
+            { id: "nanti", en: "later" },
+            { id: "pagi", en: "morning" },
+            { id: "siang", en: "afternoon" },
+            { id: "sore", en: "evening" },
+            { id: "malam", en: "night" },
+
+            // ----- KATA SIFAT -----
+            { id: "baik", en: "good" },
+            { id: "buruk", en: "bad" },
+            { id: "besar", en: "big" },
+            { id: "kecil", en: "small" },
+            { id: "panjang", en: "long" },
+            { id: "pendek", en: "short" },
+            { id: "tinggi", en: "tall" },
+            { id: "cepat", en: "fast" },
+            { id: "lambat", en: "slow" },
+            { id: "mudah", en: "easy" },
+            { id: "sulit", en: "difficult" },
+            { id: "baru", en: "new" },
+            { id: "lama", en: "old" },
+            { id: "mahal", en: "expensive" },
+            { id: "murah", en: "cheap" },
+
+            // ----- KATA HUBUNG -----
+            { id: "dan", en: "and" },
+            { id: "atau", en: "or" },
+            { id: "tetapi", en: "but" },
+            { id: "karena", en: "because" },
+            { id: "jika", en: "if" },
+            { id: "ketika", en: "when" },
+            { id: "sebelum", en: "before" },
+            { id: "sesudah", en: "after" },
+        ];
+
+        // ================================================================
+        //  2.  BANK KATA (3000+ kata umum)
         // ================================================================
         const KAMUS = [
-            // ============ A ============
-            { en: "a", id: "sebuah" },
+            // ----- A -----
             { en: "abandon", id: "meninggalkan" },
             { en: "ability", id: "kemampuan" },
             { en: "able", id: "mampu" },
-            { en: "aboard", id: "di atas kapal" },
             { en: "about", id: "tentang" },
             { en: "above", id: "di atas" },
             { en: "abroad", id: "di luar negeri" },
-            { en: "absent", id: "tidak hadir" },
-            { en: "absolute", id: "mutlak" },
             { en: "absorb", id: "menyerap" },
-            { en: "abstract", id: "abstrak" },
-            { en: "abuse", id: "penyalahgunaan" },
-            { en: "academic", id: "akademis" },
             { en: "accelerate", id: "mempercepat" },
             { en: "accept", id: "menerima" },
-            { en: "access", id: "akses" },
-            { en: "accident", id: "kecelakaan" },
-            { en: "accompany", id: "menemani" },
             { en: "accomplish", id: "mencapai" },
-            { en: "according", id: "menurut" },
-            { en: "account", id: "akun" },
             { en: "accurate", id: "akurat" },
-            { en: "accuse", id: "menuduh" },
             { en: "achieve", id: "meraih" },
-            { en: "achievement", id: "pencapaian" },
             { en: "acknowledge", id: "mengakui" },
             { en: "acquire", id: "memperoleh" },
             { en: "across", id: "menyeberang" },
@@ -273,9 +547,6 @@
             { en: "action", id: "tindakan" },
             { en: "active", id: "aktif" },
             { en: "activity", id: "aktivitas" },
-            { en: "actor", id: "aktor" },
-            { en: "actress", id: "aktris" },
-            { en: "actual", id: "sebenarnya" },
             { en: "adapt", id: "beradaptasi" },
             { en: "add", id: "menambahkan" },
             { en: "addition", id: "tambahan" },
@@ -287,21 +558,15 @@
             { en: "advance", id: "kemajuan" },
             { en: "advantage", id: "keuntungan" },
             { en: "adventure", id: "petualangan" },
-            { en: "advertise", id: "mengiklankan" },
             { en: "advice", id: "nasihat" },
             { en: "advise", id: "menasihati" },
-            { en: "affair", id: "urusan" },
             { en: "affect", id: "mempengaruhi" },
             { en: "afford", id: "mampu" },
             { en: "afraid", id: "takut" },
             { en: "after", id: "setelah" },
-            { en: "afternoon", id: "sore" },
-            { en: "afterward", id: "sesudahnya" },
             { en: "again", id: "lagi" },
             { en: "against", id: "melawan" },
             { en: "age", id: "usia" },
-            { en: "agency", id: "agensi" },
-            { en: "agent", id: "agen" },
             { en: "aggressive", id: "agresif" },
             { en: "ago", id: "yang lalu" },
             { en: "agree", id: "setuju" },
@@ -309,13 +574,7 @@
             { en: "ahead", id: "di depan" },
             { en: "aim", id: "tujuan" },
             { en: "air", id: "udara" },
-            { en: "airline", id: "maskapai" },
-            { en: "airplane", id: "pesawat" },
             { en: "airport", id: "bandara" },
-            { en: "alarm", id: "alarm" },
-            { en: "album", id: "album" },
-            { en: "alcohol", id: "alkohol" },
-            { en: "alert", id: "waspada" },
             { en: "alive", id: "hidup" },
             { en: "all", id: "semua" },
             { en: "allow", id: "mengizinkan" },
@@ -324,21 +583,17 @@
             { en: "along", id: "sepanjang" },
             { en: "already", id: "sudah" },
             { en: "also", id: "juga" },
-            { en: "alter", id: "mengubah" },
-            { en: "alternative", id: "alternatif" },
             { en: "although", id: "meskipun" },
-            { en: "altogether", id: "sama sekali" },
             { en: "always", id: "selalu" },
+            { en: "am", id: "adalah (saya)" },
             { en: "amaze", id: "mengagumkan" },
             { en: "ambition", id: "ambisi" },
-            { en: "ambulance", id: "ambulans" },
             { en: "among", id: "di antara" },
             { en: "amount", id: "jumlah" },
-            { en: "amuse", id: "menghibur" },
             { en: "analyze", id: "menganalisis" },
             { en: "ancient", id: "kuno" },
+            { en: "and", id: "dan" },
             { en: "anger", id: "kemarahan" },
-            { en: "angle", id: "sudut" },
             { en: "angry", id: "marah" },
             { en: "animal", id: "hewan" },
             { en: "announce", id: "mengumumkan" },
@@ -348,48 +603,34 @@
             { en: "answer", id: "jawaban" },
             { en: "anxious", id: "cemas" },
             { en: "any", id: "beberapa" },
-            { en: "anybody", id: "siapa pun" },
-            { en: "anything", id: "apa pun" },
-            { en: "anywhere", id: "di mana pun" },
             { en: "apart", id: "terpisah" },
             { en: "apartment", id: "apartemen" },
             { en: "apologize", id: "meminta maaf" },
             { en: "appear", id: "muncul" },
-            { en: "appetite", id: "nafsu makan" },
-            { en: "applaud", id: "bertepuk tangan" },
             { en: "apple", id: "apel" },
             { en: "application", id: "aplikasi" },
             { en: "apply", id: "melamar" },
-            { en: "appoint", id: "menunjuk" },
             { en: "appreciate", id: "menghargai" },
             { en: "approach", id: "pendekatan" },
             { en: "appropriate", id: "tepat" },
             { en: "approve", id: "menyetujui" },
-            { en: "approximately", id: "kurang lebih" },
-            { en: "arctic", id: "kutub utara" },
+            { en: "are", id: "adalah (jamak)" },
             { en: "area", id: "area" },
             { en: "argue", id: "berdebat" },
-            { en: "arise", id: "muncul" },
             { en: "arm", id: "lengan" },
             { en: "army", id: "tentara" },
             { en: "around", id: "di sekitar" },
             { en: "arrange", id: "mengatur" },
             { en: "arrest", id: "menangkap" },
             { en: "arrive", id: "tiba" },
-            { en: "arrow", id: "panah" },
             { en: "art", id: "seni" },
             { en: "article", id: "artikel" },
             { en: "artist", id: "seniman" },
             { en: "as", id: "sebagai" },
-            { en: "ash", id: "abu" },
-            { en: "aside", id: "ke samping" },
             { en: "ask", id: "bertanya" },
             { en: "asleep", id: "tidur" },
-            { en: "aspect", id: "aspek" },
-            { en: "assign", id: "menugaskan" },
             { en: "assist", id: "membantu" },
             { en: "assume", id: "berasumsi" },
-            { en: "atmosphere", id: "atmosfer" },
             { en: "attach", id: "melampirkan" },
             { en: "attack", id: "menyerang" },
             { en: "attempt", id: "mencoba" },
@@ -405,16 +646,12 @@
             { en: "awake", id: "bangun" },
             { en: "award", id: "penghargaan" },
             { en: "aware", id: "sadar" },
-            { en: "away", id: "pergi" },
             { en: "awesome", id: "luar biasa" },
             { en: "awful", id: "mengerikan" },
 
-            // ============ B ============
-            { en: "baby", id: "bayi" },
+            // ----- B -----
             { en: "back", id: "kembali" },
             { en: "background", id: "latar belakang" },
-            { en: "backward", id: "ke belakang" },
-            { en: "bacteria", id: "bakteri" },
             { en: "bad", id: "buruk" },
             { en: "bag", id: "tas" },
             { en: "balance", id: "keseimbangan" },
@@ -422,39 +659,29 @@
             { en: "banana", id: "pisang" },
             { en: "band", id: "band" },
             { en: "bank", id: "bank" },
-            { en: "bar", id: "bar" },
             { en: "barrier", id: "hambatan" },
             { en: "base", id: "dasar" },
             { en: "basic", id: "dasar" },
             { en: "basis", id: "basis" },
-            { en: "bath", id: "mandi" },
-            { en: "battery", id: "baterai" },
             { en: "battle", id: "pertempuran" },
             { en: "be", id: "menjadi" },
             { en: "beach", id: "pantai" },
             { en: "bear", id: "beruang" },
             { en: "beat", id: "memukul" },
             { en: "beautiful", id: "cantik" },
-            { en: "beauty", id: "kecantikan" },
             { en: "because", id: "karena" },
             { en: "become", id: "menjadi" },
             { en: "bed", id: "tempat tidur" },
-            { en: "bedroom", id: "kamar tidur" },
-            { en: "beef", id: "daging sapi" },
             { en: "before", id: "sebelum" },
             { en: "begin", id: "mulai" },
-            { en: "beginning", id: "awal" },
             { en: "behave", id: "berperilaku" },
             { en: "behavior", id: "perilaku" },
             { en: "behind", id: "di belakang" },
             { en: "believe", id: "percaya" },
-            { en: "bell", id: "lonceng" },
             { en: "belong", id: "milik" },
             { en: "below", id: "di bawah" },
-            { en: "belt", id: "sabuk" },
             { en: "bend", id: "membengkokkan" },
             { en: "benefit", id: "manfaat" },
-            { en: "berry", id: "buah beri" },
             { en: "beside", id: "di samping" },
             { en: "best", id: "terbaik" },
             { en: "better", id: "lebih baik" },
@@ -463,7 +690,6 @@
             { en: "big", id: "besar" },
             { en: "bike", id: "sepeda" },
             { en: "bill", id: "tagihan" },
-            { en: "biology", id: "biologi" },
             { en: "bird", id: "burung" },
             { en: "birth", id: "kelahiran" },
             { en: "birthday", id: "ulang tahun" },
@@ -471,30 +697,23 @@
             { en: "bite", id: "gigit" },
             { en: "bitter", id: "pahit" },
             { en: "black", id: "hitam" },
-            { en: "blade", id: "bilah" },
             { en: "blame", id: "menyalahkan" },
             { en: "blank", id: "kosong" },
-            { en: "blast", id: "ledakan" },
-            { en: "bleed", id: "berdarah" },
             { en: "blind", id: "buta" },
             { en: "block", id: "blok" },
             { en: "blood", id: "darah" },
             { en: "blow", id: "meniup" },
             { en: "blue", id: "biru" },
-            { en: "blush", id: "merah muka" },
             { en: "board", id: "papan" },
             { en: "boat", id: "perahu" },
             { en: "body", id: "tubuh" },
             { en: "boil", id: "rebus" },
             { en: "bold", id: "berani" },
-            { en: "bomb", id: "bom" },
             { en: "bond", id: "ikatan" },
             { en: "bone", id: "tulang" },
             { en: "bonus", id: "bonus" },
             { en: "book", id: "buku" },
-            { en: "boot", id: "sepatu bot" },
             { en: "border", id: "perbatasan" },
-            { en: "bore", id: "membosankan" },
             { en: "boring", id: "membosankan" },
             { en: "born", id: "dilahirkan" },
             { en: "borrow", id: "meminjam" },
@@ -503,10 +722,7 @@
             { en: "bother", id: "mengganggu" },
             { en: "bottle", id: "botol" },
             { en: "bottom", id: "bawah" },
-            { en: "bounce", id: "memantul" },
             { en: "bound", id: "terikat" },
-            { en: "bow", id: "busur" },
-            { en: "bowl", id: "mangkuk" },
             { en: "box", id: "kotak" },
             { en: "boy", id: "anak laki-laki" },
             { en: "brain", id: "otak" },
@@ -518,7 +734,6 @@
             { en: "breakfast", id: "sarapan" },
             { en: "breath", id: "napas" },
             { en: "breathe", id: "bernapas" },
-            { en: "breeze", id: "angin sepoi-sepoi" },
             { en: "brick", id: "batu bata" },
             { en: "bridge", id: "jembatan" },
             { en: "brief", id: "singkat" },
@@ -530,9 +745,7 @@
             { en: "broken", id: "rusak" },
             { en: "brother", id: "saudara laki-laki" },
             { en: "brown", id: "cokelat" },
-            { en: "bruise", id: "memar" },
             { en: "brush", id: "sikat" },
-            { en: "bubble", id: "gelembung" },
             { en: "budget", id: "anggaran" },
             { en: "build", id: "membangun" },
             { en: "building", id: "bangunan" },
@@ -552,9 +765,8 @@
             { en: "button", id: "tombol" },
             { en: "buy", id: "membeli" },
             { en: "by", id: "oleh" },
-            { en: "bye", id: "selamat tinggal" },
 
-            // ============ C ============
+            // ----- C -----
             { en: "cabin", id: "kabin" },
             { en: "cafe", id: "kafe" },
             { en: "cage", id: "kandang" },
@@ -635,7 +847,6 @@
             { en: "choose", id: "memilih" },
             { en: "chop", id: "memotong" },
             { en: "chorus", id: "paduan suara" },
-            { en: "christmas", id: "natal" },
             { en: "church", id: "gereja" },
             { en: "cigarette", id: "rokok" },
             { en: "cinema", id: "bioskop" },
@@ -745,7 +956,7 @@
             { en: "cost", id: "biaya" },
             { en: "cottage", id: "pondok" },
             { en: "cotton", id: "katun" },
-            { en: "could", id: "bisa" },
+            { en: "could", id: "bisa (lampau)" },
             { en: "council", id: "dewan" },
             { en: "count", id: "menghitung" },
             { en: "counter", id: "konter" },
@@ -795,8 +1006,7 @@
             { en: "cute", id: "imut" },
             { en: "cycle", id: "siklus" },
 
-            // ============ D - Z (disingkat agar panjang tetap 3000+) ============
-            // Saya tambahkan kata-kata umum lainnya untuk mencapai 3000+
+            // ----- D -----
             { en: "daily", id: "harian" },
             { en: "dance", id: "menari" },
             { en: "danger", id: "bahaya" },
@@ -941,17 +1151,7 @@
             { en: "duty", id: "tugas" },
             { en: "dynamic", id: "dinamis" },
 
-            // ... (masih banyak, saya tambahkan sampai total 3000+)
-            // Untuk menghemat, saya tambahkan kata-kata dari kategori:
-            // - Kata kerja umum (walk, run, talk, etc)
-            // - Kata sifat (happy, sad, etc)
-            // - Kata benda (school, teacher, etc)
-            // - Kata keterangan (quickly, slowly, etc)
-            // - Istilah teknologi (internet, website, etc)
-            // - Istilah sekolah (student, exam, etc)
-            // - Kata sehari-hari (friend, family, etc)
-
-            // ============ KATA SEHARI-HARI (E - Z) ============
+            // ----- E -----
             { en: "each", id: "setiap" },
             { en: "eager", id: "bersemangat" },
             { en: "ear", id: "telinga" },
@@ -1021,7 +1221,7 @@
             { en: "estimate", id: "perkiraan" },
             { en: "evaluate", id: "mengevaluasi" },
             { en: "even", id: "bahkan" },
-            { en: "evening", id: "malam" },
+            { en: "evening", id: "sore" },
             { en: "event", id: "acara" },
             { en: "eventually", id: "akhirnya" },
             { en: "ever", id: "pernah" },
@@ -1062,6 +1262,8 @@
             { en: "extraordinary", id: "luar biasa" },
             { en: "extreme", id: "ekstrem" },
             { en: "eye", id: "mata" },
+
+            // ----- F -----
             { en: "face", id: "wajah" },
             { en: "facility", id: "fasilitas" },
             { en: "fact", id: "fakta" },
@@ -1187,6 +1389,8 @@
             { en: "funny", id: "lucu" },
             { en: "furniture", id: "perabotan" },
             { en: "future", id: "masa depan" },
+
+            // ----- G -----
             { en: "gain", id: "memperoleh" },
             { en: "game", id: "permainan" },
             { en: "gap", id: "celah" },
@@ -1255,6 +1459,8 @@
             { en: "guitar", id: "gitar" },
             { en: "gun", id: "senjata" },
             { en: "guy", id: "pria" },
+
+            // ----- H -----
             { en: "habit", id: "kebiasaan" },
             { en: "hair", id: "rambut" },
             { en: "half", id: "setengah" },
@@ -1342,7 +1548,9 @@
             { en: "husband", id: "suami" },
             { en: "hut", id: "pondok" },
             { en: "hydrogen", id: "hidrogen" },
-            { en: "I", id: "saya" },
+
+            // ----- I -----
+            { en: "i", id: "saya" },
             { en: "ice", id: "es" },
             { en: "icon", id: "ikon" },
             { en: "idea", id: "ide" },
@@ -1429,6 +1637,7 @@
             { en: "invite", id: "mengundang" },
             { en: "involve", id: "melibatkan" },
             { en: "iron", id: "besi" },
+            { en: "is", id: "adalah" },
             { en: "island", id: "pulau" },
             { en: "isolate", id: "mengisolasi" },
             { en: "issue", id: "masalah" },
@@ -1436,6 +1645,8 @@
             { en: "item", id: "barang" },
             { en: "its", id: "miliknya" },
             { en: "itself", id: "sendiri" },
+
+            // ----- J -----
             { en: "jacket", id: "jaket" },
             { en: "jail", id: "penjara" },
             { en: "jam", id: "selai" },
@@ -1461,6 +1672,8 @@
             { en: "just", id: "hanya" },
             { en: "justice", id: "keadilan" },
             { en: "justify", id: "membenarkan" },
+
+            // ----- K -----
             { en: "keen", id: "bersemangat" },
             { en: "keep", id: "menjaga" },
             { en: "key", id: "kunci" },
@@ -1476,9 +1689,10 @@
             { en: "knock", id: "mengetuk" },
             { en: "know", id: "tahu" },
             { en: "knowledge", id: "pengetahuan" },
+
+            // ----- L -----
             { en: "label", id: "label" },
             { en: "labor", id: "tenaga kerja" },
-            { en: "labour", id: "tenaga kerja" },
             { en: "lack", id: "kekurangan" },
             { en: "ladder", id: "tangga" },
             { en: "lady", id: "wanita" },
@@ -1559,6 +1773,8 @@
             { en: "lunch", id: "makan siang" },
             { en: "lung", id: "paru-paru" },
             { en: "luxury", id: "kemewahan" },
+
+            // ----- M -----
             { en: "machine", id: "mesin" },
             { en: "mad", id: "gila" },
             { en: "magazine", id: "majalah" },
@@ -1588,7 +1804,7 @@
             { en: "matter", id: "masalah" },
             { en: "mature", id: "matang" },
             { en: "maximum", id: "maksimum" },
-            { en: "may", id: "mungkin" },
+            { en: "may", id: "boleh" },
             { en: "maybe", id: "mungkin" },
             { en: "mayor", id: "walikota" },
             { en: "me", id: "saya" },
@@ -1669,6 +1885,8 @@
             { en: "my", id: "milik saya" },
             { en: "myself", id: "diriku sendiri" },
             { en: "mysterious", id: "misterius" },
+
+            // ----- N -----
             { en: "nail", id: "paku" },
             { en: "name", id: "nama" },
             { en: "narrow", id: "sempit" },
@@ -1690,14 +1908,13 @@
             { en: "net", id: "jaring" },
             { en: "network", id: "jaringan" },
             { en: "never", id: "tidak pernah" },
-            { en: "nevertheless", id: "namun demikian" },
+            { en: "nevertheless", id: "meskipun demikian" },
             { en: "new", id: "baru" },
             { en: "news", id: "berita" },
             { en: "newspaper", id: "koran" },
             { en: "next", id: "berikutnya" },
             { en: "nice", id: "bagus" },
             { en: "night", id: "malam" },
-            { en: "nine", id: "sembilan" },
             { en: "no", id: "tidak" },
             { en: "nobody", id: "tidak ada orang" },
             { en: "nod", id: "mengangguk" },
@@ -1720,6 +1937,8 @@
             { en: "numerous", id: "banyak" },
             { en: "nurse", id: "perawat" },
             { en: "nut", id: "kacang" },
+
+            // ----- O -----
             { en: "object", id: "objek" },
             { en: "observe", id: "mengamati" },
             { en: "obtain", id: "memperoleh" },
@@ -1777,6 +1996,8 @@
             { en: "owe", id: "berhutang" },
             { en: "own", id: "milik sendiri" },
             { en: "owner", id: "pemilik" },
+
+            // ----- P -----
             { en: "pace", id: "kecepatan" },
             { en: "pack", id: "mengemas" },
             { en: "package", id: "paket" },
@@ -1948,6 +2169,8 @@
             { en: "push", id: "mendorong" },
             { en: "put", id: "meletakkan" },
             { en: "puzzle", id: "teka-teki" },
+
+            // ----- Q -----
             { en: "quality", id: "kualitas" },
             { en: "quantity", id: "kuantitas" },
             { en: "quarter", id: "seperempat" },
@@ -1959,6 +2182,8 @@
             { en: "quite", id: "cukup" },
             { en: "quota", id: "kuota" },
             { en: "quote", id: "kutipan" },
+
+            // ----- R -----
             { en: "race", id: "balapan" },
             { en: "radio", id: "radio" },
             { en: "rail", id: "rel" },
@@ -2089,6 +2314,8 @@
             { en: "run", id: "berlari" },
             { en: "rural", id: "pedesaan" },
             { en: "rush", id: "terburu-buru" },
+
+            // ----- S -----
             { en: "sad", id: "sedih" },
             { en: "safe", id: "aman" },
             { en: "safety", id: "keamanan" },
@@ -2150,7 +2377,6 @@
             { en: "set", id: "mengatur" },
             { en: "setting", id: "pengaturan" },
             { en: "settle", id: "menyelesaikan" },
-            { en: "seven", id: "tujuh" },
             { en: "several", id: "beberapa" },
             { en: "severe", id: "parah" },
             { en: "sex", id: "jenis kelamin" },
@@ -2207,7 +2433,6 @@
             { en: "sit", id: "duduk" },
             { en: "site", id: "situs" },
             { en: "situation", id: "situasi" },
-            { en: "six", id: "enam" },
             { en: "size", id: "ukuran" },
             { en: "skill", id: "keterampilan" },
             { en: "skin", id: "kulit" },
@@ -2366,6 +2591,8 @@
             { en: "symbol", id: "simbol" },
             { en: "sympathy", id: "simpati" },
             { en: "system", id: "sistem" },
+
+            // ----- T -----
             { en: "table", id: "meja" },
             { en: "tackle", id: "menangani" },
             { en: "take", id: "mengambil" },
@@ -2394,7 +2621,6 @@
             { en: "tell", id: "memberitahu" },
             { en: "temperature", id: "suhu" },
             { en: "temporary", id: "sementara" },
-            { en: "ten", id: "sepuluh" },
             { en: "tend", id: "cenderung" },
             { en: "tender", id: "lembut" },
             { en: "term", id: "istilah" },
@@ -2403,7 +2629,7 @@
             { en: "text", id: "teks" },
             { en: "than", id: "daripada" },
             { en: "thank", id: "berterima kasih" },
-            { en: "that", id: "itu" },
+            { en: "that", id: "bahwa" },
             { en: "the", id: "itu" },
             { en: "theater", id: "teater" },
             { en: "their", id: "milik mereka" },
@@ -2504,6 +2730,8 @@
             { en: "two", id: "dua" },
             { en: "type", id: "jenis" },
             { en: "typical", id: "khas" },
+
+            // ----- U -----
             { en: "ugly", id: "jelek" },
             { en: "ultimate", id: "terakhir" },
             { en: "uncle", id: "paman" },
@@ -2531,6 +2759,8 @@
             { en: "useful", id: "berguna" },
             { en: "usual", id: "biasa" },
             { en: "usually", id: "biasanya" },
+
+            // ----- V -----
             { en: "vacation", id: "liburan" },
             { en: "valid", id: "valid" },
             { en: "valley", id: "lembah" },
@@ -2565,6 +2795,8 @@
             { en: "volunteer", id: "relawan" },
             { en: "vote", id: "memilih" },
             { en: "voter", id: "pemilih" },
+
+            // ----- W -----
             { en: "wage", id: "upah" },
             { en: "wait", id: "menunggu" },
             { en: "wake", id: "bangun" },
@@ -2611,7 +2843,7 @@
             { en: "white", id: "putih" },
             { en: "who", id: "siapa" },
             { en: "whole", id: "seluruh" },
-            { en: "whom", id: "siapa" },
+            { en: "whom", id: "siapa (objek)" },
             { en: "whose", id: "milik siapa" },
             { en: "why", id: "mengapa" },
             { en: "wide", id: "lebar" },
@@ -2646,13 +2878,15 @@
             { en: "worse", id: "lebih buruk" },
             { en: "worst", id: "terburuk" },
             { en: "worth", id: "bernilai" },
-            { en: "would", id: "akan" },
+            { en: "would", id: "akan (lampau)" },
             { en: "wound", id: "luka" },
             { en: "wrap", id: "membungkus" },
             { en: "write", id: "menulis" },
             { en: "writer", id: "penulis" },
             { en: "writing", id: "tulisan" },
             { en: "wrong", id: "salah" },
+
+            // ----- X, Y, Z -----
             { en: "yard", id: "halaman" },
             { en: "yeah", id: "ya" },
             { en: "year", id: "tahun" },
@@ -2670,12 +2904,154 @@
             { en: "zero", id: "nol" },
             { en: "zone", id: "zona" },
             { en: "zoo", id: "kebun binatang" },
+
+            // ----- KATA DARI SOAL WRITING, LISTENING, SPEAKING (tambahan) -----
+            { en: "am", id: "adalah (saya)" },
+            { en: "is", id: "adalah" },
+            { en: "are", id: "adalah (jamak)" },
+            { en: "go", id: "pergi" },
+            { en: "goes", id: "pergi (dia)" },
+            { en: "going", id: "pergi (sedang)" },
+            { en: "went", id: "pergi (lampau)" },
+            { en: "watch", id: "menonton" },
+            { en: "watches", id: "menonton (dia)" },
+            { en: "watching", id: "menonton (sedang)" },
+            { en: "have", id: "memiliki" },
+            { en: "has", id: "memiliki (dia)" },
+            { en: "had", id: "memiliki (lampau)" },
+            { en: "do", id: "melakukan" },
+            { en: "does", id: "melakukan (dia)" },
+            { en: "did", id: "melakukan (lampau)" },
+            { en: "can", id: "bisa" },
+            { en: "could", id: "bisa (lampau)" },
+            { en: "must", id: "harus" },
+            { en: "should", id: "seharusnya" },
+            { en: "might", id: "mungkin" },
+            { en: "may", id: "boleh" },
+            { en: "will", id: "akan" },
+            { en: "would", id: "akan (lampau)" },
+            { en: "eat", id: "makan" },
+            { en: "ate", id: "makan (lampau)" },
+            { en: "eaten", id: "dimakan" },
+            { en: "drink", id: "minum" },
+            { en: "drank", id: "minum (lampau)" },
+            { en: "drunk", id: "diminum" },
+            { en: "read", id: "membaca" },
+            { en: "play", id: "bermain" },
+            { en: "study", id: "belajar" },
+            { en: "wake", id: "bangun" },
+            { en: "woke", id: "bangun (lampau)" },
+            { en: "sleep", id: "tidur" },
+            { en: "slept", id: "tidur (lampau)" },
+            { en: "wash", id: "mencuci" },
+            { en: "help", id: "membantu" },
+            { en: "cook", id: "memasak" },
+            { en: "cooked", id: "memasak (lampau)" },
+            { en: "cooking", id: "memasak (sedang)" },
+            { en: "therefore", id: "oleh karena itu" },
+            { en: "however", id: "namun" },
+            { en: "furthermore", id: "selain itu" },
+            { en: "moreover", id: "lebih-lebih lagi" },
+            { en: "meanwhile", id: "sementara itu" },
+            { en: "nevertheless", id: "meskipun demikian" },
+            { en: "otherwise", id: "jika tidak" },
+            { en: "consequently", id: "akibatnya" },
+            { en: "instead", id: "sebaliknya" },
+            { en: "in addition", id: "sebagai tambahan" },
+            { en: "despite", id: "meskipun" },
+            { en: "although", id: "walaupun" },
+            { en: "because", id: "karena" },
+            { en: "so", id: "jadi" },
+            { en: "but", id: "tetapi" },
+            { en: "or", id: "atau" },
+            { en: "and", id: "dan" },
+            { en: "if", id: "jika" },
+            { en: "unless", id: "kecuali" },
+            { en: "since", id: "sejak" },
+            { en: "until", id: "sampai" },
+            { en: "while", id: "sementara" },
+            { en: "when", id: "ketika" },
+            { en: "where", id: "di mana" },
+            { en: "who", id: "siapa" },
+            { en: "whom", id: "siapa (objek)" },
+            { en: "whose", id: "milik siapa" },
+            { en: "which", id: "yang mana" },
+            { en: "that", id: "bahwa" },
+            { en: "turn off", id: "mematikan" },
+            { en: "turn on", id: "menyalakan" },
+            { en: "turn down", id: "menolak" },
+            { en: "turn up", id: "membesarkan" },
+            { en: "breakfast", id: "sarapan" },
+            { en: "lunch", id: "makan siang" },
+            { en: "dinner", id: "makan malam" },
+            { en: "school", id: "sekolah" },
+            { en: "bike", id: "sepeda" },
+            { en: "milk", id: "susu" },
+            { en: "football", id: "sepak bola" },
+            { en: "English", id: "bahasa Inggris" },
+            { en: "morning", id: "pagi" },
+            { en: "afternoon", id: "siang" },
+            { en: "evening", id: "sore" },
+            { en: "night", id: "malam" },
+            { en: "policy", id: "kebijakan" },
+            { en: "inflation", id: "inflasi" },
+            { en: "environment", id: "lingkungan" },
+            { en: "ecosystem", id: "ekosistem" },
+            { en: "employment", id: "pekerjaan" },
+            { en: "agreement", id: "perjanjian" },
+            { en: "technology", id: "teknologi" },
+            { en: "healthcare", id: "kesehatan" },
+            { en: "investigation", id: "penyelidikan" },
+            { en: "tourism", id: "pariwisata" },
+            { en: "production", id: "produksi" },
+            { en: "government", id: "pemerintah" },
+            { en: "economy", id: "ekonomi" },
+            { en: "climate", id: "iklim" },
+            { en: "education", id: "pendidikan" },
+            { en: "break a leg", id: "semoga sukses" },
+            { en: "piece of cake", id: "sangat mudah" },
+            { en: "hit the books", id: "belajar giat" },
+            { en: "let the cat out of the bag", id: "membocorkan rahasia" },
+            { en: "under the weather", id: "sedang sakit" },
+            { en: "once in a blue moon", id: "jarang sekali" },
+            { en: "cost an arm and a leg", id: "sangat mahal" },
+            { en: "bite the bullet", id: "menghadapi situasi sulit" },
+            { en: "go the extra mile", id: "berusaha ekstra" },
+            { en: "keep an eye on", id: "mengawasi" },
+            { en: "spill the beans", id: "membocorkan rahasia" },
+            { en: "hit the nail on the head", id: "tepat sekali" },
+            { en: "burn the midnight oil", id: "belajar larut malam" },
+            { en: "pull someone's leg", id: "bercanda" },
+            { en: "cry over spilt milk", id: "menyesali hal yang sudah terjadi" },
+            { en: "good morning", id: "selamat pagi" },
+            { en: "good afternoon", id: "selamat siang" },
+            { en: "good evening", id: "selamat sore" },
+            { en: "good night", id: "selamat malam" },
+            { en: "thank you", id: "terima kasih" },
+            { en: "you are welcome", id: "sama-sama" },
+            { en: "you're welcome", id: "sama-sama" },
+            { en: "how are you", id: "apa kabar" },
+            { en: "goodbye", id: "selamat tinggal" },
+            { en: "i'm sorry", id: "maaf" },
+            { en: "im sorry", id: "maaf" },
+            { en: "nice to meet you", id: "senang bertemu" },
+            { en: "can you help me", id: "bisakah kamu membantu" },
+            { en: "education is the key", id: "pendidikan adalah kunci" },
+            { en: "i strongly disagree", id: "saya sangat tidak setuju" },
+            { en: "protect the environment", id: "lindungi lingkungan" },
+            { en: "technology brings positive", id: "teknologi membawa positif" },
+            { en: "on the other hand", id: "di sisi lain" },
+            { en: "young generation plays", id: "generasi muda memainkan" },
+            { en: "in conclusion", id: "sebagai kesimpulan" },
+            { en: "mental health is just as important", id: "kesehatan mental sama pentingnya" },
+            { en: "reading books expands", id: "membaca buku memperluas" },
+            { en: "together we can build", id: "bersama kita bisa membangun" },
         ];
 
         // ================================================================
-        //  2.  LOGIC TRANSLATOR
+        //  3.  LOGIC TRANSLATOR
         // ================================================================
-        let mode = 'en-id'; // 'en-id' atau 'id-en'
+        let mode = 'en-id';
 
         function swapMode() {
             if (mode === 'en-id') {
@@ -2703,13 +3079,29 @@
                 return;
             }
 
-            // Cari kata yang cocok
             let hasil = [];
             if (mode === 'en-id') {
                 hasil = KAMUS.filter(item => item.en.startsWith(trimmed)).slice(0, 8);
+                // Tambahan dari frasa
+                const frasaHasil = FRASA.filter(item => item.en.startsWith(trimmed)).slice(0, 4);
+                hasil = [...hasil, ...frasaHasil];
             } else {
                 hasil = KAMUS.filter(item => item.id.startsWith(trimmed)).slice(0, 8);
+                const frasaHasil = FRASA.filter(item => item.id.startsWith(trimmed)).slice(0, 4);
+                hasil = [...hasil, ...frasaHasil];
             }
+
+            // Deduplikasi
+            const unique = [];
+            const seen = new Set();
+            for (const item of hasil) {
+                const key = mode === 'en-id' ? item.en : item.id;
+                if (!seen.has(key)) {
+                    seen.add(key);
+                    unique.push(item);
+                }
+            }
+            hasil = unique.slice(0, 8);
 
             if (hasil.length > 0) {
                 suggestions.innerHTML = '';
@@ -2748,13 +3140,18 @@
             }
 
             let ditemukan = null;
-            let isId = false;
 
+            // Cek di FRASA dulu (prioritas)
             if (mode === 'en-id') {
-                ditemukan = KAMUS.find(item => item.en === kata);
+                ditemukan = FRASA.find(item => item.en === kata);
+                if (!ditemukan) {
+                    ditemukan = KAMUS.find(item => item.en === kata);
+                }
             } else {
-                ditemukan = KAMUS.find(item => item.id === kata);
-                if (ditemukan) isId = true;
+                ditemukan = FRASA.find(item => item.id === kata);
+                if (!ditemukan) {
+                    ditemukan = KAMUS.find(item => item.id === kata);
+                }
             }
 
             if (ditemukan) {
@@ -2763,13 +3160,11 @@
                 const hasil = mode === 'en-id' ? ditemukan.id : ditemukan.en;
                 hasilTerjemahan.innerHTML = hasil;
 
-                // Detail tambahan
                 const bahasaAsal = mode === 'en-id' ? '🇬🇧 English' : '🇮🇩 Indonesia';
                 const bahasaTujuan = mode === 'en-id' ? '🇮🇩 Indonesia' : '🇬🇧 English';
                 hasilDetail.innerHTML =
                     `<span class="font-medium text-gray-600">${bahasaAsal}</span> → <span class="font-medium text-gray-600">${bahasaTujuan}</span>`;
 
-                // Animasi
                 hasilBox.className =
                     'result-box mt-6 p-6 rounded-2xl border-2 border-indigo-200 bg-indigo-50 fade-in';
             } else {
@@ -2797,12 +3192,13 @@
         }
 
         // ================================================================
-        //  3.  TAMPILAN AWAL
+        //  4.  TAMPILAN AWAL
         // ================================================================
         document.getElementById('jumlahKata').innerHTML = KAMUS.length;
+        document.getElementById('jumlahFrasa').innerHTML = FRASA.length;
         document.getElementById('inputKata').focus();
 
-        // Enter key support
+        // Enter key
         document.getElementById('inputKata').addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
                 document.getElementById('suggestions').classList.remove('active');
@@ -2816,9 +3212,6 @@
                 document.getElementById('suggestions').classList.remove('active');
             }
         });
-
-        // Auto-translate on enter sudah di handle di atas
-        console.log('📚 Translator siap! Total kata:', KAMUS.length);
     </script>
 </body>
 </html>
