@@ -1,221 +1,258 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reading SMP | ENG-LEARN</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reading SMP (20 Soal) | ENG-LEARN</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
-        * { font-family: 'Poppins', sans-serif; }
-        body { min-height: 100vh; padding: 1.5rem; background-color: #fce4ec; }
-        .max-w-3xl { max-width: 48rem; margin-left: auto; margin-right: auto; }
-        /* Mobile fix */
-        @media (max-width: 640px) {
-            #areaPilihan { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
-            #areaPilihan button { padding: 16px 8px !important; font-size: 0.9rem !important; min-height: 52px !important; }
-            .flex.gap-3 { flex-direction: column !important; gap: 12px !important; }
-            #tombolSebelumnya, #tombolLanjut { width: 100% !important; min-height: 52px !important; }
-            #tombolKirim, #tombolLanjut, #tombolSelesai { padding: 16px !important; font-size: 1rem !important; min-height: 56px !important; }
-            .max-w-3xl.mx-auto.mb-6.flex.justify-between { flex-wrap: wrap !important; gap: 12px !important; }
-            .bg-white.rounded-3xl { padding: 16px !important; }
-            #teksSoal { font-size: 1rem !important; }
-            #kotakMateri { font-size: 0.9rem !important; padding: 12px !important; }
+        * {
+            font-family: 'Poppins', sans-serif;
         }
-        button:active { transform: scale(0.96); transition: transform 0.1s ease; }
-        #areaPilihan button.bg-rose-500, #areaPilihan button.bg-rose-500:active { color: white !important; }
-        .option-btn { transition: all 0.2s ease; border: 2px solid #e5e7eb; background: white; padding: 16px 12px; border-radius: 16px; font-weight: 600; font-size: 1rem; min-height: 56px; cursor: pointer; }
-        .option-btn:hover { border-color: #f43f5e; background: #ffe4e6; }
-        .option-btn.correct { border-color: #22c55e; background: #dcfce7; }
-        .option-btn.wrong { border-color: #ef4444; background: #fee2e2; }
-        .option-btn.disabled { pointer-events: none; opacity: 0.7; }
-        .option-btn.selected { border-color: #f43f5e; background: #fecdd3; }
+        body {
+            min-height: 100vh;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #eff6ff, #bfdbfe);
+        }
+        .max-w-3xl {
+            max-width: 48rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .option-btn {
+            transition: all 0.2s ease;
+            border: 2px solid #e5e7eb;
+            background: white;
+            padding: 14px 12px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            min-height: 50px;
+            cursor: pointer;
+            text-align: left;
+        }
+        .option-btn:hover {
+            border-color: #6366f1;
+            background: #eef2ff;
+        }
+        .option-btn.correct {
+            border-color: #22c55e;
+            background: #dcfce7;
+        }
+        .option-btn.wrong {
+            border-color: #ef4444;
+            background: #fee2e2;
+        }
+        .option-btn.disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        .option-btn.selected {
+            border-color: #6366f1;
+            background: #eef2ff;
+        }
+        @media (max-width: 640px) {
+            .option-btn {
+                font-size: 0.85rem !important;
+                padding: 12px 10px !important;
+                min-height: 46px !important;
+            }
+            .bg-white.rounded-3xl {
+                padding: 16px !important;
+            }
+            #teksSoal {
+                font-size: 0.95rem !important;
+            }
+            #teksBacaan {
+                font-size: 0.85rem !important;
+                padding: 12px !important;
+                max-height: 200px !important;
+            }
+            .max-w-3xl.mx-auto.mb-6.flex.justify-between {
+                flex-wrap: wrap !important;
+                gap: 12px !important;
+            }
+            #tombolKirim,
+            #tombolLanjut,
+            #tombolSelesai {
+                padding: 16px !important;
+                font-size: 1rem !important;
+                min-height: 56px !important;
+            }
+            .flex.gap-3 {
+                flex-direction: column !important;
+                gap: 10px !important;
+            }
+        }
+        button:active {
+            transform: scale(0.96);
+        }
+        .text-bacaan {
+            background: #f8fafc;
+            border-left: 4px solid #6366f1;
+            padding: 14px 18px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+        .btn-back {
+            background: white;
+            border-radius: 12px;
+            padding: 8px 16px;
+            font-weight: 600;
+            color: #4f46e5;
+            border: 2px solid #e0e7ff;
+            transition: all 0.2s;
+        }
+        .btn-back:hover {
+            background: #eef2ff;
+        }
+        .hasil-box {
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
     </style>
 </head>
 <body>
 
-    <div class="max-w-3xl mx-auto mb-6 flex justify-between items-center">
-        <a href="smp.html" onclick="return confirm('Yakin mau kembali? Poin sesi ini akan hangus lho!')" class="inline-flex items-center text-red-500 hover:text-red-700 font-bold bg-white px-4 py-2 rounded-xl shadow-sm border border-red-100 transition-all">
-            ⬅️ Batal & Kembali
-        </a>
-        <div class="bg-rose-500 text-white font-bold px-6 py-2 rounded-xl shadow-md flex items-center gap-2 text-lg">
-            ⭐ Poin Sesi: <span id="poinSesiTampil">0</span>
-        </div>
-    </div>
+    <div class="max-w-3xl mx-auto">
 
-    <div class="max-w-3xl mx-auto bg-white rounded-3xl p-8 shadow-xl border-2 border-rose-50">
-        <div class="flex justify-between items-center mb-4 border-b-2 border-rose-100 pb-4">
-            <h1 class="text-2xl font-bold text-gray-800">📖 Reading Comprehension (SMP)</h1>
-            <span id="labelNomorSoal" class="bg-rose-100 text-rose-700 font-bold px-4 py-1 rounded-full text-sm">Soal 1 dari 10</span>
+        <!-- TOP BAR -->
+        <div class="mb-6 flex flex-wrap justify-between items-center gap-3">
+            <a href="smp.html" onclick="return confirm('Kak, yakin mau kembali? Poin sesi ini akan hangus lho!')" class="btn-back inline-flex items-center gap-1">
+                ⬅️ Batal & Kembali
+            </a>
+            <div class="bg-blue-500 text-white font-bold px-6 py-2 rounded-xl shadow-md flex items-center gap-2 text-lg">
+                ⭐ Poin Sesi: <span id="poinSesiTampil">0</span>
+            </div>
         </div>
 
-        <!-- Teks bacaan -->
-        <div id="kotakMateri" class="mb-6 text-gray-700 text-base bg-rose-50 p-4 rounded-xl border border-rose-100 font-medium"></div>
+        <!-- KARTU READING -->
+        <div class="bg-white rounded-3xl p-8 shadow-xl border-2 border-blue-100">
 
-        <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100">
-            <div id="teksSoal" class="text-xl font-medium mb-6 leading-relaxed text-center"></div>
-
-            <div id="areaPilihan" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6"></div>
-
-            <button id="tombolKirim" onclick="kirimJawaban()" class="w-full bg-rose-500 text-white px-6 py-3 rounded-xl font-bold text-lg hover:bg-rose-600 shadow-md transition-colors mb-4">
-                🚀 Kirim Jawaban
-            </button>
-
-            <div id="pesanHasil" class="hidden mb-6 p-4 rounded-xl border-2"></div>
-
-            <div id="kotakPenjelasanSemua" class="hidden mb-6 p-5 rounded-xl bg-white border-2 border-rose-200 shadow-sm">
-                <h3 class="font-bold text-rose-900 mb-3 text-base">📚 Bedah Fungsi Semua Opsi:</h3>
-                <div id="isiPenjelasanSemua" class="space-y-3 text-sm text-gray-700"></div>
+            <div class="flex justify-between items-center mb-4 border-b-2 border-blue-100 pb-4">
+                <h1 class="text-2xl font-extrabold text-gray-800 flex items-center gap-2">
+                    📖 Reading <span class="text-blue-500">SMP</span>
+                </h1>
+                <span id="labelNomorSoal" class="bg-blue-100 text-blue-700 font-bold px-4 py-1 rounded-full text-sm">
+                    Soal 1 dari 20
+                </span>
             </div>
 
-            <div class="flex gap-3">
-                <button id="tombolSebelumnya" onclick="soalSebelumnya()" class="hidden flex-1 bg-gray-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-gray-600 shadow-md transition-colors">
-                    ⬅️ Sebelumnya
-                </button>
-                <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden flex-1 bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-green-600 shadow-md transition-colors">
-                    ➡️ Lanjut
-                </button>
-            </div>
+            <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100">
 
-            <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700 shadow-lg">
-                🎉 Selesai & Simpan Poin!
-            </button>
+                <!-- Teks Bacaan -->
+                <div id="teksBacaan" class="text-bacaan mb-6">
+                    Teks bacaan akan muncul di sini...
+                </div>
+
+                <!-- Pertanyaan -->
+                <div id="teksSoal" class="text-lg font-bold text-gray-800 mb-4">
+                    Pertanyaan...
+                </div>
+
+                <!-- Opsi Jawaban -->
+                <div id="areaPilihan" class="grid grid-cols-1 gap-3 mb-6"></div>
+
+                <!-- Tombol Kirim -->
+                <button id="tombolKirim" onclick="kirimJawaban()" class="w-full bg-blue-500 text-white px-6 py-3 rounded-xl font-bold text-lg hover:bg-blue-600 shadow-md transition-colors mb-4">
+                    🚀 Kirim Jawaban
+                </button>
+
+                <!-- Feedback Hasil -->
+                <div id="pesanHasil" class="hidden mb-6 p-4 rounded-xl border-2 text-center font-bold text-lg"></div>
+
+                <!-- Navigasi -->
+                <div class="flex gap-3">
+                    <button id="tombolSebelumnya" onclick="soalSebelumnya()" class="hidden flex-1 bg-gray-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-gray-600 shadow-md transition-colors">
+                        ⬅️ Sebelumnya
+                    </button>
+                    <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden flex-1 bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-green-600 shadow-md transition-colors">
+                        ➡️ Lanjut
+                    </button>
+                </div>
+
+                <!-- Tombol Selesai -->
+                <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700 shadow-lg">
+                    🎉 Selesai & Simpan Poin!
+                </button>
+
+                <!-- SKOR AKHIR -->
+                <div id="hasilSkor" class="hidden mt-6 p-6 rounded-2xl border-2 border-indigo-200 bg-indigo-50 text-center hasil-box">
+                    <div class="text-4xl mb-2">🎉</div>
+                    <h2 class="text-2xl font-extrabold text-gray-800 mb-2">Selesai!</h2>
+                    <div class="text-3xl font-extrabold text-indigo-600 mb-2">
+                        <span id="skorBenar">0</span> dari <span id="skorTotal">0</span>
+                        <span id="skorPersen" class="text-lg font-semibold text-gray-500">(0%)</span>
+                    </div>
+                    <div class="flex justify-center gap-6 text-sm text-gray-600 mb-4">
+                        <div>✅ Benar: <span id="benarCount" class="font-bold text-green-600">0</span></div>
+                        <div>❌ Salah: <span id="salahCount" class="font-bold text-red-600">0</span></div>
+                    </div>
+                    <div class="text-sm text-gray-500 mb-4">
+                        💡 Poin yang didapat: <span id="skorPoinAkhir" class="font-bold text-indigo-600">0</span>
+                    </div>
+                    <a href="smp.html" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-full font-bold hover:bg-indigo-700 transition shadow-md">
+                        🏠 Kembali ke Dashboard
+                    </a>
+                </div>
+
+            </div>
         </div>
     </div>
 
     <script>
-        const daftarSoal = [{
-            // Soal 1 (SMP)
-            reading: "My name is Rina. I have a cat named Mochi. Mochi is an orange cat. She likes to sleep on the sofa. Every morning, I give her milk. She is very cute and playful.",
-            clue: "Bacaan tentang kucing Rina.",
-            depan: "What is the name of Rina's cat?",
-            pilihan: ["Mochi", "Milo", "Mimi", "Momo"],
-            kunci: "Mochi",
-            penjelasan: {
-                "Mochi": "<b>Mochi:</b> BENAR! Di teks tertulis: 'I have a cat named Mochi.'",
-                "Milo": "<b>Milo:</b> Salah. Nama kucing Rina adalah Mochi, bukan Milo.",
-                "Mimi": "<b>Mimi:</b> Salah. Nama kucing Rina adalah Mochi, bukan Mimi.",
-                "Momo": "<b>Momo:</b> Salah. Nama kucing Rina adalah Mochi, bukan Momo."
-            }
-        }, {
-            // Soal 2
-            reading: "My name is Rina. I have a cat named Mochi. Mochi is an orange cat. She likes to sleep on the sofa. Every morning, I give her milk. She is very cute and playful.",
-            clue: "Bacaan tentang kucing Rina.",
-            depan: "What color is Mochi?",
-            pilihan: ["Black", "White", "Orange", "Gray"],
-            kunci: "Orange",
-            penjelasan: {
-                "Black": "<b>Black:</b> Salah. Mochi berwarna oranye, bukan hitam.",
-                "White": "<b>White:</b> Salah. Mochi berwarna oranye, bukan putih.",
-                "Orange": "<b>Orange:</b> BENAR! Di teks: 'Mochi is an orange cat.'",
-                "Gray": "<b>Gray:</b> Salah. Mochi berwarna oranye, bukan abu-abu."
-            }
-        }, {
-            // Soal 3
-            reading: "My name is Rina. I have a cat named Mochi. Mochi is an orange cat. She likes to sleep on the sofa. Every morning, I give her milk. She is very cute and playful.",
-            clue: "Bacaan tentang kucing Rina.",
-            depan: "Where does Mochi like to sleep?",
-            pilihan: ["On the bed", "On the sofa", "On the floor", "On the chair"],
-            kunci: "On the sofa",
-            penjelasan: {
-                "On the bed": "<b>On the bed:</b> Salah. Mochi suka tidur di sofa, bukan di tempat tidur.",
-                "On the sofa": "<b>On the sofa:</b> BENAR! Di teks: 'She likes to sleep on the sofa.'",
-                "On the floor": "<b>On the floor:</b> Salah. Mochi suka tidur di sofa, bukan di lantai.",
-                "On the chair": "<b>On the chair:</b> Salah. Mochi suka tidur di sofa, bukan di kursi."
-            }
-        }, {
-            // Soal 4
-            reading: "My name is Rina. I have a cat named Mochi. Mochi is an orange cat. She likes to sleep on the sofa. Every morning, I give her milk. She is very cute and playful.",
-            clue: "Bacaan tentang kucing Rina.",
-            depan: "What does Rina give Mochi every morning?",
-            pilihan: ["Fish", "Milk", "Meat", "Bread"],
-            kunci: "Milk",
-            penjelasan: {
-                "Fish": "<b>Fish:</b> Salah. Rina memberi Mochi susu, bukan ikan.",
-                "Milk": "<b>Milk:</b> BENAR! Di teks: 'Every morning, I give her milk.'",
-                "Meat": "<b>Meat:</b> Salah. Rina memberi Mochi susu, bukan daging.",
-                "Bread": "<b>Bread:</b> Salah. Rina memberi Mochi susu, bukan roti."
-            }
-        }, {
-            // Soal 5
-            reading: "My name is Rina. I have a cat named Mochi. Mochi is an orange cat. She likes to sleep on the sofa. Every morning, I give her milk. She is very cute and playful.",
-            clue: "Bacaan tentang kucing Rina.",
-            depan: "How does Rina describe Mochi?",
-            pilihan: ["Cute and playful", "Big and strong", "Fast and smart", "Quiet and shy"],
-            kunci: "Cute and playful",
-            penjelasan: {
-                "Cute and playful": "<b>Cute and playful:</b> BENAR! Di teks: 'She is very cute and playful.'",
-                "Big and strong": "<b>Big and strong:</b> Salah. Mochi digambarkan imut dan suka bermain.",
-                "Fast and smart": "<b>Fast and smart:</b> Salah. Mochi digambarkan imut dan suka bermain.",
-                "Quiet and shy": "<b>Quiet and shy:</b> Salah. Mochi digambarkan imut dan suka bermain."
-            }
-        }, {
-            // Soal 6
-            reading: "My name is Rina. I have a cat named Mochi. Mochi is an orange cat. She likes to sleep on the sofa. Every morning, I give her milk. She is very cute and playful.",
-            clue: "Bacaan tentang kucing Rina.",
-            depan: "What is the main idea of the text?",
-            pilihan: ["Rina likes milk.", "Mochi is a cute cat.", "Rina has a cat named Mochi.", "Sofas are comfortable."],
-            kunci: "Rina has a cat named Mochi.",
-            penjelasan: {
-                "Rina likes milk.": "<b>Rina likes milk:</b> Salah. Ini bukan ide utama.",
-                "Mochi is a cute cat.": "<b>Mochi is a cute cat:</b> Kurang tepat. Ini hanya detail.",
-                "Rina has a cat named Mochi.": "<b>Rina has a cat named Mochi.:</b> BENAR! Ini adalah ide utama dari teks.",
-                "Sofas are comfortable.": "<b>Sofas are comfortable:</b> Salah. Ini tidak relevan."
-            }
-        }, {
-            // Soal 7
-            reading: "My name is Rina. I have a cat named Mochi. Mochi is an orange cat. She likes to sleep on the sofa. Every morning, I give her milk. She is very cute and playful.",
-            clue: "Bacaan tentang kucing Rina.",
-            depan: "What does 'playful' mean?",
-            pilihan: ["Lazy", "Active and fun", "Quiet", "Sleepy"],
-            kunci: "Active and fun",
-            penjelasan: {
-                "Lazy": "<b>Lazy:</b> Salah. Playful berarti aktif dan suka bermain.",
-                "Active and fun": "<b>Active and fun:</b> BENAR! Playful berarti aktif dan menyenangkan.",
-                "Quiet": "<b>Quiet:</b> Salah. Playful berarti aktif dan suka bermain.",
-                "Sleepy": "<b>Sleepy:</b> Salah. Playful berarti aktif dan suka bermain."
-            }
-        }, {
-            // Soal 8
-            reading: "My name is Rina. I have a cat named Mochi. Mochi is an orange cat. She likes to sleep on the sofa. Every morning, I give her milk. She is very cute and playful.",
-            clue: "Bacaan tentang kucing Rina.",
-            depan: "Who is telling the story?",
-            pilihan: ["Mochi", "Rina's friend", "Rina", "Rina's mother"],
-            kunci: "Rina",
-            penjelasan: {
-                "Mochi": "<b>Mochi:</b> Salah. Kucing tidak bercerita.",
-                "Rina's friend": "<b>Rina's friend:</b> Salah. Tokoh 'Aku' adalah Rina.",
-                "Rina": "<b>Rina:</b> BENAR! Teks menggunakan sudut pandang orang pertama (my).",
-                "Rina's mother": "<b>Rina's mother:</b> Salah. Tokoh 'Aku' adalah Rina."
-            }
-        }, {
-            // Soal 9
-            reading: "My name is Rina. I have a cat named Mochi. Mochi is an orange cat. She likes to sleep on the sofa. Every morning, I give her milk. She is very cute and playful.",
-            clue: "Bacaan tentang kucing Rina.",
-            depan: "What does Rina do every morning?",
-            pilihan: ["She plays with Mochi.", "She gives Mochi milk.", "She sleeps on the sofa.", "She takes Mochi for a walk."],
-            kunci: "She gives Mochi milk.",
-            penjelasan: {
-                "She plays with Mochi.": "<b>She plays with Mochi:</b> Salah. Rina memberi susu setiap pagi.",
-                "She gives Mochi milk.": "<b>She gives Mochi milk.:</b> BENAR! Di teks: 'Every morning, I give her milk.'",
-                "She sleeps on the sofa.": "<b>She sleeps on the sofa:</b> Salah. Mochi yang tidur di sofa.",
-                "She takes Mochi for a walk.": "<b>She takes Mochi for a walk:</b> Salah. Rina tidak mengajak jalan."
-            }
-        }, {
-            // Soal 10
-            reading: "My name is Rina. I have a cat named Mochi. Mochi is an orange cat. She likes to sleep on the sofa. Every morning, I give her milk. She is very cute and playful.",
-            clue: "Bacaan tentang kucing Rina.",
-            depan: "What is the best title for this text?",
-            pilihan: ["My Cat Mochi", "My Morning Routine", "Rina's Family", "Cute Animals"],
-            kunci: "My Cat Mochi",
-            penjelasan: {
-                "My Cat Mochi": "<b>My Cat Mochi:</b> BENAR! Teks menceritakan tentang kucing Rina.",
-                "My Morning Routine": "<b>My Morning Routine:</b> Kurang tepat. Hanya sebagian kecil.",
-                "Rina's Family": "<b>Rina's Family:</b> Salah. Tidak membahas keluarga.",
-                "Cute Animals": "<b>Cute Animals:</b> Terlalu umum, spesifik tentang Mochi."
-            }
-        }];
+        // ================================================================
+        //  20 SOAL READING SMP (10 Teks × 2 Soal)
+        // ================================================================
+        const daftarSoal = [
+            // TEKS 1: Perkenalan
+            { bacaan: "My name is Rina. I am 13 years old. I live in Jakarta. I have a cat named Mimi.", soal: "How old is Rina?", pilihan: ["10", "11", "12", "13"], kunci: 3 },
+            { bacaan: "My name is Rina. I am 13 years old. I live in Jakarta. I have a cat named Mimi.", soal: "Where does Rina live?", pilihan: ["Bandung", "Jakarta", "Surabaya", "Medan"], kunci: 1 },
+            // TEKS 2: Hobi
+            { bacaan: "Rudi likes to play football. He plays every Sunday. His favorite team is Barcelona.", soal: "What does Rudi like to play?", pilihan: ["Basketball", "Volleyball", "Football", "Tennis"], kunci: 2 },
+            { bacaan: "Rudi likes to play football. He plays every Sunday. His favorite team is Barcelona.", soal: "When does Rudi play football?", pilihan: ["Monday", "Saturday", "Sunday", "Friday"], kunci: 2 },
+            // TEKS 3: Tempat
+            { bacaan: "The library is quiet. Many students read books there. They sit on the chairs and study.", soal: "Where are the students?", pilihan: ["In the classroom", "In the library", "In the park", "In the canteen"], kunci: 1 },
+            { bacaan: "The library is quiet. Many students read books there. They sit on the chairs and study.", soal: "What do the students do in the library?", pilihan: ["Play games", "Read books and study", "Sleep", "Eat"], kunci: 1 },
+            // TEKS 4: Hewan Peliharaan
+            { bacaan: "I have a dog named Brownie. He is brown and very friendly. He likes to play in the park.", soal: "What is the dog's name?", pilihan: ["Milo", "Brownie", "Coco", "Luna"], kunci: 1 },
+            { bacaan: "I have a dog named Brownie. He is brown and very friendly. He likes to play in the park.", soal: "Where does Brownie like to play?", pilihan: ["In the house", "In the park", "In the school", "In the garden"], kunci: 1 },
+            // TEKS 5: Sekolah
+            { bacaan: "SMP Merdeka is a great school. It has a big library and a large field. The teachers are kind and helpful.", soal: "What does SMP Merdeka have?", pilihan: ["A small library", "A big library and a large field", "A swimming pool", "A cinema"], kunci: 1 },
+            { bacaan: "SMP Merdeka is a great school. It has a big library and a large field. The teachers are kind and helpful.", soal: "How are the teachers?", pilihan: ["Strict", "Kind and helpful", "Angry", "Lazy"], kunci: 1 },
+            // TEKS 6: Makanan
+            { bacaan: "My favorite food is fried rice. It is delicious and filling. I usually eat it for lunch.", soal: "What is the writer's favorite food?", pilihan: ["Noodles", "Fried rice", "Soup", "Sandwich"], kunci: 1 },
+            { bacaan: "My favorite food is fried rice. It is delicious and filling. I usually eat it for lunch.", soal: "When does the writer usually eat fried rice?", pilihan: ["Breakfast", "Lunch", "Dinner", "Snack"], kunci: 1 },
+            // TEKS 7: Keluarga
+            { bacaan: "My family has four people: father, mother, my sister, and me. We live in a small house near the river.", soal: "How many people are in the family?", pilihan: ["Three", "Four", "Five", "Six"], kunci: 1 },
+            { bacaan: "My family has four people: father, mother, my sister, and me. We live in a small house near the river.", soal: "Where does the family live?", pilihan: ["Near the river", "Near the mountain", "In the city", "In the village"], kunci: 0 },
+            // TEKS 8: Cuaca
+            { bacaan: "Today is very hot. The sun is shining brightly. Many people go to the beach to swim.", soal: "How is the weather today?", pilihan: ["Cold", "Hot", "Rainy", "Windy"], kunci: 1 },
+            { bacaan: "Today is very hot. The sun is shining brightly. Many people go to the beach to swim.", soal: "Where do many people go?", pilihan: ["To the park", "To the beach", "To the mountain", "To the library"], kunci: 1 },
+            // TEKS 9: Kegiatan Sehari-hari
+            { bacaan: "I wake up at 5 AM every day. Then I take a shower and have breakfast. I go to school at 6:30.", soal: "What time does the writer wake up?", pilihan: ["4 AM", "5 AM", "6 AM", "6:30 AM"], kunci: 1 },
+            { bacaan: "I wake up at 5 AM every day. Then I take a shower and have breakfast. I go to school at 6:30.", soal: "What does the writer do after waking up?", pilihan: ["Go to school", "Take a shower and have breakfast", "Watch TV", "Read a book"], kunci: 1 },
+            // TEKS 10: Teman
+            { bacaan: "Doni is my best friend. He is very funny and kind. We often play football together after school.", soal: "Who is Doni?", pilihan: ["The writer's brother", "The writer's best friend", "The writer's teacher", "The writer's neighbor"], kunci: 1 },
+            { bacaan: "Doni is my best friend. He is very funny and kind. We often play football together after school.", soal: "What do they often do together?", pilihan: ["Study", "Play football", "Watch movies", "Go to the library"], kunci: 1 }
+        ];
 
+        // ================================================================
+        //  STATE & LOGIC
+        // ================================================================
         let indeksSoalAktif = 0;
         let poinSesi = 0;
         let pilihanDipilih = null;
@@ -223,20 +260,21 @@
 
         function muatSoal() {
             let soal = daftarSoal[indeksSoalAktif];
-            document.getElementById("labelNomorSoal").innerHTML = "Soal " + (indeksSoalAktif + 1) + " dari 10";
-            document.getElementById("kotakMateri").innerHTML = soal.reading + "<br><br><span class='text-rose-500 font-semibold'>💡 Petunjuk: " + soal.clue + "</span>";
-            document.getElementById("teksSoal").innerHTML = soal.depan;
+            document.getElementById("labelNomorSoal").innerHTML = "Soal " + (indeksSoalAktif + 1) + " dari " + daftarSoal.length;
+            document.getElementById("teksBacaan").innerHTML = soal.bacaan;
+            document.getElementById("teksSoal").innerHTML = soal.soal;
 
             let areaPilihan = document.getElementById("areaPilihan");
             areaPilihan.innerHTML = "";
             pilihanDipilih = null;
 
-            soal.pilihan.forEach(function(opsi) {
+            soal.pilihan.forEach(function(opsi, index) {
                 let tombol = document.createElement("button");
-                tombol.innerHTML = opsi;
-                tombol.id = "opsi-" + opsi;
+                tombol.innerHTML = String.fromCharCode(65 + index) + ". " + opsi;
+                tombol.id = "opsi-" + index;
                 tombol.className = "option-btn";
-                tombol.onclick = function() { pilihOpsi(opsi); };
+                tombol.dataset.index = index;
+                tombol.onclick = function() { pilihOpsi(index); };
                 areaPilihan.appendChild(tombol);
             });
 
@@ -253,51 +291,56 @@
                 tampilkanHasilDanBedah(true, true);
             } else {
                 document.getElementById("pesanHasil").classList.add("hidden");
-                document.getElementById("kotakPenjelasanSemua").classList.add("hidden");
                 document.getElementById("tombolLanjut").classList.add("hidden");
                 document.getElementById("tombolKirim").classList.remove("hidden");
                 document.getElementById("tombolSelesai").classList.add("hidden");
+                document.querySelectorAll(".option-btn").forEach(b => {
+                    b.classList.remove("selected", "correct", "wrong", "disabled");
+                });
             }
         }
 
-        function pilihOpsi(opsi) {
+        function pilihOpsi(index) {
             let riwayat = statusRiwayat[indeksSoalAktif];
             if (riwayat && riwayat.sudahBenar) return;
-            pilihanDipilih = opsi;
-            tandaiTombolTerpilih(opsi);
+            pilihanDipilih = index;
+            tandaiTombolTerpilih(index);
         }
 
-        function tandaiTombolTerpilih(opsiTerpilih) {
-            let soal = daftarSoal[indeksSoalAktif];
-            soal.pilihan.forEach(function(o) {
-                let btn = document.getElementById("opsi-" + o);
-                if (btn) {
-                    if (o === opsiTerpilih) {
-                        btn.className = "option-btn bg-rose-500 border-2 border-rose-600 text-white font-bold";
-                    } else {
-                        btn.className = "option-btn";
-                    }
-                }
+        function tandaiTombolTerpilih(index) {
+            document.querySelectorAll(".option-btn").forEach((btn, i) => {
+                btn.classList.remove("selected");
+                if (i === index) btn.classList.add("selected");
             });
         }
 
         function kirimJawaban() {
-            if (!pilihanDipilih) {
-                alert("Pilih salah satu opsi jawaban terlebih dahulu ya mase!");
+            if (pilihanDipilih === null) {
+                alert("Kak, pilih dulu jawabannya ya!");
                 return;
             }
+
             let soalAktif = daftarSoal[indeksSoalAktif];
             let isBenar = (pilihanDipilih === soalAktif.kunci);
+
             if (isBenar) {
                 if (!statusRiwayat[indeksSoalAktif] || !statusRiwayat[indeksSoalAktif].sudahBenar) {
                     poinSesi += 10;
                     document.getElementById("poinSesiTampil").innerHTML = poinSesi;
                 }
                 statusRiwayat[indeksSoalAktif] = { sudahBenar: true, pilihan: pilihanDipilih };
-                tampilkanHasilDanBedah(true, false);
             } else {
                 statusRiwayat[indeksSoalAktif] = { sudahBenar: false, pilihan: pilihanDipilih };
-                tampilkanHasilDanBedah(false, false);
+            }
+
+            tampilkanHasilDanBedah(isBenar, false);
+
+            // LANGSUNG MUNCULKAN TOMBOL LANJUT (meskipun salah)
+            document.getElementById("tombolKirim").classList.add("hidden");
+            if (indeksSoalAktif < daftarSoal.length - 1) {
+                document.getElementById("tombolLanjut").classList.remove("hidden");
+            } else {
+                document.getElementById("tombolSelesai").classList.remove("hidden");
             }
         }
 
@@ -305,34 +348,25 @@
             let soalAktif = daftarSoal[indeksSoalAktif];
             let pesan = document.getElementById("pesanHasil");
             pesan.classList.remove("hidden");
-            let kotakPenjelasan = document.getElementById("kotakPenjelasanSemua");
-            let isiPenjelasan = document.getElementById("isiPenjelasanSemua");
-            kotakPenjelasan.classList.remove("hidden");
-            let htmlSemua = "";
-            for (let key in soalAktif.penjelasan) {
-                let statusWarna = "text-gray-600 bg-gray-50 p-2 rounded";
-                if (isBenar && key === soalAktif.kunci) {
-                    statusWarna = "text-green-700 font-bold bg-green-50 p-2 rounded border border-green-200";
+
+            document.querySelectorAll(".option-btn").forEach((btn, i) => {
+                btn.classList.add("disabled");
+                if (i === soalAktif.kunci) {
+                    btn.classList.add("correct");
+                } else if (i === pilihanDipilih && !isBenar) {
+                    btn.classList.add("wrong");
                 }
-                htmlSemua += '<div class="' + statusWarna + '">• ' + soalAktif.penjelasan[key] + '</div>';
-            }
-            isiPenjelasan.innerHTML = htmlSemua;
+            });
+
             if (isBenar) {
                 pesan.innerHTML = dariReview ?
                     '📚 <b>Mode Review:</b> Soal ini sudah kamu jawab dengan benar sebelumnya.' :
-                    '🎉 <b>Tepat sekali! Pilihanmu benar.</b>';
+                    '🎉 <b>Tepat sekali!</b> (+10 Poin)';
                 pesan.className = "mb-4 p-4 rounded-xl border-2 bg-green-50 text-green-800 border-green-200 text-base";
-                document.getElementById("tombolKirim").classList.add("hidden");
-                if (indeksSoalAktif < daftarSoal.length - 1) {
-                    document.getElementById("tombolLanjut").classList.remove("hidden");
-                } else {
-                    document.getElementById("tombolSelesai").classList.remove("hidden");
-                }
             } else {
-                pesan.innerHTML = '⚠️ <b>Kurang tepat.</b> Jawabannya belum benar, yuk cek fungsi masing-masing opsi di bawah!';
+                let jawabanBenar = String.fromCharCode(65 + soalAktif.kunci) + ". " + soalAktif.pilihan[soalAktif.kunci];
+                pesan.innerHTML = '⚠️ <b>Kurang tepat.</b> Jawaban yang benar: <span class="text-green-600 font-bold">' + jawabanBenar + '</span>';
                 pesan.className = "mb-4 p-4 rounded-xl border-2 bg-red-50 text-red-800 border-red-200 text-base";
-                document.getElementById("tombolLanjut").classList.add("hidden");
-                document.getElementById("tombolSelesai").classList.add("hidden");
             }
         }
 
@@ -349,11 +383,37 @@
         }
 
         function simpanPoinDanSelesai() {
+            // ===== HITUNG SKOR =====
+            let totalSoal = daftarSoal.length;
+            let benar = 0;
+            for (let i = 0; i < totalSoal; i++) {
+                if (statusRiwayat[i] && statusRiwayat[i].sudahBenar) {
+                    benar++;
+                }
+            }
+            let salah = totalSoal - benar;
+
+            // ===== TAMPILKAN SKOR =====
+            document.getElementById("hasilSkor").classList.remove("hidden");
+            document.getElementById("skorBenar").innerHTML = benar;
+            document.getElementById("skorTotal").innerHTML = totalSoal;
+            document.getElementById("benarCount").innerHTML = benar;
+            document.getElementById("salahCount").innerHTML = salah;
+            document.getElementById("skorPoinAkhir").innerHTML = poinSesi;
+            let persen = Math.round((benar / totalSoal) * 100);
+            document.getElementById("skorPersen").innerHTML = "(" + persen + "%)";
+
+            // ===== SEMBUNYIKAN TOMBOL SELESAI =====
+            document.getElementById("tombolSelesai").classList.add("hidden");
+
+            // ===== SIMPAN POIN =====
             let poinTotalLama = parseInt(localStorage.getItem('poinMurid')) || 0;
             localStorage.setItem('poinMurid', poinTotalLama + poinSesi);
-            window.location.href = "smp.html";
         }
 
+        // ================================================================
+        //  INISIALISASI
+        // ================================================================
         muatSoal();
     </script>
 </body>

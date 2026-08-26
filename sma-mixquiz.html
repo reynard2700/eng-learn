@@ -53,21 +53,22 @@
             background: #ffedd5;
         }
         @media (max-width: 640px) {
+            .option-btn {
+                font-size: 0.85rem !important;
+                padding: 12px 10px !important;
+                min-height: 46px !important;
+            }
             .bg-white.rounded-3xl {
                 padding: 16px !important;
             }
             #teksSoal {
                 font-size: 0.95rem !important;
             }
-            .option-btn {
-                font-size: 0.85rem !important;
-                padding: 12px 10px !important;
-                min-height: 46px !important;
-            }
             .max-w-3xl.mx-auto.mb-6.flex.justify-between {
                 flex-wrap: wrap !important;
                 gap: 12px !important;
             }
+            #tombolKirim,
             #tombolLanjut,
             #tombolSelesai {
                 padding: 16px !important;
@@ -81,6 +82,16 @@
         }
         button:active {
             transform: scale(0.96);
+        }
+        .text-bacaan {
+            background: #f8fafc;
+            border-left: 4px solid #8b5cf6;
+            padding: 14px 18px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            max-height: 180px;
+            overflow-y: auto;
         }
         .badge-tipe {
             display: inline-block;
@@ -103,16 +114,6 @@
             background: #8b5cf6;
             color: white;
         }
-        .text-bacaan {
-            background: #f8fafc;
-            border-left: 4px solid #8b5cf6;
-            padding: 14px 18px;
-            border-radius: 12px;
-            font-size: 0.9rem;
-            line-height: 1.8;
-            max-height: 200px;
-            overflow-y: auto;
-        }
         .btn-back {
             background: white;
             border-radius: 12px;
@@ -125,6 +126,19 @@
         .btn-back:hover {
             background: #fffbeb;
         }
+        .hasil-box {
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
     </style>
 </head>
 <body>
@@ -133,7 +147,7 @@
 
         <!-- TOP BAR -->
         <div class="mb-6 flex flex-wrap justify-between items-center gap-3">
-            <a href="sma.html" onclick="return confirm('Yakin mau kembali? Poin sesi ini akan hangus lho!')" class="btn-back inline-flex items-center gap-1">
+            <a href="sma.html" onclick="return confirm('Kak, yakin mau kembali? Poin sesi ini akan hangus lho!')" class="btn-back inline-flex items-center gap-1">
                 ⬅️ Batal & Kembali
             </a>
             <div class="bg-orange-500 text-white font-bold px-6 py-2 rounded-xl shadow-md flex items-center gap-2 text-lg">
@@ -153,7 +167,8 @@
                 </span>
             </div>
 
-            <div id="areaSoal">
+            <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100">
+
                 <!-- Tipe Soal -->
                 <div id="tipeSoal" class="mb-3">
                     <span class="badge-tipe badge-vocab">Vocabulary</span>
@@ -171,34 +186,58 @@
 
                 <!-- Opsi Jawaban -->
                 <div id="areaPilihan" class="grid grid-cols-1 gap-3 mb-6"></div>
-            </div>
 
-            <button id="tombolKirim" onclick="kirimJawaban()" class="w-full bg-orange-500 text-white px-6 py-3 rounded-xl font-bold text-lg hover:bg-orange-600 shadow-md transition-colors mb-4">
-                🚀 Kirim Jawaban
-            </button>
-
-            <div id="pesanHasil" class="hidden mb-6 p-4 rounded-xl border-2 text-center font-bold text-lg"></div>
-
-            <div class="flex gap-3">
-                <button id="tombolSebelumnya" onclick="soalSebelumnya()" class="hidden flex-1 bg-gray-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-gray-600 shadow-md transition-colors">
-                    ⬅️ Sebelumnya
+                <!-- Tombol Kirim -->
+                <button id="tombolKirim" onclick="kirimJawaban()" class="w-full bg-orange-500 text-white px-6 py-3 rounded-xl font-bold text-lg hover:bg-orange-600 shadow-md transition-colors mb-4">
+                    🚀 Kirim Jawaban
                 </button>
-                <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden flex-1 bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-green-600 shadow-md transition-colors">
-                    ➡️ Lanjut
+
+                <!-- Feedback Hasil -->
+                <div id="pesanHasil" class="hidden mb-6 p-4 rounded-xl border-2 text-center font-bold text-lg"></div>
+
+                <!-- Navigasi -->
+                <div class="flex gap-3">
+                    <button id="tombolSebelumnya" onclick="soalSebelumnya()" class="hidden flex-1 bg-gray-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-gray-600 shadow-md transition-colors">
+                        ⬅️ Sebelumnya
+                    </button>
+                    <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden flex-1 bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-green-600 shadow-md transition-colors">
+                        ➡️ Lanjut
+                    </button>
+                </div>
+
+                <!-- Tombol Selesai -->
+                <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700 shadow-lg">
+                    🎉 Selesai & Simpan Poin!
                 </button>
+
+                <!-- SKOR AKHIR -->
+                <div id="hasilSkor" class="hidden mt-6 p-6 rounded-2xl border-2 border-indigo-200 bg-indigo-50 text-center hasil-box">
+                    <div class="text-4xl mb-2">🎉</div>
+                    <h2 class="text-2xl font-extrabold text-gray-800 mb-2">Selesai!</h2>
+                    <div class="text-3xl font-extrabold text-indigo-600 mb-2">
+                        <span id="skorBenar">0</span> dari <span id="skorTotal">0</span>
+                        <span id="skorPersen" class="text-lg font-semibold text-gray-500">(0%)</span>
+                    </div>
+                    <div class="flex justify-center gap-6 text-sm text-gray-600 mb-4">
+                        <div>✅ Benar: <span id="benarCount" class="font-bold text-green-600">0</span></div>
+                        <div>❌ Salah: <span id="salahCount" class="font-bold text-red-600">0</span></div>
+                    </div>
+                    <div class="text-sm text-gray-500 mb-4">
+                        💡 Poin yang didapat: <span id="skorPoinAkhir" class="font-bold text-indigo-600">0</span>
+                    </div>
+                    <a href="sma.html" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-full font-bold hover:bg-indigo-700 transition shadow-md">
+                        🏠 Kembali ke Dashboard
+                    </a>
+                </div>
+
             </div>
-
-            <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700 shadow-lg">
-                🎉 Selesai & Simpan Poin!
-            </button>
-
         </div>
     </div>
 
     <script>
         // ================================================================
         //  20 SOAL MIX QUIZ SMA
-        //  Vocabulary, Grammar, Reading Comprehension
+        //  5 Vocabulary, 10 Grammar, 5 Reading
         // ================================================================
         const daftarSoal = [{
             tipe: "Vocabulary",
@@ -293,7 +332,7 @@
             pilihan: [
                 "Animals that eat plants",
                 "Animals that eat meat",
-                "Animals that eat both",
+                "Animals that eat both plants and meat",
                 "Animals that eat insects"
             ],
             kunci: 1
@@ -342,8 +381,7 @@
 
         function muatSoal() {
             let soal = daftarSoal[indeksSoalAktif];
-            document.getElementById("labelNomorSoal").innerHTML = "Soal " + (indeksSoalAktif + 1) + " dari " + daftarSoal
-                .length;
+            document.getElementById("labelNomorSoal").innerHTML = "Soal " + (indeksSoalAktif + 1) + " dari " + daftarSoal.length;
 
             // Tipe Soal
             let tipeEl = document.getElementById("tipeSoal");
@@ -421,21 +459,31 @@
 
         function kirimJawaban() {
             if (pilihanDipilih === null) {
-                alert("Pilih salah satu opsi jawaban terlebih dahulu ya mase!");
+                alert("Kak, pilih dulu jawabannya ya!");
                 return;
             }
+
             let soalAktif = daftarSoal[indeksSoalAktif];
             let isBenar = (pilihanDipilih === soalAktif.kunci);
+
             if (isBenar) {
                 if (!statusRiwayat[indeksSoalAktif] || !statusRiwayat[indeksSoalAktif].sudahBenar) {
                     poinSesi += 15;
                     document.getElementById("poinSesiTampil").innerHTML = poinSesi;
                 }
                 statusRiwayat[indeksSoalAktif] = { sudahBenar: true, pilihan: pilihanDipilih };
-                tampilkanHasilDanBedah(true, false);
             } else {
                 statusRiwayat[indeksSoalAktif] = { sudahBenar: false, pilihan: pilihanDipilih };
-                tampilkanHasilDanBedah(false, false);
+            }
+
+            tampilkanHasilDanBedah(isBenar, false);
+
+            // LANGSUNG MUNCULKAN TOMBOL LANJUT (meskipun salah)
+            document.getElementById("tombolKirim").classList.add("hidden");
+            if (indeksSoalAktif < daftarSoal.length - 1) {
+                document.getElementById("tombolLanjut").classList.remove("hidden");
+            } else {
+                document.getElementById("tombolSelesai").classList.remove("hidden");
             }
         }
 
@@ -446,8 +494,11 @@
 
             document.querySelectorAll(".option-btn").forEach((btn, i) => {
                 btn.classList.add("disabled");
-                if (i === soalAktif.kunci) btn.classList.add("correct");
-                else if (i === pilihanDipilih && !isBenar) btn.classList.add("wrong");
+                if (i === soalAktif.kunci) {
+                    btn.classList.add("correct");
+                } else if (i === pilihanDipilih && !isBenar) {
+                    btn.classList.add("wrong");
+                }
             });
 
             if (isBenar) {
@@ -455,19 +506,10 @@
                     '📚 <b>Mode Review:</b> Soal ini sudah kamu jawab dengan benar sebelumnya.' :
                     '🎉 <b>Tepat sekali! Pilihanmu benar.</b> (+15 Poin)';
                 pesan.className = "mb-4 p-4 rounded-xl border-2 bg-green-50 text-green-800 border-green-200 text-base";
-                document.getElementById("tombolKirim").classList.add("hidden");
-                if (indeksSoalAktif < daftarSoal.length - 1) {
-                    document.getElementById("tombolLanjut").classList.remove("hidden");
-                } else {
-                    document.getElementById("tombolSelesai").classList.remove("hidden");
-                }
             } else {
                 let jawabanBenar = String.fromCharCode(65 + soalAktif.kunci) + ". " + soalAktif.pilihan[soalAktif.kunci];
-                pesan.innerHTML = '⚠️ <b>Kurang tepat.</b> Jawaban yang benar: <span class="text-green-600 font-bold">' +
-                    jawabanBenar + '</span>';
+                pesan.innerHTML = '⚠️ <b>Kurang tepat.</b> Jawaban yang benar: <span class="text-green-600 font-bold">' + jawabanBenar + '</span>';
                 pesan.className = "mb-4 p-4 rounded-xl border-2 bg-red-50 text-red-800 border-red-200 text-base";
-                document.getElementById("tombolLanjut").classList.add("hidden");
-                document.getElementById("tombolSelesai").classList.add("hidden");
             }
         }
 
@@ -484,11 +526,37 @@
         }
 
         function simpanPoinDanSelesai() {
+            // ===== HITUNG SKOR =====
+            let totalSoal = daftarSoal.length;
+            let benar = 0;
+            for (let i = 0; i < totalSoal; i++) {
+                if (statusRiwayat[i] && statusRiwayat[i].sudahBenar) {
+                    benar++;
+                }
+            }
+            let salah = totalSoal - benar;
+
+            // ===== TAMPILKAN SKOR =====
+            document.getElementById("hasilSkor").classList.remove("hidden");
+            document.getElementById("skorBenar").innerHTML = benar;
+            document.getElementById("skorTotal").innerHTML = totalSoal;
+            document.getElementById("benarCount").innerHTML = benar;
+            document.getElementById("salahCount").innerHTML = salah;
+            document.getElementById("skorPoinAkhir").innerHTML = poinSesi;
+            let persen = Math.round((benar / totalSoal) * 100);
+            document.getElementById("skorPersen").innerHTML = "(" + persen + "%)";
+
+            // ===== SEMBUNYIKAN TOMBOL SELESAI =====
+            document.getElementById("tombolSelesai").classList.add("hidden");
+
+            // ===== SIMPAN POIN =====
             let poinTotalLama = parseInt(localStorage.getItem('poinMurid')) || 0;
             localStorage.setItem('poinMurid', poinTotalLama + poinSesi);
-            window.location.href = "sma.html";
         }
 
+        // ================================================================
+        //  INISIALISASI
+        // ================================================================
         muatSoal();
     </script>
 </body>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Listening SMP (10 Soal) | ENG-LEARN</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
         * {
             font-family: 'Poppins', sans-serif;
@@ -20,146 +20,269 @@
             margin-left: auto;
             margin-right: auto;
         }
+        .option-btn {
+            transition: all 0.2s ease;
+            border: 2px solid #e5e7eb;
+            background: white;
+            padding: 14px 12px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            min-height: 50px;
+            cursor: pointer;
+            text-align: left;
+        }
+        .option-btn:hover {
+            border-color: #22c55e;
+            background: #f0fdf4;
+        }
+        .option-btn.correct {
+            border-color: #22c55e;
+            background: #dcfce7;
+        }
+        .option-btn.wrong {
+            border-color: #ef4444;
+            background: #fee2e2;
+        }
+        .option-btn.disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        .option-btn.selected {
+            border-color: #22c55e;
+            background: #dcfce7;
+        }
         @media (max-width: 640px) {
-            .max-w-3xl.mx-auto.mb-6.flex.justify-between {
-                flex-wrap: wrap !important;
-                gap: 12px !important;
+            .option-btn {
+                font-size: 0.85rem !important;
+                padding: 12px 10px !important;
+                min-height: 46px !important;
             }
             .bg-white.rounded-3xl {
                 padding: 16px !important;
             }
             #teksSoal {
-                font-size: 1rem !important;
+                font-size: 0.95rem !important;
             }
-            input[type="text"] {
-                font-size: 1rem !important;
-                min-height: 48px !important;
-                width: 100% !important;
-                max-width: 100% !important;
-                padding: 12px !important;
+            .max-w-3xl.mx-auto.mb-6.flex.justify-between {
+                flex-wrap: wrap !important;
+                gap: 12px !important;
             }
-            .bg-green-500.px-8.py-4 {
-                padding: 14px 20px !important;
-                font-size: 1rem !important;
-                min-height: 52px !important;
-            }
-            #tombolCek,
+            #tombolKirim,
             #tombolLanjut,
             #tombolSelesai {
                 padding: 16px !important;
                 font-size: 1rem !important;
                 min-height: 56px !important;
             }
+            .flex.gap-3 {
+                flex-direction: column !important;
+                gap: 10px !important;
+            }
         }
         button:active {
             transform: scale(0.96);
-            transition: transform 0.1s ease;
+        }
+        .btn-back {
+            background: white;
+            border-radius: 12px;
+            padding: 8px 16px;
+            font-weight: 600;
+            color: #4f46e5;
+            border: 2px solid #e0e7ff;
+            transition: all 0.2s;
+        }
+        .btn-back:hover {
+            background: #eef2ff;
+        }
+        .hasil-box {
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .btn-audio {
+            background: #22c55e;
+            transition: all 0.3s ease;
+        }
+        .btn-audio:hover {
+            background: #16a34a;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
         }
     </style>
 </head>
 <body>
 
-    <div class="max-w-3xl mx-auto mb-6 flex justify-between items-center">
-        <a href="smp.html" onclick="return confirm('Yakin mau kembali? Poin sesi ini akan hangus lho!')" class="inline-flex items-center text-red-500 hover:text-red-700 font-bold bg-white px-4 py-2 rounded-xl shadow-sm border border-red-100 transition-all">
-            ⬅️ Batal & Kembali
-        </a>
-        <div class="bg-blue-500 text-white font-bold px-6 py-2 rounded-xl shadow-md flex items-center gap-2 text-lg">
-            ⭐ Poin Sesi: <span id="poinSesiTampil">0</span>
-        </div>
-    </div>
+    <div class="max-w-3xl mx-auto">
 
-    <div class="max-w-3xl mx-auto bg-white rounded-3xl p-8 shadow-xl border-2 border-blue-50">
-        <div class="flex justify-between items-center mb-4 border-b-2 border-blue-100 pb-4">
-            <h1 class="text-2xl font-bold text-gray-800">🎧 Listening SMP (10 Soal)</h1>
-            <span id="labelNomorSoal" class="bg-blue-100 text-blue-700 font-bold px-4 py-1 rounded-full text-sm">Soal 1 dari 10</span>
+        <!-- TOP BAR -->
+        <div class="mb-6 flex flex-wrap justify-between items-center gap-3">
+            <a href="smp.html" onclick="return confirm('Kak, yakin mau kembali? Poin sesi ini akan hangus lho!')" class="btn-back inline-flex items-center gap-1">
+                ⬅️ Batal & Kembali
+            </a>
+            <div class="bg-blue-500 text-white font-bold px-6 py-2 rounded-xl shadow-md flex items-center gap-2 text-lg">
+                ⭐ Poin Sesi: <span id="poinSesiTampil">0</span>
+            </div>
         </div>
 
-        <!-- KOTAK MATERI DIHAPUS -->
+        <!-- KARTU LISTENING -->
+        <div class="bg-white rounded-3xl p-8 shadow-xl border-2 border-blue-100">
 
-        <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100 text-center">
-            <button onclick="putarAudio()" class="bg-green-500 text-white px-8 py-4 rounded-full font-bold text-xl hover:bg-green-600 transition-colors shadow-lg mb-6">
-                🔊 Putar Suara
-            </button>
+            <div class="flex justify-between items-center mb-4 border-b-2 border-blue-100 pb-4">
+                <h1 class="text-2xl font-extrabold text-gray-800 flex items-center gap-2">
+                    🎧 Listening <span class="text-blue-500">SMP</span>
+                </h1>
+                <span id="labelNomorSoal" class="bg-blue-100 text-blue-700 font-bold px-4 py-1 rounded-full text-sm">
+                    Soal 1 dari 10
+                </span>
+            </div>
 
-            <div id="teksSoal" class="text-xl font-medium mb-6 leading-relaxed"></div>
+            <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100 text-center">
 
-            <input type="text" id="jawabanListening" class="border-b-4 border-green-300 bg-white px-4 py-2 rounded-lg w-48 text-center text-xl font-bold mb-6 focus:outline-none focus:border-green-600 shadow-inner" placeholder="Ketik jawaban..." />
+                <!-- Tombol Audio -->
+                <button onclick="putarAudio()" class="btn-audio text-white px-8 py-4 rounded-full font-bold text-xl shadow-lg mb-6 inline-flex items-center gap-2">
+                    🔊 Putar Suara
+                </button>
 
-            <button id="tombolCek" onclick="cekJawaban()" class="block w-full bg-blue-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-600 mb-2">Cek Jawaban</button>
-            <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden block w-full bg-green-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-green-600">➡️ Lanjut Soal Berikutnya</button>
+                <!-- Soal -->
+                <div id="teksSoal" class="text-xl font-medium mb-6 leading-relaxed"></div>
 
-            <p id="pesanHasil" class="mt-4 text-lg font-bold hidden p-3 rounded-xl"></p>
-            <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700">🎉 Selesai & Simpan!</button>
+                <!-- Opsi Pilihan Ganda -->
+                <div id="areaPilihan" class="grid grid-cols-1 gap-3 mb-6 text-left"></div>
+
+                <!-- Tombol Kirim -->
+                <button id="tombolKirim" onclick="kirimJawaban()" class="w-full bg-blue-500 text-white px-6 py-3 rounded-xl font-bold text-lg hover:bg-blue-600 shadow-md transition-colors mb-4">
+                    🚀 Kirim Jawaban
+                </button>
+
+                <!-- Feedback Hasil -->
+                <div id="pesanHasil" class="hidden mb-6 p-4 rounded-xl border-2 text-center font-bold text-lg"></div>
+
+                <!-- Navigasi -->
+                <div class="flex gap-3">
+                    <button id="tombolSebelumnya" onclick="soalSebelumnya()" class="hidden flex-1 bg-gray-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-gray-600 shadow-md transition-colors">
+                        ⬅️ Sebelumnya
+                    </button>
+                    <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden flex-1 bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-green-600 shadow-md transition-colors">
+                        ➡️ Lanjut
+                    </button>
+                </div>
+
+                <!-- Tombol Selesai -->
+                <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700 shadow-lg">
+                    🎉 Selesai & Simpan Poin!
+                </button>
+
+                <!-- SKOR AKHIR -->
+                <div id="hasilSkor" class="hidden mt-6 p-6 rounded-2xl border-2 border-indigo-200 bg-indigo-50 text-center hasil-box">
+                    <div class="text-4xl mb-2">🎉</div>
+                    <h2 class="text-2xl font-extrabold text-gray-800 mb-2">Selesai!</h2>
+                    <div class="text-3xl font-extrabold text-indigo-600 mb-2">
+                        <span id="skorBenar">0</span> dari <span id="skorTotal">0</span>
+                        <span id="skorPersen" class="text-lg font-semibold text-gray-500">(0%)</span>
+                    </div>
+                    <div class="flex justify-center gap-6 text-sm text-gray-600 mb-4">
+                        <div>✅ Benar: <span id="benarCount" class="font-bold text-green-600">0</span></div>
+                        <div>❌ Salah: <span id="salahCount" class="font-bold text-red-600">0</span></div>
+                    </div>
+                    <div class="text-sm text-gray-500 mb-4">
+                        💡 Poin yang didapat: <span id="skorPoinAkhir" class="font-bold text-indigo-600">0</span>
+                    </div>
+                    <a href="smp.html" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-full font-bold hover:bg-indigo-700 transition shadow-md">
+                        🏠 Kembali ke Dashboard
+                    </a>
+                </div>
+
+            </div>
         </div>
     </div>
 
     <script>
-        const daftarSoal = [{
-            depan: "I usually",
-            belakang: "breakfast at 6.",
-            kunci: "eat",
-            clue: "Petunjuk: Kegiatan makan pagi."
-        }, {
-            depan: "I",
-            belakang: "to school by bike.",
-            kunci: "go",
-            clue: "Petunjuk: Pergi ke sekolah."
-        }, {
-            depan: "I",
-            belakang: "milk every morning.",
-            kunci: "drink",
-            clue: "Petunjuk: Meminum susu."
-        }, {
-            depan: "I like to",
-            belakang: "books at night.",
-            kunci: "read",
-            clue: "Petunjuk: Membaca buku."
-        }, {
-            depan: "I",
-            belakang: "football in the park.",
-            kunci: "play",
-            clue: "Petunjuk: Bermain bola."
-        }, {
-            depan: "We",
-            belakang: "English together.",
-            kunci: "study",
-            clue: "Petunjuk: Belajar bersama."
-        }, {
-            depan: "I",
-            belakang: "up at 5 AM.",
-            kunci: "wake",
-            clue: "Petunjuk: Bangun tidur."
-        }, {
-            depan: "I",
-            belakang: "at 9 PM.",
-            kunci: "sleep",
-            clue: "Petunjuk: Tidur malam."
-        }, {
-            depan: "I",
-            belakang: "my face every morning.",
-            kunci: "wash",
-            clue: "Petunjuk: Mencuci wajah."
-        }, {
-            depan: "I",
-            belakang: "my mother.",
-            kunci: "help",
-            clue: "Petunjuk: Membantu ibu."
-        }];
+        // ================================================================
+        //  10 SOAL LISTENING SMP
+        // ================================================================
+        const daftarSoal = [
+            { depan: "I usually", belakang: "breakfast at 6.", pilihan: ["eat", "drink", "cook", "make"], kunci: "eat", clue: "💡 Kegiatan makan pagi." },
+            { depan: "I", belakang: "to school by bike.", pilihan: ["go", "walk", "run", "drive"], kunci: "go", clue: "💡 Pergi ke sekolah." },
+            { depan: "I", belakang: "milk every morning.", pilihan: ["drink", "eat", "take", "have"], kunci: "drink", clue: "💡 Meminum susu." },
+            { depan: "I like to", belakang: "books at night.", pilihan: ["read", "watch", "see", "look"], kunci: "read", clue: "💡 Membaca buku." },
+            { depan: "I", belakang: "football in the park.", pilihan: ["play", "do", "make", "take"], kunci: "play", clue: "💡 Bermain bola." },
+            { depan: "We", belakang: "English together.", pilihan: ["study", "learn", "teach", "read"], kunci: "study", clue: "💡 Belajar bersama." },
+            { depan: "I", belakang: "up at 5 AM.", pilihan: ["wake", "get", "stand", "rise"], kunci: "wake", clue: "💡 Bangun tidur." },
+            { depan: "I", belakang: "at 9 PM.", pilihan: ["sleep", "rest", "lie", "nap"], kunci: "sleep", clue: "💡 Tidur malam." },
+            { depan: "I", belakang: "my face every morning.", pilihan: ["wash", "clean", "wipe", "brush"], kunci: "wash", clue: "💡 Mencuci wajah." },
+            { depan: "I", belakang: "my mother.", pilihan: ["help", "assist", "support", "aid"], kunci: "help", clue: "💡 Membantu ibu." }
+        ];
 
+        // ================================================================
+        //  STATE & LOGIC
+        // ================================================================
         let indeksSoalAktif = 0;
         let poinSesi = 0;
-        let sudahDijawab = false;
+        let pilihanDipilih = null;
+        let statusRiwayat = {};
 
         function muatSoal() {
             let soal = daftarSoal[indeksSoalAktif];
-            document.getElementById("labelNomorSoal").innerHTML = "Soal " + (indeksSoalAktif + 1) + " dari 10";
+            document.getElementById("labelNomorSoal").innerHTML = "Soal " + (indeksSoalAktif + 1) + " dari " + daftarSoal.length;
             document.getElementById("teksSoal").innerHTML = '"' + soal.depan + ' <span class="text-green-600 font-bold underline">[ ... ]</span> ' + soal.belakang + '"';
-            document.getElementById("jawabanListening").value = "";
-            document.getElementById("pesanHasil").classList.add("hidden");
-            document.getElementById("tombolLanjut").classList.add("hidden");
-            document.getElementById("tombolCek").classList.remove("hidden");
-            document.getElementById("tombolSelesai").classList.add("hidden");
-            sudahDijawab = false;
+
+            let areaPilihan = document.getElementById("areaPilihan");
+            areaPilihan.innerHTML = "";
+            pilihanDipilih = null;
+
+            soal.pilihan.forEach(function(opsi) {
+                let tombol = document.createElement("button");
+                tombol.innerHTML = opsi;
+                tombol.className = "option-btn";
+                tombol.onclick = function() { pilihOpsi(opsi); };
+                areaPilihan.appendChild(tombol);
+            });
+
+            if (indeksSoalAktif > 0) {
+                document.getElementById("tombolSebelumnya").classList.remove("hidden");
+            } else {
+                document.getElementById("tombolSebelumnya").classList.add("hidden");
+            }
+
+            let riwayat = statusRiwayat[indeksSoalAktif];
+            if (riwayat && riwayat.sudahBenar) {
+                pilihanDipilih = riwayat.pilihan;
+                tandaiTombolTerpilih(pilihanDipilih);
+                tampilkanHasil(true, true);
+            } else {
+                document.getElementById("pesanHasil").classList.add("hidden");
+                document.getElementById("tombolLanjut").classList.add("hidden");
+                document.getElementById("tombolKirim").classList.remove("hidden");
+                document.getElementById("tombolSelesai").classList.add("hidden");
+                document.querySelectorAll(".option-btn").forEach(b => {
+                    b.classList.remove("selected", "correct", "wrong", "disabled");
+                });
+            }
+        }
+
+        function pilihOpsi(opsi) {
+            let riwayat = statusRiwayat[indeksSoalAktif];
+            if (riwayat && riwayat.sudahBenar) return;
+            pilihanDipilih = opsi;
+            tandaiTombolTerpilih(opsi);
+        }
+
+        function tandaiTombolTerpilih(opsiTerpilih) {
+            document.querySelectorAll(".option-btn").forEach(function(btn) {
+                btn.classList.remove("selected");
+                if (btn.innerHTML === opsiTerpilih) {
+                    btn.classList.add("selected");
+                }
+            });
         }
 
         function putarAudio() {
@@ -171,28 +294,58 @@
             window.speechSynthesis.speak(suara);
         }
 
-        function cekJawaban() {
-            if (sudahDijawab) return;
-            let jawaban = document.getElementById("jawabanListening").value.toLowerCase().trim();
-            let pesan = document.getElementById("pesanHasil");
+        function kirimJawaban() {
+            if (!pilihanDipilih) {
+                alert("Kak, pilih dulu jawabannya ya!");
+                return;
+            }
+
             let soalAktif = daftarSoal[indeksSoalAktif];
+            let isBenar = (pilihanDipilih === soalAktif.kunci);
+
+            if (isBenar) {
+                if (!statusRiwayat[indeksSoalAktif] || !statusRiwayat[indeksSoalAktif].sudahBenar) {
+                    poinSesi += 10;
+                    document.getElementById("poinSesiTampil").innerHTML = poinSesi;
+                }
+                statusRiwayat[indeksSoalAktif] = { sudahBenar: true, pilihan: pilihanDipilih };
+            } else {
+                statusRiwayat[indeksSoalAktif] = { sudahBenar: false, pilihan: pilihanDipilih };
+            }
+
+            tampilkanHasil(isBenar, false);
+
+            // LANGSUNG MUNCULKAN TOMBOL LANJUT (meskipun salah)
+            document.getElementById("tombolKirim").classList.add("hidden");
+            if (indeksSoalAktif < daftarSoal.length - 1) {
+                document.getElementById("tombolLanjut").classList.remove("hidden");
+            } else {
+                document.getElementById("tombolSelesai").classList.remove("hidden");
+            }
+        }
+
+        function tampilkanHasil(isBenar, dariReview) {
+            let soalAktif = daftarSoal[indeksSoalAktif];
+            let pesan = document.getElementById("pesanHasil");
             pesan.classList.remove("hidden");
 
-            if (jawaban === soalAktif.kunci) {
-                pesan.innerHTML = "✅ Benar! (+10 Poin)";
-                pesan.className = "mt-4 text-lg font-bold p-3 rounded-xl bg-green-100 text-green-700 border-2 border-green-200";
-                poinSesi += 10;
-                document.getElementById("poinSesiTampil").innerHTML = poinSesi;
-                sudahDijawab = true;
-                document.getElementById("tombolCek").classList.add("hidden");
-                if (indeksSoalAktif < daftarSoal.length - 1) {
-                    document.getElementById("tombolLanjut").classList.remove("hidden");
-                } else {
-                    document.getElementById("tombolSelesai").classList.remove("hidden");
+            document.querySelectorAll(".option-btn").forEach(function(btn) {
+                btn.classList.add("disabled");
+                if (btn.innerHTML === soalAktif.kunci) {
+                    btn.classList.add("correct");
+                } else if (btn.innerHTML === pilihanDipilih && !isBenar) {
+                    btn.classList.add("wrong");
                 }
+            });
+
+            if (isBenar) {
+                pesan.innerHTML = dariReview ?
+                    '📚 <b>Mode Review:</b> Soal ini sudah kamu jawab dengan benar sebelumnya.' :
+                    '🎉 <b>Tepat sekali!</b> (+10 Poin)';
+                pesan.className = "mb-4 p-4 rounded-xl border-2 bg-green-50 text-green-800 border-green-200 text-base";
             } else {
-                pesan.innerHTML = "❌ Salah. <br /><span class='text-sm font-normal'>" + soalAktif.clue + "</span>";
-                pesan.className = "mt-4 text-lg font-bold p-3 rounded-xl bg-red-100 text-red-700 border-2 border-red-200";
+                pesan.innerHTML = '⚠️ <b>Kurang tepat.</b> ' + soalAktif.clue;
+                pesan.className = "mb-4 p-4 rounded-xl border-2 bg-red-50 text-red-800 border-red-200 text-base";
             }
         }
 
@@ -201,11 +354,45 @@
             muatSoal();
         }
 
+        function soalSebelumnya() {
+            if (indeksSoalAktif > 0) {
+                indeksSoalAktif--;
+                muatSoal();
+            }
+        }
+
         function simpanPoinDanSelesai() {
+            // ===== HITUNG SKOR =====
+            let totalSoal = daftarSoal.length;
+            let benar = 0;
+            for (let i = 0; i < totalSoal; i++) {
+                if (statusRiwayat[i] && statusRiwayat[i].sudahBenar) {
+                    benar++;
+                }
+            }
+            let salah = totalSoal - benar;
+
+            // ===== TAMPILKAN SKOR =====
+            document.getElementById("hasilSkor").classList.remove("hidden");
+            document.getElementById("skorBenar").innerHTML = benar;
+            document.getElementById("skorTotal").innerHTML = totalSoal;
+            document.getElementById("benarCount").innerHTML = benar;
+            document.getElementById("salahCount").innerHTML = salah;
+            document.getElementById("skorPoinAkhir").innerHTML = poinSesi;
+            let persen = Math.round((benar / totalSoal) * 100);
+            document.getElementById("skorPersen").innerHTML = "(" + persen + "%)";
+
+            // ===== SEMBUNYIKAN TOMBOL SELESAI =====
+            document.getElementById("tombolSelesai").classList.add("hidden");
+
+            // ===== SIMPAN POIN =====
             let poinTotalLama = parseInt(localStorage.getItem('poinMurid')) || 0;
             localStorage.setItem('poinMurid', poinTotalLama + poinSesi);
-            window.location.href = "smp.html";
         }
+
+        // ================================================================
+        //  INISIALISASI
+        // ================================================================
         muatSoal();
     </script>
 </body>

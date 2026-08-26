@@ -30,6 +30,7 @@
             font-size: 1rem;
             min-height: 56px;
             cursor: pointer;
+            text-align: center;
         }
         .option-btn:hover {
             border-color: #f59e0b;
@@ -53,13 +54,9 @@
         }
         @media (max-width: 640px) {
             .option-btn {
-                font-size: 0.9rem;
-                padding: 14px 10px;
-                min-height: 52px;
-            }
-            .grid-cols-1.md\:grid-cols-2 {
-                grid-template-columns: 1fr 1fr !important;
-                gap: 10px !important;
+                font-size: 0.85rem !important;
+                padding: 14px 10px !important;
+                min-height: 50px !important;
             }
             .bg-white.rounded-3xl {
                 padding: 16px !important;
@@ -67,6 +64,23 @@
             #teksSoal {
                 font-size: 1.2rem !important;
             }
+            .max-w-3xl.mx-auto.mb-6.flex.justify-between {
+                flex-wrap: wrap !important;
+                gap: 12px !important;
+            }
+            #tombolLanjut,
+            #tombolSelesai {
+                padding: 16px !important;
+                font-size: 1rem !important;
+                min-height: 56px !important;
+            }
+            .flex.gap-3 {
+                flex-direction: column !important;
+                gap: 10px !important;
+            }
+        }
+        button:active {
+            transform: scale(0.96);
         }
         .badge-daily {
             background: rgba(255, 255, 255, 0.9);
@@ -80,24 +94,22 @@
             font-weight: 600;
             color: #d97706;
             border: 2px solid #fde68a;
+            transition: all 0.2s;
         }
         .btn-back:hover {
             background: #fffbeb;
         }
-        button:active {
-            transform: scale(0.96);
-        }
-        .fade-in {
-            animation: fadeIn 0.4s ease-out forwards;
+        .hasil-box {
+            animation: fadeIn 0.5s ease-out;
         }
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(10px);
+                transform: scale(0.95);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: scale(1);
             }
         }
     </style>
@@ -108,7 +120,7 @@
 
         <!-- TOP BAR -->
         <div class="mb-6 flex flex-wrap justify-between items-center gap-3">
-            <a href="index.html" class="btn-back inline-flex items-center gap-1">
+            <a href="index.html" onclick="return confirm('Kak, yakin mau kembali? Poin sesi ini akan hangus lho!')" class="btn-back inline-flex items-center gap-1">
                 ⬅️ Kembali
             </a>
             <div class="bg-yellow-500 text-white font-bold px-6 py-2 rounded-xl shadow-md flex items-center gap-2 text-lg">
@@ -119,7 +131,6 @@
         <!-- KARTU CHALLENGE -->
         <div class="bg-white rounded-3xl p-8 shadow-xl border-2 border-yellow-200">
 
-            <!-- Header -->
             <div class="flex flex-wrap justify-between items-center mb-4 border-b-2 border-yellow-100 pb-4">
                 <h1 class="text-2xl font-extrabold text-gray-800 flex items-center gap-2">
                     🌟 Daily <span class="text-yellow-500">Challenge</span>
@@ -156,16 +167,38 @@
 
             <!-- Feedback -->
             <div id="pesanHasil" class="hidden mt-4 p-4 rounded-xl border-2 text-center font-bold text-lg"></div>
+
+            <!-- SKOR AKHIR -->
+            <div id="hasilSkor" class="hidden mt-6 p-6 rounded-2xl border-2 border-yellow-200 bg-yellow-50 text-center hasil-box">
+                <div class="text-4xl mb-2">🎉</div>
+                <h2 class="text-2xl font-extrabold text-gray-800 mb-2">Selesai!</h2>
+                <div class="text-3xl font-extrabold text-yellow-600 mb-2">
+                    <span id="skorBenar">0</span> dari <span id="skorTotal">0</span>
+                    <span id="skorPersen" class="text-lg font-semibold text-gray-500">(0%)</span>
+                </div>
+                <div class="flex justify-center gap-6 text-sm text-gray-600 mb-4">
+                    <div>✅ Benar: <span id="benarCount" class="font-bold text-green-600">0</span></div>
+                    <div>❌ Salah: <span id="salahCount" class="font-bold text-red-600">0</span></div>
+                </div>
+                <div class="text-sm text-gray-500 mb-4">
+                    💡 Poin yang didapat: <span id="skorPoinAkhir" class="font-bold text-yellow-600">0</span>
+                    <br />
+                    <span class="text-xs text-green-600">+50 Bonus Daily Challenge!</span>
+                </div>
+                <a href="index.html" class="inline-block bg-yellow-600 text-white px-6 py-3 rounded-full font-bold hover:bg-yellow-700 transition shadow-md">
+                    🏠 Kembali ke Home
+                </a>
+            </div>
+
         </div>
     </div>
 
     <script>
         // ================================================================
         //  1.  MASTER BANK SOAL (100+ Soal)
-        //     Campuran: Vocabulary (arti), Grammar (lengkapi), Idiom
         // ================================================================
         const MASTER_SOAL = [
-            // --- VOCABULARY (Arti kata) ---
+            // VOCABULARY
             { tipe: "vocab", word: "abandon", meaning: "meninggalkan" },
             { tipe: "vocab", word: "ability", meaning: "kemampuan" },
             { tipe: "vocab", word: "abroad", meaning: "di luar negeri" },
@@ -217,34 +250,23 @@
             { tipe: "vocab", word: "convince", meaning: "meyakinkan" },
             { tipe: "vocab", word: "courage", meaning: "keberanian" },
             { tipe: "vocab", word: "creative", meaning: "kreatif" },
-
-            // --- GRAMMAR (Lengkapi kalimat) ---
+            // GRAMMAR
             { tipe: "grammar", soal: "She ___ to school every day.", opsi: ["go", "goes", "going", "went"], kunci: "goes" },
-            { tipe: "grammar", soal: "They ___ a movie right now.", opsi: ["watch", "watches", "watching", "are watching"],
-            kunci: "are watching" },
-            { tipe: "grammar", soal: "I ___ to Bali last year.", opsi: ["go", "went", "have gone", "will go"],
-            kunci: "went" },
-            { tipe: "grammar", soal: "We ___ a new house next year.", opsi: ["buy", "bought", "will buy", "are buying"],
-                kunci: "will buy" },
+            { tipe: "grammar", soal: "They ___ a movie right now.", opsi: ["watch", "watches", "watching", "are watching"], kunci: "are watching" },
+            { tipe: "grammar", soal: "I ___ to Bali last year.", opsi: ["go", "went", "have gone", "will go"], kunci: "went" },
+            { tipe: "grammar", soal: "We ___ a new house next year.", opsi: ["buy", "bought", "will buy", "are buying"], kunci: "will buy" },
             { tipe: "grammar", soal: "The book is ___ the table.", opsi: ["in", "on", "at", "to"], kunci: "on" },
-            { tipe: "grammar", soal: "There are three ___ in the basket.", opsi: ["apple", "apples", "apple's", "appless"],
-                kunci: "apples" },
-            { tipe: "grammar", soal: "I ___ to that museum before.", opsi: ["go", "went", "have gone", "have been"],
-                kunci: "have been" },
-            { tipe: "grammar", soal: "You ___ bring an umbrella today.", opsi: ["must", "can", "should", "might"],
-                kunci: "should" },
+            { tipe: "grammar", soal: "There are three ___ in the basket.", opsi: ["apple", "apples", "apple's", "appless"], kunci: "apples" },
+            { tipe: "grammar", soal: "I ___ to that museum before.", opsi: ["go", "went", "have gone", "have been"], kunci: "have been" },
+            { tipe: "grammar", soal: "You ___ bring an umbrella today.", opsi: ["must", "can", "should", "might"], kunci: "should" },
             { tipe: "grammar", soal: "She wants to be ___ engineer.", opsi: ["a", "an", "the", "none"], kunci: "an" },
             { tipe: "grammar", soal: "___ you like to dance?", opsi: ["Are", "Do", "Does", "Is"], kunci: "Do" },
             { tipe: "grammar", soal: "I ___ a dedicated student.", opsi: ["am", "is", "are", "be"], kunci: "am" },
             { tipe: "grammar", soal: "___ she reading a book now?", opsi: ["Is", "Are", "Do", "Does"], kunci: "Is" },
-            { tipe: "grammar", soal: "She ___ an apple this morning.", opsi: ["eat", "ate", "eaten", "eats"],
-            kunci: "ate" },
-            { tipe: "grammar", soal: "We ___ visit grandma next week.", opsi: ["go", "went", "will go", "are going to"],
-                kunci: "are going to" },
-            { tipe: "grammar", soal: "If I ___ you, I would accept it.", opsi: ["am", "was", "were", "have been"],
-                kunci: "were" },
-
-            // --- IDIOM / PHRASE ---
+            { tipe: "grammar", soal: "She ___ an apple this morning.", opsi: ["eat", "ate", "eaten", "eats"], kunci: "ate" },
+            { tipe: "grammar", soal: "We ___ visit grandma next week.", opsi: ["go", "went", "will go", "are going to"], kunci: "are going to" },
+            { tipe: "grammar", soal: "If I ___ you, I would accept it.", opsi: ["am", "was", "were", "have been"], kunci: "were" },
+            // IDIOM
             { tipe: "idiom", phrase: "Break a leg", meaning: "Semoga sukses!" },
             { tipe: "idiom", phrase: "Piece of cake", meaning: "Sangat mudah" },
             { tipe: "idiom", phrase: "Hit the books", meaning: "Belajar giat" },
@@ -257,24 +279,22 @@
             { tipe: "idiom", phrase: "Keep an eye on", meaning: "Mengawasi" },
             { tipe: "idiom", phrase: "Spill the beans", meaning: "Membocorkan rahasia" },
             { tipe: "idiom", phrase: "Hit the nail on the head", meaning: "Tepat sekali" },
-            { tipe: "idiom", phrase: "Burn the midnight oil", meaning: "Belajar/bekerja larut malam" },
-            { tipe: "idiom", phrase: "Pull someone's leg", meaning: "Bercanda / menggoda" },
+            { tipe: "idiom", phrase: "Burn the midnight oil", meaning: "Belajar larut malam" },
+            { tipe: "idiom", phrase: "Pull someone's leg", meaning: "Bercanda" },
             { tipe: "idiom", phrase: "Cry over spilt milk", meaning: "Menyesali hal yang sudah terjadi" },
         ];
 
         // ================================================================
-        //  2.  SEEDED RANDOM (biar tiap hari beda, tapi konsisten)
+        //  2.  SEEDED RANDOM (biar tiap hari beda)
         // ================================================================
         function getDateSeed() {
             const today = new Date();
             const y = today.getFullYear();
             const m = String(today.getMonth() + 1).padStart(2, '0');
             const d = String(today.getDate()).padStart(2, '0');
-            const key = `${y}${m}${d}`; // contoh: 20260826
-            return parseInt(key);
+            return parseInt(y + m + d);
         }
 
-        // Simple seeded random generator (Mulberry32)
         function seededRandom(seed) {
             return function() {
                 seed |= 0;
@@ -285,7 +305,6 @@
             };
         }
 
-        // Shuffle array dengan seed
         function shuffleArray(array, seed) {
             const rand = seededRandom(seed);
             const arr = [...array];
@@ -296,28 +315,23 @@
             return arr;
         }
 
-        // ================================================================
-        //  3.  AMBIL 10 SOAL HARI INI
-        // ================================================================
         function getDailyQuestions() {
             const seed = getDateSeed();
-            // Acak master soal berdasarkan seed
             const shuffled = shuffleArray(MASTER_SOAL, seed);
-            // Ambil 10 pertama
             return shuffled.slice(0, 10);
         }
 
         // ================================================================
-        //  4.  STATE & LOGIC GAME
+        //  3.  STATE & LOGIC
         // ================================================================
         let sesiSoal = [];
         let indeksAktif = 0;
         let skorSesi = 0;
         let sudahDijawab = false;
+        let statusRiwayat = {};
         const MAX_SOAL = 10;
-        const TODAY_KEY = `daily_done_${new Date().toISOString().split('T')[0]}`;
+        const TODAY_KEY = "daily_done_" + new Date().toISOString().split('T')[0];
 
-        // Fungsi render soal
         function renderSoal(soal, index) {
             const container = document.getElementById('areaSoal');
             const teksSoal = document.getElementById('teksSoal');
@@ -328,6 +342,7 @@
             document.getElementById('pesanHasil').classList.add('hidden');
             document.getElementById('tombolLanjut').classList.add('hidden');
             document.getElementById('tombolSelesai').classList.add('hidden');
+            document.getElementById('hasilSkor').classList.add('hidden');
             sudahDijawab = false;
 
             let pertanyaan = '';
@@ -335,8 +350,7 @@
             let kunci = '';
 
             if (soal.tipe === 'vocab') {
-                pertanyaan = `Apa arti dari kata <span class="text-yellow-600 font-extrabold">"${soal.word}"</span> ?`;
-                // Cari 3 arti salah dari master
+                pertanyaan = 'Apa arti dari kata <span class="text-yellow-600 font-extrabold">"' + soal.word + '"</span> ?';
                 const semuaArti = MASTER_SOAL.filter(s => s.tipe === 'vocab' || s.tipe === 'idiom')
                     .map(s => s.meaning || s.phrase)
                     .filter(m => m !== soal.meaning);
@@ -346,7 +360,7 @@
                 opsi = shuffleArray(opsi, getDateSeed() + index + 200);
                 kunci = soal.meaning;
             } else if (soal.tipe === 'idiom') {
-                pertanyaan = `Apa arti dari idiom <span class="text-yellow-600 font-extrabold">"${soal.phrase}"</span> ?`;
+                pertanyaan = 'Apa arti dari idiom <span class="text-yellow-600 font-extrabold">"' + soal.phrase + '"</span> ?';
                 const semuaArti = MASTER_SOAL.filter(s => s.tipe === 'vocab' || s.tipe === 'idiom')
                     .map(s => s.meaning || s.phrase)
                     .filter(m => m !== soal.meaning);
@@ -356,7 +370,7 @@
                 opsi = shuffleArray(opsi, getDateSeed() + index + 400);
                 kunci = soal.meaning;
             } else if (soal.tipe === 'grammar') {
-                pertanyaan = `Lengkapi kalimat: <span class="text-yellow-600 font-extrabold">"${soal.soal}"</span>`;
+                pertanyaan = 'Lengkapi kalimat: <span class="text-yellow-600 font-extrabold">"' + soal.soal + '"</span>';
                 opsi = soal.opsi;
                 kunci = soal.kunci;
             }
@@ -373,7 +387,6 @@
             });
         }
 
-        // Pilih jawaban
         function pilihJawaban(btn, dipilih, kunciBenar) {
             if (sudahDijawab) return;
             sudahDijawab = true;
@@ -395,10 +408,12 @@
 
             if (isBenar) {
                 skorSesi += 10;
-                pesan.innerHTML = `✅ <b>Benar!</b> +10 poin`;
+                statusRiwayat[indeksAktif] = { sudahBenar: true };
+                pesan.innerHTML = "✅ <b>Benar!</b> +10 poin";
                 pesan.className = 'mt-4 p-4 rounded-xl border-2 border-green-200 bg-green-50 text-green-700 text-center font-bold text-lg';
             } else {
-                pesan.innerHTML = `❌ <b>Kurang tepat.</b> Jawaban: <span class="font-bold text-green-600">"${kunciBenar}"</span>`;
+                statusRiwayat[indeksAktif] = { sudahBenar: false };
+                pesan.innerHTML = '❌ <b>Kurang tepat.</b> Jawaban: <span class="font-bold text-green-600">"' + kunciBenar + '"</span>';
                 pesan.className = 'mt-4 p-4 rounded-xl border-2 border-red-200 bg-red-50 text-red-700 text-center font-bold text-lg';
             }
 
@@ -409,38 +424,40 @@
             }
         }
 
-        // Lanjut
         function soalBerikutnya() {
             indeksAktif++;
-            if (indeksAktif < sesiSoal.length) {
-                renderSoal(sesiSoal[indeksAktif], indeksAktif);
-            }
+            renderSoal(sesiSoal[indeksAktif], indeksAktif);
         }
 
-        // Selesai & simpan poin
         function simpanPoinDanSelesai() {
-            // Tandai sudah selesai hari ini
             localStorage.setItem(TODAY_KEY, 'true');
+            let totalSoal = sesiSoal.length;
+            let benar = 0;
+            for (let i = 0; i < totalSoal; i++) {
+                if (statusRiwayat[i] && statusRiwayat[i].sudahBenar) benar++;
+            }
+
+            document.getElementById("hasilSkor").classList.remove("hidden");
+            document.getElementById("skorBenar").innerHTML = benar;
+            document.getElementById("skorTotal").innerHTML = totalSoal;
+            document.getElementById("benarCount").innerHTML = benar;
+            document.getElementById("salahCount").innerHTML = totalSoal - benar;
+            document.getElementById("skorPoinAkhir").innerHTML = skorSesi;
+            let persen = Math.round((benar / totalSoal) * 100);
+            document.getElementById("skorPersen").innerHTML = "(" + persen + "%)";
+            document.getElementById("tombolSelesai").classList.add("hidden");
+            document.getElementById("areaSoal").classList.add("hidden");
+
             const poinTotalLama = parseInt(localStorage.getItem('poinMurid')) || 0;
-            localStorage.setItem('poinMurid', poinTotalLama + skorSesi);
-            // Bonus tambahan 50 poin karena sudah menyelesaikan daily!
-            localStorage.setItem('poinMurid', (poinTotalLama + skorSesi + 50));
-            window.location.href = "index.html";
+            localStorage.setItem('poinMurid', poinTotalLama + skorSesi + 50);
         }
 
-        // ================================================================
-        //  5.  INISIALISASI
-        // ================================================================
         function initDaily() {
-            // Tampilkan poin
             document.getElementById('poinTotal').innerHTML = parseInt(localStorage.getItem('poinMurid')) || 0;
-
-            // Tampilkan tanggal
             const today = new Date();
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             document.getElementById('tanggalHariIni').innerHTML = today.toLocaleDateString('id-ID', options);
 
-            // Cek apakah sudah dikerjakan hari ini
             const sudahSelesai = localStorage.getItem(TODAY_KEY);
             const statusText = document.getElementById('statusText');
 
@@ -453,11 +470,10 @@
             }
 
             statusText.innerHTML = '🔥 <span class="text-yellow-600">Tantangan hari ini siap!</span> Jawab 10 soal dengan benar untuk mendapatkan poin + bonus 50!';
-
-            // Ambil soal hari ini
             sesiSoal = getDailyQuestions();
             indeksAktif = 0;
             skorSesi = 0;
+            statusRiwayat = {};
             renderSoal(sesiSoal[0], 0);
         }
 

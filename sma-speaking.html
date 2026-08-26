@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Speaking SMA (10 Soal) | ENG-LEARN</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
         * {
             font-family: 'Poppins', sans-serif;
@@ -21,10 +21,6 @@
             margin-right: auto;
         }
         @media (max-width: 640px) {
-            .max-w-3xl.mx-auto.mb-6.flex.justify-between {
-                flex-wrap: wrap !important;
-                gap: 12px !important;
-            }
             .bg-white.rounded-3xl {
                 padding: 16px !important;
             }
@@ -49,93 +45,175 @@
                 font-size: 1rem !important;
                 min-height: 56px !important;
             }
+            .max-w-3xl.mx-auto.mb-6.flex.justify-between {
+                flex-wrap: wrap !important;
+                gap: 12px !important;
+            }
         }
         button:active {
             transform: scale(0.96);
-            transition: transform 0.1s ease;
+        }
+        .btn-back {
+            background: white;
+            border-radius: 12px;
+            padding: 8px 16px;
+            font-weight: 600;
+            color: #d97706;
+            border: 2px solid #fde68a;
+            transition: all 0.2s;
+        }
+        .btn-back:hover {
+            background: #fffbeb;
+        }
+        .hasil-box {
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="max-w-3xl mx-auto mb-6 flex justify-between items-center">
-        <a href="sma.html" onclick="return confirm('Yakin mau kembali? Poin sesi ini akan hangus lho!')" class="inline-flex items-center text-red-500 hover:text-red-700 font-bold bg-white px-4 py-2 rounded-xl shadow-sm border border-orange-100 transition-all">
-            ⬅️ Batal & Kembali
-        </a>
-        <div class="bg-orange-500 text-white font-bold px-6 py-2 rounded-xl shadow-md flex items-center gap-2 text-lg">
-            ⭐ Poin Sesi: <span id="poinSesiTampil">0</span>
-        </div>
-    </div>
+    <div class="max-w-3xl mx-auto">
 
-    <div class="max-w-3xl mx-auto bg-white rounded-3xl p-8 shadow-xl border-2 border-orange-50 text-center">
-        <div class="flex justify-between items-center mb-4 border-b-2 border-orange-100 pb-4 text-left">
-            <h1 class="text-2xl font-bold text-gray-800">📢 Speaking SMA (10 Soal)</h1>
-            <span id="labelNomorSoal" class="bg-orange-100 text-orange-700 font-bold px-4 py-1 rounded-full text-sm">Soal 1 dari 10</span>
+        <!-- TOP BAR -->
+        <div class="mb-6 flex flex-wrap justify-between items-center gap-3">
+            <a href="sma.html" onclick="return confirm('Kak, yakin mau kembali? Poin sesi ini akan hangus lho!')" class="btn-back inline-flex items-center gap-1">
+                ⬅️ Batal & Kembali
+            </a>
+            <div class="bg-orange-500 text-white font-bold px-6 py-2 rounded-xl shadow-md flex items-center gap-2 text-lg">
+                ⭐ Poin Sesi: <span id="poinSesiTampil">0</span>
+            </div>
         </div>
 
-        <!-- KOTAK MATERI DIHAPUS -->
+        <!-- KARTU SPEAKING -->
+        <div class="bg-white rounded-3xl p-8 shadow-xl border-2 border-orange-100 text-center">
 
-        <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100">
-            <p class="mb-3 text-gray-700 font-semibold">Ucapkan argumen berikut dengan lantang:</p>
-
-            <div id="teksSoal" class="text-2xl font-extrabold text-orange-600 mb-6 bg-white py-6 px-4 rounded-2xl border-2 border-orange-200 shadow-sm leading-relaxed"></div>
-
-            <div class="flex justify-center gap-4 mb-6 flex-wrap">
-                <button onclick="putarContoh()" class="bg-green-500 text-white px-6 py-3 rounded-2xl font-bold text-lg hover:bg-green-600 shadow-md inline-flex items-center gap-2">
-                    🔊 Dengar Contoh
-                </button>
-                <button id="tombolBicara" onclick="mulaiMendengar()" class="bg-purple-500 text-white px-6 py-3 rounded-2xl font-bold text-lg hover:bg-purple-600 shadow-md inline-flex items-center gap-2">
-                    🎤 Mulai Pidato
-                </button>
+            <div class="flex justify-between items-center mb-4 border-b-2 border-orange-100 pb-4 text-left">
+                <h1 class="text-2xl font-extrabold text-gray-800 flex items-center gap-2">
+                    📢 Speaking <span class="text-orange-500">SMA</span>
+                </h1>
+                <span id="labelNomorSoal" class="bg-orange-100 text-orange-700 font-bold px-4 py-1 rounded-full text-sm">
+                    Soal 1 dari 10
+                </span>
             </div>
 
-            <p class="text-gray-500 font-medium mb-1">Yang komputer dengar:</p>
-            <div id="teksTangkapan" class="text-xl font-mono bg-white border border-gray-200 p-4 rounded-xl min-h-[60px] flex items-center justify-center mb-4 shadow-inner">
-                (Belum ada suara)
+            <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100">
+
+                <p class="mb-3 text-gray-700 font-semibold">Ucapkan argumen berikut dengan lantang:</p>
+
+                <!-- Teks yang harus diucapkan -->
+                <div id="teksSoal" class="text-2xl font-extrabold text-orange-600 mb-6 bg-white py-6 px-4 rounded-2xl border-2 border-orange-200 shadow-sm leading-relaxed"></div>
+
+                <!-- Tombol Aksi -->
+                <div class="flex justify-center gap-4 mb-6 flex-wrap">
+                    <button onclick="putarContoh()" class="bg-green-500 text-white px-6 py-3 rounded-2xl font-bold text-lg hover:bg-green-600 shadow-md inline-flex items-center gap-2">
+                        🔊 Dengar Contoh
+                    </button>
+                    <button id="tombolBicara" onclick="mulaiMendengar()" class="bg-purple-500 text-white px-6 py-3 rounded-2xl font-bold text-lg hover:bg-purple-600 shadow-md inline-flex items-center gap-2">
+                        🎤 Mulai Pidato
+                    </button>
+                </div>
+
+                <!-- Hasil Tangkapan Suara -->
+                <p class="text-gray-500 font-medium mb-1">Yang komputer dengar:</p>
+                <div id="teksTangkapan" class="text-xl font-mono bg-white border border-gray-200 p-4 rounded-xl min-h-[60px] flex items-center justify-center mb-4 shadow-inner">
+                    (Belum ada suara)
+                </div>
+
+                <!-- Tombol Lanjut -->
+                <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden w-full bg-green-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-green-600 shadow-md">
+                    ➡️ Lanjut Soal Berikutnya
+                </button>
+
+                <!-- Feedback Hasil -->
+                <p id="pesanHasil" class="text-lg font-bold hidden p-4 rounded-xl mt-4"></p>
+
+                <!-- Tombol Selesai -->
+                <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700 shadow-lg">
+                    🎉 Selesai! Simpan Semua Poin
+                </button>
+
+                <!-- SKOR AKHIR -->
+                <div id="hasilSkor" class="hidden mt-6 p-6 rounded-2xl border-2 border-indigo-200 bg-indigo-50 text-center hasil-box">
+                    <div class="text-4xl mb-2">🎉</div>
+                    <h2 class="text-2xl font-extrabold text-gray-800 mb-2">Selesai!</h2>
+                    <div class="text-3xl font-extrabold text-indigo-600 mb-2">
+                        <span id="skorBenar">0</span> dari <span id="skorTotal">0</span>
+                        <span id="skorPersen" class="text-lg font-semibold text-gray-500">(0%)</span>
+                    </div>
+                    <div class="flex justify-center gap-6 text-sm text-gray-600 mb-4">
+                        <div>✅ Benar: <span id="benarCount" class="font-bold text-green-600">0</span></div>
+                        <div>❌ Salah: <span id="salahCount" class="font-bold text-red-600">0</span></div>
+                    </div>
+                    <div class="text-sm text-gray-500 mb-4">
+                        💡 Poin yang didapat: <span id="skorPoinAkhir" class="font-bold text-indigo-600">0</span>
+                    </div>
+                    <a href="sma.html" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-full font-bold hover:bg-indigo-700 transition shadow-md">
+                        🏠 Kembali ke Dashboard
+                    </a>
+                </div>
+
             </div>
-
-            <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden w-full bg-green-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-green-600 shadow-md">
-                ➡️ Lanjut Soal Berikutnya
-            </button>
-
-            <p id="pesanHasil" class="text-lg font-bold hidden p-4 rounded-xl mt-4"></p>
-
-            <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700 shadow-lg">
-                🎉 Selesai! Simpan Semua Poin
-            </button>
         </div>
     </div>
 
     <script>
+        // ================================================================
+        //  10 SOAL SPEAKING SMA (Opini & Debat)
+        // ================================================================
         const daftarSoal = [
-            { kunci: "education is the key", teks: "In my opinion, education is the key to success.", clue: "Petunjuk: Pastikan frasa 'education is the key' terucap dengan jelas." },
-            { kunci: "i strongly disagree", teks: "I strongly disagree with this statement.", clue: "Petunjuk: Tekankan kata 'strongly' untuk menunjukkan ketegasan argumen." },
-            { kunci: "protect the environment", teks: "We must take immediate action to protect the environment.", clue: "Petunjuk: Fokus pada pelafalan frasa 'protect the environment'." },
-            { kunci: "technology brings positive", teks: "Technology brings positive changes to our daily lives.", clue: "Petunjuk: Ucapkan kata 'technology' dan 'positive' dengan intonasi naik." },
-            { kunci: "on the other hand", teks: "On the other hand, we should consider the economic impact.", clue: "Petunjuk: Gunakan frasa transisi 'on the other hand' di awal kalimat." },
-            { kunci: "young generation plays", teks: "The young generation plays a vital role in shaping the future.", clue: "Petunjuk: Pastikan frasa 'vital role' terdengar jelas oleh mikrofon." },
-            { kunci: "in conclusion", teks: "In conclusion, hard work always pays off in the end.", clue: "Petunjuk: Awali dengan frasa konklusi formal 'in conclusion'." },
-            { kunci: "mental health is just as important", teks: "Mental health is just as important as physical health.", clue: "Petunjuk: Ucapkan perbandingan 'just as important' dengan penekanan." },
-            { kunci: "reading books expands", teks: "Reading books expands our imagination and knowledge.", clue: "Petunjuk: Fokus pada kata kerja 'expands' dan objek 'knowledge'." },
-            { kunci: "together we can build", teks: "Together, we can build a better world for everyone.", clue: "Petunjuk: Ucapkan dengan nada optimis pada frasa 'build a better world'." }
+            { kunci: "education is the key", teks: "In my opinion, education is the key to success.", clue: "💡 Pastikan frasa 'education is the key' terucap dengan jelas." },
+            { kunci: "i strongly disagree", teks: "I strongly disagree with this statement.", clue: "💡 Tekankan kata 'strongly' untuk menunjukkan ketegasan argumen." },
+            { kunci: "protect the environment", teks: "We must take immediate action to protect the environment.", clue: "💡 Fokus pada pelafalan frasa 'protect the environment'." },
+            { kunci: "technology brings positive", teks: "Technology brings positive changes to our daily lives.", clue: "💡 Ucapkan kata 'technology' dan 'positive' dengan intonasi naik." },
+            { kunci: "on the other hand", teks: "On the other hand, we should consider the economic impact.", clue: "💡 Gunakan frasa transisi 'on the other hand' di awal kalimat." },
+            { kunci: "young generation plays", teks: "The young generation plays a vital role in shaping the future.", clue: "💡 Pastikan frasa 'vital role' terdengar jelas oleh mikrofon." },
+            { kunci: "in conclusion", teks: "In conclusion, hard work always pays off in the end.", clue: "💡 Awali dengan frasa konklusi formal 'in conclusion'." },
+            { kunci: "mental health is just as important", teks: "Mental health is just as important as physical health.", clue: "💡 Ucapkan perbandingan 'just as important' dengan penekanan." },
+            { kunci: "reading books expands", teks: "Reading books expands our imagination and knowledge.", clue: "💡 Fokus pada kata kerja 'expands' dan objek 'knowledge'." },
+            { kunci: "together we can build", teks: "Together, we can build a better world for everyone.", clue: "💡 Ucapkan dengan nada optimis pada frasa 'build a better world'." }
         ];
 
+        // ================================================================
+        //  STATE & LOGIC
+        // ================================================================
         let indeksSoalAktif = 0;
         let poinSesi = 0;
         let sudahBenar = false;
+        let statusRiwayat = {};
 
         function muatSoal() {
             let soal = daftarSoal[indeksSoalAktif];
-            document.getElementById("labelNomorSoal").innerHTML = "Soal " + (indeksSoalAktif + 1) + " dari 10";
+            document.getElementById("labelNomorSoal").innerHTML = "Soal " + (indeksSoalAktif + 1) + " dari " + daftarSoal.length;
             document.getElementById("teksSoal").innerHTML = '"' + soal.teks + '"';
             document.getElementById("teksTangkapan").innerHTML = "(Belum ada suara)";
             document.getElementById("pesanHasil").classList.add("hidden");
             document.getElementById("tombolLanjut").classList.add("hidden");
             document.getElementById("tombolSelesai").classList.add("hidden");
+            document.getElementById("hasilSkor").classList.add("hidden");
+
             let tombol = document.getElementById("tombolBicara");
             tombol.innerHTML = '🎤 Mulai Pidato';
             tombol.className = "bg-purple-500 text-white px-6 py-3 rounded-2xl font-bold text-lg hover:bg-purple-600 shadow-md inline-flex items-center gap-2";
-            sudahBenar = false;
+
+            let riwayat = statusRiwayat[indeksSoalAktif];
+            if (riwayat && riwayat.sudahBenar) {
+                sudahBenar = true;
+                tampilkanHasil(true, true);
+                tombol.innerHTML = "✅ Selesai";
+                tombol.className = "bg-gray-400 text-white px-6 py-3 rounded-2xl font-bold text-lg shadow-md inline-flex items-center gap-2";
+            } else {
+                sudahBenar = false;
+            }
         }
 
         function putarContoh() {
@@ -148,16 +226,20 @@
 
         function mulaiMendengar() {
             if (sudahBenar) return;
+
             let tombol = document.getElementById("tombolBicara");
             let teksTangkapan = document.getElementById("teksTangkapan");
             let pesanHasil = document.getElementById("pesanHasil");
+
             let TelingaKomputer = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!TelingaKomputer) {
-                alert("Gunakan Google Chrome terbaru untuk fitur suara.");
+                alert("Kak, gunakan Google Chrome terbaru untuk fitur suara ya!");
                 return;
             }
+
             let mesinPengecek = new TelingaKomputer();
             mesinPengecek.lang = "en-US";
+
             tombol.innerHTML = "🔴 Mendengarkan...";
             tombol.className = "bg-red-500 text-white px-6 py-3 rounded-2xl font-bold text-lg shadow-md inline-flex items-center gap-2";
             mesinPengecek.start();
@@ -166,23 +248,28 @@
                 let hasilSuara = event.results[0][0].transcript.toLowerCase();
                 teksTangkapan.innerHTML = '"' + hasilSuara + '"';
                 pesanHasil.classList.remove("hidden");
+
                 let soalAktif = daftarSoal[indeksSoalAktif];
-                if (hasilSuara.includes(soalAktif.kunci)) {
-                    pesanHasil.innerHTML = "✅ Artikulasi Luar Biasa! (+20 Poin)";
-                    pesanHasil.className = "mt-4 text-xl font-bold p-4 rounded-xl bg-green-100 text-green-700 border-2 border-green-200";
-                    poinSesi += 20;
-                    document.getElementById("poinSesiTampil").innerHTML = poinSesi;
+                let isMatch = hasilSuara.includes(soalAktif.kunci);
+
+                if (isMatch) {
+                    if (!statusRiwayat[indeksSoalAktif] || !statusRiwayat[indeksSoalAktif].sudahBenar) {
+                        poinSesi += 20;
+                        document.getElementById("poinSesiTampil").innerHTML = poinSesi;
+                    }
+                    statusRiwayat[indeksSoalAktif] = { sudahBenar: true };
                     sudahBenar = true;
+                    tampilkanHasil(true, false);
                     tombol.innerHTML = "✅ Selesai";
                     tombol.className = "bg-gray-400 text-white px-6 py-3 rounded-2xl font-bold text-lg shadow-md inline-flex items-center gap-2";
+
                     if (indeksSoalAktif < daftarSoal.length - 1) {
                         document.getElementById("tombolLanjut").classList.remove("hidden");
                     } else {
                         document.getElementById("tombolSelesai").classList.remove("hidden");
                     }
                 } else {
-                    pesanHasil.innerHTML = "❌ Pelafalan kurang akurat.<br /><span class='text-sm font-normal'>" + soalAktif.clue + "</span>";
-                    pesanHasil.className = "mt-4 text-xl font-bold p-4 rounded-xl bg-red-100 text-red-700 border-2 border-red-200";
+                    tampilkanHasil(false, false);
                 }
             };
 
@@ -202,16 +289,59 @@
             };
         }
 
+        function tampilkanHasil(isBenar, dariReview) {
+            let pesanHasil = document.getElementById("pesanHasil");
+            pesanHasil.classList.remove("hidden");
+            let soalAktif = daftarSoal[indeksSoalAktif];
+
+            if (isBenar) {
+                pesanHasil.innerHTML = dariReview ?
+                    '📚 <b>Mode Review:</b> Soal ini sudah kamu jawab dengan benar sebelumnya.' :
+                    '✅ Artikulasi Luar Biasa! (+20 Poin)';
+                pesanHasil.className = "mt-4 text-xl font-bold p-4 rounded-xl bg-green-100 text-green-700 border-2 border-green-200";
+            } else {
+                pesanHasil.innerHTML = '❌ Pelafalan kurang akurat.<br /><span class="text-sm font-normal">' + soalAktif.clue + '</span>';
+                pesanHasil.className = "mt-4 text-xl font-bold p-4 rounded-xl bg-red-100 text-red-700 border-2 border-red-200";
+            }
+        }
+
         function soalBerikutnya() {
             indeksSoalAktif++;
             muatSoal();
         }
 
         function simpanPoinDanSelesai() {
+            // ===== HITUNG SKOR =====
+            let totalSoal = daftarSoal.length;
+            let benar = 0;
+            for (let i = 0; i < totalSoal; i++) {
+                if (statusRiwayat[i] && statusRiwayat[i].sudahBenar) {
+                    benar++;
+                }
+            }
+            let salah = totalSoal - benar;
+
+            // ===== TAMPILKAN SKOR =====
+            document.getElementById("hasilSkor").classList.remove("hidden");
+            document.getElementById("skorBenar").innerHTML = benar;
+            document.getElementById("skorTotal").innerHTML = totalSoal;
+            document.getElementById("benarCount").innerHTML = benar;
+            document.getElementById("salahCount").innerHTML = salah;
+            document.getElementById("skorPoinAkhir").innerHTML = poinSesi;
+            let persen = Math.round((benar / totalSoal) * 100);
+            document.getElementById("skorPersen").innerHTML = "(" + persen + "%)";
+
+            // ===== SEMBUNYIKAN TOMBOL SELESAI =====
+            document.getElementById("tombolSelesai").classList.add("hidden");
+
+            // ===== SIMPAN POIN =====
             let poinTotalLama = parseInt(localStorage.getItem('poinMurid')) || 0;
             localStorage.setItem('poinMurid', poinTotalLama + poinSesi);
-            window.location.href = "sma.html";
         }
+
+        // ================================================================
+        //  INISIALISASI
+        // ================================================================
         muatSoal();
     </script>
 </body>

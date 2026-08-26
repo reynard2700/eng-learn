@@ -20,14 +20,11 @@
             margin-left: auto;
             margin-right: auto;
         }
-
-        /* Timer progress bar */
         .timer-bar {
             height: 6px;
             background: #e5e7eb;
             border-radius: 4px;
             overflow: hidden;
-            transition: width 0.3s ease;
         }
         .timer-bar-fill {
             height: 100%;
@@ -36,16 +33,12 @@
             width: 100%;
             transition: width 0.3s linear;
         }
-
-        /* Skor & streak */
         .badge-score {
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(4px);
             border: 2px solid #fff;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
         }
-
-        /* Opsi pilihan */
         .option-btn {
             transition: all 0.2s ease;
             border: 2px solid #e5e7eb;
@@ -55,14 +48,10 @@
             font-weight: 600;
             font-size: 1rem;
             min-height: 56px;
-            text-align: center;
             cursor: pointer;
+            text-align: center;
         }
         .option-btn:hover {
-            border-color: #818cf8;
-            background: #f8faff;
-        }
-        .option-btn.selected {
             border-color: #6366f1;
             background: #eef2ff;
         }
@@ -74,27 +63,29 @@
             border-color: #ef4444;
             background: #fee2e2;
         }
-        .option-btn:active {
-            transform: scale(0.96);
-        }
         .option-btn.disabled {
             pointer-events: none;
             opacity: 0.7;
         }
-
-        /* Responsive */
+        .option-btn.selected {
+            border-color: #6366f1;
+            background: #eef2ff;
+        }
         @media (max-width: 640px) {
             .option-btn {
-                font-size: 0.9rem;
-                padding: 14px 10px;
-                min-height: 52px;
-            }
-            .grid-cols-1.md\:grid-cols-2 {
-                grid-template-columns: 1fr 1fr !important;
-                gap: 10px !important;
+                font-size: 0.85rem !important;
+                padding: 14px 10px !important;
+                min-height: 50px !important;
             }
             .bg-white.rounded-3xl {
                 padding: 16px !important;
+            }
+            #teksSoal {
+                font-size: 1.2rem !important;
+            }
+            .max-w-3xl.mx-auto.mb-6.flex.justify-between {
+                flex-wrap: wrap !important;
+                gap: 12px !important;
             }
             #tombolLanjut,
             #tombolSelesai {
@@ -102,39 +93,14 @@
                 font-size: 1rem !important;
                 min-height: 56px !important;
             }
-            .max-w-3xl.mx-auto.mb-6.flex.justify-between {
-                flex-wrap: wrap !important;
-                gap: 12px !important;
-            }
-            #teksSoal {
-                font-size: 1.2rem !important;
+            .flex.gap-3 {
+                flex-direction: column !important;
+                gap: 10px !important;
             }
         }
-
-        /* Animasi fade */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        button:active {
+            transform: scale(0.96);
         }
-        .fade-in {
-            animation: fadeIn 0.4s ease-out forwards;
-        }
-        .delay-1 {
-            animation-delay: 0.1s;
-            opacity: 0;
-        }
-        .delay-2 {
-            animation-delay: 0.2s;
-            opacity: 0;
-        }
-
-        /* Tombol kembali */
         .btn-back {
             background: white;
             border-radius: 12px;
@@ -146,7 +112,19 @@
         }
         .btn-back:hover {
             background: #eef2ff;
-            border-color: #818cf8;
+        }
+        .hasil-box {
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
     </style>
 </head>
@@ -155,8 +133,8 @@
     <div class="max-w-3xl mx-auto">
 
         <!-- TOP BAR -->
-        <div class="mb-6 flex justify-between items-center">
-            <a href="index.html" class="btn-back inline-flex items-center gap-1">
+        <div class="mb-6 flex flex-wrap justify-between items-center gap-3">
+            <a href="index.html" onclick="return confirm('Kak, yakin mau kembali? Poin sesi ini akan hangus lho!')" class="btn-back inline-flex items-center gap-1">
                 ⬅️ Kembali
             </a>
             <div class="bg-indigo-600 text-white font-bold px-6 py-2 rounded-xl shadow-md flex items-center gap-2 text-lg">
@@ -167,7 +145,6 @@
         <!-- KARTU GAME -->
         <div class="bg-white rounded-3xl p-8 shadow-xl border-2 border-indigo-100">
 
-            <!-- Header Game -->
             <div class="flex justify-between items-center mb-4 border-b-2 border-indigo-100 pb-4">
                 <h1 class="text-2xl font-extrabold text-gray-800 flex items-center gap-2">
                     🎮 Vocab <span class="text-indigo-600">Quiz</span>
@@ -177,7 +154,7 @@
                 </span>
             </div>
 
-            <!-- Skor & Streak (badge) -->
+            <!-- Skor & Streak -->
             <div class="flex flex-wrap gap-4 mb-6 text-sm">
                 <div class="badge-score rounded-xl px-4 py-2 flex items-center gap-2">
                     🏆 Skor: <span id="skorSesi" class="font-bold text-indigo-600">0</span>
@@ -190,20 +167,17 @@
                 </div>
             </div>
 
-            <!-- Timer Progress Bar -->
+            <!-- Timer -->
             <div class="timer-bar mb-6">
                 <div id="timerFill" class="timer-bar-fill" style="width: 100%;"></div>
             </div>
 
-            <!-- Kata & Opsi -->
+            <!-- Area Soal -->
             <div id="areaSoal" class="fade-in">
                 <div id="teksSoal" class="text-3xl font-extrabold text-center text-gray-800 mb-6">
                     Loading...
                 </div>
-
-                <div id="areaPilihan" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                    <!-- Opsi dimuat via JS -->
-                </div>
+                <div id="areaPilihan" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6"></div>
             </div>
 
             <!-- Tombol Lanjut / Selesai -->
@@ -215,16 +189,36 @@
                 🎉 Selesai! Simpan Poin
             </button>
 
-            <!-- Pesan Hasil (feedback) -->
+            <!-- Feedback -->
             <div id="pesanHasil" class="hidden mt-4 p-4 rounded-xl border-2 text-center font-bold text-lg"></div>
+
+            <!-- SKOR AKHIR -->
+            <div id="hasilSkor" class="hidden mt-6 p-6 rounded-2xl border-2 border-indigo-200 bg-indigo-50 text-center hasil-box">
+                <div class="text-4xl mb-2">🎉</div>
+                <h2 class="text-2xl font-extrabold text-gray-800 mb-2">Selesai!</h2>
+                <div class="text-3xl font-extrabold text-indigo-600 mb-2">
+                    <span id="skorBenar">0</span> dari <span id="skorTotal">0</span>
+                    <span id="skorPersen" class="text-lg font-semibold text-gray-500">(0%)</span>
+                </div>
+                <div class="flex justify-center gap-6 text-sm text-gray-600 mb-4">
+                    <div>✅ Benar: <span id="benarCount" class="font-bold text-green-600">0</span></div>
+                    <div>❌ Salah: <span id="salahCount" class="font-bold text-red-600">0</span></div>
+                </div>
+                <div class="text-sm text-gray-500 mb-4">
+                    💡 Poin yang didapat: <span id="skorPoinAkhir" class="font-bold text-indigo-600">0</span>
+                </div>
+                <a href="index.html" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-full font-bold hover:bg-indigo-700 transition shadow-md">
+                    🏠 Kembali ke Home
+                </a>
+            </div>
 
         </div>
     </div>
 
     <script>
-        // ============================================================
-        //  DATA KOSAKATA (40 kata umum untuk SMP/SMA)
-        // ============================================================
+        // ================================================================
+        //  DATA KOSAKATA (40 kata)
+        // ================================================================
         const vocabData = [
             { word: "abandon", meaning: "meninggalkan" },
             { word: "ability", meaning: "kemampuan" },
@@ -233,7 +227,7 @@
             { word: "accelerate", meaning: "mempercepat" },
             { word: "accomplish", meaning: "mencapai" },
             { word: "accurate", meaning: "akurat" },
-            { word: "achieve", meaning: "mencapai" },
+            { word: "achieve", meaning: "meraih" },
             { word: "acquire", meaning: "memperoleh" },
             { word: "adapt", meaning: "beradaptasi" },
             { word: "adjust", meaning: "menyesuaikan" },
@@ -261,16 +255,16 @@
             { word: "aware", meaning: "sadar" },
             { word: "balance", meaning: "keseimbangan" },
             { word: "barrier", meaning: "hambatan" },
-            { word: "behavior", meaning: "perilaku" },
             { word: "benefit", meaning: "manfaat" },
             { word: "blame", meaning: "menyalahkan" },
             { word: "boost", meaning: "meningkatkan" },
-            { word: "brief", meaning: "singkat" }
+            { word: "brief", meaning: "singkat" },
+            { word: "brilliant", meaning: "cemerlang" }
         ];
 
-        // ============================================================
+        // ================================================================
         //  STATE GAME
-        // ============================================================
+        // ================================================================
         let sesiSoal = [];
         let indeksAktif = 0;
         let skorSesi = 0;
@@ -278,15 +272,14 @@
         let timerInterval = null;
         let waktuTersisa = 15;
         let sudahDijawab = false;
-        let totalPoinLama = 0;
+        let statusRiwayat = {};
         const MAX_SOAL = 10;
         const WAKTU_PER_SOAL = 15;
 
-        // ============================================================
+        // ================================================================
         //  FUNGSI UTAMA
-        // ============================================================
+        // ================================================================
 
-        // Ambil 10 soal acak dari vocabData
         function ambilSoalAcak() {
             const shuffled = [...vocabData];
             for (let i = shuffled.length - 1; i > 0; i--) {
@@ -296,7 +289,6 @@
             return shuffled.slice(0, MAX_SOAL);
         }
 
-        // Buat pilihan (1 benar + 3 salah acak dari data)
         function buatPilihan(soal) {
             const semuaArti = vocabData.map(v => v.meaning);
             const filtered = semuaArti.filter(m => m !== soal.meaning);
@@ -305,31 +297,36 @@
             return pilihan.sort(() => Math.random() - 0.5);
         }
 
-        // Muat soal ke tampilan
         function muatSoal() {
             if (indeksAktif >= sesiSoal.length) {
-                // Semua selesai
                 document.getElementById("tombolLanjut").classList.add("hidden");
                 document.getElementById("tombolSelesai").classList.remove("hidden");
                 document.getElementById("areaSoal").classList.add("hidden");
-                document.getElementById("pesanHasil").classList.remove("hidden");
-                document.getElementById("pesanHasil").innerHTML = `
-                    🎉 <b>Semua soal selesai!</b><br />
-                    Skor akhir: <span class="text-indigo-600 text-2xl">${skorSesi}</span> poin
-                `;
-                document.getElementById("pesanHasil").className =
-                    "mt-4 p-4 rounded-xl border-2 border-indigo-200 bg-indigo-50 text-gray-700 text-center font-bold text-lg";
+                document.getElementById("pesanHasil").classList.add("hidden");
                 stopTimer();
+                // Tampilkan skor otomatis
+                let totalSoal = sesiSoal.length;
+                let benar = 0;
+                for (let i = 0; i < totalSoal; i++) {
+                    if (statusRiwayat[i] && statusRiwayat[i].sudahBenar) benar++;
+                }
+                document.getElementById("hasilSkor").classList.remove("hidden");
+                document.getElementById("skorBenar").innerHTML = benar;
+                document.getElementById("skorTotal").innerHTML = totalSoal;
+                document.getElementById("benarCount").innerHTML = benar;
+                document.getElementById("salahCount").innerHTML = totalSoal - benar;
+                document.getElementById("skorPoinAkhir").innerHTML = skorSesi;
+                let persen = Math.round((benar / totalSoal) * 100);
+                document.getElementById("skorPersen").innerHTML = "(" + persen + "%)";
                 return;
             }
 
             const soal = sesiSoal[indeksAktif];
             const pilihan = buatPilihan(soal);
 
-            document.getElementById("labelNomorSoal").innerHTML = `Soal ${indeksAktif + 1} dari ${MAX_SOAL}`;
-            document.getElementById("teksSoal").innerHTML = `<span class="text-indigo-600">Pilih arti dari:</span><br />"${soal.word}"`;
+            document.getElementById("labelNomorSoal").innerHTML = "Soal " + (indeksAktif + 1) + " dari " + MAX_SOAL;
+            document.getElementById("teksSoal").innerHTML = '<span class="text-indigo-600">Pilih arti dari:</span><br />"' + soal.word + '"';
 
-            // Render opsi
             const areaPilihan = document.getElementById("areaPilihan");
             areaPilihan.innerHTML = "";
             pilihan.forEach((opsi) => {
@@ -341,21 +338,19 @@
                 areaPilihan.appendChild(btn);
             });
 
-            // Reset state
             sudahDijawab = false;
             document.getElementById("pesanHasil").classList.add("hidden");
             document.getElementById("tombolLanjut").classList.add("hidden");
             document.getElementById("tombolSelesai").classList.add("hidden");
             document.getElementById("areaSoal").classList.remove("hidden");
+            document.getElementById("hasilSkor").classList.add("hidden");
 
-            // Reset timer
             waktuTersisa = WAKTU_PER_SOAL;
             document.getElementById("timerDisplay").innerHTML = waktuTersisa;
             document.getElementById("timerFill").style.width = "100%";
             startTimer();
         }
 
-        // Pilih jawaban
         function pilihJawaban(btn, dipilih, kunciBenar) {
             if (sudahDijawab) return;
             sudahDijawab = true;
@@ -368,7 +363,6 @@
             const pesan = document.getElementById("pesanHasil");
             pesan.classList.remove("hidden");
 
-            // Tandai semua opsi
             semuaBtn.forEach(b => {
                 if (b.dataset.value === kunciBenar) {
                     b.classList.add("correct");
@@ -380,19 +374,19 @@
             if (isBenar) {
                 skorSesi += 10;
                 streakSesi += 1;
-                pesan.innerHTML = `✅ <b>Benar!</b> +10 poin (🔥 Streak: ${streakSesi})`;
+                statusRiwayat[indeksAktif] = { sudahBenar: true };
+                pesan.innerHTML = "✅ <b>Benar!</b> +10 poin (🔥 Streak: " + streakSesi + ")";
                 pesan.className = "mt-4 p-4 rounded-xl border-2 border-green-200 bg-green-50 text-green-700 text-center font-bold text-lg";
             } else {
                 streakSesi = 0;
-                pesan.innerHTML = `❌ <b>Kurang tepat.</b> Jawaban yang benar: <span class="font-bold text-green-600">"${kunciBenar}"</span>`;
+                statusRiwayat[indeksAktif] = { sudahBenar: false };
+                pesan.innerHTML = '❌ <b>Kurang tepat.</b> Jawaban yang benar: <span class="font-bold text-green-600">"' + kunciBenar + '"</span>';
                 pesan.className = "mt-4 p-4 rounded-xl border-2 border-red-200 bg-red-50 text-red-700 text-center font-bold text-lg";
             }
 
-            // Update tampilan skor & streak
             document.getElementById("skorSesi").innerHTML = skorSesi;
             document.getElementById("streak").innerHTML = streakSesi;
 
-            // Tampilkan tombol lanjut / selesai
             if (indeksAktif < MAX_SOAL - 1) {
                 document.getElementById("tombolLanjut").classList.remove("hidden");
             } else {
@@ -400,15 +394,14 @@
             }
         }
 
-        // Soal berikutnya
         function soalBerikutnya() {
             indeksAktif++;
             muatSoal();
         }
 
-        // ============================================================
+        // ================================================================
         //  TIMER
-        // ============================================================
+        // ================================================================
         function startTimer() {
             stopTimer();
             waktuTersisa = WAKTU_PER_SOAL;
@@ -424,7 +417,6 @@
                 if (waktuTersisa <= 0) {
                     clearInterval(timerInterval);
                     timerInterval = null;
-                    // Timeout: otomatis salah
                     if (!sudahDijawab) {
                         sudahDijawab = true;
                         const soal = sesiSoal[indeksAktif];
@@ -437,7 +429,8 @@
                         });
                         const pesan = document.getElementById("pesanHasil");
                         pesan.classList.remove("hidden");
-                        pesan.innerHTML = `⏰ <b>Waktu habis!</b> Jawaban yang benar: <span class="font-bold text-green-600">"${soal.meaning}"</span>`;
+                        statusRiwayat[indeksAktif] = { sudahBenar: false };
+                        pesan.innerHTML = '⏰ <b>Waktu habis!</b> Jawaban yang benar: <span class="font-bold text-green-600">"' + soal.meaning + '"</span>';
                         pesan.className = "mt-4 p-4 rounded-xl border-2 border-yellow-200 bg-yellow-50 text-yellow-700 text-center font-bold text-lg";
                         streakSesi = 0;
                         document.getElementById("streak").innerHTML = streakSesi;
@@ -459,31 +452,45 @@
             }
         }
 
-        // ============================================================
+        // ================================================================
         //  SIMPAN POIN
-        // ============================================================
+        // ================================================================
         function simpanPoinDanSelesai() {
-            totalPoinLama = parseInt(localStorage.getItem('poinMurid')) || 0;
-            localStorage.setItem('poinMurid', totalPoinLama + skorSesi);
-            // Redirect ke halaman utama
-            window.location.href = "index.html";
+            // Hitung skor akhir
+            let totalSoal = sesiSoal.length;
+            let benar = 0;
+            for (let i = 0; i < totalSoal; i++) {
+                if (statusRiwayat[i] && statusRiwayat[i].sudahBenar) benar++;
+            }
+            document.getElementById("hasilSkor").classList.remove("hidden");
+            document.getElementById("skorBenar").innerHTML = benar;
+            document.getElementById("skorTotal").innerHTML = totalSoal;
+            document.getElementById("benarCount").innerHTML = benar;
+            document.getElementById("salahCount").innerHTML = totalSoal - benar;
+            document.getElementById("skorPoinAkhir").innerHTML = skorSesi;
+            let persen = Math.round((benar / totalSoal) * 100);
+            document.getElementById("skorPersen").innerHTML = "(" + persen + "%)";
+            document.getElementById("tombolSelesai").classList.add("hidden");
+            document.getElementById("areaSoal").classList.add("hidden");
+
+            let poinTotalLama = parseInt(localStorage.getItem('poinMurid')) || 0;
+            localStorage.setItem('poinMurid', poinTotalLama + skorSesi);
         }
 
-        // ============================================================
+        // ================================================================
         //  INISIALISASI
-        // ============================================================
+        // ================================================================
         function initGame() {
-            // Tampilkan poin total dari localStorage
             const poin = parseInt(localStorage.getItem('poinMurid')) || 0;
             document.getElementById("poinTotal").innerHTML = poin;
-
-            // Ambil 10 soal acak
             sesiSoal = ambilSoalAcak();
             indeksAktif = 0;
             skorSesi = 0;
             streakSesi = 0;
+            statusRiwayat = {};
             document.getElementById("skorSesi").innerHTML = "0";
             document.getElementById("streak").innerHTML = "0";
+            document.getElementById("hasilSkor").classList.add("hidden");
             muatSoal();
         }
 
