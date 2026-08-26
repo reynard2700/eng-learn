@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Writing SMP (20 Soal) | ENG-LEARN</title>
+    <title>Writing SMA (20 Soal) | ENG-LEARN</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
         * {
             font-family: 'Poppins', sans-serif;
@@ -13,31 +13,60 @@
         body {
             min-height: 100vh;
             padding: 1.5rem;
-            background-color: #eff6ff;
+            background-color: #fff7ed;
         }
         .max-w-3xl {
             max-width: 48rem;
             margin-left: auto;
             margin-right: auto;
         }
+        .option-btn {
+            transition: all 0.2s ease;
+            border: 2px solid #e5e7eb;
+            background: white;
+            padding: 16px 12px;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 1rem;
+            min-height: 56px;
+            cursor: pointer;
+            text-align: center;
+        }
+        .option-btn:hover {
+            border-color: #f97316;
+            background: #fff7ed;
+        }
+        .option-btn.correct {
+            border-color: #22c55e;
+            background: #dcfce7;
+        }
+        .option-btn.wrong {
+            border-color: #ef4444;
+            background: #fee2e2;
+        }
+        .option-btn.disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        .option-btn.selected {
+            border-color: #f97316;
+            background: #ffedd5;
+        }
         @media (max-width: 640px) {
-            #areaPilihan {
-                grid-template-columns: 1fr 1fr !important;
+            .option-btn {
+                font-size: 0.85rem !important;
+                padding: 14px 8px !important;
+                min-height: 50px !important;
+            }
+            .bg-white.rounded-3xl {
+                padding: 16px !important;
+            }
+            #teksSoal {
+                font-size: 1rem !important;
+            }
+            .max-w-3xl.mx-auto.mb-6.flex.justify-between {
+                flex-wrap: wrap !important;
                 gap: 12px !important;
-            }
-            #areaPilihan button {
-                padding: 16px 8px !important;
-                font-size: 0.9rem !important;
-                min-height: 52px !important;
-            }
-            .flex.gap-3 {
-                flex-direction: column !important;
-                gap: 12px !important;
-            }
-            #tombolSebelumnya,
-            #tombolLanjut {
-                width: 100% !important;
-                min-height: 52px !important;
             }
             #tombolKirim,
             #tombolLanjut,
@@ -46,325 +75,349 @@
                 font-size: 1rem !important;
                 min-height: 56px !important;
             }
-            .max-w-3xl.mx-auto.mb-6.flex.justify-between {
-                flex-wrap: wrap !important;
-                gap: 12px !important;
-            }
-            .bg-white.rounded-3xl {
-                padding: 16px !important;
-            }
-            #teksSoal {
-                font-size: 1rem !important;
-            }
-            #kotakMateri {
-                font-size: 0.9rem !important;
-                padding: 12px !important;
+            .flex.gap-3 {
+                flex-direction: column !important;
+                gap: 10px !important;
             }
         }
         button:active {
             transform: scale(0.96);
-            transition: transform 0.1s ease;
         }
-        #areaPilihan button.bg-blue-500,
-        #areaPilihan button.bg-blue-500:active {
-            color: white !important;
+        .btn-back {
+            background: white;
+            border-radius: 12px;
+            padding: 8px 16px;
+            font-weight: 600;
+            color: #d97706;
+            border: 2px solid #fde68a;
+            transition: all 0.2s;
+        }
+        .btn-back:hover {
+            background: #fffbeb;
         }
     </style>
 </head>
 <body>
 
-    <div class="max-w-3xl mx-auto mb-6 flex justify-between items-center">
-        <a href="smp.html" onclick="return confirm('Yakin mau kembali? Poin sesi ini akan hangus lho!')" class="inline-flex items-center text-red-500 hover:text-red-700 font-bold bg-white px-4 py-2 rounded-xl shadow-sm border border-red-100 transition-all">
-            ⬅️ Batal & Kembali
-        </a>
-        <div class="bg-blue-500 text-white font-bold px-6 py-2 rounded-xl shadow-md flex items-center gap-2 text-lg">
-            ⭐ Poin Sesi: <span id="poinSesiTampil">0</span>
-        </div>
-    </div>
+    <div class="max-w-3xl mx-auto">
 
-    <div class="max-w-3xl mx-auto bg-white rounded-3xl p-8 shadow-xl border-2 border-blue-50">
-        <div class="flex justify-between items-center mb-4 border-b-2 border-blue-100 pb-4">
-            <h1 class="text-2xl font-bold text-gray-800">✍️ Writing SMP (20 Soal)</h1>
-            <span id="labelNomorSoal" class="bg-blue-100 text-blue-700 font-bold px-4 py-1 rounded-full text-sm">Soal 1 dari 20</span>
+        <!-- TOP BAR -->
+        <div class="mb-6 flex flex-wrap justify-between items-center gap-3">
+            <a href="sma.html" onclick="return confirm('Yakin mau kembali? Poin sesi ini akan hangus lho!')" class="btn-back inline-flex items-center gap-1">
+                ⬅️ Batal & Kembali
+            </a>
+            <div class="bg-orange-500 text-white font-bold px-6 py-2 rounded-xl shadow-md flex items-center gap-2 text-lg">
+                ⭐ Poin Sesi: <span id="poinSesiTampil">0</span>
+            </div>
         </div>
 
-        <!-- CLUE UMUM DI ATAS SOAL -->
-        <div id="kotakMateri" class="mb-6 text-gray-700 text-base bg-blue-50 p-4 rounded-xl border border-blue-100 font-medium"></div>
-
-        <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100">
-            <div id="teksSoal" class="text-xl font-medium mb-6 leading-relaxed text-center"></div>
-
-            <div id="areaPilihan" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6"></div>
-
-            <button id="tombolKirim" onclick="kirimJawaban()" class="w-full bg-blue-500 text-white px-6 py-3 rounded-xl font-bold text-lg hover:bg-blue-600 shadow-md transition-colors mb-4">
-                🚀 Kirim Jawaban
-            </button>
-
-            <div id="pesanHasil" class="hidden mb-6 p-4 rounded-xl border-2"></div>
-
-            <div id="kotakPenjelasanSemua" class="hidden mb-6 p-5 rounded-xl bg-white border-2 border-blue-200 shadow-sm">
-                <h3 class="font-bold text-blue-900 mb-3 text-base">📚 Bedah Fungsi Semua Opsi:</h3>
-                <div id="isiPenjelasanSemua" class="space-y-3 text-sm text-gray-700"></div>
+        <!-- KARTU WRITING -->
+        <div class="bg-white rounded-3xl p-8 shadow-xl border-2 border-orange-100">
+            <div class="flex justify-between items-center mb-4 border-b-2 border-orange-100 pb-4">
+                <h1 class="text-2xl font-extrabold text-gray-800 flex items-center gap-2">
+                    ✍️ Writing <span class="text-orange-500">SMA</span>
+                </h1>
+                <span id="labelNomorSoal" class="bg-orange-100 text-orange-700 font-bold px-4 py-1 rounded-full text-sm">
+                    Soal 1 dari 20
+                </span>
             </div>
 
-            <div class="flex gap-3">
-                <button id="tombolSebelumnya" onclick="soalSebelumnya()" class="hidden flex-1 bg-gray-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-gray-600 shadow-md transition-colors">
-                    ⬅️ Sebelumnya
+            <!-- Clue / Petunjuk ringan -->
+            <div id="kotakMateri" class="mb-6 text-gray-700 text-sm bg-orange-50 p-4 rounded-xl border border-orange-100 font-medium"></div>
+
+            <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-100">
+                <div id="teksSoal" class="text-xl font-medium mb-6 leading-relaxed text-center"></div>
+
+                <div id="areaPilihan" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6"></div>
+
+                <button id="tombolKirim" onclick="kirimJawaban()" class="w-full bg-orange-500 text-white px-6 py-3 rounded-xl font-bold text-lg hover:bg-orange-600 shadow-md transition-colors mb-4">
+                    🚀 Kirim Jawaban
                 </button>
-                <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden flex-1 bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-green-600 shadow-md transition-colors">
-                    ➡️ Lanjut
+
+                <div id="pesanHasil" class="hidden mb-6 p-4 rounded-xl border-2 text-center font-bold text-lg"></div>
+
+                <div id="kotakPenjelasanSemua" class="hidden mb-6 p-5 rounded-xl bg-white border-2 border-orange-200 shadow-sm">
+                    <h3 class="font-bold text-orange-900 mb-3 text-base">📚 Bedah Fungsi Semua Opsi:</h3>
+                    <div id="isiPenjelasanSemua" class="space-y-3 text-sm text-gray-700"></div>
+                </div>
+
+                <div class="flex gap-3">
+                    <button id="tombolSebelumnya" onclick="soalSebelumnya()" class="hidden flex-1 bg-gray-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-gray-600 shadow-md transition-colors">
+                        ⬅️ Sebelumnya
+                    </button>
+                    <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden flex-1 bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-green-600 shadow-md transition-colors">
+                        ➡️ Lanjut
+                    </button>
+                </div>
+
+                <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700 shadow-lg">
+                    🎉 Selesai & Simpan Poin!
                 </button>
             </div>
-
-            <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700 shadow-lg">
-                🎉 Selesai & Simpan Poin!
-            </button>
         </div>
     </div>
 
     <script>
+        // ================================================================
+        //  20 SOAL GRAMMAR SMA (TANPA CAMPURAN SMP)
+        // ================================================================
         const daftarSoal = [{
-            clue: "💡 Petunjuk: Perhatikan subjek 'She' (tunggal). Kata kerja untuk kebiasaan sehari-hari perlu akhiran khusus.",
-            depan: "She",
-            belakang: "to school every day.",
-            pilihan: ["go", "goes", "going", "went"],
-            kunci: "goes",
+            clue: "💡 Petunjuk: Pilih kata hubung yang menunjukkan akibat atau kesimpulan.",
+            depan: "It was raining heavily,",
+            belakang: "we canceled the match.",
+            pilihan: ["therefore", "however", "furthermore", "meanwhile"],
+            kunci: "therefore",
             penjelasan: {
-                "go": "<b>Go:</b> Digunakan untuk subjek I/You/They/We.",
-                "goes": "<b>Goes:</b> Bentuk yang tepat untuk subjek tunggal (She) dalam Simple Present.",
-                "going": "<b>Going:</b> Memerlukan to be (is going) untuk Present Continuous.",
-                "went": "<b>Went:</b> Ini adalah bentuk lampau (Past Tense)."
+                "therefore": "<b>Therefore:</b> Digunakan untuk menarik kesimpulan logis.",
+                "however": "<b>However:</b> Digunakan untuk menyatakan pertentangan.",
+                "furthermore": "<b>Furthermore:</b> Digunakan untuk menambah argumen.",
+                "meanwhile": "<b>Meanwhile:</b> Menunjukkan dua kejadian bersamaan."
             }
         }, {
-            clue: "💡 Petunjuk: 'Right now' menandakan kejadian yang sedang berlangsung. Butuh to be + kata kerja + ing.",
-            depan: "They",
-            belakang: "a movie right now.",
-            pilihan: ["watch", "watches", "watching", "are watching"],
-            kunci: "are watching",
+            clue: "💡 Petunjuk: Kata hubung untuk pertentangan atau hasil tak terduga.",
+            depan: "She studied hard;",
+            belakang: "she failed the exam.",
+            pilihan: ["therefore", "however", "moreover", "instead"],
+            kunci: "however",
             penjelasan: {
-                "watch": "<b>Watch:</b> Bentuk Simple Present.",
-                "watches": "<b>Watches:</b> Untuk subjek tunggal (He/She/It).",
-                "watching": "<b>Watching:</b> Kurang to be di depannya.",
-                "are watching": "<b>Are watching:</b> Subjek jamak (They) + are + V-ing untuk aksi sekarang."
+                "therefore": "<b>Therefore:</b> Menyimpulkan akibat.",
+                "however": "<b>However:</b> Menunjukkan kontras yang mengejutkan.",
+                "moreover": "<b>Moreover:</b> Menambah informasi senada.",
+                "instead": "<b>Instead:</b> Menunjukkan alternatif."
             }
         }, {
-            clue: "💡 Petunjuk: 'Last holiday' menunjukkan waktu lampau. Pilih bentuk kata kerja untuk masa lalu.",
-            depan: "I",
-            belakang: "to Bali last holiday.",
-            pilihan: ["go", "went", "have gone", "will go"],
-            kunci: "went",
+            clue: "💡 Petunjuk: Pola 'so + adjective + that' menyatakan akibat.",
+            depan: "It was",
+            belakang: "hot that we went swimming.",
+            pilihan: ["so", "such", "too", "very"],
+            kunci: "so",
             penjelasan: {
-                "go": "<b>Go:</b> Bentuk Present.",
-                "went": "<b>Went:</b> Bentuk lampau dari 'go' untuk kejadian masa lalu.",
-                "have gone": "<b>Have gone:</b> Present Perfect, biasanya tanpa keterangan waktu spesifik.",
-                "will go": "<b>Will go:</b> Untuk masa depan (Future)."
+                "so": "<b>So:</b> So + adjective + that.",
+                "such": "<b>Such:</b> Such + noun + that.",
+                "too": "<b>Too:</b> Terlalu, tanpa 'that'.",
+                "very": "<b>Very:</b> Hanya penguat, tanpa 'that'."
             }
         }, {
-            clue: "💡 Petunjuk: 'Next year' menunjukkan masa depan. Kata bantu yang tepat untuk rencana.",
-            depan: "We",
-            belakang: "a new house next year.",
-            pilihan: ["buy", "bought", "will buy", "are buying"],
-            kunci: "will buy",
+            clue: "💡 Petunjuk: Conditional Type 3 untuk pengandaian masa lalu.",
+            depan: "If she had studied,",
+            belakang: "the exam.",
+            pilihan: ["passes", "would pass", "would have passed", "passed"],
+            kunci: "would have passed",
             penjelasan: {
-                "buy": "<b>Buy:</b> Bentuk Present.",
-                "bought": "<b>Bought:</b> Past Tense.",
-                "will buy": "<b>Will buy:</b> 'Will' + V1 untuk rencana masa depan.",
-                "are buying": "<b>Are buying:</b> Bisa untuk rencana dekat, tapi 'will buy' lebih tepat untuk 'next year'."
+                "passes": "<b>Passes:</b> Type 1.",
+                "would pass": "<b>Would pass:</b> Type 2.",
+                "would have passed": "<b>Would have passed:</b> Type 3.",
+                "passed": "<b>Passed:</b> Simple Past."
             }
         }, {
-            clue: "💡 Petunjuk: Cari preposisi yang tepat untuk menunjukkan posisi benda di atas permukaan.",
-            depan: "The book is",
-            belakang: "the table.",
-            pilihan: ["in", "on", "at", "to"],
-            kunci: "on",
+            clue: "💡 Petunjuk: 'Otherwise' untuk peringatan.",
+            depan: "Hurry up;",
+            belakang: ", we will miss the train.",
+            pilihan: ["furthermore", "otherwise", "meanwhile", "consequently"],
+            kunci: "otherwise",
             penjelasan: {
-                "in": "<b>In:</b> Digunakan untuk ruang tertutup (in the room).",
-                "on": "<b>On:</b> Digunakan untuk posisi di atas permukaan.",
-                "at": "<b>At:</b> Digunakan untuk titik spesifik (at the bus stop).",
-                "to": "<b>To:</b> Menunjukkan arah tujuan."
+                "furthermore": "<b>Furthermore:</b> Menambah info.",
+                "otherwise": "<b>Otherwise:</b> Peringatan jika tidak dilakukan.",
+                "meanwhile": "<b>Meanwhile:</b> Waktu paralel.",
+                "consequently": "<b>Consequently:</b> Akibat langsung."
             }
         }, {
-            clue: "💡 Petunjuk: Kata 'three' menunjukkan jumlah lebih dari satu. Pilih bentuk jamak (plural).",
-            depan: "There are three",
-            belakang: "in the basket.",
-            pilihan: ["apple", "apples", "apple's", "appless"],
-            kunci: "apples",
+            clue: "💡 Petunjuk: Conditional Type 2 pakai 'were' untuk semua subjek.",
+            depan: "If I",
+            belakang: "you, I would accept it.",
+            pilihan: ["am", "was", "were", "have been"],
+            kunci: "were",
             penjelasan: {
-                "apple": "<b>Apple:</b> Bentuk tunggal.",
-                "apples": "<b>Apples:</b> Bentuk jamak dengan akhiran -s.",
-                "apple's": "<b>Apple's:</b> Menunjukkan kepemilikan (punya apel).",
-                "appless": "<b>Appless:</b> Bukan kata dalam bahasa Inggris."
+                "am": "<b>Am:</b> Present.",
+                "was": "<b>Was:</b> Bisa dipakai tapi 'were' lebih formal.",
+                "were": "<b>Were:</b> Type 2 wajib 'were'.",
+                "have been": "<b>Have been:</b> Present Perfect."
             }
         }, {
-            clue: "💡 Petunjuk: Kata 'before' menandakan pengalaman masa lalu tanpa waktu spesifik. Butuh have/has + V3.",
-            depan: "I",
-            belakang: "to that museum before.",
-            pilihan: ["go", "went", "have gone", "have been"],
-            kunci: "have been",
+            clue: "💡 Petunjuk: Conditional Type 1 realistis.",
+            depan: "If she studies hard,",
+            belakang: "the exam.",
+            pilihan: ["passes", "will pass", "would pass", "passed"],
+            kunci: "will pass",
             penjelasan: {
-                "go": "<b>Go:</b> Bentuk Present.",
-                "went": "<b>Went:</b> Simple Past, butuh keterangan waktu spesifik.",
-                "have gone": "<b>Have gone:</b> Berarti masih di sana (belum kembali).",
-                "have been": "<b>Have been:</b> Digunakan untuk pengalaman masa lalu tanpa waktu spesifik."
+                "passes": "<b>Passes:</b> Butuh 'will' di klausa utama.",
+                "will pass": "<b>Will pass:</b> Type 1.",
+                "would pass": "<b>Would pass:</b> Type 2.",
+                "passed": "<b>Passed:</b> Past Tense."
             }
         }, {
-            clue: "💡 Petunjuk: Kata ini digunakan untuk memberi saran atau rekomendasi kepada orang lain.",
-            depan: "You",
-            belakang: "bring an umbrella today.",
-            pilihan: ["must", "can", "should", "might"],
-            kunci: "should",
+            clue: "💡 Petunjuk: 'Who' untuk orang sebagai subjek.",
+            depan: "The teacher",
+            belakang: "teaches math is kind.",
+            pilihan: ["who", "whom", "which", "whose"],
+            kunci: "who",
             penjelasan: {
-                "must": "<b>Must:</b> Menunjukkan keharusan absolut.",
-                "can": "<b>Can:</b> Menunjukkan kemampuan.",
-                "should": "<b>Should:</b> Digunakan untuk memberikan saran.",
-                "might": "<b>Might:</b> Menunjukkan kemungkinan."
+                "who": "<b>Who:</b> Subjek orang.",
+                "whom": "<b>Whom:</b> Objek orang.",
+                "which": "<b>Which:</b> Benda/hewan.",
+                "whose": "<b>Whose:</b> Kepemilikan."
             }
         }, {
-            clue: "💡 Petunjuk: Kata 'engineer' diawali bunyi vokal. Artikel apa yang tepat di depannya?",
-            depan: "She wants to be",
-            belakang: "engineer.",
-            pilihan: ["a", "an", "the", "none"],
-            kunci: "an",
+            clue: "💡 Petunjuk: Past Passive: was/were + V3.",
+            depan: "The letter",
+            belakang: "by the secretary yesterday.",
+            pilihan: ["sent", "is sent", "was sent", "has sent"],
+            kunci: "was sent",
             penjelasan: {
-                "a": "<b>A:</b> Digunakan sebelum huruf konsonan.",
-                "an": "<b>An:</b> Digunakan sebelum bunyi vokal (a, i, u, e, o).",
-                "the": "<b>The:</b> Digunakan untuk benda yang sudah spesifik/dikenal.",
-                "none": "<b>None:</b> Kata benda tunggal yang disebut pertama kali butuh artikel."
+                "sent": "<b>Sent:</b> Aktif.",
+                "is sent": "<b>Is sent:</b> Present Passive.",
+                "was sent": "<b>Was sent:</b> Past Passive.",
+                "has sent": "<b>Has sent:</b> Active Perfect."
             }
         }, {
-            clue: "💡 Petunjuk: Kalimat tanya dengan subjek 'you' membutuhkan kata bantu yang tepat.",
+            clue: "💡 Petunjuk: Reported Speech: Present Perfect → Past Perfect.",
+            depan: "He said he",
+            belakang: "the document.",
+            pilihan: ["has", "have", "had", "will have"],
+            kunci: "had",
+            penjelasan: {
+                "has": "<b>Has:</b> Harus berubah ke lampau.",
+                "have": "<b>Have:</b> Tidak cocok.",
+                "had": "<b>Had:</b> Has → had.",
+                "will have": "<b>Will have:</b> Future Perfect."
+            }
+        }, {
+            clue: "💡 Petunjuk: Future Perfect: will have + V3.",
+            depan: "By next month, I",
+            belakang: "this project.",
+            pilihan: ["finish", "finished", "will finish", "will have finished"],
+            kunci: "will have finished",
+            penjelasan: {
+                "finish": "<b>Finish:</b> Present.",
+                "finished": "<b>Finished:</b> Past.",
+                "will finish": "<b>Will finish:</b> Kurang tepat.",
+                "will have finished": "<b>Will have finished:</b> Future Perfect."
+            }
+        }, {
+            clue: "💡 Petunjuk: Setelah 'mind' pakai Gerund (V-ing).",
+            depan: "I don't mind",
+            belakang: "late today.",
+            pilihan: ["stay", "to stay", "staying", "stayed"],
+            kunci: "staying",
+            penjelasan: {
+                "stay": "<b>Stay:</b> Bare infinitive.",
+                "to stay": "<b>To stay:</b> To infinitive.",
+                "staying": "<b>Staying:</b> Gerund (V-ing).",
+                "stayed": "<b>Stayed:</b> Past Tense."
+            }
+        }, {
+            clue: "💡 Petunjuk: 'Most of' = sebagian besar.",
             depan: "",
-            belakang: "you like to dance?",
-            pilihan: ["Are", "Do", "Does", "Is"],
-            kunci: "Do",
+            belakang: "of the students passed.",
+            pilihan: ["Many", "Much", "Most", "Every"],
+            kunci: "Most",
             penjelasan: {
-                "Are": "<b>Are:</b> Kata bantu untuk to be.",
-                "Do": "<b>Do:</b> Kata bantu untuk subjek I/You/They/We.",
-                "Does": "<b>Does:</b> Kata bantu untuk subjek tunggal (He/She/It).",
-                "Is": "<b>Is:</b> Kata bantu untuk to be."
+                "Many": "<b>Many:</b> Butuh 'Many of the'.",
+                "Much": "<b>Much:</b> Uncountable.",
+                "Most": "<b>Most:</b> Most of the...",
+                "Every": "<b>Every:</b> Singular."
             }
         }, {
-            clue: "💡 Petunjuk: Subjek 'I' selalu memiliki pasangan to be yang khusus. Pilih yang tepat.",
-            depan: "I",
-            belakang: "a dedicated student.",
-            pilihan: ["am", "is", "are", "be"],
-            kunci: "am",
+            clue: "💡 Petunjuk: 'News' selalu tunggal.",
+            depan: "The news",
+            belakang: "very shocking.",
+            pilihan: ["are", "is", "were", "have been"],
+            kunci: "is",
             penjelasan: {
-                "am": "<b>Am:</b> Pasangan khusus untuk subjek 'I'.",
-                "is": "<b>Is:</b> Untuk subjek He/She/It.",
-                "are": "<b>Are:</b> Untuk subjek You/They/We.",
-                "be": "<b>Be:</b> Bentuk dasar (infinitive) tanpa subjek."
+                "are": "<b>Are:</b> Plural.",
+                "is": "<b>Is:</b> News = tunggal.",
+                "were": "<b>Were:</b> Past plural.",
+                "have been": "<b>Have been:</b> Plural Perfect."
             }
         }, {
-            clue: "💡 Petunjuk: Pertanyaan untuk aksi yang sedang berlangsung. Subjek 'she' pakai to be apa?",
+            clue: "💡 Petunjuk: 'Interested in' + V-ing / noun.",
+            depan: "He is interested",
+            belakang: "learning English.",
+            pilihan: ["to", "at", "in", "for"],
+            kunci: "in",
+            penjelasan: {
+                "to": "<b>To:</b> Tidak tepat.",
+                "at": "<b>At:</b> Tidak tepat.",
+                "in": "<b>In:</b> Interested in.",
+                "for": "<b>For:</b> Tidak tepat."
+            }
+        }, {
+            clue: "💡 Petunjuk: Subjunctive setelah 'suggest' pakai V1.",
+            depan: "I suggest that he",
+            belakang: "harder.",
+            pilihan: ["study", "studies", "studied", "will study"],
+            kunci: "study",
+            penjelasan: {
+                "study": "<b>Study:</b> Subjunctive V1.",
+                "studies": "<b>Studies:</b> Present tunggal.",
+                "studied": "<b>Studied:</b> Past.",
+                "will study": "<b>Will study:</b> Future."
+            }
+        }, {
+            clue: "💡 Petunjuk: 'Turn off' = mematikan.",
+            depan: "Please",
+            belakang: "the lights before leaving.",
+            pilihan: ["turn on", "turn off", "turn down", "turn up"],
+            kunci: "turn off",
+            penjelasan: {
+                "turn on": "<b>Turn on:</b> Menyalakan.",
+                "turn off": "<b>Turn off:</b> Mematikan.",
+                "turn down": "<b>Turn down:</b> Menolak/mengecilkan.",
+                "turn up": "<b>Turn up:</b> Membesarkan."
+            }
+        }, {
+            clue: "💡 Petunjuk: Stop + V-ing (berhenti melakukan) vs Stop + to V (berhenti untuk...).",
+            depan: "She stopped",
+            belakang: "because she was tired.",
+            pilihan: ["smoke", "to smoke", "smoking", "smoked"],
+            kunci: "smoking",
+            penjelasan: {
+                "smoke": "<b>Smoke:</b> Bare infinitive.",
+                "to smoke": "<b>To smoke:</b> Berhenti untuk merokok (tujuan).",
+                "smoking": "<b>Smoking:</b> Berhenti merokok (aktivitas).",
+                "smoked": "<b>Smoked:</b> Past Tense."
+            }
+        }, {
+            clue: "💡 Petunjuk: Causative 'have something done'.",
+            depan: "She",
+            belakang: "her hair cut yesterday.",
+            pilihan: ["had", "has", "have", "was"],
+            kunci: "had",
+            penjelasan: {
+                "had": "<b>Had:</b> Causative Past.",
+                "has": "<b>Has:</b> Tidak cocok dengan 'yesterday'.",
+                "have": "<b>Have:</b> Tidak cocok.",
+                "was": "<b>Was:</b> Passive biasa."
+            }
+        }, {
+            clue: "💡 Petunjuk: Wish + could untuk keinginan di masa kini.",
+            depan: "I wish I",
+            belakang: "swim.",
+            pilihan: ["can", "could", "will", "would"],
+            kunci: "could",
+            penjelasan: {
+                "can": "<b>Can:</b> Present, tidak dipakai setelah wish.",
+                "could": "<b>Could:</b> Wish + could.",
+                "will": "<b>Will:</b> Future.",
+                "would": "<b>Would:</b> Lebih untuk preferensi."
+            }
+        }, {
+            clue: "💡 Petunjuk: Meskipun ada rintangan (Despite/Although).",
             depan: "",
-            belakang: "she reading a book now?",
-            pilihan: ["Is", "Are", "Do", "Does"],
-            kunci: "Is",
+            belakang: "the rain, we went out.",
+            pilihan: ["Although", "Despite", "Because", "Unless"],
+            kunci: "Despite",
             penjelasan: {
-                "Is": "<b>Is:</b> To be untuk subjek tunggal (she) dalam Present Continuous.",
-                "Are": "<b>Are:</b> To be untuk subjek jamak (they/we/you).",
-                "Do": "<b>Do:</b> Kata bantu untuk Simple Present.",
-                "Does": "<b>Does:</b> Kata bantu untuk Simple Present tunggal."
-            }
-        }, {
-            clue: "💡 Petunjuk: 'This morning' menunjukkan waktu lampau. Kata kerja 'eat' berubah menjadi apa?",
-            depan: "She",
-            belakang: "an apple this morning.",
-            pilihan: ["eat", "ate", "eaten", "eats"],
-            kunci: "ate",
-            penjelasan: {
-                "eat": "<b>Eat:</b> Bentuk Present.",
-                "ate": "<b>Ate:</b> Bentuk lampau (Past Tense) dari 'eat'.",
-                "eaten": "<b>Eaten:</b> Past Participle (V3), membutuhkan has/have.",
-                "eats": "<b>Eats:</b> Bentuk Present untuk subjek tunggal."
-            }
-        }, {
-            clue: "💡 Petunjuk: 'Next week' menunjukkan rencana masa depan yang sudah pasti. Frasa apa yang tepat?",
-            depan: "We",
-            belakang: "visit grandma next week.",
-            pilihan: ["go", "went", "will go", "are going to"],
-            kunci: "are going to",
-            penjelasan: {
-                "go": "<b>Go:</b> Bentuk Present.",
-                "went": "<b>Went:</b> Past Tense.",
-                "will go": "<b>Will go:</b> Bisa dipakai, tapi 'going to' lebih natural untuk rencana matang.",
-                "are going to": "<b>Are going to:</b> Digunakan untuk rencana yang sudah pasti di masa depan."
-            }
-        }, {
-            clue: "💡 Petunjuk: 'Milk' adalah benda yang tidak bisa dihitung (uncountable). Pilih kata penunjuk jumlah yang tepat.",
-            depan: "There isn't",
-            belakang: "milk in the fridge.",
-            pilihan: ["many", "much", "few", "a lot"],
-            kunci: "much",
-            penjelasan: {
-                "many": "<b>Many:</b> Untuk benda yang bisa dihitung (countable plural).",
-                "much": "<b>Much:</b> Untuk benda yang tidak bisa dihitung (uncountable).",
-                "few": "<b>Few:</b> Untuk countable plural dengan arti 'sedikit'.",
-                "a lot": "<b>A lot:</b> Biasanya dipakai di kalimat positif, di negatif lebih umum 'much'."
-            }
-        }, {
-            clue: "💡 Petunjuk: Ada dua kejadian di masa lalu. Satu sedang berlangsung, satu tiba-tiba terjadi. Pilih bentuk yang tepat.",
-            depan: "She",
-            belakang: "dinner when I arrived.",
-            pilihan: ["cook", "cooked", "was cooking", "has cooked"],
-            kunci: "was cooking",
-            penjelasan: {
-                "cook": "<b>Cook:</b> Bentuk Present.",
-                "cooked": "<b>Cooked:</b> Simple Past (aksi selesai).",
-                "was cooking": "<b>Was cooking:</b> Past Continuous untuk aksi yang sedang berlangsung.",
-                "has cooked": "<b>Has cooked:</b> Present Perfect."
-            }
-        }, {
-            clue: "💡 Petunjuk: Kata ini digunakan untuk menyatakan kemampuan (ability) melakukan sesuatu.",
-            depan: "I",
-            belakang: "speak three languages.",
-            pilihan: ["can", "may", "must", "should"],
-            kunci: "can",
-            penjelasan: {
-                "can": "<b>Can:</b> Digunakan untuk menyatakan kemampuan.",
-                "may": "<b>May:</b> Digunakan untuk izin atau kemungkinan.",
-                "must": "<b>Must:</b> Digunakan untuk keharusan.",
-                "should": "<b>Should:</b> Digunakan untuk saran."
-            }
-        }, {
-            clue: "💡 Petunjuk: Kata ganti kepemilikan yang berdiri sendiri (tanpa diikuti kata benda).",
-            depan: "This bag is",
-            belakang: ", not yours.",
-            pilihan: ["my", "mine", "me", "I"],
-            kunci: "mine",
-            penjelasan: {
-                "my": "<b>My:</b> Diikuti kata benda (my bag).",
-                "mine": "<b>Mine:</b> Berdiri sendiri tanpa kata benda.",
-                "me": "<b>Me:</b> Object pronoun (untuk objek).",
-                "I": "<b>I:</b> Subject pronoun (untuk subjek)."
-            }
-        }, {
-            clue: "💡 Petunjuk: Kata ini menunjukkan alasan (sebab) dari suatu kejadian.",
-            depan: "She was happy",
-            belakang: "she got a gift.",
-            pilihan: ["because", "so", "but", "although"],
-            kunci: "because",
-            penjelasan: {
-                "because": "<b>Because:</b> Menunjukkan alasan atau sebab.",
-                "so": "<b>So:</b> Menunjukkan akibat.",
-                "but": "<b>But:</b> Menunjukkan pertentangan.",
-                "although": "<b>Although:</b> Menunjukkan konsesi (meskipun)."
-            }
-        }, {
-            clue: "💡 Petunjuk: Dalam kalimat negatif, kata penunjuk benda tak tentu yang tepat adalah...",
-            depan: "There isn't",
-            belakang: "sugar in the jar.",
-            pilihan: ["some", "any", "many", "much"],
-            kunci: "any",
-            penjelasan: {
-                "some": "<b>Some:</b> Digunakan dalam kalimat positif.",
-                "any": "<b>Any:</b> Digunakan dalam kalimat negatif atau pertanyaan.",
-                "many": "<b>Many:</b> Untuk countable plural.",
-                "much": "<b>Much:</b> Untuk uncountable, tapi 'any' lebih umum di negatif."
+                "Although": "<b>Although:</b> Diikuti klausa (S+V).",
+                "Despite": "<b>Despite:</b> Diikuti kata benda.",
+                "Because": "<b>Because:</b> Sebab.",
+                "Unless": "<b>Unless:</b> Kondisi."
             }
         }];
 
+        // ================================================================
+        //  STATE & LOGIC
+        // ================================================================
         let indeksSoalAktif = 0;
         let poinSesi = 0;
         let pilihanDipilih = null;
@@ -372,10 +425,13 @@
 
         function muatSoal() {
             let soal = daftarSoal[indeksSoalAktif];
-            document.getElementById("labelNomorSoal").innerHTML = "Soal " + (indeksSoalAktif + 1) + " dari 20";
-            document.getElementById("kotakMateri").innerHTML = soal.clue;
+            document.getElementById("labelNomorSoal").innerHTML = "Soal " + (indeksSoalAktif + 1) + " dari " + daftarSoal
+                .length;
+            document.getElementById("kotakMateri").innerHTML = soal.clue || "";
             let depan = soal.depan ? soal.depan + " " : "";
-            document.getElementById("teksSoal").innerHTML = '"' + depan + '<span class="text-blue-600 font-bold underline bg-blue-100 px-2 py-1 rounded">[ ... ]</span> ' + soal.belakang + '"';
+            document.getElementById("teksSoal").innerHTML = '"' + depan +
+                '<span class="text-orange-600 font-bold underline bg-orange-100 px-2 py-1 rounded">[ ... ]</span> ' + soal
+                .belakang + '"';
 
             let areaPilihan = document.getElementById("areaPilihan");
             areaPilihan.innerHTML = "";
@@ -385,7 +441,7 @@
                 let tombol = document.createElement("button");
                 tombol.innerHTML = opsi;
                 tombol.id = "opsi-" + opsi;
-                tombol.className = "bg-white border-2 border-blue-200 text-blue-700 font-bold py-4 rounded-xl shadow-sm hover:bg-blue-50 hover:border-blue-400 transition-all text-xl capitalize";
+                tombol.className = "option-btn";
                 tombol.onclick = function() { pilihOpsi(opsi); };
                 areaPilihan.appendChild(tombol);
             });
@@ -418,15 +474,10 @@
         }
 
         function tandaiTombolTerpilih(opsiTerpilih) {
-            let soal = daftarSoal[indeksSoalAktif];
-            soal.pilihan.forEach(function(o) {
-                let btn = document.getElementById("opsi-" + o);
-                if (btn) {
-                    if (o === opsiTerpilih) {
-                        btn.className = "bg-blue-500 border-2 border-blue-600 text-white font-bold py-4 rounded-xl shadow-md transition-all text-xl capitalize";
-                    } else {
-                        btn.className = "bg-white border-2 border-blue-200 text-blue-700 font-bold py-4 rounded-xl shadow-sm hover:bg-blue-50 transition-all text-xl capitalize";
-                    }
+            document.querySelectorAll(".option-btn").forEach(function(btn) {
+                btn.classList.remove("selected");
+                if (btn.innerHTML === opsiTerpilih) {
+                    btn.classList.add("selected");
                 }
             });
         }
@@ -440,7 +491,7 @@
             let isBenar = (pilihanDipilih === soalAktif.kunci);
             if (isBenar) {
                 if (!statusRiwayat[indeksSoalAktif] || !statusRiwayat[indeksSoalAktif].sudahBenar) {
-                    poinSesi += 10;
+                    poinSesi += 20;
                     document.getElementById("poinSesiTampil").innerHTML = poinSesi;
                 }
                 statusRiwayat[indeksSoalAktif] = { sudahBenar: true, pilihan: pilihanDipilih };
@@ -467,10 +518,21 @@
                 htmlSemua += '<div class="' + statusWarna + '">• ' + soalAktif.penjelasan[key] + '</div>';
             }
             isiPenjelasan.innerHTML = htmlSemua;
+
+            // Tandai tombol
+            document.querySelectorAll(".option-btn").forEach(function(btn) {
+                btn.classList.add("disabled");
+                if (btn.innerHTML === soalAktif.kunci) {
+                    btn.classList.add("correct");
+                } else if (btn.innerHTML === pilihanDipilih && !isBenar) {
+                    btn.classList.add("wrong");
+                }
+            });
+
             if (isBenar) {
                 pesan.innerHTML = dariReview ?
                     '📚 <b>Mode Review:</b> Soal ini sudah kamu jawab dengan benar sebelumnya.' :
-                    '🎉 <b>Tepat sekali! Pilihanmu benar.</b>';
+                    '🎉 <b>Tepat sekali! Pilihanmu benar.</b> (+20 Poin)';
                 pesan.className = "mb-4 p-4 rounded-xl border-2 bg-green-50 text-green-800 border-green-200 text-base";
                 document.getElementById("tombolKirim").classList.add("hidden");
                 if (indeksSoalAktif < daftarSoal.length - 1) {
@@ -501,7 +563,7 @@
         function simpanPoinDanSelesai() {
             let poinTotalLama = parseInt(localStorage.getItem('poinMurid')) || 0;
             localStorage.setItem('poinMurid', poinTotalLama + poinSesi);
-            window.location.href = "smp.html";
+            window.location.href = "sma.html";
         }
 
         muatSoal();
