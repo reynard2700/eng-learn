@@ -125,6 +125,16 @@
             animation: pulse-badge 1.5s ease-in-out infinite;
         }
 
+        /* Kartu fitur skill */
+        .skill-card {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .skill-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+        }
+
         /* Responsive */
         @media (max-width: 640px) {
             .grid-cols-1.md\:grid-cols-2 {
@@ -150,7 +160,6 @@
     <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
-            <!-- LOGO + TEKS (Bisa diklik ke Home) -->
             <a href="/" class="logo-link flex items-center gap-3">
                 <svg class="logo-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect x="4" y="6" width="32" height="36" rx="4" fill="#6366f1" opacity="0.15" />
@@ -164,23 +173,19 @@
                 <span class="text-xl font-extrabold text-indigo-600">English<span class="text-gray-800">Learning</span></span>
             </a>
 
-            <!-- Navigasi Desktop -->
             <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-gray-600">
                 <a href="#fitur" class="hover:text-indigo-600 transition">Fitur</a>
                 <a href="#kelas" class="hover:text-indigo-600 transition">Kelas</a>
                 <a href="#tentang" class="hover:text-indigo-600 transition">Tentang</a>
             </nav>
 
-            <!-- Tombol Masuk (Desktop) -->
             <a href="#kelas" class="hidden md:inline-block bg-indigo-600 text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-indigo-700 transition shadow-md hover:shadow-lg">
                 🚀 Mulai Belajar
             </a>
 
-            <!-- Menu Hamburger (Mobile) -->
             <button class="md:hidden text-gray-600 text-2xl" onclick="toggleMenu()">☰</button>
         </div>
 
-        <!-- Mobile Menu -->
         <div id="mobileMenu" class="md:hidden hidden bg-white border-t border-gray-100 px-6 py-4 space-y-3 text-sm font-semibold text-gray-600">
             <a href="#fitur" class="block hover:text-indigo-600 transition" onclick="toggleMenu()">Fitur</a>
             <a href="#kelas" class="block hover:text-indigo-600 transition" onclick="toggleMenu()">Kelas</a>
@@ -214,7 +219,6 @@
                     Kuasai <strong class="text-white">Writing, Listening, Speaking, &amp; Reading</strong> dengan metode yang menyenangkan.
                 </p>
 
-                <!-- Tombol CTA Utama -->
                 <div class="flex flex-wrap gap-4 animate-fade-up delay-3">
                     <a href="#kelas" class="btn-cta text-white px-10 py-4 rounded-full text-lg font-bold inline-flex items-center gap-2">
                         🎯 Mulai Belajar Sekarang
@@ -227,7 +231,6 @@
                     </a>
                 </div>
 
-                <!-- Statistik -->
                 <div class="flex gap-8 pt-4 text-sm text-gray-300 animate-fade-up delay-3">
                     <div><span class="font-extrabold text-indigo-300 text-xl">20+</span> Soal Interaktif</div>
                     <div><span class="font-extrabold text-indigo-300 text-xl">4</span> Kemampuan</div>
@@ -238,75 +241,88 @@
     </section>
 
     <!-- ============================================================ -->
-    <!-- FITUR UNGGULAN (6 FITUR TERPISAH) -->
+    <!-- FITUR BAGIAN 1: 4 KEMAMPUAN UTAMA -->
     <!-- ============================================================ -->
     <section id="fitur" class="py-20 px-6 bg-white">
         <div class="max-w-6xl mx-auto text-center">
             <h2 class="text-3xl lg:text-4xl font-extrabold text-gray-800 mb-4">
-                🚀 Apa yang Kamu Pelajari?
+                🚀 4 Kemampuan Utama
             </h2>
             <p class="text-gray-500 max-w-2xl mx-auto mb-16">
-                Enam kemampuan utama yang akan kamu asah di English Learning.
+                Asah kemampuan bahasa Inggrismu dari 4 sisi: menulis, mendengar, berbicara, dan membaca.
             </p>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
-                <!-- Fitur 1: Writing -->
-                <div class="bg-indigo-50/50 rounded-3xl p-6 border border-indigo-100 hover:shadow-xl transition hover:-translate-y-2 group">
-                    <div class="w-14 h-14 bg-indigo-100 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 group-hover:scale-110 transition">✍️</div>
-                    <h3 class="text-lg font-bold text-gray-800 mb-1">Writing</h3>
-                    <p class="text-gray-600 text-sm mb-3">Latih tata bahasa &amp; menulis.</p>
-                    <a href="#kelas" class="inline-block text-sm bg-indigo-500 hover:bg-indigo-600 text-white font-bold px-4 py-2 rounded-full transition">Mulai</a>
-                </div>
+                <!-- Writing -->
+                <a href="#kelas" class="skill-card bg-indigo-50/50 rounded-3xl p-8 border border-indigo-100 hover:border-indigo-300 text-center">
+                    <div class="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4">✍️</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Writing</h3>
+                    <p class="text-gray-600 text-sm">Latih tata bahasa dan penyusunan kalimat.</p>
+                </a>
 
-                <!-- Fitur 2: Listening -->
-                <div class="bg-green-50/50 rounded-3xl p-6 border border-green-100 hover:shadow-xl transition hover:-translate-y-2 group">
-                    <div class="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 group-hover:scale-110 transition">🎧</div>
-                    <h3 class="text-lg font-bold text-gray-800 mb-1">Listening</h3>
-                    <p class="text-gray-600 text-sm mb-3">Tingkatkan pemahaman audio.</p>
-                    <a href="#kelas" class="inline-block text-sm bg-green-500 hover:bg-green-600 text-white font-bold px-4 py-2 rounded-full transition">Mulai</a>
-                </div>
+                <!-- Listening -->
+                <a href="#kelas" class="skill-card bg-green-50/50 rounded-3xl p-8 border border-green-100 hover:border-green-300 text-center">
+                    <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4">🎧</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Listening</h3>
+                    <p class="text-gray-600 text-sm">Tingkatkan pemahaman dengan audio.</p>
+                </a>
 
-                <!-- Fitur 3: Speaking -->
-                <div class="bg-purple-50/50 rounded-3xl p-6 border border-purple-100 hover:shadow-xl transition hover:-translate-y-2 group">
-                    <div class="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 group-hover:scale-110 transition">🗣️</div>
-                    <h3 class="text-lg font-bold text-gray-800 mb-1">Speaking</h3>
-                    <p class="text-gray-600 text-sm mb-3">Latih pengucapan dengan AI.</p>
-                    <a href="#kelas" class="inline-block text-sm bg-purple-500 hover:bg-purple-600 text-white font-bold px-4 py-2 rounded-full transition">Mulai</a>
-                </div>
+                <!-- Speaking -->
+                <a href="#kelas" class="skill-card bg-purple-50/50 rounded-3xl p-8 border border-purple-100 hover:border-purple-300 text-center">
+                    <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4">🗣️</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Speaking</h3>
+                    <p class="text-gray-600 text-sm">Latih pengucapan dengan speech recognition.</p>
+                </a>
 
-                <!-- Fitur 4: Reading -->
-                <div class="bg-cyan-50/50 rounded-3xl p-6 border border-cyan-100 hover:shadow-xl transition hover:-translate-y-2 group">
-                    <div class="w-14 h-14 bg-cyan-100 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 group-hover:scale-110 transition">📖</div>
-                    <h3 class="text-lg font-bold text-gray-800 mb-1">Reading</h3>
-                    <p class="text-gray-600 text-sm mb-3">Pahami berbagai teks bacaan.</p>
-                    <a href="#kelas" class="inline-block text-sm bg-cyan-500 hover:bg-cyan-600 text-white font-bold px-4 py-2 rounded-full transition">Mulai</a>
-                </div>
+                <!-- Reading -->
+                <a href="#kelas" class="skill-card bg-cyan-50/50 rounded-3xl p-8 border border-cyan-100 hover:border-cyan-300 text-center">
+                    <div class="w-16 h-16 bg-cyan-100 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4">📖</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Reading</h3>
+                    <p class="text-gray-600 text-sm">Latih pemahaman teks berbagai jenis.</p>
+                </a>
 
-                <!-- Fitur 5: Vocabulary Game -->
-                <div class="bg-yellow-50/50 rounded-3xl p-6 border border-yellow-100 hover:shadow-xl transition hover:-translate-y-2 group relative overflow-hidden">
-                    <div class="absolute -top-10 -right-10 w-24 h-24 bg-yellow-200/30 rounded-full blur-2xl group-hover:scale-150 transition duration-500"></div>
-                    <div class="relative z-10">
-                        <div class="w-14 h-14 bg-yellow-100 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 group-hover:scale-110 transition">🎮</div>
-                        <h3 class="text-lg font-bold text-gray-800 mb-1">Vocab Game</h3>
-                        <p class="text-gray-600 text-sm mb-3">Tebak arti kata dalam 15 detik!</p>
-                        <a href="vocab-game.html" class="inline-block text-sm bg-yellow-500 hover:bg-yellow-600 text-white font-bold px-4 py-2 rounded-full transition">🎯 Mainkan</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- FITUR BAGIAN 2: VOCABULARY & DAILY CHALLENGE (BAR TERPISAH) -->
+    <!-- ============================================================ -->
+    <section class="py-16 px-6 bg-gradient-to-r from-yellow-50 via-amber-50 to-orange-50 border-y-2 border-yellow-100">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 bg-yellow-200/60 text-yellow-800 px-4 py-1.5 rounded-full text-sm font-bold mb-4">
+                🎮 Bonus
+            </div>
+            <h2 class="text-2xl lg:text-3xl font-extrabold text-gray-800 mb-3">
+                Vocabulary &amp; Daily Challenge
+            </h2>
+            <p class="text-gray-600 text-sm max-w-2xl mx-auto mb-10">
+                Asah kosakata dengan kuis interaktif dan dapatkan tantangan baru setiap hari!
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+
+                <!-- Vocab Game -->
+                <a href="vocab-game.html" class="bg-white rounded-2xl p-8 shadow-md hover:shadow-xl transition hover:-translate-y-1 border-2 border-yellow-200 hover:border-yellow-400 group">
+                    <div class="text-5xl mb-3 group-hover:scale-110 transition">🎮</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-1">Vocab Game</h3>
+                    <p class="text-gray-500 text-sm">Tebak arti kata dalam 15 detik!</p>
+                    <div class="inline-block mt-4 text-sm bg-indigo-500 text-white px-5 py-2 rounded-full font-semibold hover:bg-indigo-600 transition">
+                        🚀 Mainkan
                     </div>
-                </div>
+                </a>
 
-                <!-- Fitur 6: Daily Challenge -->
-                <div class="bg-orange-50/50 rounded-3xl p-6 border border-orange-100 hover:shadow-xl transition hover:-translate-y-2 group relative overflow-hidden">
-                    <div class="absolute -top-10 -right-10 w-24 h-24 bg-orange-200/30 rounded-full blur-2xl group-hover:scale-150 transition duration-500"></div>
-                    <div class="relative z-10">
-                        <div class="w-14 h-14 bg-orange-100 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 group-hover:scale-110 transition">🌟</div>
-                        <h3 class="text-lg font-bold text-gray-800 mb-1">Daily Challenge</h3>
-                        <p class="text-gray-600 text-sm mb-3">Tantangan baru setiap hari! 🔥</p>
-                        <a href="daily-challenge.html" class="inline-block text-sm bg-orange-500 hover:bg-orange-600 text-white font-bold px-4 py-2 rounded-full transition relative">
-                            ⭐ Ikuti
-                            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[8px] font-bold px-1.5 py-0.5 rounded-full badge-new">NEW</span>
-                        </a>
+                <!-- Daily Challenge -->
+                <a href="daily-challenge.html" class="bg-white rounded-2xl p-8 shadow-md hover:shadow-xl transition hover:-translate-y-1 border-2 border-yellow-200 hover:border-yellow-400 group relative">
+                    <div class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full badge-new">NEW</div>
+                    <div class="text-5xl mb-3 group-hover:scale-110 transition">🌟</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-1">Daily Challenge</h3>
+                    <p class="text-gray-500 text-sm">Tantangan baru setiap hari! 🔥</p>
+                    <div class="inline-block mt-4 text-sm bg-yellow-500 text-white px-5 py-2 rounded-full font-semibold hover:bg-yellow-600 transition">
+                        ⭐ Ikuti
                     </div>
-                </div>
+                </a>
 
             </div>
         </div>
@@ -326,7 +342,6 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
 
-                <!-- Kartu SMP -->
                 <a href="smp.html" class="card-smp bg-white rounded-3xl p-10 text-center shadow-lg">
                     <div class="text-6xl mb-4">🎒</div>
                     <h3 class="text-3xl font-extrabold text-gray-800 mb-2">SMP</h3>
@@ -336,7 +351,6 @@
                     </div>
                 </a>
 
-                <!-- Kartu SMA -->
                 <a href="sma.html" class="card-sma bg-white rounded-3xl p-10 text-center shadow-lg">
                     <div class="text-6xl mb-4">🎓</div>
                     <h3 class="text-3xl font-extrabold text-gray-800 mb-2">SMA</h3>
@@ -351,7 +365,7 @@
     </section>
 
     <!-- ============================================================ -->
-    <!-- TENTANG / FOOTER -->
+    <!-- FOOTER -->
     <!-- ============================================================ -->
     <footer id="tentang" class="bg-gray-900 text-white py-12 px-6">
         <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -396,7 +410,7 @@
     </footer>
 
     <!-- ============================================================ -->
-    <!-- JAVASCRIPT UNTUK MOBILE MENU -->
+    <!-- JAVASCRIPT -->
     <!-- ============================================================ -->
     <script>
         function toggleMenu() {
