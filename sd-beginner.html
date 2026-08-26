@@ -144,6 +144,19 @@
             }
         }
 
+        /* Gambar soal - besar dan jelas */
+        .gambar-soal {
+            font-size: 6rem;
+            line-height: 1.2;
+            text-align: center;
+            margin-bottom: 4px;
+            display: block;
+            background: #fefce8;
+            border-radius: 24px;
+            padding: 12px;
+            border: 2px dashed #fcd34d;
+        }
+
         /* Responsive */
         @media (max-width: 640px) {
             .soal-card {
@@ -167,6 +180,10 @@
             #teksBacaan {
                 font-size: 0.9rem !important;
                 padding: 12px !important;
+            }
+            .gambar-soal {
+                font-size: 4rem !important;
+                padding: 8px !important;
             }
         }
         button:active {
@@ -255,6 +272,9 @@
                     <span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">📝 Vocabulary</span>
                 </div>
 
+                <!-- GAMBAR SOAL (besar & sesuai jawaban) -->
+                <div id="gambarSoal" class="gambar-soal">🐱</div>
+
                 <!-- Teks Bacaan (khusus Reading) -->
                 <div id="teksBacaan" class="hidden bg-gray-50 p-4 rounded-xl border-l-4 border-purple-400 mb-4 text-sm leading-relaxed">
                     Teks bacaan...
@@ -321,58 +341,67 @@
 
     <script>
         // ================================================================
-        //  BANK SOAL BEGINNER (10 Soal Campuran)
+        //  BANK SOAL BEGINNER (10 Soal Campuran) + GAMBAR SESUAI JAWABAN
         // ================================================================
         const bankSoal = [{
             tipe: "vocab",
+            gambar: "🐱",
             soal: "Apa arti dari kata 'cat'?",
             pilihan: ["Anjing", "Kucing", "Burung", "Ikan"],
             kunci: 1,
             audio: null
         }, {
             tipe: "vocab",
+            gambar: "🐶",
             soal: "Apa arti dari kata 'dog'?",
             pilihan: ["Kucing", "Anjing", "Kelinci", "Kambing"],
             kunci: 1,
             audio: null
         }, {
             tipe: "vocab",
+            gambar: "🍎",
             soal: "Apa arti dari kata 'apple'?",
             pilihan: ["Jeruk", "Pisang", "Apel", "Mangga"],
             kunci: 2,
             audio: null
         }, {
             tipe: "grammar",
+            gambar: "👩‍🎓",
             soal: "She ___ a student.",
             pilihan: ["am", "is", "are", "be"],
             kunci: 1,
             audio: null
         }, {
             tipe: "grammar",
+            gambar: "😊",
             soal: "I ___ happy.",
             pilihan: ["am", "is", "are", "be"],
             kunci: 0,
             audio: null
         }, {
             tipe: "grammar",
+            gambar: "⚽",
             soal: "They ___ playing football.",
             pilihan: ["am", "is", "are", "be"],
             kunci: 2,
             audio: null
         }, {
             tipe: "listening",
+            gambar: "📖",
             soal: "Dengarkan dan pilih kata yang kamu dengar!",
             pilihan: ["Book", "Pencil", "Table", "Chair"],
             kunci: 0,
             audio: "Book"
         }, {
             tipe: "listening",
+            gambar: "⭐",
             soal: "Dengarkan dan pilih kata yang kamu dengar!",
             pilihan: ["Sun", "Moon", "Star", "Cloud"],
             kunci: 2,
             audio: "Star"
         }, {
             tipe: "reading",
+            gambar: "🐱⚪",
             soal: "Baca teks berikut! 'I have a cat. It is white and cute.' Pertanyaan: What color is the cat?",
             pilihan: ["Black", "White", "Brown", "Yellow"],
             kunci: 1,
@@ -380,6 +409,7 @@
             bacaan: "I have a cat. It is white and cute."
         }, {
             tipe: "reading",
+            gambar: "👧",
             soal: "Baca teks berikut! 'My name is Rani. I am 8 years old.' Pertanyaan: How old is Rani?",
             pilihan: ["6", "7", "8", "9"],
             kunci: 2,
@@ -436,6 +466,9 @@
             };
             document.getElementById("tipeSoalBadge").innerHTML = '<span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">' +
                 badgeMap[soal.tipe] + '</span>';
+
+            // GAMBAR SOAL (sesuai jawaban)
+            document.getElementById("gambarSoal").innerHTML = soal.gambar || '📝';
 
             // Teks bacaan (reading)
             const bacaanEl = document.getElementById("teksBacaan");
@@ -502,7 +535,8 @@
                 "Kamu pasti bisa! 💪",
                 "Semangat! 🔥",
                 "Coba pikirkan baik-baik! 🤔",
-                "Selamat berpetualang! 🌟"
+                "Selamat berpetualang! 🌟",
+                "Lihat gambarnya, lalu pilih jawaban! 👀"
             ];
             pesanMaskot.innerHTML = pesan[Math.floor(Math.random() * pesan.length)];
         }
