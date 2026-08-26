@@ -7,220 +7,77 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
-        * {
-            font-family: 'Poppins', sans-serif;
-        }
-        body {
-            min-height: 100vh;
-            padding: 1rem;
-            background: linear-gradient(135deg, #e0f2fe, #bae6fd);
-        }
-        .max-w-3xl {
-            max-width: 42rem;
-            margin: 0 auto;
-        }
-        .mascot {
-            font-size: 4rem;
-            animation: bounce 2s infinite;
-        }
-        @keyframes bounce {
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-        .progress-track {
-            background: #e5e7eb;
-            border-radius: 20px;
-            height: 10px;
-            overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-            border-radius: 20px;
-            transition: width 0.5s ease;
-            width: 0%;
-        }
-        .option-btn {
-            transition: all 0.2s ease;
-            border: 3px solid #e5e7eb;
-            background: white;
-            padding: 16px 12px;
-            border-radius: 16px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            min-height: 56px;
-            cursor: pointer;
-            text-align: center;
-            color: #1f2937;
-        }
-        .option-btn:hover {
-            border-color: #3b82f6;
-            background: #eff6ff;
-            transform: scale(1.02);
-        }
-        .option-btn.correct {
-            border-color: #22c55e;
-            background: #dcfce7;
-        }
-        .option-btn.wrong {
-            border-color: #ef4444;
-            background: #fee2e2;
-        }
-        .option-btn.disabled {
-            pointer-events: none;
-            opacity: 0.7;
-        }
-        .option-btn.selected {
-            border-color: #3b82f6;
-            background: #dbeafe;
-        }
-        .btn-audio {
-            background: #22c55e;
-            transition: all 0.3s ease;
-            padding: 14px 28px;
-            border-radius: 60px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: white;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
-        }
-        .btn-audio:hover {
-            background: #16a34a;
-            transform: scale(1.05);
-        }
-        .soal-card {
-            background: white;
-            border-radius: 30px;
-            padding: 24px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-            border: 3px solid #93c5fd;
-        }
-        .badge-level {
-            display: inline-block;
-            background: #8b5cf6;
-            color: white;
-            font-size: 0.7rem;
-            font-weight: 700;
-            padding: 4px 16px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .sticker {
-            font-size: 3.5rem;
-            display: inline-block;
-            animation: pop 0.5s ease-out;
-        }
-        @keyframes pop {
-            0% {
-                transform: scale(0);
-            }
-            70% {
-                transform: scale(1.2);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
+        * { font-family: 'Poppins', sans-serif; }
+        body { min-height: 100vh; padding: 1rem; background: linear-gradient(135deg, #fecaca, #fca5a5); }
+        .max-w-3xl { max-width: 42rem; margin: 0 auto; }
+        .mascot { font-size: 4rem; animation: bounce 2s infinite; }
+        @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .progress-track { background: #e5e7eb; border-radius: 20px; height: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #ef4444, #dc2626); border-radius: 20px; transition: width 0.5s ease; width: 0%; }
+        .option-btn { transition: all 0.2s ease; border: 3px solid #e5e7eb; background: white; padding: 16px 12px; border-radius: 16px; font-weight: 700; font-size: 1.1rem; min-height: 56px; cursor: pointer; text-align: center; color: #1f2937; }
+        .option-btn:hover { border-color: #ef4444; background: #fef2f2; transform: scale(1.02); }
+        .option-btn.correct { border-color: #22c55e; background: #dcfce7; }
+        .option-btn.wrong { border-color: #ef4444; background: #fee2e2; }
+        .option-btn.disabled { pointer-events: none; opacity: 0.7; }
+        .option-btn.selected { border-color: #ef4444; background: #fecaca; }
+        .btn-audio { background: #22c55e; transition: all 0.3s ease; padding: 14px 28px; border-radius: 60px; font-weight: 700; font-size: 1.1rem; color: white; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(34,197,94,0.4); }
+        .btn-audio:hover { background: #16a34a; transform: scale(1.05); }
+        .soal-card { background: white; border-radius: 30px; padding: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.08); border: 3px solid #fca5a5; }
+        .badge-level { display: inline-block; background: #ef4444; color: white; font-size: 0.7rem; font-weight: 700; padding: 4px 16px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .sticker { font-size: 3.5rem; display: inline-block; animation: pop 0.5s ease-out; }
+        @keyframes pop { 0% { transform: scale(0); } 70% { transform: scale(1.2); } 100% { transform: scale(1); } }
+        .gambar-soal { text-align: center; margin-bottom: 12px; border-radius: 16px; overflow: hidden; background: #f3f4f6; max-height: 50vh; display: flex; align-items: center; justify-content: center; }
+        .gambar-soal img { width: 100%; height: 100%; max-height: 50vh; object-fit: cover; }
         @media (max-width: 640px) {
-            .soal-card {
-                padding: 16px !important;
-            }
-            .option-btn {
-                font-size: 0.95rem !important;
-                padding: 14px 10px !important;
-                min-height: 48px !important;
-            }
-            #teksSoal {
-                font-size: 1.1rem !important;
-            }
-            .mascot {
-                font-size: 3rem !important;
-            }
-            .btn-audio {
-                font-size: 0.95rem !important;
-                padding: 12px 20px !important;
-            }
-            #teksBacaan {
-                font-size: 0.9rem !important;
-                padding: 12px !important;
-            }
+            .soal-card { padding: 16px !important; }
+            .option-btn { font-size: 0.95rem !important; padding: 14px 10px !important; min-height: 48px !important; }
+            #teksSoal { font-size: 1.1rem !important; }
+            .mascot { font-size: 3rem !important; }
+            .btn-audio { font-size: 0.95rem !important; padding: 12px 20px !important; }
+            #teksBacaan { font-size: 0.9rem !important; padding: 12px !important; }
+            .gambar-soal { max-height: 35vh !important; }
+            .gambar-soal img { max-height: 35vh !important; }
         }
-        button:active {
-            transform: scale(0.96);
-        }
-        .btn-back {
-            background: white;
-            border-radius: 12px;
-            padding: 8px 16px;
-            font-weight: 600;
-            color: #1d4ed8;
-            border: 2px solid #bfdbfe;
-            transition: all 0.2s;
-        }
-        .btn-back:hover {
-            background: #eff6ff;
-        }
-        .hasil-box {
-            animation: fadeIn 0.5s ease-out;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
+        button:active { transform: scale(0.96); }
+        .btn-back { background: white; border-radius: 12px; padding: 8px 16px; font-weight: 600; color: #dc2626; border: 2px solid #fca5a5; transition: all 0.2s; }
+        .btn-back:hover { background: #fef2f2; }
+        .hasil-box { animation: fadeIn 0.5s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
     </style>
 </head>
 <body>
 
     <div class="max-w-3xl mx-auto">
 
-        <!-- TOP BAR -->
         <div class="mb-4 flex flex-wrap justify-between items-center gap-3">
             <a href="sd.html" onclick="return confirm('Kak, yakin mau kembali? Poin sesi ini akan hangus lho!')" class="btn-back inline-flex items-center gap-1">
                 ⬅️ Kembali
             </a>
-            <div class="bg-indigo-600 text-white font-bold px-6 py-2 rounded-xl shadow-md flex items-center gap-2 text-lg">
+            <div class="bg-red-500 text-white font-bold px-6 py-2 rounded-xl shadow-md flex items-center gap-2 text-lg">
                 ⭐ Poin: <span id="poinTotal">0</span>
             </div>
         </div>
 
-        <!-- KARTU UTAMA -->
         <div class="soal-card">
 
-            <!-- Header -->
             <div class="flex justify-between items-center mb-4">
                 <div class="flex items-center gap-3">
-                    <span class="badge-level">🚀 Advanced</span>
+                    <span class="badge-level">🏆 Advanced</span>
                     <span class="text-sm font-semibold text-gray-500">Petualangan</span>
                 </div>
-                <span id="labelNomorSoal" class="bg-indigo-100 text-indigo-700 font-bold px-4 py-1 rounded-full text-sm">
+                <span id="labelNomorSoal" class="bg-red-100 text-red-700 font-bold px-4 py-1 rounded-full text-sm">
                     Soal 1 dari 15
                 </span>
             </div>
 
-            <!-- Maskot -->
-            <div class="flex items-center gap-4 mb-4 bg-indigo-50 rounded-2xl p-4 border-2 border-indigo-200">
-                <div class="mascot">🦉</div>
+            <div class="flex items-center gap-4 mb-4 bg-red-50 rounded-2xl p-4 border-2 border-red-200">
+                <div class="mascot">🦊</div>
                 <div>
-                    <div class="font-bold text-gray-700 text-sm">Halo, Petualang Hebat!</div>
+                    <div class="font-bold text-gray-700 text-sm">Halo, Petualang!</div>
                     <div id="pesanMaskot" class="text-sm text-gray-600">Ayo jawab 15 soal ini dengan benar!</div>
                 </div>
             </div>
 
-            <!-- Progress Bar -->
             <div class="mb-5">
                 <div class="flex justify-between text-xs text-gray-500 mb-1">
                     <span>Progress</span>
@@ -231,11 +88,14 @@
                 </div>
             </div>
 
-            <!-- AREA SOAL -->
             <div id="areaSoal">
 
                 <div id="tipeSoalBadge" class="mb-3">
                     <span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">📝 Vocabulary</span>
+                </div>
+
+                <div id="gambarSoal" class="gambar-soal">
+                    <img id="gambarImg" src="" alt="Gambar soal" />
                 </div>
 
                 <div id="teksBacaan" class="hidden bg-gray-50 p-4 rounded-xl border-l-4 border-purple-400 mb-4 text-sm leading-relaxed">
@@ -254,7 +114,7 @@
 
                 <div id="areaPilihan" class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5"></div>
 
-                <button id="tombolKirim" onclick="kirimJawaban()" class="w-full bg-indigo-600 text-white px-6 py-4 rounded-2xl font-bold text-lg hover:bg-indigo-700 shadow-md transition-colors">
+                <button id="tombolKirim" onclick="kirimJawaban()" class="w-full bg-red-500 text-white px-6 py-4 rounded-2xl font-bold text-lg hover:bg-red-600 shadow-md transition-colors">
                     🚀 Kirim Jawaban
                 </button>
 
@@ -266,12 +126,11 @@
 
             </div>
 
-            <!-- SKOR AKHIR -->
-            <div id="hasilSkor" class="hidden mt-4 p-6 rounded-2xl border-4 border-indigo-300 bg-indigo-50 text-center hasil-box">
+            <div id="hasilSkor" class="hidden mt-4 p-6 rounded-2xl border-4 border-red-300 bg-red-50 text-center hasil-box">
                 <div class="text-5xl mb-2">🎉</div>
                 <div class="sticker">⭐</div>
-                <h2 class="text-2xl font-extrabold text-gray-800 mt-2">Selesai, Petualang Hebat!</h2>
-                <div class="text-3xl font-extrabold text-indigo-600 mb-2">
+                <h2 class="text-2xl font-extrabold text-gray-800 mt-2">Selesai, Petualang!</h2>
+                <div class="text-3xl font-extrabold text-red-600 mb-2">
                     <span id="skorBenar">0</span> dari <span id="skorTotal">0</span>
                     <span id="skorPersen" class="text-lg font-semibold text-gray-500">(0%)</span>
                 </div>
@@ -280,10 +139,10 @@
                     <div>❌ Salah: <span id="salahCount" class="font-bold text-red-600">0</span></div>
                 </div>
                 <div class="text-sm text-gray-500 mb-4">
-                    💡 Poin yang didapat: <span id="skorPoinAkhir" class="font-bold text-indigo-600">0</span>
+                    💡 Poin yang didapat: <span id="skorPoinAkhir" class="font-bold text-red-600">0</span>
                 </div>
                 <div class="flex flex-wrap gap-3 justify-center">
-                    <a href="sd.html" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-full font-bold hover:bg-indigo-700 transition shadow-md">
+                    <a href="sd.html" class="inline-block bg-red-600 text-white px-6 py-3 rounded-full font-bold hover:bg-red-700 transition shadow-md">
                         🏠 Kembali ke Dashboard
                     </a>
                     <button onclick="ulangi()" class="inline-block bg-indigo-500 text-white px-6 py-3 rounded-full font-bold hover:bg-indigo-600 transition shadow-md">
@@ -298,106 +157,120 @@
     <script>
         // ================================================================
         //  BANK SOAL ADVANCED (15 Soal Campuran)
-        //  Vocabulary: 4 soal | Grammar: 4 soal | Listening: 3 soal | Reading: 4 soal
         // ================================================================
         const bankSoal = [{
             tipe: "vocab",
-            soal: "Apa arti dari kata 'beautiful'?",
-            pilihan: ["Cantik", "Pintar", "Besar", "Cepat"],
+            gambar: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&h=300&fit=crop&crop=center",
+            soal: "What is the meaning of 'teacher'?",
+            pilihan: ["Dokter", "Guru", "Polisi", "Petani"],
+            kunci: 1,
+            audio: null
+        }, {
+            tipe: "vocab",
+            gambar: "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=600&h=300&fit=crop&crop=center",
+            soal: "What is the meaning of 'hospital'?",
+            pilihan: ["Sekolah", "Rumah Sakit", "Kantor", "Pasar"],
+            kunci: 1,
+            audio: null
+        }, {
+            tipe: "vocab",
+            gambar: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&h=300&fit=crop&crop=center",
+            soal: "What is the meaning of 'computer'?",
+            pilihan: ["Komputer", "Televisi", "Radio", "Telepon"],
             kunci: 0,
             audio: null
         }, {
             tipe: "vocab",
-            soal: "Apa arti dari kata 'dangerous'?",
-            pilihan: ["Berbahaya", "Aman", "Menakutkan", "Menyenangkan"],
-            kunci: 0,
-            audio: null
-        }, {
-            tipe: "vocab",
-            soal: "Apa arti dari kata 'generous'?",
-            pilihan: ["Dermawan", "Pemarah", "Ramah", "Cerdas"],
-            kunci: 0,
-            audio: null
-        }, {
-            tipe: "vocab",
-            soal: "Apa arti dari kata 'explore'?",
-            pilihan: ["Menjelajahi", "Meninggalkan", "Memperbaiki", "Menyembunyikan"],
+            gambar: "https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?w=600&h=300&fit=crop&crop=center",
+            soal: "What is the meaning of 'library'?",
+            pilihan: ["Perpustakaan", "Toko Buku", "Kelas", "Kantin"],
             kunci: 0,
             audio: null
         }, {
             tipe: "grammar",
-            soal: "She ___ to the market yesterday.",
-            pilihan: ["go", "went", "going", "gone"],
+            gambar: "https://images.unsplash.com/photo-1523050854058-8df90110c7f1?w=600&h=300&fit=crop&crop=center",
+            soal: "She ___ to school every day.",
+            pilihan: ["go", "goes", "going", "went"],
             kunci: 1,
             audio: null
         }, {
             tipe: "grammar",
-            soal: "I have ___ that movie before.",
-            pilihan: ["see", "saw", "seen", "seeing"],
+            gambar: "https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=600&h=300&fit=crop&crop=center",
+            soal: "They ___ playing soccer now.",
+            pilihan: ["is", "am", "are", "be"],
             kunci: 2,
             audio: null
         }, {
             tipe: "grammar",
-            soal: "They are ___ in the park right now.",
-            pilihan: ["play", "plays", "playing", "played"],
-            kunci: 2,
+            gambar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=300&fit=crop&crop=center",
+            soal: "I ___ very happy yesterday.",
+            pilihan: ["am", "was", "were", "is"],
+            kunci: 1,
             audio: null
         }, {
             tipe: "grammar",
-            soal: "If it rains, we ___ stay at home.",
-            pilihan: ["will", "would", "shall", "might"],
-            kunci: 0,
+            gambar: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&h=300&fit=crop&crop=center",
+            soal: "Rina and I ___ friends.",
+            pilihan: ["am", "is", "are", "be"],
+            kunci: 2,
             audio: null
         }, {
             tipe: "listening",
+            gambar: "https://images.unsplash.com/photo-1544716278-e513176f20b5?w=600&h=300&fit=crop&crop=center",
             soal: "Dengarkan dan pilih kata yang kamu dengar!",
-            pilihan: ["Adventure", "Mountain", "Ocean", "Forest"],
-            kunci: 2,
-            audio: "Ocean"
-        }, {
-            tipe: "listening",
-            soal: "Dengarkan dan pilih kata yang kamu dengar!",
-            pilihan: ["Intelligent", "Honest", "Kind", "Brave"],
+            pilihan: ["Book", "Pencil", "Table", "Chair"],
             kunci: 0,
-            audio: "Intelligent"
+            audio: "Book"
         }, {
             tipe: "listening",
+            gambar: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=600&h=300&fit=crop&crop=center",
             soal: "Dengarkan dan pilih kata yang kamu dengar!",
-            pilihan: ["Temperature", "Humidity", "Wind", "Rain"],
-            kunci: 3,
-            audio: "Rain"
+            pilihan: ["Sun", "Moon", "Star", "Cloud"],
+            kunci: 2,
+            audio: "Star"
+        }, {
+            tipe: "listening",
+            gambar: "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=600&h=300&fit=crop&crop=center",
+            soal: "Dengarkan dan pilih kata yang kamu dengar!",
+            pilihan: ["Cat", "Dog", "Bird", "Fish"],
+            kunci: 0,
+            audio: "Cat"
         }, {
             tipe: "reading",
-            soal: "Baca teks berikut! 'Once upon a time, there was a wise owl who lived in a big tree. The owl helped all the animals in the forest.' Pertanyaan: Where did the owl live?",
-            pilihan: ["In a cave", "In a big tree", "In a river", "On a mountain"],
+            gambar: "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=600&h=300&fit=crop&crop=center",
+            soal: "Baca teks berikut! 'I have a white cat. It likes to sleep on the sofa.' Pertanyaan: Where does the cat sleep?",
+            pilihan: ["On the bed", "On the sofa", "On the table", "On the floor"],
             kunci: 1,
             audio: null,
-            bacaan: "Once upon a time, there was a wise owl who lived in a big tree. The owl helped all the animals in the forest."
+            bacaan: "I have a white cat. It likes to sleep on the sofa."
         }, {
             tipe: "reading",
-            soal: "Baca teks berikut! 'Rara loves to read books about animals. Her favorite book is about elephants. She learns many things from reading.' Pertanyaan: What is Rara's favorite book about?",
-            pilihan: ["Cats", "Dogs", "Elephants", "Birds"],
+            gambar: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&h=300&fit=crop&crop=center",
+            soal: "Baca teks berikut! 'Rani is 8 years old. She goes to SD Merdeka.' Pertanyaan: How old is Rani?",
+            pilihan: ["6", "7", "8", "9"],
             kunci: 2,
             audio: null,
-            bacaan: "Rara loves to read books about animals. Her favorite book is about elephants. She learns many things from reading."
+            bacaan: "Rani is 8 years old. She goes to SD Merdeka."
         }, {
             tipe: "reading",
-            soal: "Baca teks berikut! 'Bali is a beautiful island in Indonesia. Many tourists visit Bali every year. They enjoy the beaches and the culture.' Pertanyaan: What do tourists enjoy in Bali?",
-            pilihan: ["Mountains", "Beaches and culture", "Shopping", "Rain forest"],
-            kunci: 1,
+            gambar: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&h=300&fit=crop&crop=center",
+            soal: "Baca teks berikut! 'Today is sunny. Many people go to the beach.' Pertanyaan: How is the weather?",
+            pilihan: ["Rainy", "Cloudy", "Sunny", "Windy"],
+            kunci: 2,
             audio: null,
-            bacaan: "Bali is a beautiful island in Indonesia. Many tourists visit Bali every year. They enjoy the beaches and the culture."
+            bacaan: "Today is sunny. Many people go to the beach."
         }, {
             tipe: "reading",
-            soal: "Baca teks berikut! 'Recycling is important to protect our environment. We should recycle paper, plastic, and glass to reduce waste.' Pertanyaan: Why is recycling important?",
-            pilihan: ["To save money", "To protect the environment", "To make new products", "To decorate"],
-            kunci: 1,
+            gambar: "https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=600&h=300&fit=crop&crop=center",
+            soal: "Baca teks berikut! 'Rudi likes to play football every Sunday.' Pertanyaan: When does Rudi play football?",
+            pilihan: ["Monday", "Saturday", "Sunday", "Friday"],
+            kunci: 2,
             audio: null,
-            bacaan: "Recycling is important to protect our environment. We should recycle paper, plastic, and glass to reduce waste."
+            bacaan: "Rudi likes to play football every Sunday."
         }];
 
         // ================================================================
-        //  STATE
+        //  STATE & LOGIC
         // ================================================================
         let sesiSoal = [];
         let indeksAktif = 0;
@@ -405,10 +278,6 @@
         let pilihanDipilih = null;
         let statusRiwayat = {};
         const MAX_SOAL = 15;
-
-        // ================================================================
-        //  FUNGSI UTAMA
-        // ================================================================
 
         function acakSoal() {
             const shuffled = [...bankSoal];
@@ -420,29 +289,23 @@
         }
 
         function muatSoal() {
-            if (indeksAktif >= sesiSoal.length) {
-                tampilkanSkor();
-                return;
-            }
-
+            if (indeksAktif >= sesiSoal.length) { tampilkanSkor(); return; }
             const soal = sesiSoal[indeksAktif];
             const total = sesiSoal.length;
-
             document.getElementById("labelNomorSoal").innerHTML = "Soal " + (indeksAktif + 1) + " dari " + total;
-
             const progress = ((indeksAktif) / total) * 100;
             document.getElementById("progressFill").style.width = progress + "%";
             document.getElementById("progressLabel").innerHTML = Math.round(progress) + "%";
-
-            const badgeMap = {
-                vocab: '📝 Vocabulary',
-                grammar: '📚 Grammar',
-                listening: '🎧 Listening',
-                reading: '📖 Reading'
-            };
-            document.getElementById("tipeSoalBadge").innerHTML = '<span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">' +
-                badgeMap[soal.tipe] + '</span>';
-
+            const badgeMap = { vocab: '📝 Vocabulary', grammar: '📚 Grammar', listening: '🎧 Listening', reading: '📖 Reading' };
+            document.getElementById("tipeSoalBadge").innerHTML = '<span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">' + badgeMap[soal.tipe] + '</span>';
+            const imgEl = document.getElementById("gambarImg");
+            if (soal.gambar) {
+                imgEl.src = soal.gambar;
+                imgEl.alt = "Gambar untuk soal";
+                document.getElementById("gambarSoal").classList.remove("hidden");
+            } else {
+                document.getElementById("gambarSoal").classList.add("hidden");
+            }
             const bacaanEl = document.getElementById("teksBacaan");
             if (soal.tipe === "reading" && soal.bacaan) {
                 bacaanEl.classList.remove("hidden");
@@ -451,20 +314,16 @@
                 bacaanEl.classList.add("hidden");
                 bacaanEl.innerHTML = "";
             }
-
             const audioEl = document.getElementById("areaAudio");
             if (soal.tipe === "listening" && soal.audio) {
                 audioEl.classList.remove("hidden");
             } else {
                 audioEl.classList.add("hidden");
             }
-
             document.getElementById("teksSoal").innerHTML = soal.soal;
-
             const areaPilihan = document.getElementById("areaPilihan");
             areaPilihan.innerHTML = "";
             pilihanDipilih = null;
-
             soal.pilihan.forEach(function(opsi, index) {
                 const tombol = document.createElement("button");
                 tombol.innerHTML = opsi;
@@ -474,12 +333,10 @@
                 tombol.onclick = function() { pilihOpsi(index); };
                 areaPilihan.appendChild(tombol);
             });
-
             document.getElementById("pesanHasil").classList.add("hidden");
             document.getElementById("tombolLanjut").classList.add("hidden");
             document.getElementById("tombolKirim").classList.remove("hidden");
             document.getElementById("hasilSkor").classList.add("hidden");
-
             const riwayat = statusRiwayat[indeksAktif];
             if (riwayat && riwayat.sudahBenar) {
                 pilihanDipilih = riwayat.pilihan;
@@ -494,15 +351,8 @@
                     b.classList.remove("selected", "correct", "wrong", "disabled");
                 });
             }
-
             const pesanMaskot = document.getElementById("pesanMaskot");
-            const pesan = [
-                "Tantangan semakin seru! 💪",
-                "Kamu pasti bisa melewatinya! 🌟",
-                "Terus semangat, Petualang! 🔥",
-                "Jangan menyerah! 🧠",
-                "Selangkah lagi menuju kemenangan! 🏆"
-            ];
+            const pesan = ["Ayo, jawab dengan teliti! 🧐", "Kamu pasti bisa! 💪", "Semangat! 🔥", "Coba pikirkan baik-baik! 🤔", "Selamat berpetualang! 🌟", "Lihat gambarnya, lalu pilih jawaban! 👀"];
             pesanMaskot.innerHTML = pesan[Math.floor(Math.random() * pesan.length)];
         }
 
@@ -521,14 +371,9 @@
         }
 
         function kirimJawaban() {
-            if (pilihanDipilih === null) {
-                alert("Kak, pilih dulu jawabannya ya!");
-                return;
-            }
-
+            if (pilihanDipilih === null) { alert("Kak, pilih dulu jawabannya ya!"); return; }
             const soalAktif = sesiSoal[indeksAktif];
             const isBenar = (pilihanDipilih === soalAktif.kunci);
-
             if (isBenar) {
                 if (!statusRiwayat[indeksAktif] || !statusRiwayat[indeksAktif].sudahBenar) {
                     poinSesi += 15;
@@ -538,18 +383,14 @@
             } else {
                 statusRiwayat[indeksAktif] = { sudahBenar: false, pilihan: pilihanDipilih };
             }
-
             tampilkanHasil(isBenar, false);
-
             document.getElementById("tombolKirim").classList.add("hidden");
             if (indeksAktif < sesiSoal.length - 1) {
                 document.getElementById("tombolLanjut").classList.remove("hidden");
             } else {
                 document.getElementById("tombolLanjut").textContent = "🎉 Lihat Hasil";
                 document.getElementById("tombolLanjut").classList.remove("hidden");
-                document.getElementById("tombolLanjut").onclick = function() {
-                    tampilkanSkor();
-                };
+                document.getElementById("tombolLanjut").onclick = function() { tampilkanSkor(); };
             }
         }
 
@@ -557,25 +398,21 @@
             const soalAktif = sesiSoal[indeksAktif];
             const pesan = document.getElementById("pesanHasil");
             pesan.classList.remove("hidden");
-
             document.querySelectorAll(".option-btn").forEach((btn, i) => {
                 btn.classList.add("disabled");
                 if (i === soalAktif.kunci) btn.classList.add("correct");
                 else if (i === pilihanDipilih && !isBenar) btn.classList.add("wrong");
             });
-
             const maskot = document.getElementById("pesanMaskot");
             if (isBenar) {
-                pesan.innerHTML = dariReview ?
-                    '📚 <b>Kamu sudah jawab soal ini sebelumnya!</b>' :
-                    '🎉 <b>Luar biasa!</b> +15 poin ✨';
+                pesan.innerHTML = dariReview ? '📚 <b>Kamu sudah jawab soal ini sebelumnya!</b>' : '🎉 <b>Benar sekali!</b> +15 poin ✨';
                 pesan.className = "mt-4 p-4 rounded-xl border-2 border-green-200 bg-green-50 text-green-700 text-center font-bold text-lg";
-                maskot.innerHTML = "Hebat! Kamu luar biasa! 🌟";
+                maskot.innerHTML = "Hebat! Kamu pintar! 🌟";
             } else {
                 const jawabanBenar = soalAktif.pilihan[soalAktif.kunci];
                 pesan.innerHTML = '😅 <b>Kurang tepat.</b> Jawaban yang benar: <span class="font-bold text-green-600">"' + jawabanBenar + '"</span>';
                 pesan.className = "mt-4 p-4 rounded-xl border-2 border-red-200 bg-red-50 text-red-700 text-center font-bold text-lg";
-                maskot.innerHTML = "Jangan menyerah, coba lebih teliti! 💪";
+                maskot.innerHTML = "Yuk, coba lebih teliti lagi! 💪";
             }
         }
 
@@ -591,7 +428,6 @@
                 if (statusRiwayat[i] && statusRiwayat[i].sudahBenar) benar++;
             }
             const salah = totalSoal - benar;
-
             document.getElementById("hasilSkor").classList.remove("hidden");
             document.getElementById("skorBenar").innerHTML = benar;
             document.getElementById("skorTotal").innerHTML = totalSoal;
@@ -602,11 +438,9 @@
             document.getElementById("skorPersen").innerHTML = "(" + persen + "%)";
             document.getElementById("areaSoal").classList.add("hidden");
             document.getElementById("tombolLanjut").classList.add("hidden");
-
             const poinLama = parseInt(localStorage.getItem('poinMurid')) || 0;
             localStorage.setItem('poinMurid', poinLama + poinSesi);
             document.getElementById("poinTotal").innerHTML = poinLama + poinSesi;
-
             let stiker = "⭐";
             if (persen === 100) stiker = "🏆";
             else if (persen >= 70) stiker = "🌟";
@@ -626,9 +460,6 @@
             muatSoal();
         }
 
-        // ================================================================
-        //  LISTENING
-        // ================================================================
         function putarAudio() {
             const soal = sesiSoal[indeksAktif];
             if (soal.audio) {
@@ -639,9 +470,6 @@
             }
         }
 
-        // ================================================================
-        //  INISIALISASI
-        // ================================================================
         sesiSoal = acakSoal();
         indeksAktif = 0;
         poinSesi = 0;
