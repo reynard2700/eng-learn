@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mix Quiz SMA | ENG-LEARN</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
         * {
             font-family: 'Poppins', sans-serif;
@@ -13,38 +13,24 @@
         body {
             min-height: 100vh;
             padding: 1.5rem;
-            background-color: #fff7ed;
+            background: linear-gradient(135deg, #fff7ed, #fed7aa);
         }
         .max-w-3xl {
             max-width: 48rem;
             margin-left: auto;
             margin-right: auto;
         }
-        .btn-back {
-            background: white;
-            border-radius: 12px;
-            padding: 8px 16px;
-            font-weight: 600;
-            color: #ea580c;
-            border: 2px solid #fed7aa;
-            transition: all 0.2s;
-        }
-        .btn-back:hover {
-            background: #fff7ed;
-            border-color: #f97316;
-        }
         .option-btn {
             transition: all 0.2s ease;
             border: 2px solid #e5e7eb;
             background: white;
-            padding: 14px 16px;
-            border-radius: 16px;
+            padding: 14px 12px;
+            border-radius: 14px;
             font-weight: 600;
             font-size: 0.95rem;
-            min-height: 52px;
+            min-height: 50px;
             cursor: pointer;
             text-align: left;
-            width: 100%;
         }
         .option-btn:hover {
             border-color: #f97316;
@@ -71,40 +57,73 @@
                 padding: 16px !important;
             }
             #teksSoal {
-                font-size: 1rem !important;
+                font-size: 0.95rem !important;
             }
             .option-btn {
                 font-size: 0.85rem !important;
-                padding: 12px 14px !important;
-                min-height: 48px !important;
+                padding: 12px 10px !important;
+                min-height: 46px !important;
+            }
+            .max-w-3xl.mx-auto.mb-6.flex.justify-between {
+                flex-wrap: wrap !important;
+                gap: 12px !important;
+            }
+            #tombolLanjut,
+            #tombolSelesai {
+                padding: 16px !important;
+                font-size: 1rem !important;
+                min-height: 56px !important;
+            }
+            .flex.gap-3 {
+                flex-direction: column !important;
+                gap: 10px !important;
             }
         }
         button:active {
             transform: scale(0.96);
         }
-        .fade-in {
-            animation: fadeIn 0.4s ease-out forwards;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .badge-topic {
+        .badge-tipe {
             display: inline-block;
-            background: #fef3c7;
-            color: #d97706;
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             font-weight: 700;
             padding: 2px 12px;
             border-radius: 20px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+        }
+        .badge-vocab {
+            background: #3b82f6;
+            color: white;
+        }
+        .badge-grammar {
+            background: #f59e0b;
+            color: white;
+        }
+        .badge-reading {
+            background: #8b5cf6;
+            color: white;
+        }
+        .text-bacaan {
+            background: #f8fafc;
+            border-left: 4px solid #8b5cf6;
+            padding: 14px 18px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .btn-back {
+            background: white;
+            border-radius: 12px;
+            padding: 8px 16px;
+            font-weight: 600;
+            color: #d97706;
+            border: 2px solid #fde68a;
+            transition: all 0.2s;
+        }
+        .btn-back:hover {
+            background: #fffbeb;
         }
     </style>
 </head>
@@ -125,147 +144,192 @@
         <!-- KARTU MIX QUIZ -->
         <div class="bg-white rounded-3xl p-8 shadow-xl border-2 border-orange-100">
 
-            <!-- Header -->
             <div class="flex justify-between items-center mb-4 border-b-2 border-orange-100 pb-4">
-                <h1 class="text-2xl font-bold text-gray-800">🧩 Mix Quiz <span class="text-orange-500 text-sm font-normal">SMA</span></h1>
-                <span id="labelNomorSoal" class="bg-orange-100 text-orange-700 font-bold px-4 py-1 rounded-full text-sm">Soal 1 dari 10</span>
+                <h1 class="text-2xl font-extrabold text-gray-800 flex items-center gap-2">
+                    🧩 Mix Quiz <span class="text-orange-500">SMA</span>
+                </h1>
+                <span id="labelNomorSoal" class="bg-orange-100 text-orange-700 font-bold px-4 py-1 rounded-full text-sm">
+                    Soal 1 dari 20
+                </span>
             </div>
 
-            <!-- Area Soal -->
-            <div id="areaSoal" class="fade-in">
-                <!-- Topic Badge -->
-                <div id="topicBadge" class="mb-3"></div>
+            <div id="areaSoal">
+                <!-- Tipe Soal -->
+                <div id="tipeSoal" class="mb-3">
+                    <span class="badge-tipe badge-vocab">Vocabulary</span>
+                </div>
+
+                <!-- Teks Bacaan (khusus Reading) -->
+                <div id="teksBacaan" class="text-bacaan mb-4 hidden">
+                    Teks bacaan...
+                </div>
 
                 <!-- Pertanyaan -->
-                <div id="teksSoal" class="text-lg font-semibold text-gray-800 mb-4"></div>
+                <div id="teksSoal" class="text-lg font-bold text-gray-800 mb-4">
+                    Pertanyaan...
+                </div>
 
-                <!-- Opsi -->
+                <!-- Opsi Jawaban -->
                 <div id="areaPilihan" class="grid grid-cols-1 gap-3 mb-6"></div>
             </div>
 
-            <!-- Tombol Kirim / Lanjut / Selesai -->
             <button id="tombolKirim" onclick="kirimJawaban()" class="w-full bg-orange-500 text-white px-6 py-3 rounded-xl font-bold text-lg hover:bg-orange-600 shadow-md transition-colors mb-4">
                 🚀 Kirim Jawaban
             </button>
 
-            <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden w-full bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-green-600 shadow-md transition-colors">
-                ➡️ Lanjut Soal Berikutnya
-            </button>
+            <div id="pesanHasil" class="hidden mb-6 p-4 rounded-xl border-2 text-center font-bold text-lg"></div>
 
-            <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700 shadow-lg transition-colors">
+            <div class="flex gap-3">
+                <button id="tombolSebelumnya" onclick="soalSebelumnya()" class="hidden flex-1 bg-gray-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-gray-600 shadow-md transition-colors">
+                    ⬅️ Sebelumnya
+                </button>
+                <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden flex-1 bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-green-600 shadow-md transition-colors">
+                    ➡️ Lanjut
+                </button>
+            </div>
+
+            <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700 shadow-lg">
                 🎉 Selesai & Simpan Poin!
             </button>
-
-            <!-- Feedback -->
-            <div id="pesanHasil" class="hidden mt-4 p-4 rounded-xl border-2 text-center font-bold text-lg"></div>
 
         </div>
     </div>
 
     <script>
         // ================================================================
-        //  DATA MIX QUIZ SMA (10 soal - Grammar, Vocab, Idiom)
+        //  20 SOAL MIX QUIZ SMA
+        //  Vocabulary, Grammar, Reading Comprehension
         // ================================================================
         const daftarSoal = [{
-            topic: "Grammar",
-            pertanyaan: "Which sentence is in the passive voice?",
-            pilihan: [
-                "A. The chef cooked the meal.",
-                "B. The meal was cooked by the chef.",
-                "C. The chef is cooking the meal.",
-                "D. The chef will cook the meal."
-            ],
-            kunci: "B. The meal was cooked by the chef."
+            tipe: "Vocabulary",
+            soal: "What is the meaning of 'abandon'?",
+            pilihan: ["Meninggalkan", "Mengambil", "Memperbaiki", "Menemukan"],
+            kunci: 0
         }, {
-            topic: "Vocabulary",
-            pertanyaan: "What is the synonym of 'abandon'?",
-            pilihan: [
-                "A. Keep",
-                "B. Leave",
-                "C. Help",
-                "D. Build"
-            ],
-            kunci: "B. Leave"
+            tipe: "Vocabulary",
+            soal: "What is the meaning of 'accelerate'?",
+            pilihan: ["Memperlambat", "Mempercepat", "Menghentikan", "Memulai"],
+            kunci: 1
         }, {
-            topic: "Idiom",
-            pertanyaan: "What does 'break a leg' mean?",
-            pilihan: [
-                "A. Get injured",
-                "B. Good luck",
-                "C. Fall down",
-                "D. Be angry"
-            ],
-            kunci: "B. Good luck"
+            tipe: "Vocabulary",
+            soal: "What is the meaning of 'convince'?",
+            pilihan: ["Membingungkan", "Meyakinkan", "Menolak", "Menghindari"],
+            kunci: 1
         }, {
-            topic: "Grammar",
-            pertanyaan: "Which sentence uses the correct conditional (Type 2)?",
-            pilihan: [
-                "A. If I was you, I would go.",
-                "B. If I were you, I would go.",
-                "C. If I am you, I would go.",
-                "D. If I had been you, I would go."
-            ],
-            kunci: "B. If I were you, I would go."
+            tipe: "Vocabulary",
+            soal: "What is the meaning of 'significant'?",
+            pilihan: ["Kecil", "Penting", "Biasa", "Berbahaya"],
+            kunci: 1
         }, {
-            topic: "Vocabulary",
-            pertanyaan: "What is the meaning of 'sophisticated'?",
-            pilihan: [
-                "A. Simple",
-                "B. Complex and elegant",
-                "C. Old-fashioned",
-                "D. Cheap"
-            ],
-            kunci: "B. Complex and elegant"
+            tipe: "Vocabulary",
+            soal: "What is the meaning of 'guarantee'?",
+            pilihan: ["Jaminan", "Keraguan", "Kehilangan", "Kesalahan"],
+            kunci: 0
         }, {
-            topic: "Idiom",
-            pertanyaan: "What does 'hit the books' mean?",
-            pilihan: [
-                "A. Throw books",
-                "B. Study hard",
-                "C. Read quickly",
-                "D. Buy books"
-            ],
-            kunci: "B. Study hard"
+            tipe: "Grammar",
+            soal: "If I _____ you, I would accept the offer.",
+            pilihan: ["am", "was", "were", "have been"],
+            kunci: 2
         }, {
-            topic: "Grammar",
-            pertanyaan: "Choose the correct reported speech: 'She said, \"I am tired.\"'",
-            pilihan: [
-                "A. She said she is tired.",
-                "B. She said she was tired.",
-                "C. She said she has been tired.",
-                "D. She said she tired."
-            ],
-            kunci: "B. She said she was tired."
+            tipe: "Grammar",
+            soal: "The letter _____ by the secretary yesterday.",
+            pilihan: ["sent", "is sent", "was sent", "has sent"],
+            kunci: 2
         }, {
-            topic: "Vocabulary",
-            pertanyaan: "What is the opposite of 'ancient'?",
-            pilihan: [
-                "A. Old",
-                "B. Modern",
-                "C. Historic",
-                "D. Antique"
-            ],
-            kunci: "B. Modern"
+            tipe: "Grammar",
+            soal: "He said he _____ the document already.",
+            pilihan: ["has", "have", "had", "will have"],
+            kunci: 2
         }, {
-            topic: "Idiom",
-            pertanyaan: "What does 'piece of cake' mean?",
-            pilihan: [
-                "A. A small dessert",
-                "B. Something very easy",
-                "C. Something very difficult",
-                "D. A slice of bread"
-            ],
-            kunci: "B. Something very easy"
+            tipe: "Grammar",
+            soal: "I suggest that he _____ harder.",
+            pilihan: ["study", "studies", "studied", "will study"],
+            kunci: 0
         }, {
-            topic: "Grammar",
-            pertanyaan: "Which sentence uses the subjunctive mood?",
+            tipe: "Grammar",
+            soal: "She stopped _____ because she was tired.",
+            pilihan: ["smoke", "to smoke", "smoking", "smoked"],
+            kunci: 2
+        }, {
+            tipe: "Grammar",
+            soal: "I wish I _____ swim.",
+            pilihan: ["can", "could", "will", "would"],
+            kunci: 1
+        }, {
+            tipe: "Grammar",
+            soal: "By next month, I _____ this project.",
+            pilihan: ["finish", "finished", "will finish", "will have finished"],
+            kunci: 3
+        }, {
+            tipe: "Grammar",
+            soal: "_____ the rain, we went out.",
+            pilihan: ["Although", "Despite", "Because", "Unless"],
+            kunci: 1
+        }, {
+            tipe: "Grammar",
+            soal: "The news _____ very shocking.",
+            pilihan: ["are", "is", "were", "have been"],
+            kunci: 1
+        }, {
+            tipe: "Grammar",
+            soal: "It was _____ hot that we went swimming.",
+            pilihan: ["so", "such", "too", "very"],
+            kunci: 0
+        }, {
+            tipe: "Reading",
+            bacaan: "The Komodo dragon is the largest lizard in the world. It can grow up to 3 meters long and weigh up to 70 kilograms. They are carnivores and eat deer, pigs, and even water buffalo.",
+            soal: "What is the main idea of the text?",
             pilihan: [
-                "A. I suggest that he studies harder.",
-                "B. I suggest that he study harder.",
-                "C. I suggest that he studied harder.",
-                "D. I suggest that he will study harder."
+                "The habitat of Komodo dragons",
+                "General information about Komodo dragons",
+                "The diet of Komodo dragons",
+                "The danger of Komodo dragons"
             ],
-            kunci: "B. I suggest that he study harder."
+            kunci: 1
+        }, {
+            tipe: "Reading",
+            bacaan: "The Komodo dragon is the largest lizard in the world. It can grow up to 3 meters long and weigh up to 70 kilograms. They are carnivores and eat deer, pigs, and even water buffalo.",
+            soal: "What does 'carnivores' mean in the text?",
+            pilihan: [
+                "Animals that eat plants",
+                "Animals that eat meat",
+                "Animals that eat both",
+                "Animals that eat insects"
+            ],
+            kunci: 1
+        }, {
+            tipe: "Reading",
+            bacaan: "Social media has become a big part of our daily lives. While it can be fun, it also has negative effects. Therefore, we should limit our time on social media.",
+            soal: "What is the writer's suggestion?",
+            pilihan: [
+                "Use social media more often",
+                "Limit time on social media",
+                "Delete all social media",
+                "Only use social media at night"
+            ],
+            kunci: 1
+        }, {
+            tipe: "Reading",
+            bacaan: "Social media has become a big part of our daily lives. While it can be fun, it also has negative effects. Therefore, we should limit our time on social media.",
+            soal: "What is one negative effect of social media mentioned?",
+            pilihan: [
+                "It improves communication",
+                "It causes addiction",
+                "It makes people happy",
+                "It helps education"
+            ],
+            kunci: 1
+        }, {
+            tipe: "Reading",
+            bacaan: "Once upon a time, a poor farmer found a golden egg. He became rich but greedy. He cut the goose open to get all the gold, but found nothing. He lost everything.",
+            soal: "What is the moral of the story?",
+            pilihan: [
+                "Hard work is important",
+                "Greed leads to loss",
+                "Golden eggs are valuable",
+                "Farmers are lucky"
+            ],
+            kunci: 1
         }];
 
         // ================================================================
@@ -274,104 +338,123 @@
         let indeksSoalAktif = 0;
         let poinSesi = 0;
         let pilihanDipilih = null;
-        let sudahDijawab = false;
         let statusRiwayat = {};
 
         function muatSoal() {
             let soal = daftarSoal[indeksSoalAktif];
-            document.getElementById("labelNomorSoal").innerHTML = `Soal ${indeksSoalAktif + 1} dari 10`;
-            document.getElementById("topicBadge").innerHTML = `<span class="badge-topic">${soal.topic}</span>`;
-            document.getElementById("teksSoal").innerHTML = soal.pertanyaan;
+            document.getElementById("labelNomorSoal").innerHTML = "Soal " + (indeksSoalAktif + 1) + " dari " + daftarSoal
+                .length;
 
+            // Tipe Soal
+            let tipeEl = document.getElementById("tipeSoal");
+            let badgeClass = "badge-tipe ";
+            if (soal.tipe === "Vocabulary") badgeClass += "badge-vocab";
+            else if (soal.tipe === "Grammar") badgeClass += "badge-grammar";
+            else badgeClass += "badge-reading";
+            tipeEl.innerHTML = '<span class="' + badgeClass + '">' + soal.tipe + '</span>';
+
+            // Teks Bacaan (khusus Reading)
+            let bacaanEl = document.getElementById("teksBacaan");
+            if (soal.tipe === "Reading" && soal.bacaan) {
+                bacaanEl.classList.remove("hidden");
+                bacaanEl.innerHTML = soal.bacaan;
+            } else {
+                bacaanEl.classList.add("hidden");
+                bacaanEl.innerHTML = "";
+            }
+
+            // Pertanyaan
+            document.getElementById("teksSoal").innerHTML = soal.soal;
+
+            // Opsi
             let areaPilihan = document.getElementById("areaPilihan");
             areaPilihan.innerHTML = "";
             pilihanDipilih = null;
-            sudahDijawab = false;
 
-            soal.pilihan.forEach(opsi => {
+            soal.pilihan.forEach(function(opsi, index) {
                 let tombol = document.createElement("button");
-                tombol.innerHTML = opsi;
+                tombol.innerHTML = String.fromCharCode(65 + index) + ". " + opsi;
+                tombol.id = "opsi-" + index;
                 tombol.className = "option-btn";
-                tombol.dataset.value = opsi;
-                tombol.onclick = function() { pilihOpsi(this, opsi); };
+                tombol.dataset.index = index;
+                tombol.onclick = function() { pilihOpsi(index); };
                 areaPilihan.appendChild(tombol);
             });
 
-            // Reset tombol
-            document.getElementById("tombolKirim").classList.remove("hidden");
-            document.getElementById("tombolLanjut").classList.add("hidden");
-            document.getElementById("tombolSelesai").classList.add("hidden");
-            document.getElementById("pesanHasil").classList.add("hidden");
+            // Navigasi
+            if (indeksSoalAktif > 0) {
+                document.getElementById("tombolSebelumnya").classList.remove("hidden");
+            } else {
+                document.getElementById("tombolSebelumnya").classList.add("hidden");
+            }
 
-            // Cek riwayat
+            // Riwayat
             let riwayat = statusRiwayat[indeksSoalAktif];
             if (riwayat && riwayat.sudahBenar) {
                 pilihanDipilih = riwayat.pilihan;
                 tandaiTombolTerpilih(pilihanDipilih);
-                tampilkanHasil(true, true);
+                tampilkanHasilDanBedah(true, true);
+            } else {
+                document.getElementById("pesanHasil").classList.add("hidden");
+                document.getElementById("tombolLanjut").classList.add("hidden");
+                document.getElementById("tombolKirim").classList.remove("hidden");
+                document.getElementById("tombolSelesai").classList.add("hidden");
+                document.querySelectorAll(".option-btn").forEach(b => {
+                    b.classList.remove("selected", "correct", "wrong", "disabled");
+                });
             }
         }
 
-        function pilihOpsi(btn, opsi) {
-            if (sudahDijawab) return;
-            pilihanDipilih = opsi;
-            tandaiTombolTerpilih(opsi);
+        function pilihOpsi(index) {
+            let riwayat = statusRiwayat[indeksSoalAktif];
+            if (riwayat && riwayat.sudahBenar) return;
+            pilihanDipilih = index;
+            tandaiTombolTerpilih(index);
         }
 
-        function tandaiTombolTerpilih(opsiTerpilih) {
-            let semuaBtn = document.querySelectorAll(".option-btn");
-            semuaBtn.forEach(btn => {
+        function tandaiTombolTerpilih(index) {
+            document.querySelectorAll(".option-btn").forEach((btn, i) => {
                 btn.classList.remove("selected");
-                if (btn.dataset.value === opsiTerpilih) {
-                    btn.classList.add("selected");
-                }
+                if (i === index) btn.classList.add("selected");
             });
         }
 
         function kirimJawaban() {
-            if (!pilihanDipilih) {
-                alert("Pilih salah satu opsi jawaban terlebih dahulu!");
+            if (pilihanDipilih === null) {
+                alert("Pilih salah satu opsi jawaban terlebih dahulu ya mase!");
                 return;
             }
-            if (sudahDijawab) return;
-            sudahDijawab = true;
-
             let soalAktif = daftarSoal[indeksSoalAktif];
             let isBenar = (pilihanDipilih === soalAktif.kunci);
-
-            // Tandai semua opsi
-            let semuaBtn = document.querySelectorAll(".option-btn");
-            semuaBtn.forEach(btn => {
-                btn.classList.add("disabled");
-                if (btn.dataset.value === soalAktif.kunci) {
-                    btn.classList.add("correct");
-                } else if (btn.dataset.value === pilihanDipilih && !isBenar) {
-                    btn.classList.add("wrong");
-                }
-            });
-
             if (isBenar) {
                 if (!statusRiwayat[indeksSoalAktif] || !statusRiwayat[indeksSoalAktif].sudahBenar) {
-                    poinSesi += 20;
+                    poinSesi += 15;
                     document.getElementById("poinSesiTampil").innerHTML = poinSesi;
                 }
                 statusRiwayat[indeksSoalAktif] = { sudahBenar: true, pilihan: pilihanDipilih };
-                tampilkanHasil(true, false);
+                tampilkanHasilDanBedah(true, false);
             } else {
                 statusRiwayat[indeksSoalAktif] = { sudahBenar: false, pilihan: pilihanDipilih };
-                tampilkanHasil(false, false);
+                tampilkanHasilDanBedah(false, false);
             }
         }
 
-        function tampilkanHasil(isBenar, dariReview) {
+        function tampilkanHasilDanBedah(isBenar, dariReview) {
+            let soalAktif = daftarSoal[indeksSoalAktif];
             let pesan = document.getElementById("pesanHasil");
             pesan.classList.remove("hidden");
 
+            document.querySelectorAll(".option-btn").forEach((btn, i) => {
+                btn.classList.add("disabled");
+                if (i === soalAktif.kunci) btn.classList.add("correct");
+                else if (i === pilihanDipilih && !isBenar) btn.classList.add("wrong");
+            });
+
             if (isBenar) {
                 pesan.innerHTML = dariReview ?
-                    "📚 <b>Mode Review:</b> Soal ini sudah kamu jawab benar sebelumnya." :
-                    "🎉 <b>Tepat sekali! Pilihanmu benar.</b> (+20 Poin)";
-                pesan.className = "mt-4 p-4 rounded-xl border-2 bg-green-50 text-green-700 border-green-200 text-center font-bold text-lg";
+                    '📚 <b>Mode Review:</b> Soal ini sudah kamu jawab dengan benar sebelumnya.' :
+                    '🎉 <b>Tepat sekali! Pilihanmu benar.</b> (+15 Poin)';
+                pesan.className = "mb-4 p-4 rounded-xl border-2 bg-green-50 text-green-800 border-green-200 text-base";
                 document.getElementById("tombolKirim").classList.add("hidden");
                 if (indeksSoalAktif < daftarSoal.length - 1) {
                     document.getElementById("tombolLanjut").classList.remove("hidden");
@@ -379,20 +462,25 @@
                     document.getElementById("tombolSelesai").classList.remove("hidden");
                 }
             } else {
-                pesan.innerHTML = `⚠️ <b>Kurang tepat.</b> Jawaban yang benar adalah: <span class="font-bold text-green-600">"${daftarSoal[indeksSoalAktif].kunci}"</span>`;
-                pesan.className = "mt-4 p-4 rounded-xl border-2 bg-red-50 text-red-700 border-red-200 text-center font-bold text-lg";
-                document.getElementById("tombolKirim").classList.add("hidden");
-                if (indeksSoalAktif < daftarSoal.length - 1) {
-                    document.getElementById("tombolLanjut").classList.remove("hidden");
-                } else {
-                    document.getElementById("tombolSelesai").classList.remove("hidden");
-                }
+                let jawabanBenar = String.fromCharCode(65 + soalAktif.kunci) + ". " + soalAktif.pilihan[soalAktif.kunci];
+                pesan.innerHTML = '⚠️ <b>Kurang tepat.</b> Jawaban yang benar: <span class="text-green-600 font-bold">' +
+                    jawabanBenar + '</span>';
+                pesan.className = "mb-4 p-4 rounded-xl border-2 bg-red-50 text-red-800 border-red-200 text-base";
+                document.getElementById("tombolLanjut").classList.add("hidden");
+                document.getElementById("tombolSelesai").classList.add("hidden");
             }
         }
 
         function soalBerikutnya() {
             indeksSoalAktif++;
             muatSoal();
+        }
+
+        function soalSebelumnya() {
+            if (indeksSoalAktif > 0) {
+                indeksSoalAktif--;
+                muatSoal();
+            }
         }
 
         function simpanPoinDanSelesai() {
