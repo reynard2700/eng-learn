@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kelas SD | ENG-LEARN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            min-height: 100vh;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #fef9c3, #fde68a);
+        }
+        .max-w-4xl {
+            max-width: 56rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Kartu level */
+        .level-card {
+            transition: all 0.4s ease;
+            border: 3px solid transparent;
+            background: white;
+            border-radius: 30px;
+            padding: 32px 24px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+        }
+        .level-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+        .level-card.beginner {
+            border-color: #a7f3d0;
+        }
+        .level-card.beginner:hover {
+            border-color: #10b981;
+            box-shadow: 0 20px 60px rgba(16, 185, 129, 0.15);
+        }
+        .level-card.intermediate {
+            border-color: #fcd34d;
+        }
+        .level-card.intermediate:hover {
+            border-color: #f59e0b;
+            box-shadow: 0 20px 60px rgba(245, 158, 11, 0.15);
+        }
+        .level-card.advanced {
+            border-color: #fca5a5;
+        }
+        .level-card.advanced:hover {
+            border-color: #ef4444;
+            box-shadow: 0 20px 60px rgba(239, 68, 68, 0.15);
+        }
+
+        .level-icon {
+            font-size: 4rem;
+            display: block;
+            margin-bottom: 12px;
+        }
+        .level-title {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+        .level-sub {
+            font-size: 0.85rem;
+            color: #6b7280;
+            font-weight: 600;
+        }
+        .level-desc {
+            font-size: 0.95rem;
+            color: #4b5563;
+            margin: 12px 0 16px;
+            line-height: 1.5;
+        }
+        .level-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 4px 16px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: white;
+        }
+        .badge-beginner {
+            background: #10b981;
+        }
+        .badge-intermediate {
+            background: #f59e0b;
+        }
+        .badge-advanced {
+            background: #ef4444;
+        }
+        .btn-level {
+            display: inline-block;
+            padding: 12px 32px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            text-decoration: none;
+        }
+        .btn-level:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        .btn-beginner {
+            background: #10b981;
+        }
+        .btn-beginner:hover {
+            background: #059669;
+        }
+        .btn-intermediate {
+            background: #f59e0b;
+        }
+        .btn-intermediate:hover {
+            background: #d97706;
+        }
+        .btn-advanced {
+            background: #ef4444;
+        }
+        .btn-advanced:hover {
+            background: #dc2626;
+        }
+
+        /* Tombol kembali */
+        .btn-back {
+            background: white;
+            border-radius: 12px;
+            padding: 8px 20px;
+            font-weight: 600;
+            color: #d97706;
+            border: 2px solid #fde68a;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .btn-back:hover {
+            background: #fffbeb;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .level-card {
+                padding: 24px 16px !important;
+            }
+            .level-icon {
+                font-size: 3rem !important;
+            }
+            .level-title {
+                font-size: 1.4rem !important;
+            }
+            .btn-level {
+                padding: 10px 24px !important;
+                font-size: 0.85rem !important;
+            }
+            .text-4xl {
+                font-size: 2rem !important;
+            }
+            .grid-cols-1.md\:grid-cols-3 {
+                grid-template-columns: 1fr !important;
+                gap: 16px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="max-w-4xl mx-auto">
+
+        <!-- TOP BAR -->
+        <div class="mb-8 flex flex-wrap justify-between items-center gap-3">
+            <a href="index.html" class="btn-back inline-flex items-center gap-1">
+                ⬅️ Kembali
+            </a>
+            <div class="bg-yellow-500 text-white font-bold px-6 py-2 rounded-xl shadow-md flex items-center gap-2 text-lg">
+                ⭐ Poin Total: <span id="skorTotal">0</span>
+            </div>
+        </div>
+
+        <!-- JUDUL -->
+        <div class="text-center mb-10">
+            <h1 class="text-4xl font-extrabold text-gray-800 mb-2 flex items-center justify-center gap-2">
+                🎒 Kelas <span class="text-yellow-500">SD</span>
+            </h1>
+            <p class="text-gray-600">Pilih level petualangan bahasa Inggrismu!</p>
+        </div>
+
+        <!-- 3 LEVEL -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <!-- BEGINNER -->
+            <div class="level-card beginner">
+                <span class="level-icon">🌱</span>
+                <span class="level-badge badge-beginner">Beginner</span>
+                <h2 class="level-title">Pemula</h2>
+                <p class="level-sub">Kelas 1-2 SD</p>
+                <p class="level-desc">10 soal campuran. Belajar kata dasar, huruf, dan salam sederhana.</p>
+                <a href="sd-beginner.html" class="btn-level btn-beginner">🚀 Mulai</a>
+            </div>
+
+            <!-- INTERMEDIATE -->
+            <div class="level-card intermediate">
+                <span class="level-icon">🌟</span>
+                <span class="level-badge badge-intermediate">Intermediate</span>
+                <h2 class="level-title">Menengah</h2>
+                <p class="level-sub">Kelas 3-4 SD</p>
+                <p class="level-desc">12 soal campuran. Kalimat sederhana, to be, dan deskripsi.</p>
+                <a href="sd-intermediate.html" class="btn-level btn-intermediate">🚀 Mulai</a>
+            </div>
+
+            <!-- ADVANCED -->
+            <div class="level-card advanced">
+                <span class="level-icon">🏆</span>
+                <span class="level-badge badge-advanced">Advanced</span>
+                <h2 class="level-title">Mahir</h2>
+                <p class="level-sub">Kelas 5-6 SD</p>
+                <p class="level-desc">15 soal campuran. Tata bahasa lebih kompleks & teks panjang.</p>
+                <a href="sd-advanced.html" class="btn-level btn-advanced">🚀 Mulai</a>
+            </div>
+
+        </div>
+
+        <!-- INFO TAMBAHAN -->
+        <div class="mt-10 text-center text-sm text-gray-500 bg-white/60 rounded-2xl p-4 border-2 border-yellow-200">
+            <p>🎯 Setiap level memiliki soal campuran: Vocabulary, Grammar, Listening, dan Reading.</p>
+            <p class="mt-1">✨ Semakin tinggi level, semakin banyak soal dan tantangan!</p>
+        </div>
+
+    </div>
+
+    <script>
+        // Tampilkan poin total dari localStorage
+        const skor = parseInt(localStorage.getItem('poinMurid')) || 0;
+        document.getElementById('skorTotal').innerHTML = skor;
+    </script>
+
+</body>
+</html>

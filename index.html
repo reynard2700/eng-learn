@@ -50,6 +50,15 @@
         }
 
         /* Kartu pilihan kelas */
+        .card-sd {
+            transition: all 0.4s ease;
+            border: 2px solid #fef3c7;
+        }
+        .card-sd:hover {
+            transform: translateY(-10px);
+            border-color: #f59e0b;
+            box-shadow: 0 20px 60px rgba(245, 158, 11, 0.15);
+        }
         .card-smp {
             transition: all 0.4s ease;
             border: 2px solid #e0e7ff;
@@ -140,6 +149,9 @@
             .grid-cols-1.md\:grid-cols-2 {
                 grid-template-columns: 1fr !important;
             }
+            .grid-cols-1.md\:grid-cols-3 {
+                grid-template-columns: 1fr !important;
+            }
             .text-5xl {
                 font-size: 2.5rem !important;
             }
@@ -215,7 +227,7 @@
                 </h1>
 
                 <p class="text-lg text-gray-200 leading-relaxed max-w-lg animate-fade-up delay-2">
-                    Platform belajar bahasa Inggris interaktif untuk siswa SMP dan SMA.
+                    Platform belajar bahasa Inggris interaktif untuk siswa SD, SMP, dan SMA.
                     Kuasai <strong class="text-white">Writing, Listening, Speaking, &amp; Reading</strong> dengan metode yang menyenangkan.
                 </p>
 
@@ -329,7 +341,7 @@
     </section>
 
     <!-- ============================================================ -->
-    <!-- PILIH KELAS (SMP & SMA) -->
+    <!-- PILIH KELAS (SD, SMP, SMA) -->
     <!-- ============================================================ -->
     <section id="kelas" class="py-20 px-6 bg-gradient-to-b from-gray-50 to-white">
         <div class="max-w-6xl mx-auto text-center">
@@ -340,8 +352,19 @@
                 Sesuaikan materi dengan jenjang pendidikanmu. Mulai dari yang paling cocok untukmu!
             </p>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
 
+                <!-- Kartu SD -->
+                <a href="sd.html" class="card-sd bg-white rounded-3xl p-10 text-center shadow-lg">
+                    <div class="text-6xl mb-4">🎒</div>
+                    <h3 class="text-3xl font-extrabold text-gray-800 mb-2">SD</h3>
+                    <p class="text-gray-500 text-sm mb-6">Untuk siswa kelas 1-6. Belajar sambil bermain!</p>
+                    <div class="inline-flex items-center gap-2 bg-yellow-50 text-yellow-600 font-bold px-6 py-3 rounded-full text-sm hover:bg-yellow-100 transition">
+                        Masuk ke SD →
+                    </div>
+                </a>
+
+                <!-- Kartu SMP -->
                 <a href="smp.html" class="card-smp bg-white rounded-3xl p-10 text-center shadow-lg">
                     <div class="text-6xl mb-4">🎒</div>
                     <h3 class="text-3xl font-extrabold text-gray-800 mb-2">SMP</h3>
@@ -351,6 +374,7 @@
                     </div>
                 </a>
 
+                <!-- Kartu SMA -->
                 <a href="sma.html" class="card-sma bg-white rounded-3xl p-10 text-center shadow-lg">
                     <div class="text-6xl mb-4">🎓</div>
                     <h3 class="text-3xl font-extrabold text-gray-800 mb-2">SMA</h3>

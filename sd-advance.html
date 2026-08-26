@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Petualangan Inggris - Advanced | ENG-LEARN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            min-height: 100vh;
+            padding: 1rem;
+            background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+        }
+        .max-w-3xl {
+            max-width: 42rem;
+            margin: 0 auto;
+        }
+        .mascot {
+            font-size: 4rem;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        .progress-track {
+            background: #e5e7eb;
+            border-radius: 20px;
+            height: 10px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            border-radius: 20px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+        .option-btn {
+            transition: all 0.2s ease;
+            border: 3px solid #e5e7eb;
+            background: white;
+            padding: 16px 12px;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            min-height: 56px;
+            cursor: pointer;
+            text-align: center;
+            color: #1f2937;
+        }
+        .option-btn:hover {
+            border-color: #3b82f6;
+            background: #eff6ff;
+            transform: scale(1.02);
+        }
+        .option-btn.correct {
+            border-color: #22c55e;
+            background: #dcfce7;
+        }
+        .option-btn.wrong {
+            border-color: #ef4444;
+            background: #fee2e2;
+        }
+        .option-btn.disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        .option-btn.selected {
+            border-color: #3b82f6;
+            background: #dbeafe;
+        }
+        .btn-audio {
+            background: #22c55e;
+            transition: all 0.3s ease;
+            padding: 14px 28px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+        }
+        .btn-audio:hover {
+            background: #16a34a;
+            transform: scale(1.05);
+        }
+        .soal-card {
+            background: white;
+            border-radius: 30px;
+            padding: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            border: 3px solid #93c5fd;
+        }
+        .badge-level {
+            display: inline-block;
+            background: #8b5cf6;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 4px 16px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .sticker {
+            font-size: 3.5rem;
+            display: inline-block;
+            animation: pop 0.5s ease-out;
+        }
+        @keyframes pop {
+            0% {
+                transform: scale(0);
+            }
+            70% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        @media (max-width: 640px) {
+            .soal-card {
+                padding: 16px !important;
+            }
+            .option-btn {
+                font-size: 0.95rem !important;
+                padding: 14px 10px !important;
+                min-height: 48px !important;
+            }
+            #teksSoal {
+                font-size: 1.1rem !important;
+            }
+            .mascot {
+                font-size: 3rem !important;
+            }
+            .btn-audio {
+                font-size: 0.95rem !important;
+                padding: 12px 20px !important;
+            }
+            #teksBacaan {
+                font-size: 0.9rem !important;
+                padding: 12px !important;
+            }
+        }
+        button:active {
+            transform: scale(0.96);
+        }
+        .btn-back {
+            background: white;
+            border-radius: 12px;
+            padding: 8px 16px;
+            font-weight: 600;
+            color: #1d4ed8;
+            border: 2px solid #bfdbfe;
+            transition: all 0.2s;
+        }
+        .btn-back:hover {
+            background: #eff6ff;
+        }
+        .hasil-box {
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="max-w-3xl mx-auto">
+
+        <!-- TOP BAR -->
+        <div class="mb-4 flex flex-wrap justify-between items-center gap-3">
+            <a href="sd.html" onclick="return confirm('Kak, yakin mau kembali? Poin sesi ini akan hangus lho!')" class="btn-back inline-flex items-center gap-1">
+                ⬅️ Kembali
+            </a>
+            <div class="bg-indigo-600 text-white font-bold px-6 py-2 rounded-xl shadow-md flex items-center gap-2 text-lg">
+                ⭐ Poin: <span id="poinTotal">0</span>
+            </div>
+        </div>
+
+        <!-- KARTU UTAMA -->
+        <div class="soal-card">
+
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-4">
+                <div class="flex items-center gap-3">
+                    <span class="badge-level">🚀 Advanced</span>
+                    <span class="text-sm font-semibold text-gray-500">Petualangan</span>
+                </div>
+                <span id="labelNomorSoal" class="bg-indigo-100 text-indigo-700 font-bold px-4 py-1 rounded-full text-sm">
+                    Soal 1 dari 15
+                </span>
+            </div>
+
+            <!-- Maskot -->
+            <div class="flex items-center gap-4 mb-4 bg-indigo-50 rounded-2xl p-4 border-2 border-indigo-200">
+                <div class="mascot">🦉</div>
+                <div>
+                    <div class="font-bold text-gray-700 text-sm">Halo, Petualang Hebat!</div>
+                    <div id="pesanMaskot" class="text-sm text-gray-600">Ayo jawab 15 soal ini dengan benar!</div>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="mb-5">
+                <div class="flex justify-between text-xs text-gray-500 mb-1">
+                    <span>Progress</span>
+                    <span id="progressLabel">0%</span>
+                </div>
+                <div class="progress-track">
+                    <div id="progressFill" class="progress-fill" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <!-- AREA SOAL -->
+            <div id="areaSoal">
+
+                <div id="tipeSoalBadge" class="mb-3">
+                    <span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">📝 Vocabulary</span>
+                </div>
+
+                <div id="teksBacaan" class="hidden bg-gray-50 p-4 rounded-xl border-l-4 border-purple-400 mb-4 text-sm leading-relaxed">
+                    Teks bacaan...
+                </div>
+
+                <div id="teksSoal" class="text-xl font-bold text-gray-800 mb-5 leading-relaxed">
+                    Pertanyaan...
+                </div>
+
+                <div id="areaAudio" class="hidden text-center mb-4">
+                    <button onclick="putarAudio()" class="btn-audio inline-flex items-center gap-2">
+                        🔊 Dengarkan
+                    </button>
+                </div>
+
+                <div id="areaPilihan" class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5"></div>
+
+                <button id="tombolKirim" onclick="kirimJawaban()" class="w-full bg-indigo-600 text-white px-6 py-4 rounded-2xl font-bold text-lg hover:bg-indigo-700 shadow-md transition-colors">
+                    🚀 Kirim Jawaban
+                </button>
+
+                <div id="pesanHasil" class="hidden mt-4 p-4 rounded-xl border-2 text-center font-bold text-lg"></div>
+
+                <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden w-full bg-green-500 text-white px-6 py-4 rounded-2xl font-bold text-lg hover:bg-green-600 shadow-md transition-colors mt-3">
+                    ➡️ Lanjut
+                </button>
+
+            </div>
+
+            <!-- SKOR AKHIR -->
+            <div id="hasilSkor" class="hidden mt-4 p-6 rounded-2xl border-4 border-indigo-300 bg-indigo-50 text-center hasil-box">
+                <div class="text-5xl mb-2">🎉</div>
+                <div class="sticker">⭐</div>
+                <h2 class="text-2xl font-extrabold text-gray-800 mt-2">Selesai, Petualang Hebat!</h2>
+                <div class="text-3xl font-extrabold text-indigo-600 mb-2">
+                    <span id="skorBenar">0</span> dari <span id="skorTotal">0</span>
+                    <span id="skorPersen" class="text-lg font-semibold text-gray-500">(0%)</span>
+                </div>
+                <div class="flex justify-center gap-6 text-sm text-gray-600 mb-3">
+                    <div>✅ Benar: <span id="benarCount" class="font-bold text-green-600">0</span></div>
+                    <div>❌ Salah: <span id="salahCount" class="font-bold text-red-600">0</span></div>
+                </div>
+                <div class="text-sm text-gray-500 mb-4">
+                    💡 Poin yang didapat: <span id="skorPoinAkhir" class="font-bold text-indigo-600">0</span>
+                </div>
+                <div class="flex flex-wrap gap-3 justify-center">
+                    <a href="sd.html" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-full font-bold hover:bg-indigo-700 transition shadow-md">
+                        🏠 Kembali ke Dashboard
+                    </a>
+                    <button onclick="ulangi()" class="inline-block bg-indigo-500 text-white px-6 py-3 rounded-full font-bold hover:bg-indigo-600 transition shadow-md">
+                        🔄 Ulangi
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // ================================================================
+        //  BANK SOAL ADVANCED (15 Soal Campuran)
+        //  Vocabulary: 4 soal | Grammar: 4 soal | Listening: 3 soal | Reading: 4 soal
+        // ================================================================
+        const bankSoal = [{
+            tipe: "vocab",
+            soal: "Apa arti dari kata 'beautiful'?",
+            pilihan: ["Cantik", "Pintar", "Besar", "Cepat"],
+            kunci: 0,
+            audio: null
+        }, {
+            tipe: "vocab",
+            soal: "Apa arti dari kata 'dangerous'?",
+            pilihan: ["Berbahaya", "Aman", "Menakutkan", "Menyenangkan"],
+            kunci: 0,
+            audio: null
+        }, {
+            tipe: "vocab",
+            soal: "Apa arti dari kata 'generous'?",
+            pilihan: ["Dermawan", "Pemarah", "Ramah", "Cerdas"],
+            kunci: 0,
+            audio: null
+        }, {
+            tipe: "vocab",
+            soal: "Apa arti dari kata 'explore'?",
+            pilihan: ["Menjelajahi", "Meninggalkan", "Memperbaiki", "Menyembunyikan"],
+            kunci: 0,
+            audio: null
+        }, {
+            tipe: "grammar",
+            soal: "She ___ to the market yesterday.",
+            pilihan: ["go", "went", "going", "gone"],
+            kunci: 1,
+            audio: null
+        }, {
+            tipe: "grammar",
+            soal: "I have ___ that movie before.",
+            pilihan: ["see", "saw", "seen", "seeing"],
+            kunci: 2,
+            audio: null
+        }, {
+            tipe: "grammar",
+            soal: "They are ___ in the park right now.",
+            pilihan: ["play", "plays", "playing", "played"],
+            kunci: 2,
+            audio: null
+        }, {
+            tipe: "grammar",
+            soal: "If it rains, we ___ stay at home.",
+            pilihan: ["will", "would", "shall", "might"],
+            kunci: 0,
+            audio: null
+        }, {
+            tipe: "listening",
+            soal: "Dengarkan dan pilih kata yang kamu dengar!",
+            pilihan: ["Adventure", "Mountain", "Ocean", "Forest"],
+            kunci: 2,
+            audio: "Ocean"
+        }, {
+            tipe: "listening",
+            soal: "Dengarkan dan pilih kata yang kamu dengar!",
+            pilihan: ["Intelligent", "Honest", "Kind", "Brave"],
+            kunci: 0,
+            audio: "Intelligent"
+        }, {
+            tipe: "listening",
+            soal: "Dengarkan dan pilih kata yang kamu dengar!",
+            pilihan: ["Temperature", "Humidity", "Wind", "Rain"],
+            kunci: 3,
+            audio: "Rain"
+        }, {
+            tipe: "reading",
+            soal: "Baca teks berikut! 'Once upon a time, there was a wise owl who lived in a big tree. The owl helped all the animals in the forest.' Pertanyaan: Where did the owl live?",
+            pilihan: ["In a cave", "In a big tree", "In a river", "On a mountain"],
+            kunci: 1,
+            audio: null,
+            bacaan: "Once upon a time, there was a wise owl who lived in a big tree. The owl helped all the animals in the forest."
+        }, {
+            tipe: "reading",
+            soal: "Baca teks berikut! 'Rara loves to read books about animals. Her favorite book is about elephants. She learns many things from reading.' Pertanyaan: What is Rara's favorite book about?",
+            pilihan: ["Cats", "Dogs", "Elephants", "Birds"],
+            kunci: 2,
+            audio: null,
+            bacaan: "Rara loves to read books about animals. Her favorite book is about elephants. She learns many things from reading."
+        }, {
+            tipe: "reading",
+            soal: "Baca teks berikut! 'Bali is a beautiful island in Indonesia. Many tourists visit Bali every year. They enjoy the beaches and the culture.' Pertanyaan: What do tourists enjoy in Bali?",
+            pilihan: ["Mountains", "Beaches and culture", "Shopping", "Rain forest"],
+            kunci: 1,
+            audio: null,
+            bacaan: "Bali is a beautiful island in Indonesia. Many tourists visit Bali every year. They enjoy the beaches and the culture."
+        }, {
+            tipe: "reading",
+            soal: "Baca teks berikut! 'Recycling is important to protect our environment. We should recycle paper, plastic, and glass to reduce waste.' Pertanyaan: Why is recycling important?",
+            pilihan: ["To save money", "To protect the environment", "To make new products", "To decorate"],
+            kunci: 1,
+            audio: null,
+            bacaan: "Recycling is important to protect our environment. We should recycle paper, plastic, and glass to reduce waste."
+        }];
+
+        // ================================================================
+        //  STATE
+        // ================================================================
+        let sesiSoal = [];
+        let indeksAktif = 0;
+        let poinSesi = 0;
+        let pilihanDipilih = null;
+        let statusRiwayat = {};
+        const MAX_SOAL = 15;
+
+        // ================================================================
+        //  FUNGSI UTAMA
+        // ================================================================
+
+        function acakSoal() {
+            const shuffled = [...bankSoal];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled.slice(0, MAX_SOAL);
+        }
+
+        function muatSoal() {
+            if (indeksAktif >= sesiSoal.length) {
+                tampilkanSkor();
+                return;
+            }
+
+            const soal = sesiSoal[indeksAktif];
+            const total = sesiSoal.length;
+
+            document.getElementById("labelNomorSoal").innerHTML = "Soal " + (indeksAktif + 1) + " dari " + total;
+
+            const progress = ((indeksAktif) / total) * 100;
+            document.getElementById("progressFill").style.width = progress + "%";
+            document.getElementById("progressLabel").innerHTML = Math.round(progress) + "%";
+
+            const badgeMap = {
+                vocab: '📝 Vocabulary',
+                grammar: '📚 Grammar',
+                listening: '🎧 Listening',
+                reading: '📖 Reading'
+            };
+            document.getElementById("tipeSoalBadge").innerHTML = '<span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">' +
+                badgeMap[soal.tipe] + '</span>';
+
+            const bacaanEl = document.getElementById("teksBacaan");
+            if (soal.tipe === "reading" && soal.bacaan) {
+                bacaanEl.classList.remove("hidden");
+                bacaanEl.innerHTML = soal.bacaan;
+            } else {
+                bacaanEl.classList.add("hidden");
+                bacaanEl.innerHTML = "";
+            }
+
+            const audioEl = document.getElementById("areaAudio");
+            if (soal.tipe === "listening" && soal.audio) {
+                audioEl.classList.remove("hidden");
+            } else {
+                audioEl.classList.add("hidden");
+            }
+
+            document.getElementById("teksSoal").innerHTML = soal.soal;
+
+            const areaPilihan = document.getElementById("areaPilihan");
+            areaPilihan.innerHTML = "";
+            pilihanDipilih = null;
+
+            soal.pilihan.forEach(function(opsi, index) {
+                const tombol = document.createElement("button");
+                tombol.innerHTML = opsi;
+                tombol.id = "opsi-" + index;
+                tombol.className = "option-btn";
+                tombol.dataset.index = index;
+                tombol.onclick = function() { pilihOpsi(index); };
+                areaPilihan.appendChild(tombol);
+            });
+
+            document.getElementById("pesanHasil").classList.add("hidden");
+            document.getElementById("tombolLanjut").classList.add("hidden");
+            document.getElementById("tombolKirim").classList.remove("hidden");
+            document.getElementById("hasilSkor").classList.add("hidden");
+
+            const riwayat = statusRiwayat[indeksAktif];
+            if (riwayat && riwayat.sudahBenar) {
+                pilihanDipilih = riwayat.pilihan;
+                tandaiTombolTerpilih(pilihanDipilih);
+                tampilkanHasil(true, true);
+                document.getElementById("tombolKirim").classList.add("hidden");
+                if (indeksAktif < total - 1) {
+                    document.getElementById("tombolLanjut").classList.remove("hidden");
+                }
+            } else {
+                document.querySelectorAll(".option-btn").forEach(b => {
+                    b.classList.remove("selected", "correct", "wrong", "disabled");
+                });
+            }
+
+            const pesanMaskot = document.getElementById("pesanMaskot");
+            const pesan = [
+                "Tantangan semakin seru! 💪",
+                "Kamu pasti bisa melewatinya! 🌟",
+                "Terus semangat, Petualang! 🔥",
+                "Jangan menyerah! 🧠",
+                "Selangkah lagi menuju kemenangan! 🏆"
+            ];
+            pesanMaskot.innerHTML = pesan[Math.floor(Math.random() * pesan.length)];
+        }
+
+        function pilihOpsi(index) {
+            const riwayat = statusRiwayat[indeksAktif];
+            if (riwayat && riwayat.sudahBenar) return;
+            pilihanDipilih = index;
+            tandaiTombolTerpilih(index);
+        }
+
+        function tandaiTombolTerpilih(index) {
+            document.querySelectorAll(".option-btn").forEach((btn, i) => {
+                btn.classList.remove("selected");
+                if (i === index) btn.classList.add("selected");
+            });
+        }
+
+        function kirimJawaban() {
+            if (pilihanDipilih === null) {
+                alert("Kak, pilih dulu jawabannya ya!");
+                return;
+            }
+
+            const soalAktif = sesiSoal[indeksAktif];
+            const isBenar = (pilihanDipilih === soalAktif.kunci);
+
+            if (isBenar) {
+                if (!statusRiwayat[indeksAktif] || !statusRiwayat[indeksAktif].sudahBenar) {
+                    poinSesi += 15;
+                    document.getElementById("poinTotal").innerHTML = poinSesi;
+                }
+                statusRiwayat[indeksAktif] = { sudahBenar: true, pilihan: pilihanDipilih };
+            } else {
+                statusRiwayat[indeksAktif] = { sudahBenar: false, pilihan: pilihanDipilih };
+            }
+
+            tampilkanHasil(isBenar, false);
+
+            document.getElementById("tombolKirim").classList.add("hidden");
+            if (indeksAktif < sesiSoal.length - 1) {
+                document.getElementById("tombolLanjut").classList.remove("hidden");
+            } else {
+                document.getElementById("tombolLanjut").textContent = "🎉 Lihat Hasil";
+                document.getElementById("tombolLanjut").classList.remove("hidden");
+                document.getElementById("tombolLanjut").onclick = function() {
+                    tampilkanSkor();
+                };
+            }
+        }
+
+        function tampilkanHasil(isBenar, dariReview) {
+            const soalAktif = sesiSoal[indeksAktif];
+            const pesan = document.getElementById("pesanHasil");
+            pesan.classList.remove("hidden");
+
+            document.querySelectorAll(".option-btn").forEach((btn, i) => {
+                btn.classList.add("disabled");
+                if (i === soalAktif.kunci) btn.classList.add("correct");
+                else if (i === pilihanDipilih && !isBenar) btn.classList.add("wrong");
+            });
+
+            const maskot = document.getElementById("pesanMaskot");
+            if (isBenar) {
+                pesan.innerHTML = dariReview ?
+                    '📚 <b>Kamu sudah jawab soal ini sebelumnya!</b>' :
+                    '🎉 <b>Luar biasa!</b> +15 poin ✨';
+                pesan.className = "mt-4 p-4 rounded-xl border-2 border-green-200 bg-green-50 text-green-700 text-center font-bold text-lg";
+                maskot.innerHTML = "Hebat! Kamu luar biasa! 🌟";
+            } else {
+                const jawabanBenar = soalAktif.pilihan[soalAktif.kunci];
+                pesan.innerHTML = '😅 <b>Kurang tepat.</b> Jawaban yang benar: <span class="font-bold text-green-600">"' + jawabanBenar + '"</span>';
+                pesan.className = "mt-4 p-4 rounded-xl border-2 border-red-200 bg-red-50 text-red-700 text-center font-bold text-lg";
+                maskot.innerHTML = "Jangan menyerah, coba lebih teliti! 💪";
+            }
+        }
+
+        function soalBerikutnya() {
+            indeksAktif++;
+            muatSoal();
+        }
+
+        function tampilkanSkor() {
+            const totalSoal = sesiSoal.length;
+            let benar = 0;
+            for (let i = 0; i < totalSoal; i++) {
+                if (statusRiwayat[i] && statusRiwayat[i].sudahBenar) benar++;
+            }
+            const salah = totalSoal - benar;
+
+            document.getElementById("hasilSkor").classList.remove("hidden");
+            document.getElementById("skorBenar").innerHTML = benar;
+            document.getElementById("skorTotal").innerHTML = totalSoal;
+            document.getElementById("benarCount").innerHTML = benar;
+            document.getElementById("salahCount").innerHTML = salah;
+            document.getElementById("skorPoinAkhir").innerHTML = poinSesi;
+            const persen = Math.round((benar / totalSoal) * 100);
+            document.getElementById("skorPersen").innerHTML = "(" + persen + "%)";
+            document.getElementById("areaSoal").classList.add("hidden");
+            document.getElementById("tombolLanjut").classList.add("hidden");
+
+            const poinLama = parseInt(localStorage.getItem('poinMurid')) || 0;
+            localStorage.setItem('poinMurid', poinLama + poinSesi);
+            document.getElementById("poinTotal").innerHTML = poinLama + poinSesi;
+
+            let stiker = "⭐";
+            if (persen === 100) stiker = "🏆";
+            else if (persen >= 70) stiker = "🌟";
+            else if (persen >= 50) stiker = "⭐";
+            else stiker = "💪";
+            document.querySelector(".sticker").innerHTML = stiker;
+        }
+
+        function ulangi() {
+            sesiSoal = acakSoal();
+            indeksAktif = 0;
+            poinSesi = 0;
+            statusRiwayat = {};
+            document.getElementById("areaSoal").classList.remove("hidden");
+            document.getElementById("hasilSkor").classList.add("hidden");
+            document.getElementById("poinTotal").innerHTML = 0;
+            muatSoal();
+        }
+
+        // ================================================================
+        //  LISTENING
+        // ================================================================
+        function putarAudio() {
+            const soal = sesiSoal[indeksAktif];
+            if (soal.audio) {
+                const suara = new SpeechSynthesisUtterance(soal.audio);
+                suara.lang = "en-US";
+                suara.rate = 0.7;
+                window.speechSynthesis.speak(suara);
+            }
+        }
+
+        // ================================================================
+        //  INISIALISASI
+        // ================================================================
+        sesiSoal = acakSoal();
+        indeksAktif = 0;
+        poinSesi = 0;
+        statusRiwayat = {};
+        document.getElementById("poinTotal").innerHTML = parseInt(localStorage.getItem('poinMurid')) || 0;
+        muatSoal();
+    </script>
+</body>
+</html>

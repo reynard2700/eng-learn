@@ -261,4 +261,80 @@
         transform: scale(0.96);
         transition: transform 0.1s ease;
     }
+    /* ============================================================
+   TAMBAHAN UNTUK HALAMAN SD & INDEX
+   ============================================================ */
+
+@media (max-width: 640px) {
+    /* ----- INDEX.HTML (KARTU KELAS) ----- */
+    /* Ubah grid 3 kolom jadi 1 kolom di HP */
+    .grid-cols-1.md\:grid-cols-3 {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+    /* Kartu SD, SMP, SMA di HP */
+    .card-sd,
+    .card-smp,
+    .card-sma {
+        padding: 24px 16px !important;
+        border-radius: 24px !important;
+    }
+    .card-sd .text-6xl,
+    .card-smp .text-6xl,
+    .card-sma .text-6xl {
+        font-size: 3.5rem !important;
+    }
+    .card-sd h3,
+    .card-smp h3,
+    .card-sma h3 {
+        font-size: 1.6rem !important;
+    }
+
+    /* ----- SD.HTML (DASHBOARD SD) ----- */
+    /* Level cards di HP */
+    .level-card {
+        padding: 20px 16px !important;
+        border-radius: 24px !important;
+    }
+    .level-icon {
+        font-size: 3rem !important;
+    }
+    .level-title {
+        font-size: 1.4rem !important;
+    }
+    .btn-level {
+        padding: 10px 24px !important;
+        font-size: 0.85rem !important;
+    }
+
+    /* ----- SD-BEGINNER/INTERMEDIATE/ADVANCED ----- */
+    /* Maskot di HP */
+    .mascot {
+        font-size: 2.8rem !important;
+    }
+    /* Progress bar */
+    .progress-track {
+        height: 8px !important;
+    }
+    /* Badge level */
+    .badge-level {
+        font-size: 0.6rem !important;
+        padding: 2px 12px !important;
+    }
+    /* Stiker reward */
+    .sticker {
+        font-size: 2.8rem !important;
+    }
+    /* Tombol audio di HP */
+    .btn-audio {
+        font-size: 0.9rem !important;
+        padding: 12px 20px !important;
+    }
+    /* Teks bacaan */
+    #teksBacaan {
+        font-size: 0.85rem !important;
+        padding: 10px !important;
+        max-height: 150px !important;
+    }
+}
 }
