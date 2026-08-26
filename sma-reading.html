@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reading SMA | ENG-LEARN</title>
+    <title>Reading SMA (20 Soal) | ENG-LEARN</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
         * {
             font-family: 'Poppins', sans-serif;
@@ -20,31 +20,17 @@
             margin-left: auto;
             margin-right: auto;
         }
-        .btn-back {
-            background: white;
-            border-radius: 12px;
-            padding: 8px 16px;
-            font-weight: 600;
-            color: #ea580c;
-            border: 2px solid #fed7aa;
-            transition: all 0.2s;
-        }
-        .btn-back:hover {
-            background: #fff7ed;
-            border-color: #f97316;
-        }
         .option-btn {
             transition: all 0.2s ease;
             border: 2px solid #e5e7eb;
             background: white;
-            padding: 14px 16px;
-            border-radius: 16px;
+            padding: 14px 12px;
+            border-radius: 14px;
             font-weight: 600;
             font-size: 0.95rem;
-            min-height: 52px;
+            min-height: 50px;
             cursor: pointer;
             text-align: left;
-            width: 100%;
         }
         .option-btn:hover {
             border-color: #f97316;
@@ -70,57 +56,78 @@
             .bg-white.rounded-3xl {
                 padding: 16px !important;
             }
-            #teksSoal {
-                font-size: 1rem !important;
-            }
-            #bacaan {
-                font-size: 0.9rem !important;
+            #teksBacaan {
+                font-size: 0.85rem !important;
+                max-height: 200px !important;
                 padding: 12px !important;
             }
+            #teksSoal {
+                font-size: 0.95rem !important;
+            }
             .option-btn {
-                font-size: 0.85rem !important;
-                padding: 12px 14px !important;
-                min-height: 48px !important;
+                font-size: 0.82rem !important;
+                padding: 12px 10px !important;
+                min-height: 44px !important;
+            }
+            .max-w-3xl.mx-auto.mb-6.flex.justify-between {
+                flex-wrap: wrap !important;
+                gap: 12px !important;
+            }
+            #tombolKirim,
+            #tombolLanjut,
+            #tombolSelesai {
+                padding: 16px !important;
+                font-size: 1rem !important;
+                min-height: 56px !important;
+            }
+            .flex.gap-3 {
+                flex-direction: column !important;
+                gap: 10px !important;
             }
         }
         button:active {
             transform: scale(0.96);
         }
-        .fade-in {
-            animation: fadeIn 0.4s ease-out forwards;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        #bacaan {
-            background: #fef3c7;
-            border-left: 4px solid #f59e0b;
+        .text-bacaan {
+            background: #f8fafc;
+            border-left: 4px solid #f97316;
             padding: 16px 20px;
             border-radius: 12px;
             font-size: 0.95rem;
             line-height: 1.8;
-            color: #1e293b;
-            max-height: 250px;
-            overflow-y: auto;
-        }
-        .passage-container {
             max-height: 300px;
             overflow-y: auto;
-            scrollbar-width: thin;
         }
-        .passage-container::-webkit-scrollbar {
-            width: 4px;
+        .badge-jenis {
+            display: inline-block;
+            background: #f97316;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 2px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        .passage-container::-webkit-scrollbar-thumb {
-            background: #f59e0b;
-            border-radius: 8px;
+        .btn-back {
+            background: white;
+            border-radius: 12px;
+            padding: 8px 16px;
+            font-weight: 600;
+            color: #d97706;
+            border: 2px solid #fde68a;
+            transition: all 0.2s;
+        }
+        .btn-back:hover {
+            background: #fffbeb;
+        }
+        .badge-soal-count {
+            background: #f97316;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 20px;
         }
     </style>
 </head>
@@ -143,149 +150,301 @@
 
             <!-- Header -->
             <div class="flex justify-between items-center mb-4 border-b-2 border-orange-100 pb-4">
-                <h1 class="text-2xl font-bold text-gray-800">📖 Reading Comprehension <span class="text-orange-500 text-sm font-normal">SMA</span></h1>
-                <span id="labelNomorSoal" class="bg-orange-100 text-orange-700 font-bold px-4 py-1 rounded-full text-sm">Soal 1 dari 10</span>
+                <h1 class="text-2xl font-extrabold text-gray-800 flex items-center gap-2">
+                    📖 Reading <span class="text-orange-500">SMA</span>
+                </h1>
+                <span id="labelNomorSoal" class="bg-orange-100 text-orange-700 font-bold px-4 py-1 rounded-full text-sm">
+                    Soal 1 dari 20
+                </span>
             </div>
 
-            <!-- Area Soal -->
+            <!-- AREA SOAL -->
             <div id="areaSoal" class="fade-in">
-                <!-- Bacaan -->
-                <div id="bacaan" class="mb-4"></div>
+
+                <!-- Jenis Teks & Info -->
+                <div class="flex justify-between items-center mb-3">
+                    <span id="jenisTeks" class="badge-jenis">Hortatory</span>
+                    <span id="teksKe" class="text-xs text-gray-400 font-medium">Teks 1 dari 7</span>
+                </div>
+
+                <!-- Teks Bacaan -->
+                <div id="teksBacaan" class="text-bacaan mb-6">
+                    Teks bacaan akan muncul di sini...
+                </div>
 
                 <!-- Pertanyaan -->
-                <div id="teksSoal" class="text-lg font-semibold text-gray-800 mb-4"></div>
+                <div id="teksSoal" class="text-lg font-bold text-gray-800 mb-4">
+                    Pertanyaan...
+                </div>
 
-                <!-- Opsi -->
-                <div id="areaPilihan" class="grid grid-cols-1 gap-3 mb-6"></div>
+                <!-- Opsi Jawaban -->
+                <div id="areaPilihan" class="grid grid-cols-1 gap-3 mb-6">
+                    <!-- Opsi dimuat via JS -->
+                </div>
             </div>
 
-            <!-- Tombol Kirim / Lanjut / Selesai -->
+            <!-- Tombol Kirim -->
             <button id="tombolKirim" onclick="kirimJawaban()" class="w-full bg-orange-500 text-white px-6 py-3 rounded-xl font-bold text-lg hover:bg-orange-600 shadow-md transition-colors mb-4">
                 🚀 Kirim Jawaban
             </button>
 
-            <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden w-full bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-green-600 shadow-md transition-colors">
-                ➡️ Lanjut Soal Berikutnya
-            </button>
+            <!-- Feedback -->
+            <div id="pesanHasil" class="hidden mb-6 p-4 rounded-xl border-2 text-center font-bold text-lg"></div>
 
-            <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700 shadow-lg transition-colors">
+            <!-- Navigasi -->
+            <div class="flex gap-3">
+                <button id="tombolSebelumnya" onclick="soalSebelumnya()" class="hidden flex-1 bg-gray-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-gray-600 shadow-md transition-colors">
+                    ⬅️ Sebelumnya
+                </button>
+                <button id="tombolLanjut" onclick="soalBerikutnya()" class="hidden flex-1 bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-green-600 shadow-md transition-colors">
+                    ➡️ Lanjut
+                </button>
+            </div>
+
+            <button id="tombolSelesai" onclick="simpanPoinDanSelesai()" class="hidden mt-6 w-full bg-green-600 text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-green-700 shadow-lg">
                 🎉 Selesai & Simpan Poin!
             </button>
-
-            <!-- Feedback -->
-            <div id="pesanHasil" class="hidden mt-4 p-4 rounded-xl border-2 text-center font-bold text-lg"></div>
 
         </div>
     </div>
 
     <script>
         // ================================================================
-        //  DATA SOAL READING SMA (10 soal dengan teks pendek)
+        //  DATA SOAL READING SMA (20 Soal - 7 Teks)
+        //  Jenis: Hortatory, Instruction, Report, Analytical Exposition,
+        //         Narrative, Discussion, Review
         // ================================================================
         const daftarSoal = [{
-            bacaan: "The Great Wall of China is one of the most famous landmarks in the world. It was built over 2,000 years ago to protect China from invaders. The wall stretches over 13,000 miles and is made of stone, brick, and earth. Today, millions of tourists visit it every year.",
-            pertanyaan: "What was the purpose of the Great Wall?",
+            // TEKS 1: HORTATORY (Ajakan) - 3 Soal
+            jenis: "Hortatory",
+            bacaan: `Social media has become a big part of our daily lives. Many teenagers spend hours scrolling through Instagram, TikTok, and other platforms. While social media can be fun and useful, it also has negative effects. It can reduce face-to-face interaction, cause addiction, and spread fake news. Therefore, we should limit our time on social media. We should spend more time with family and friends in real life. We should also be more critical about the information we receive. By doing this, we can enjoy the benefits of social media without being controlled by it.`,
+            soal: "What is the main purpose of the text?",
             pilihan: [
-                "A. To attract tourists",
-                "B. To protect China from invaders",
-                "C. To serve as a trade route",
-                "D. To be a royal palace"
+                "To describe how social media works",
+                "To persuade readers to limit social media use",
+                "To explain the history of social media",
+                "To compare social media platforms"
             ],
-            kunci: "B. To protect China from invaders"
+            kunci: 1
         }, {
-            bacaan: "Albert Einstein was a brilliant physicist. He developed the theory of relativity, which changed the way scientists understand time and space. He was awarded the Nobel Prize in Physics in 1921 for his work on the photoelectric effect.",
-            pertanyaan: "What did Albert Einstein develop?",
+            jenis: "Hortatory",
+            bacaan: `Social media has become a big part of our daily lives. Many teenagers spend hours scrolling through Instagram, TikTok, and other platforms. While social media can be fun and useful, it also has negative effects. It can reduce face-to-face interaction, cause addiction, and spread fake news. Therefore, we should limit our time on social media. We should spend more time with family and friends in real life. We should also be more critical about the information we receive. By doing this, we can enjoy the benefits of social media without being controlled by it.`,
+            soal: "What is one negative effect of social media mentioned in the text?",
             pilihan: [
-                "A. The theory of gravity",
-                "B. The theory of relativity",
-                "C. The atomic bomb",
-                "D. The theory of evolution"
+                "It improves face-to-face interaction",
+                "It increases addiction",
+                "It helps spread correct information",
+                "It makes people more productive"
             ],
-            kunci: "B. The theory of relativity"
+            kunci: 1
         }, {
-            bacaan: "Global warming is the gradual increase in Earth's average temperature. It is mainly caused by human activities, such as burning fossil fuels and deforestation. The effects of global warming include rising sea levels, extreme weather, and loss of wildlife habitats.",
-            pertanyaan: "What is the main cause of global warming?",
+            jenis: "Hortatory",
+            bacaan: `Social media has become a big part of our daily lives. Many teenagers spend hours scrolling through Instagram, TikTok, and other platforms. While social media can be fun and useful, it also has negative effects. It can reduce face-to-face interaction, cause addiction, and spread fake news. Therefore, we should limit our time on social media. We should spend more time with family and friends in real life. We should also be more critical about the information we receive. By doing this, we can enjoy the benefits of social media without being controlled by it.`,
+            soal: "What does the writer suggest we do with information on social media?",
             pilihan: [
-                "A. Volcanic eruptions",
-                "B. Human activities like burning fossil fuels",
-                "C. Solar radiation",
-                "D. Natural climate cycles"
+                "Share it immediately",
+                "Ignore it completely",
+                "Be more critical about it",
+                "Post it on other platforms"
             ],
-            kunci: "B. Human activities like burning fossil fuels"
+            kunci: 2
         }, {
-            bacaan: "The human brain is an incredibly complex organ. It controls everything we do, from thinking and feeling to moving and breathing. The brain is made up of billions of nerve cells called neurons. It is protected by the skull and surrounded by fluid.",
-            pertanyaan: "What protects the human brain?",
+            // TEKS 2: INSTRUCTION (Petunjuk) - 3 Soal
+            jenis: "Instruction",
+            bacaan: `How to Make a Simple English Presentation\n\n1. Choose a topic that you are interested in.\n2. Research your topic using books or the internet.\n3. Write the main points on index cards.\n4. Practice your speech in front of a mirror.\n5. Speak clearly and slowly during the presentation.\n6. Make eye contact with the audience.\n7. Use visual aids like pictures or slides.\n8. Ask the audience if they have questions at the end.\n\nFollowing these steps will help you deliver a great presentation.`,
+            soal: "What should you do before practicing your speech?",
             pilihan: [
-                "A. The spine",
-                "B. The skull",
-                "C. The muscles",
-                "D. The skin"
+                "Speak clearly and slowly",
+                "Write the main points on index cards",
+                "Make eye contact with the audience",
+                "Ask questions to the audience"
             ],
-            kunci: "B. The skull"
+            kunci: 1
         }, {
-            bacaan: "Social media has become a big part of modern life. Platforms like Instagram, Facebook, and Twitter allow people to connect with friends, share photos, and express opinions. However, excessive use of social media can lead to addiction and mental health issues.",
-            pertanyaan: "What is one negative effect of social media mentioned in the text?",
+            jenis: "Instruction",
+            bacaan: `How to Make a Simple English Presentation\n\n1. Choose a topic that you are interested in.\n2. Research your topic using books or the internet.\n3. Write the main points on index cards.\n4. Practice your speech in front of a mirror.\n5. Speak clearly and slowly during the presentation.\n6. Make eye contact with the audience.\n7. Use visual aids like pictures or slides.\n8. Ask the audience if they have questions at the end.\n\nFollowing these steps will help you deliver a great presentation.`,
+            soal: "What is the last step in making a presentation according to the text?",
             pilihan: [
-                "A. It helps people connect",
-                "B. It improves mental health",
-                "C. It can cause addiction",
-                "D. It is free to use"
+                "Use visual aids",
+                "Practice in front of a mirror",
+                "Ask the audience if they have questions",
+                "Choose a topic"
             ],
-            kunci: "C. It can cause addiction"
+            kunci: 2
         }, {
-            bacaan: "The Amazon rainforest is the largest tropical rainforest in the world. It is home to millions of species of plants and animals. The Amazon produces about 20% of the world's oxygen and is often called the 'lungs of the Earth'.",
-            pertanyaan: "Why is the Amazon rainforest called the 'lungs of the Earth'?",
+            jenis: "Instruction",
+            bacaan: `How to Make a Simple English Presentation\n\n1. Choose a topic that you are interested in.\n2. Research your topic using books or the internet.\n3. Write the main points on index cards.\n4. Practice your speech in front of a mirror.\n5. Speak clearly and slowly during the presentation.\n6. Make eye contact with the audience.\n7. Use visual aids like pictures or slides.\n8. Ask the audience if they have questions at the end.\n\nFollowing these steps will help you deliver a great presentation.`,
+            soal: "What does 'visual aids' mean in the text?",
             pilihan: [
-                "A. Because it has many trees",
-                "B. Because it produces a lot of oxygen",
-                "C. Because it is very large",
-                "D. Because it has many animals"
+                "Books and articles",
+                "Pictures and slides",
+                "Index cards",
+                "Microphones and speakers"
             ],
-            kunci: "B. Because it produces a lot of oxygen"
+            kunci: 1
         }, {
-            bacaan: "Malaysia is a Southeast Asian country known for its diverse culture and delicious food. The capital city is Kuala Lumpur, which is famous for the Petronas Twin Towers. Malaysia has a tropical climate and is home to many beautiful beaches and islands.",
-            pertanyaan: "What is the capital city of Malaysia?",
+            // TEKS 3: REPORT (Laporan) - 3 Soal
+            jenis: "Report",
+            bacaan: `The Komodo dragon is the largest lizard in the world. It can grow up to 3 meters long and weigh up to 70 kilograms. Komodo dragons live in Indonesia, especially on the islands of Komodo, Rinca, Flores, and Gili Motang. They are carnivores and eat deer, pigs, and even water buffalo. Their saliva contains bacteria that can kill their prey within 24 hours. Komodo dragons are currently classified as endangered species. There are only about 3,000 to 5,000 left in the wild.`,
+            soal: "What is the main idea of the text?",
             pilihan: [
-                "A. Jakarta",
-                "B. Bangkok",
-                "C. Kuala Lumpur",
-                "D. Singapore"
+                "The habitat of Komodo dragons",
+                "The diet of Komodo dragons",
+                "General information about Komodo dragons",
+                "The danger of Komodo dragons"
             ],
-            kunci: "C. Kuala Lumpur"
+            kunci: 2
         }, {
-            bacaan: "Antibiotics are medicines used to treat bacterial infections. They work by killing bacteria or stopping them from growing. However, antibiotics are not effective against viral infections like the flu or cold. Overuse of antibiotics can lead to antibiotic resistance.",
-            pertanyaan: "What do antibiotics treat?",
+            jenis: "Report",
+            bacaan: `The Komodo dragon is the largest lizard in the world. It can grow up to 3 meters long and weigh up to 70 kilograms. Komodo dragons live in Indonesia, especially on the islands of Komodo, Rinca, Flores, and Gili Motang. They are carnivores and eat deer, pigs, and even water buffalo. Their saliva contains bacteria that can kill their prey within 24 hours. Komodo dragons are currently classified as endangered species. There are only about 3,000 to 5,000 left in the wild.`,
+            soal: "Why are Komodo dragons dangerous to their prey?",
             pilihan: [
-                "A. Viral infections",
-                "B. Bacterial infections",
-                "C. All kinds of diseases",
-                "D. Only the flu"
+                "They are very large",
+                "They have bacteria in their saliva",
+                "They can run very fast",
+                "They live in groups"
             ],
-            kunci: "B. Bacterial infections"
+            kunci: 1
         }, {
-            bacaan: "Renewable energy comes from natural sources that are constantly replenished, such as sunlight, wind, and water. Unlike fossil fuels, renewable energy does not produce harmful greenhouse gases. Many countries are now investing in renewable energy to combat climate change.",
-            pertanyaan: "What is an example of renewable energy mentioned in the text?",
+            jenis: "Report",
+            bacaan: `The Komodo dragon is the largest lizard in the world. It can grow up to 3 meters long and weigh up to 70 kilograms. Komodo dragons live in Indonesia, especially on the islands of Komodo, Rinca, Flores, and Gili Motang. They are carnivores and eat deer, pigs, and even water buffalo. Their saliva contains bacteria that can kill their prey within 24 hours. Komodo dragons are currently classified as endangered species. There are only about 3,000 to 5,000 left in the wild.`,
+            soal: "How many Komodo dragons are left in the wild approximately?",
             pilihan: [
-                "A. Coal",
-                "B. Oil",
-                "C. Sunlight",
-                "D. Natural gas"
+                "1,000 to 2,000",
+                "3,000 to 5,000",
+                "5,000 to 7,000",
+                "10,000 to 15,000"
             ],
-            kunci: "C. Sunlight"
+            kunci: 1
         }, {
-            bacaan: "The Eiffel Tower is one of the most recognizable structures in the world. It was built in 1889 by Gustave Eiffel for the World's Fair in Paris. Originally, many people disliked it, but today it is a symbol of France and attracts millions of tourists each year.",
-            pertanyaan: "Who built the Eiffel Tower?",
+            // TEKS 4: ANALYTICAL EXPOSITION (Argumentasi) - 3 Soal
+            jenis: "Analytical Exposition",
+            bacaan: `Online learning has become more popular in recent years. Many students now prefer to study from home using computers and the internet. There are several reasons why online learning is effective. First, it offers flexibility. Students can learn at their own pace and schedule. Second, it provides access to many resources. Students can watch videos, read articles, and join online discussions. Third, it saves time and money. Students do not need to travel to school. However, online learning also has challenges. It requires self-discipline and good internet connection.`,
+            soal: "What is the writer's opinion about online learning?",
             pilihan: [
-                "A. Gustave Eiffel",
-                "B. Alexandre Eiffel",
-                "C. Napoleon Bonaparte",
-                "D. Victor Hugo"
+                "It is completely useless",
+                "It is effective but has challenges",
+                "It is better than face-to-face learning",
+                "It is only for lazy students"
             ],
-            kunci: "A. Gustave Eiffel"
+            kunci: 1
+        }, {
+            jenis: "Analytical Exposition",
+            bacaan: `Online learning has become more popular in recent years. Many students now prefer to study from home using computers and the internet. There are several reasons why online learning is effective. First, it offers flexibility. Students can learn at their own pace and schedule. Second, it provides access to many resources. Students can watch videos, read articles, and join online discussions. Third, it saves time and money. Students do not need to travel to school. However, online learning also has challenges. It requires self-discipline and good internet connection.`,
+            soal: "Which of the following is NOT mentioned as a benefit of online learning?",
+            pilihan: [
+                "Flexibility",
+                "Access to many resources",
+                "Saving time and money",
+                "Better social interaction"
+            ],
+            kunci: 3
+        }, {
+            jenis: "Analytical Exposition",
+            bacaan: `Online learning has become more popular in recent years. Many students now prefer to study from home using computers and the internet. There are several reasons why online learning is effective. First, it offers flexibility. Students can learn at their own pace and schedule. Second, it provides access to many resources. Students can watch videos, read articles, and join online discussions. Third, it saves time and money. Students do not need to travel to school. However, online learning also has challenges. It requires self-discipline and good internet connection.`,
+            soal: "What is required for online learning to be effective according to the text?",
+            pilihan: [
+                "A big classroom",
+                "Self-discipline and good internet",
+                "Many teachers",
+                "Expensive books"
+            ],
+            kunci: 1
+        }, {
+            // TEKS 5: NARRATIVE (Cerita) - 3 Soal
+            jenis: "Narrative",
+            bacaan: `Once upon a time, there was a poor farmer named Andi. He worked hard every day but still struggled to feed his family. One day, while plowing his field, he found a golden egg. He was surprised and happy. The next day, he found another golden egg. This happened every day for a week. Andi became rich. However, he became greedy. He thought there must be a golden goose that laid the eggs. He decided to cut the goose open to get all the gold at once. But when he cut it open, there was nothing inside. He lost everything.`,
+            soal: "What is the moral lesson of the story?",
+            pilihan: [
+                "Hard work is important",
+                "Greed leads to loss",
+                "Golden eggs are valuable",
+                "Farmers are lucky"
+            ],
+            kunci: 1
+        }, {
+            jenis: "Narrative",
+            bacaan: `Once upon a time, there was a poor farmer named Andi. He worked hard every day but still struggled to feed his family. One day, while plowing his field, he found a golden egg. He was surprised and happy. The next day, he found another golden egg. This happened every day for a week. Andi became rich. However, he became greedy. He thought there must be a golden goose that laid the eggs. He decided to cut the goose open to get all the gold at once. But when he cut it open, there was nothing inside. He lost everything.`,
+            soal: "Why did Andi cut the goose open?",
+            pilihan: [
+                "He wanted to cook it",
+                "He was angry with the goose",
+                "He wanted to get all the gold at once",
+                "He wanted to sell the goose"
+            ],
+            kunci: 2
+        }, {
+            jenis: "Narrative",
+            bacaan: `Once upon a time, there was a poor farmer named Andi. He worked hard every day but still struggled to feed his family. One day, while plowing his field, he found a golden egg. He was surprised and happy. The next day, he found another golden egg. This happened every day for a week. Andi became rich. However, he became greedy. He thought there must be a golden goose that laid the eggs. He decided to cut the goose open to get all the gold at once. But when he cut it open, there was nothing inside. He lost everything.`,
+            soal: "What happened after Andi cut the goose open?",
+            pilihan: [
+                "He found more golden eggs",
+                "He lost everything",
+                "He became even richer",
+                "He sold the goose"
+            ],
+            kunci: 1
+        }, {
+            // TEKS 6: DISCUSSION (Pro dan Kontra) - 3 Soal
+            jenis: "Discussion",
+            bacaan: `Should schools ban smartphones? This is a hot topic in many countries. Some people agree that smartphones should be banned in schools. They argue that smartphones distract students from learning. Students often check social media, play games, or text their friends during class. This reduces their concentration and academic performance. On the other hand, some people disagree. They believe that smartphones can be useful for learning. Students can use them to search for information, take notes, and communicate with teachers. They also argue that banning smartphones is not the solution because students will find other ways to be distracted.`,
+            soal: "What is the main issue discussed in the text?",
+            pilihan: [
+                "The benefits of smartphones",
+                "Whether schools should ban smartphones",
+                "How to use smartphones properly",
+                "The history of smartphones"
+            ],
+            kunci: 1
+        }, {
+            jenis: "Discussion",
+            bacaan: `Should schools ban smartphones? This is a hot topic in many countries. Some people agree that smartphones should be banned in schools. They argue that smartphones distract students from learning. Students often check social media, play games, or text their friends during class. This reduces their concentration and academic performance. On the other hand, some people disagree. They believe that smartphones can be useful for learning. Students can use them to search for information, take notes, and communicate with teachers. They also argue that banning smartphones is not the solution because students will find other ways to be distracted.`,
+            soal: "What is one reason people support banning smartphones in schools?",
+            pilihan: [
+                "Smartphones help students learn better",
+                "Smartphones distract students from learning",
+                "Smartphones are too expensive",
+                "Smartphones are not needed"
+            ],
+            kunci: 1
+        }, {
+            jenis: "Discussion",
+            bacaan: `Should schools ban smartphones? This is a hot topic in many countries. Some people agree that smartphones should be banned in schools. They argue that smartphones distract students from learning. Students often check social media, play games, or text their friends during class. This reduces their concentration and academic performance. On the other hand, some people disagree. They believe that smartphones can be useful for learning. Students can use them to search for information, take notes, and communicate with teachers. They also argue that banning smartphones is not the solution because students will find other ways to be distracted.`,
+            soal: "What is the counter-argument presented by those who disagree with banning smartphones?",
+            pilihan: [
+                "Smartphones are not useful",
+                "Students will find other ways to be distracted",
+                "Smartphones are too cheap",
+                "Teachers need smartphones too"
+            ],
+            kunci: 1
+        }, {
+            // TEKS 7: REVIEW (Ulasan Buku/Film) - 2 Soal
+            jenis: "Review",
+            bacaan: `"The Fault in Our Stars" is a novel written by John Green. It tells the story of two teenagers, Hazel Grace Lancaster and Augustus Waters, who meet at a cancer support group. Both are dealing with serious health issues, but they fall in love. The book explores themes of love, mortality, and the meaning of life. The characters are well-developed and the dialogue is witty. The ending is heartbreaking but beautiful. Some readers may find the story too sad, but overall, it is a powerful and emotional read. I highly recommend this book to anyone who enjoys realistic fiction.`,
+            soal: "What is the novel "The Fault in Our Stars" about?",
+            pilihan: [
+                "Two teenagers who fall in love despite their health issues",
+                "A detective solving a mystery",
+                "A historical event in World War II",
+                "A group of friends on a road trip"
+            ],
+            kunci: 0
+        }, {
+            jenis: "Review",
+            bacaan: `"The Fault in Our Stars" is a novel written by John Green. It tells the story of two teenagers, Hazel Grace Lancaster and Augustus Waters, who meet at a cancer support group. Both are dealing with serious health issues, but they fall in love. The book explores themes of love, mortality, and the meaning of life. The characters are well-developed and the dialogue is witty. The ending is heartbreaking but beautiful. Some readers may find the story too sad, but overall, it is a powerful and emotional read. I highly recommend this book to anyone who enjoys realistic fiction.`,
+            soal: "How does the reviewer describe the ending of the book?",
+            pilihan: [
+                "Happy and cheerful",
+                "Heartbreaking but beautiful",
+                "Boring and predictable",
+                "Confusing and unclear"
+            ],
+            kunci: 1
         }];
 
         // ================================================================
-        //  STATE & LOGIC
+        //  STATE GAME
         // ================================================================
         let indeksSoalAktif = 0;
         let poinSesi = 0;
@@ -293,122 +452,161 @@
         let sudahDijawab = false;
         let statusRiwayat = {};
 
+        // ================================================================
+        //  FUNGSI MUAT SOAL
+        // ================================================================
         function muatSoal() {
             let soal = daftarSoal[indeksSoalAktif];
-            document.getElementById("labelNomorSoal").innerHTML = `Soal ${indeksSoalAktif + 1} dari 10`;
-            document.getElementById("bacaan").innerHTML = soal.bacaan;
-            document.getElementById("teksSoal").innerHTML = soal.pertanyaan;
+            document.getElementById("labelNomorSoal").innerHTML = "Soal " + (indeksSoalAktif + 1) + " dari " + daftarSoal
+                .length;
 
+            // Tampilkan jenis teks
+            document.getElementById("jenisTeks").innerHTML = '<span class="badge-jenis">' + soal.jenis + '</span>';
+
+            // Tampilkan teks bacaan
+            document.getElementById("teksBacaan").innerHTML = soal.bacaan.replace(/\n/g, '<br>');
+
+            // Tampilkan pertanyaan
+            document.getElementById("teksSoal").innerHTML = soal.soal;
+
+            // Render opsi
             let areaPilihan = document.getElementById("areaPilihan");
             areaPilihan.innerHTML = "";
             pilihanDipilih = null;
             sudahDijawab = false;
 
-            soal.pilihan.forEach(opsi => {
+            soal.pilihan.forEach(function(opsi, index) {
                 let tombol = document.createElement("button");
-                tombol.innerHTML = opsi;
+                tombol.innerHTML = String.fromCharCode(65 + index) + ". " + opsi; // A, B, C, D
+                tombol.id = "opsi-" + index;
                 tombol.className = "option-btn";
-                tombol.dataset.value = opsi;
-                tombol.onclick = function() { pilihOpsi(this, opsi); };
+                tombol.dataset.index = index;
+                tombol.onclick = function() { pilihOpsi(index); };
                 areaPilihan.appendChild(tombol);
             });
 
-            // Reset tombol
-            document.getElementById("tombolKirim").classList.remove("hidden");
-            document.getElementById("tombolLanjut").classList.add("hidden");
-            document.getElementById("tombolSelesai").classList.add("hidden");
-            document.getElementById("pesanHasil").classList.add("hidden");
+            // Navigasi sebelumnya
+            if (indeksSoalAktif > 0) {
+                document.getElementById("tombolSebelumnya").classList.remove("hidden");
+            } else {
+                document.getElementById("tombolSebelumnya").classList.add("hidden");
+            }
 
             // Cek riwayat
             let riwayat = statusRiwayat[indeksSoalAktif];
             if (riwayat && riwayat.sudahBenar) {
                 pilihanDipilih = riwayat.pilihan;
                 tandaiTombolTerpilih(pilihanDipilih);
-                tampilkanHasil(true, true);
+                tampilkanHasilDanBedah(true, true);
+            } else {
+                document.getElementById("pesanHasil").classList.add("hidden");
+                document.getElementById("tombolLanjut").classList.add("hidden");
+                document.getElementById("tombolKirim").classList.remove("hidden");
+                document.getElementById("tombolSelesai").classList.add("hidden");
+                // Reset semua tombol
+                document.querySelectorAll(".option-btn").forEach(b => {
+                    b.classList.remove("selected", "correct", "wrong", "disabled");
+                });
             }
         }
 
-        function pilihOpsi(btn, opsi) {
-            if (sudahDijawab) return;
-            pilihanDipilih = opsi;
-            tandaiTombolTerpilih(opsi);
+        // ================================================================
+        //  FUNGSI PILIH OPSI
+        // ================================================================
+        function pilihOpsi(index) {
+            let riwayat = statusRiwayat[indeksSoalAktif];
+            if (riwayat && riwayat.sudahBenar) return;
+            pilihanDipilih = index;
+            tandaiTombolTerpilih(index);
         }
 
-        function tandaiTombolTerpilih(opsiTerpilih) {
-            let semuaBtn = document.querySelectorAll(".option-btn");
-            semuaBtn.forEach(btn => {
+        function tandaiTombolTerpilih(index) {
+            document.querySelectorAll(".option-btn").forEach((btn, i) => {
                 btn.classList.remove("selected");
-                if (btn.dataset.value === opsiTerpilih) {
+                if (i === index) {
                     btn.classList.add("selected");
                 }
             });
         }
 
+        // ================================================================
+        //  FUNGSI KIRIM JAWABAN
+        // ================================================================
         function kirimJawaban() {
-            if (!pilihanDipilih) {
-                alert("Pilih salah satu opsi jawaban terlebih dahulu!");
+            if (pilihanDipilih === null) {
+                alert("Pilih salah satu opsi jawaban terlebih dahulu ya mase!");
                 return;
             }
-            if (sudahDijawab) return;
-            sudahDijawab = true;
 
             let soalAktif = daftarSoal[indeksSoalAktif];
             let isBenar = (pilihanDipilih === soalAktif.kunci);
 
-            // Tandai semua opsi
-            let semuaBtn = document.querySelectorAll(".option-btn");
-            semuaBtn.forEach(btn => {
+            if (isBenar) {
+                if (!statusRiwayat[indeksSoalAktif] || !statusRiwayat[indeksSoalAktif].sudahBenar) {
+                    poinSesi += 15;
+                    document.getElementById("poinSesiTampil").innerHTML = poinSesi;
+                }
+                statusRiwayat[indeksSoalAktif] = { sudahBenar: true, pilihan: pilihanDipilih };
+                tampilkanHasilDanBedah(true, false);
+            } else {
+                statusRiwayat[indeksSoalAktif] = { sudahBenar: false, pilihan: pilihanDipilih };
+                tampilkanHasilDanBedah(false, false);
+            }
+        }
+
+        // ================================================================
+        //  FUNGSI TAMPILKAN HASIL & BEDAH OPSI
+        // ================================================================
+        function tampilkanHasilDanBedah(isBenar, dariReview) {
+            let soalAktif = daftarSoal[indeksSoalAktif];
+            let pesan = document.getElementById("pesanHasil");
+            pesan.classList.remove("hidden");
+
+            // Tandai semua tombol
+            document.querySelectorAll(".option-btn").forEach((btn, i) => {
                 btn.classList.add("disabled");
-                if (btn.dataset.value === soalAktif.kunci) {
+                if (i === soalAktif.kunci) {
                     btn.classList.add("correct");
-                } else if (btn.dataset.value === pilihanDipilih && !isBenar) {
+                } else if (i === pilihanDipilih && !isBenar) {
                     btn.classList.add("wrong");
                 }
             });
 
             if (isBenar) {
-                if (!statusRiwayat[indeksSoalAktif] || !statusRiwayat[indeksSoalAktif].sudahBenar) {
-                    poinSesi += 20;
-                    document.getElementById("poinSesiTampil").innerHTML = poinSesi;
-                }
-                statusRiwayat[indeksSoalAktif] = { sudahBenar: true, pilihan: pilihanDipilih };
-                tampilkanHasil(true, false);
-            } else {
-                statusRiwayat[indeksSoalAktif] = { sudahBenar: false, pilihan: pilihanDipilih };
-                tampilkanHasil(false, false);
-            }
-        }
-
-        function tampilkanHasil(isBenar, dariReview) {
-            let pesan = document.getElementById("pesanHasil");
-            pesan.classList.remove("hidden");
-
-            if (isBenar) {
                 pesan.innerHTML = dariReview ?
-                    "📚 <b>Mode Review:</b> Soal ini sudah kamu jawab benar sebelumnya." :
-                    "🎉 <b>Tepat sekali! Pilihanmu benar.</b> (+20 Poin)";
-                pesan.className = "mt-4 p-4 rounded-xl border-2 bg-green-50 text-green-700 border-green-200 text-center font-bold text-lg";
+                    '📚 <b>Mode Review:</b> Soal ini sudah kamu jawab dengan benar sebelumnya.' :
+                    '🎉 <b>Tepat sekali! Pilihanmu benar.</b> (+15 Poin)';
+                pesan.className = "mb-4 p-4 rounded-xl border-2 bg-green-50 text-green-800 border-green-200 text-base";
                 document.getElementById("tombolKirim").classList.add("hidden");
+
                 if (indeksSoalAktif < daftarSoal.length - 1) {
                     document.getElementById("tombolLanjut").classList.remove("hidden");
                 } else {
                     document.getElementById("tombolSelesai").classList.remove("hidden");
                 }
             } else {
-                pesan.innerHTML = `⚠️ <b>Kurang tepat.</b> Jawaban yang benar adalah: <span class="font-bold text-green-600">"${daftarSoal[indeksSoalAktif].kunci}"</span>`;
-                pesan.className = "mt-4 p-4 rounded-xl border-2 bg-red-50 text-red-700 border-red-200 text-center font-bold text-lg";
-                document.getElementById("tombolKirim").classList.add("hidden");
-                if (indeksSoalAktif < daftarSoal.length - 1) {
-                    document.getElementById("tombolLanjut").classList.remove("hidden");
-                } else {
-                    document.getElementById("tombolSelesai").classList.remove("hidden");
-                }
+                let jawabanBenar = String.fromCharCode(65 + soalAktif.kunci) + ". " + soalAktif.pilihan[soalAktif.kunci];
+                pesan.innerHTML = '⚠️ <b>Kurang tepat.</b> Jawaban yang benar: <span class="text-green-600 font-bold">' +
+                    jawabanBenar + '</span>';
+                pesan.className = "mb-4 p-4 rounded-xl border-2 bg-red-50 text-red-800 border-red-200 text-base";
+                document.getElementById("tombolLanjut").classList.add("hidden");
+                document.getElementById("tombolSelesai").classList.add("hidden");
             }
         }
 
+        // ================================================================
+        //  NAVIGASI
+        // ================================================================
         function soalBerikutnya() {
             indeksSoalAktif++;
             muatSoal();
+        }
+
+        function soalSebelumnya() {
+            if (indeksSoalAktif > 0) {
+                indeksSoalAktif--;
+                muatSoal();
+            }
         }
 
         function simpanPoinDanSelesai() {
@@ -417,6 +615,9 @@
             window.location.href = "sma.html";
         }
 
+        // ================================================================
+        //  INISIALISASI
+        // ================================================================
         muatSoal();
     </script>
 </body>
