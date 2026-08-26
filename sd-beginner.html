@@ -7,203 +7,42 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
-        * {
-            font-family: 'Poppins', sans-serif;
-        }
-        body {
-            min-height: 100vh;
-            padding: 1rem;
-            background: linear-gradient(135deg, #fef9c3, #fde68a);
-        }
-        .max-w-3xl {
-            max-width: 42rem;
-            margin: 0 auto;
-        }
-        .mascot {
-            font-size: 4rem;
-            animation: bounce 2s infinite;
-        }
-        @keyframes bounce {
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-        .progress-track {
-            background: #e5e7eb;
-            border-radius: 20px;
-            height: 10px;
-            overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #f59e0b, #f97316);
-            border-radius: 20px;
-            transition: width 0.5s ease;
-            width: 0%;
-        }
-        .option-btn {
-            transition: all 0.2s ease;
-            border: 3px solid #e5e7eb;
-            background: white;
-            padding: 16px 12px;
-            border-radius: 16px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            min-height: 56px;
-            cursor: pointer;
-            text-align: center;
-            color: #1f2937;
-        }
-        .option-btn:hover {
-            border-color: #f59e0b;
-            background: #fffbeb;
-            transform: scale(1.02);
-        }
-        .option-btn.correct {
-            border-color: #22c55e;
-            background: #dcfce7;
-        }
-        .option-btn.wrong {
-            border-color: #ef4444;
-            background: #fee2e2;
-        }
-        .option-btn.disabled {
-            pointer-events: none;
-            opacity: 0.7;
-        }
-        .option-btn.selected {
-            border-color: #f59e0b;
-            background: #fef3c7;
-        }
-        .btn-audio {
-            background: #22c55e;
-            transition: all 0.3s ease;
-            padding: 14px 28px;
-            border-radius: 60px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: white;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
-        }
-        .btn-audio:hover {
-            background: #16a34a;
-            transform: scale(1.05);
-        }
-        .soal-card {
-            background: white;
-            border-radius: 30px;
-            padding: 24px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-            border: 3px solid #fbbf24;
-        }
-        .badge-level {
-            display: inline-block;
-            background: #f59e0b;
-            color: white;
-            font-size: 0.7rem;
-            font-weight: 700;
-            padding: 4px 16px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .sticker {
-            font-size: 3.5rem;
-            display: inline-block;
-            animation: pop 0.5s ease-out;
-        }
-        @keyframes pop {
-            0% {
-                transform: scale(0);
-            }
-            70% {
-                transform: scale(1.2);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-        .gambar-soal {
-            text-align: center;
-            margin-bottom: 12px;
-            border-radius: 16px;
-            overflow: hidden;
-            background: #f3f4f6;
-            max-height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .gambar-soal img {
-            width: 100%;
-            height: 100%;
-            max-height: 200px;
-            object-fit: cover;
-        }
+        * { font-family: 'Poppins', sans-serif; }
+        body { min-height: 100vh; padding: 1rem; background: linear-gradient(135deg, #fef9c3, #fde68a); }
+        .max-w-3xl { max-width: 42rem; margin: 0 auto; }
+        .mascot { font-size: 4rem; animation: bounce 2s infinite; }
+        @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .progress-track { background: #e5e7eb; border-radius: 20px; height: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #f59e0b, #f97316); border-radius: 20px; transition: width 0.5s ease; width: 0%; }
+        .option-btn { transition: all 0.2s ease; border: 3px solid #e5e7eb; background: white; padding: 16px 12px; border-radius: 16px; font-weight: 700; font-size: 1.1rem; min-height: 56px; cursor: pointer; text-align: center; color: #1f2937; }
+        .option-btn:hover { border-color: #f59e0b; background: #fffbeb; transform: scale(1.02); }
+        .option-btn.correct { border-color: #22c55e; background: #dcfce7; }
+        .option-btn.wrong { border-color: #ef4444; background: #fee2e2; }
+        .option-btn.disabled { pointer-events: none; opacity: 0.7; }
+        .option-btn.selected { border-color: #f59e0b; background: #fef3c7; }
+        .btn-audio { background: #22c55e; transition: all 0.3s ease; padding: 14px 28px; border-radius: 60px; font-weight: 700; font-size: 1.1rem; color: white; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(34,197,94,0.4); }
+        .btn-audio:hover { background: #16a34a; transform: scale(1.05); }
+        .soal-card { background: white; border-radius: 30px; padding: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.08); border: 3px solid #fbbf24; }
+        .badge-level { display: inline-block; background: #f59e0b; color: white; font-size: 0.7rem; font-weight: 700; padding: 4px 16px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .sticker { font-size: 3.5rem; display: inline-block; animation: pop 0.5s ease-out; }
+        @keyframes pop { 0% { transform: scale(0); } 70% { transform: scale(1.2); } 100% { transform: scale(1); } }
+        .gambar-soal { text-align: center; margin-bottom: 12px; border-radius: 16px; overflow: hidden; background: #f3f4f6; max-height: 200px; display: flex; align-items: center; justify-content: center; }
+        .gambar-soal img { width: 100%; height: 100%; max-height: 200px; object-fit: cover; }
         @media (max-width: 640px) {
-            .soal-card {
-                padding: 16px !important;
-            }
-            .option-btn {
-                font-size: 0.95rem !important;
-                padding: 14px 10px !important;
-                min-height: 48px !important;
-            }
-            #teksSoal {
-                font-size: 1.1rem !important;
-            }
-            .mascot {
-                font-size: 3rem !important;
-            }
-            .btn-audio {
-                font-size: 0.95rem !important;
-                padding: 12px 20px !important;
-            }
-            #teksBacaan {
-                font-size: 0.9rem !important;
-                padding: 12px !important;
-            }
-            .gambar-soal {
-                max-height: 150px !important;
-            }
-            .gambar-soal img {
-                max-height: 150px !important;
-            }
+            .soal-card { padding: 16px !important; }
+            .option-btn { font-size: 0.95rem !important; padding: 14px 10px !important; min-height: 48px !important; }
+            #teksSoal { font-size: 1.1rem !important; }
+            .mascot { font-size: 3rem !important; }
+            .btn-audio { font-size: 0.95rem !important; padding: 12px 20px !important; }
+            #teksBacaan { font-size: 0.9rem !important; padding: 12px !important; }
+            .gambar-soal { max-height: 150px !important; }
+            .gambar-soal img { max-height: 150px !important; }
         }
-        button:active {
-            transform: scale(0.96);
-        }
-        .btn-back {
-            background: white;
-            border-radius: 12px;
-            padding: 8px 16px;
-            font-weight: 600;
-            color: #d97706;
-            border: 2px solid #fde68a;
-            transition: all 0.2s;
-        }
-        .btn-back:hover {
-            background: #fffbeb;
-        }
-        .hasil-box {
-            animation: fadeIn 0.5s ease-out;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
+        button:active { transform: scale(0.96); }
+        .btn-back { background: white; border-radius: 12px; padding: 8px 16px; font-weight: 600; color: #d97706; border: 2px solid #fde68a; transition: all 0.2s; }
+        .btn-back:hover { background: #fffbeb; }
+        .hasil-box { animation: fadeIn 0.5s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
     </style>
 </head>
 <body>
@@ -322,63 +161,63 @@
         // ================================================================
         const bankSoal = [{
             tipe: "vocab",
-            gambar: "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=400&h=200&fit=crop",
+            gambar: "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=400&h=200&fit=crop&crop=center", // kucing PUTIH
             soal: "Apa arti dari kata 'cat'?",
             pilihan: ["Anjing", "Kucing", "Burung", "Ikan"],
             kunci: 1,
             audio: null
         }, {
             tipe: "vocab",
-            gambar: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=400&h=200&fit=crop",
+            gambar: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=400&h=200&fit=crop&crop=center", // anjing
             soal: "Apa arti dari kata 'dog'?",
             pilihan: ["Kucing", "Anjing", "Kelinci", "Kambing"],
             kunci: 1,
             audio: null
         }, {
             tipe: "vocab",
-            gambar: "https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=400&h=200&fit=crop",
+            gambar: "https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=400&h=200&fit=crop&crop=center", // apel merah
             soal: "Apa arti dari kata 'apple'?",
             pilihan: ["Jeruk", "Pisang", "Apel", "Mangga"],
             kunci: 2,
             audio: null
         }, {
             tipe: "grammar",
-            gambar: "https://images.unsplash.com/photo-1523050854058-8df90110c7f1?w=400&h=200&fit=crop",
+            gambar: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=400&h=200&fit=crop&crop=center", // siswi SD perempuan
             soal: "She ___ a student.",
             pilihan: ["am", "is", "are", "be"],
             kunci: 1,
             audio: null
         }, {
             tipe: "grammar",
-            gambar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=200&fit=crop",
+            gambar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=200&fit=crop&crop=center", // anak tersenyum
             soal: "I ___ happy.",
             pilihan: ["am", "is", "are", "be"],
             kunci: 0,
             audio: null
         }, {
             tipe: "grammar",
-            gambar: "https://images.unsplash.com/photo-1459865264687-595d652de67e?w=400&h=200&fit=crop",
+            gambar: "https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=400&h=200&fit=crop&crop=center", // anak main sepak bola
             soal: "They ___ playing football.",
             pilihan: ["am", "is", "are", "be"],
             kunci: 2,
             audio: null
         }, {
             tipe: "listening",
-            gambar: "https://images.unsplash.com/photo-1544716278-e513176f20b5?w=400&h=200&fit=crop",
+            gambar: "https://images.unsplash.com/photo-1544716278-e513176f20b5?w=400&h=200&fit=crop&crop=center", // buku
             soal: "Dengarkan dan pilih kata yang kamu dengar!",
             pilihan: ["Book", "Pencil", "Table", "Chair"],
             kunci: 0,
             audio: "Book"
         }, {
             tipe: "listening",
-            gambar: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=400&h=200&fit=crop",
+            gambar: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&h=200&fit=crop&crop=center", // bintang di langit
             soal: "Dengarkan dan pilih kata yang kamu dengar!",
             pilihan: ["Sun", "Moon", "Star", "Cloud"],
             kunci: 2,
             audio: "Star"
         }, {
             tipe: "reading",
-            gambar: "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=400&h=200&fit=crop",
+            gambar: "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=400&h=200&fit=crop&crop=center", // kucing PUTIH
             soal: "Baca teks berikut! 'I have a cat. It is white and cute.' Pertanyaan: What color is the cat?",
             pilihan: ["Black", "White", "Brown", "Yellow"],
             kunci: 1,
@@ -386,7 +225,7 @@
             bacaan: "I have a cat. It is white and cute."
         }, {
             tipe: "reading",
-            gambar: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&h=200&fit=crop",
+            gambar: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=400&h=200&fit=crop&crop=center", // siswi SD (sama, tapi sudah cocok)
             soal: "Baca teks berikut! 'My name is Rani. I am 8 years old.' Pertanyaan: How old is Rani?",
             pilihan: ["6", "7", "8", "9"],
             kunci: 2,
@@ -395,7 +234,7 @@
         }];
 
         // ================================================================
-        //  STATE
+        //  STATE & LOGIC (sama seperti sebelumnya)
         // ================================================================
         let sesiSoal = [];
         let indeksAktif = 0;
@@ -403,10 +242,6 @@
         let pilihanDipilih = null;
         let statusRiwayat = {};
         const MAX_SOAL = 10;
-
-        // ================================================================
-        //  FUNGSI UTAMA
-        // ================================================================
 
         function acakSoal() {
             const shuffled = [...bankSoal];
@@ -418,30 +253,15 @@
         }
 
         function muatSoal() {
-            if (indeksAktif >= sesiSoal.length) {
-                tampilkanSkor();
-                return;
-            }
-
+            if (indeksAktif >= sesiSoal.length) { tampilkanSkor(); return; }
             const soal = sesiSoal[indeksAktif];
             const total = sesiSoal.length;
-
             document.getElementById("labelNomorSoal").innerHTML = "Soal " + (indeksAktif + 1) + " dari " + total;
-
             const progress = ((indeksAktif) / total) * 100;
             document.getElementById("progressFill").style.width = progress + "%";
             document.getElementById("progressLabel").innerHTML = Math.round(progress) + "%";
-
-            const badgeMap = {
-                vocab: '📝 Vocabulary',
-                grammar: '📚 Grammar',
-                listening: '🎧 Listening',
-                reading: '📖 Reading'
-            };
-            document.getElementById("tipeSoalBadge").innerHTML = '<span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">' +
-                badgeMap[soal.tipe] + '</span>';
-
-            // GAMBAR
+            const badgeMap = { vocab: '📝 Vocabulary', grammar: '📚 Grammar', listening: '🎧 Listening', reading: '📖 Reading' };
+            document.getElementById("tipeSoalBadge").innerHTML = '<span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">' + badgeMap[soal.tipe] + '</span>';
             const imgEl = document.getElementById("gambarImg");
             if (soal.gambar) {
                 imgEl.src = soal.gambar;
@@ -450,7 +270,6 @@
             } else {
                 document.getElementById("gambarSoal").classList.add("hidden");
             }
-
             const bacaanEl = document.getElementById("teksBacaan");
             if (soal.tipe === "reading" && soal.bacaan) {
                 bacaanEl.classList.remove("hidden");
@@ -459,20 +278,16 @@
                 bacaanEl.classList.add("hidden");
                 bacaanEl.innerHTML = "";
             }
-
             const audioEl = document.getElementById("areaAudio");
             if (soal.tipe === "listening" && soal.audio) {
                 audioEl.classList.remove("hidden");
             } else {
                 audioEl.classList.add("hidden");
             }
-
             document.getElementById("teksSoal").innerHTML = soal.soal;
-
             const areaPilihan = document.getElementById("areaPilihan");
             areaPilihan.innerHTML = "";
             pilihanDipilih = null;
-
             soal.pilihan.forEach(function(opsi, index) {
                 const tombol = document.createElement("button");
                 tombol.innerHTML = opsi;
@@ -482,12 +297,10 @@
                 tombol.onclick = function() { pilihOpsi(index); };
                 areaPilihan.appendChild(tombol);
             });
-
             document.getElementById("pesanHasil").classList.add("hidden");
             document.getElementById("tombolLanjut").classList.add("hidden");
             document.getElementById("tombolKirim").classList.remove("hidden");
             document.getElementById("hasilSkor").classList.add("hidden");
-
             const riwayat = statusRiwayat[indeksAktif];
             if (riwayat && riwayat.sudahBenar) {
                 pilihanDipilih = riwayat.pilihan;
@@ -502,16 +315,8 @@
                     b.classList.remove("selected", "correct", "wrong", "disabled");
                 });
             }
-
             const pesanMaskot = document.getElementById("pesanMaskot");
-            const pesan = [
-                "Ayo, jawab dengan teliti! 🧐",
-                "Kamu pasti bisa! 💪",
-                "Semangat! 🔥",
-                "Coba pikirkan baik-baik! 🤔",
-                "Selamat berpetualang! 🌟",
-                "Lihat gambarnya, lalu pilih jawaban! 👀"
-            ];
+            const pesan = ["Ayo, jawab dengan teliti! 🧐", "Kamu pasti bisa! 💪", "Semangat! 🔥", "Coba pikirkan baik-baik! 🤔", "Selamat berpetualang! 🌟", "Lihat gambarnya, lalu pilih jawaban! 👀"];
             pesanMaskot.innerHTML = pesan[Math.floor(Math.random() * pesan.length)];
         }
 
@@ -530,14 +335,9 @@
         }
 
         function kirimJawaban() {
-            if (pilihanDipilih === null) {
-                alert("Kak, pilih dulu jawabannya ya!");
-                return;
-            }
-
+            if (pilihanDipilih === null) { alert("Kak, pilih dulu jawabannya ya!"); return; }
             const soalAktif = sesiSoal[indeksAktif];
             const isBenar = (pilihanDipilih === soalAktif.kunci);
-
             if (isBenar) {
                 if (!statusRiwayat[indeksAktif] || !statusRiwayat[indeksAktif].sudahBenar) {
                     poinSesi += 10;
@@ -547,18 +347,14 @@
             } else {
                 statusRiwayat[indeksAktif] = { sudahBenar: false, pilihan: pilihanDipilih };
             }
-
             tampilkanHasil(isBenar, false);
-
             document.getElementById("tombolKirim").classList.add("hidden");
             if (indeksAktif < sesiSoal.length - 1) {
                 document.getElementById("tombolLanjut").classList.remove("hidden");
             } else {
                 document.getElementById("tombolLanjut").textContent = "🎉 Lihat Hasil";
                 document.getElementById("tombolLanjut").classList.remove("hidden");
-                document.getElementById("tombolLanjut").onclick = function() {
-                    tampilkanSkor();
-                };
+                document.getElementById("tombolLanjut").onclick = function() { tampilkanSkor(); };
             }
         }
 
@@ -566,18 +362,14 @@
             const soalAktif = sesiSoal[indeksAktif];
             const pesan = document.getElementById("pesanHasil");
             pesan.classList.remove("hidden");
-
             document.querySelectorAll(".option-btn").forEach((btn, i) => {
                 btn.classList.add("disabled");
                 if (i === soalAktif.kunci) btn.classList.add("correct");
                 else if (i === pilihanDipilih && !isBenar) btn.classList.add("wrong");
             });
-
             const maskot = document.getElementById("pesanMaskot");
             if (isBenar) {
-                pesan.innerHTML = dariReview ?
-                    '📚 <b>Kamu sudah jawab soal ini sebelumnya!</b>' :
-                    '🎉 <b>Benar sekali!</b> +10 poin ✨';
+                pesan.innerHTML = dariReview ? '📚 <b>Kamu sudah jawab soal ini sebelumnya!</b>' : '🎉 <b>Benar sekali!</b> +10 poin ✨';
                 pesan.className = "mt-4 p-4 rounded-xl border-2 border-green-200 bg-green-50 text-green-700 text-center font-bold text-lg";
                 maskot.innerHTML = "Hebat! Kamu pintar! 🌟";
             } else {
@@ -600,7 +392,6 @@
                 if (statusRiwayat[i] && statusRiwayat[i].sudahBenar) benar++;
             }
             const salah = totalSoal - benar;
-
             document.getElementById("hasilSkor").classList.remove("hidden");
             document.getElementById("skorBenar").innerHTML = benar;
             document.getElementById("skorTotal").innerHTML = totalSoal;
@@ -611,11 +402,9 @@
             document.getElementById("skorPersen").innerHTML = "(" + persen + "%)";
             document.getElementById("areaSoal").classList.add("hidden");
             document.getElementById("tombolLanjut").classList.add("hidden");
-
             const poinLama = parseInt(localStorage.getItem('poinMurid')) || 0;
             localStorage.setItem('poinMurid', poinLama + poinSesi);
             document.getElementById("poinTotal").innerHTML = poinLama + poinSesi;
-
             let stiker = "⭐";
             if (persen === 100) stiker = "🏆";
             else if (persen >= 70) stiker = "🌟";
